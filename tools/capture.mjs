@@ -53,11 +53,33 @@ const DOC_BASE = "tokyo"; // entry document dir — document-relative refs resol
 const UA = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0" };
 
 // runtime-instantiated template targets (the scanner cannot see an interpolated
-// base): the loader key-art family the entry's data-src/data-srcset attributes
-// name (title/loader-1600.webp, title/loader-2560.webp, title/loader-portrait.webp)
-// is already literal, but seeds keep the family closed if a future build
-// switches to interpolation.
-const KNOWN = ["tokyo/title/loader-1600.webp", "tokyo/title/loader-2560.webp", "tokyo/title/loader-portrait.webp"];
+// base):
+//   - the loader key-art family the entry's data-src/data-srcset attributes name
+//     (title/loader-1600.webp, title/loader-2560.webp, title/loader-portrait.webp)
+//     is already literal; seeds keep the family closed if a future build
+//     switches to interpolation.
+//   - the pedestrian/hero avatar family: `tr = "/avatars/"` then
+//     fetch(`${tr}manifest.json`) in avatar-*.js — the avatars manifest (and the
+//     basis KTX2 transcoder its `transcoder: "basis/"` field names) is invisible
+//     to the static scanner; the manifest then enumerates its 42 .glb/.webp.glb
+//     model files, which expandProgrammaticFamilies() probes below.
+const KNOWN = [
+  "tokyo/title/loader-1600.webp",
+  "tokyo/title/loader-2560.webp",
+  "tokyo/title/loader-portrait.webp",
+  "avatars/manifest.json",
+  "avatars/basis/basis_transcoder.js",
+  "avatars/basis/basis_transcoder.wasm",
+];
+
+// same-origin live-backend endpoints the client talks to (Vercel functions /
+// hosted auth). They are not static files and cannot be mirrored — recorded in
+// _mirror-report.json as documented gaps, never fabricated.
+const LIVE_BACKEND = [
+  "https://auth.taipei-rush.app/auth/v1/*, /rest/v1/rpc/* (Supabase-style account backend)",
+  "/api/support/config, /api/support/checkout (same-origin Vercel functions)",
+  "/_vercel/insights/view (Vercel Web Analytics beacon, POST)",
+];
 
 // strings that look like asset paths but are not fetched refs (refresh-time
 // exclusions, verified by scan over the whole capture):
@@ -65,7 +87,11 @@ const KNOWN = ["tokyo/title/loader-1600.webp", "tokyo/title/loader-2560.webp", "
 //     looked up in the message table, never fetched: akiba.junk.bin /
 //     culture.park.map / ueno.park.map (region-tokyo i18n + sign-painting code)
 //   - source paths written in comments (dev-only provenance, not requests):
-//     src/ui/tools/splash.mjs (entry comment), tokyo/scripts/keyart.mjs
+//     src/ui/tools/splash.mjs (entry comment), tokyo/scripts/keyart.mjs,
+//     test/reversedZ.test.mjs (unit-test path string)
+//   - the Vercel Web Analytics client composes `${base}/insights/script.js`
+//     with base="/_vercel" — the bare "insights/script.js" token is not a
+//     fetchable path (the real file _vercel/insights/script.js is captured)
 const EXCLUDE = new Set([
   "akiba.junk.bin",
   "tokyo/akiba.junk.bin",
@@ -80,6 +106,12 @@ const EXCLUDE = new Set([
   "tokyo/src/ui/tools/splash.mjs",
   "tokyo/scripts/keyart.mjs",
   "tokyo/tokyo/scripts/keyart.mjs",
+  "test/reversedZ.test.mjs",
+  "tokyo/test/reversedZ.test.mjs",
+  "tokyo/assets/test/reversedZ.test.mjs",
+  "insights/script.js",
+  "tokyo/insights/script.js",
+  "tokyo/assets/insights/script.js",
 ]);
 
 const sha256 = (buf) => crypto.createHash("sha256").update(buf).digest("hex");
@@ -173,6 +205,19 @@ function refsOf(relPath, text, external) {
   }
   if (isJs) {
     for (const m of text.matchAll(RE_QUOTED)) add(classifyUrl(m[1], baseDir));
+    // srcset-style lists ("/x/a.webp 1600w, /x/b.webp 2560w") and other
+    // multi-token path strings are invisible to the whole-quoted-string scan.
+    // A direct token scan over the text catches every slash-containing
+    // path-with-extension (minified quotes/escapes cannot desync it); tokens
+    // are sanity-filtered (no interpolation, sane chars, not host-like URLs).
+    for (const m of text.matchAll(
+      new RegExp(`[A-Za-z0-9_@%+~.\\-/]{2,300}\\.(?:${EXT})(?=\\?|["'\`\\s,;)\\]}]|$)`, "gi"),
+    )) {
+      const tok = m[0];
+      if (!tok.includes("/") || tok.includes("${")) continue;
+      if (/(?:[a-z0-9-]+\.)+(?:com|org|net|io|dev|app|gg|fyi|tw|jp)\//i.test(tok)) continue;
+      add(classifyUrl(tok, baseDir));
+    }
     for (const m of text.matchAll(RE_SPECIFIER)) {
       const v = m[1];
       if (/^(\.{0,2}\/)/.test(v) || /\.(js|mjs|css|json|wasm)(\?|$)/i.test(v)) add(classifyUrl(v, baseDir));
@@ -309,6 +354,29 @@ function checkClosure() {
   process.exit(novel.length ? 1 : 0);
 }
 
+// expand the programmatic avatar family: avatars/manifest.json (fetched through
+// `${tr}manifest.json` with tr=/avatars/, invisible to the static scanner)
+// enumerates its model files; the transcoder field names the basis decoder dir.
+async function expandProgrammaticFamilies() {
+  const rec = state.fetched.get("avatars/manifest.json");
+  if (!rec) throw new Error("avatars/manifest.json was not captured — cannot expand the avatar family");
+  const j = JSON.parse(rec.buf.toString("utf8"));
+  const fam = [];
+  for (const a of j.avatars ?? [])
+    for (const f of [a.file, a.fallback]) if (f && !fam.includes("avatars/" + f)) fam.push("avatars/" + f);
+  if (j.transcoder) {
+    const dir = j.transcoder.replace(/\/?$/, "/");
+    for (const f of ["basis_transcoder.js", "basis_transcoder.wasm"]) fam.push("avatars/" + dir + f);
+  }
+  let added = 0;
+  for (const rel of fam)
+    if (!state.fetched.has(rel) && !probedFailed.has(rel)) {
+      const ok = await probe([rel]);
+      if (ok) added++;
+    }
+  console.log(`programmatic family: ${fam.length} avatar file(s) enumerated from avatars/manifest.json (${added} newly fetched)`);
+}
+
 async function main() {
   if (process.argv.includes("--check")) return checkClosure();
   if (process.argv.includes("--report-only")) {
@@ -319,6 +387,7 @@ async function main() {
   // round 0: entry + runtime-instantiated template targets
   if (!state.fetched.has(ENTRY)) await fetchEntry(ENTRY);
   for (const rel of KNOWN) if (!state.fetched.has(rel)) await probe([rel]);
+  await expandProgrammaticFamilies();
 
   // iterate closure to fixpoint
   let round = 0;
@@ -354,7 +423,7 @@ async function main() {
   }
   state.bytes = bytes;
 
-  // crawl record
+  // crawl record (dead-world shape + the additive liveBackend gap list)
   const report = {
     start: state.start,
     origin: state.origin,
@@ -367,6 +436,7 @@ async function main() {
     unresolved: state.unresolved.sort((a, b) => a.path.localeCompare(b.path)),
     unreachable: state.unreachable.sort((a, b) => a.path.localeCompare(b.path)),
     external: [...external].sort(),
+    liveBackend: LIVE_BACKEND,
   };
   fs.writeFileSync(path.join(proj, "_mirror-report.json"), JSON.stringify(report, null, 2) + "\n");
 

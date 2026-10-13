@@ -3,9 +3,9 @@
   "origin": "https://www.taipei-rush.app",
   "gated": false,
   "sessionRenewal": "none",
-  "requests": 451,
-  "fetched": 129,
-  "bytes": 12136805,
+  "requests": 585,
+  "fetched": 179,
+  "bytes": 23901495,
   "paths": [
     "_vercel/insights/script.js",
     "assets/bag-DRzQCt3x.css",
@@ -18,6 +18,51 @@
     "assets/rig-BjRdQXtM.js",
     "assets/rolldown-runtime-DK3Fl9T5.js",
     "assets/tabs-C1IhIOn4.js",
+    "avatars/auntie.glb",
+    "avatars/auntie.webp.glb",
+    "avatars/basis/basis_transcoder.js",
+    "avatars/basis/basis_transcoder.wasm",
+    "avatars/casual-f.glb",
+    "avatars/casual-f.webp.glb",
+    "avatars/casual-m.glb",
+    "avatars/casual-m.webp.glb",
+    "avatars/elder-f.glb",
+    "avatars/elder-f.webp.glb",
+    "avatars/elder-m.glb",
+    "avatars/elder-m.webp.glb",
+    "avatars/jie-lod1.glb",
+    "avatars/jie-lod1.webp.glb",
+    "avatars/jie.glb",
+    "avatars/jie.webp.glb",
+    "avatars/jp-ol-suit.glb",
+    "avatars/jp-ol-suit.webp.glb",
+    "avatars/jp-police.glb",
+    "avatars/jp-police.webp.glb",
+    "avatars/jp-salaryman2.glb",
+    "avatars/jp-salaryman2.webp.glb",
+    "avatars/jp-shirt-tie.glb",
+    "avatars/jp-shirt-tie.webp.glb",
+    "avatars/manifest.json",
+    "avatars/office-f.glb",
+    "avatars/office-f.webp.glb",
+    "avatars/office-m.glb",
+    "avatars/office-m.webp.glb",
+    "avatars/office-m2.glb",
+    "avatars/office-m2.webp.glb",
+    "avatars/police.glb",
+    "avatars/police.webp.glb",
+    "avatars/student-f.glb",
+    "avatars/student-f.webp.glb",
+    "avatars/student-m.glb",
+    "avatars/student-m.webp.glb",
+    "avatars/uncle.glb",
+    "avatars/uncle.webp.glb",
+    "avatars/vendor.glb",
+    "avatars/vendor.webp.glb",
+    "avatars/wen-lod1.glb",
+    "avatars/wen-lod1.webp.glb",
+    "avatars/wen.glb",
+    "avatars/wen.webp.glb",
     "icons/apple-touch-icon.png",
     "icons/favicon-32.png",
     "icons/icon-192.png",
@@ -29,6 +74,8 @@
     "title/loader-2560.webp",
     "title/loader-portrait.webp",
     "title/menu-1600.webp",
+    "title/menu-2560.webp",
+    "title/menu-phone.webp",
     "title/menu-portrait.webp",
     "tokyo/assets/_virtual_tokyo-ja-dict-BB6JHNEu.js",
     "tokyo/assets/accounts-CpfgQQfK.js",
@@ -135,17 +182,15 @@
     "tokyo/title/loader-1600.webp",
     "tokyo/title/loader-2560.webp",
     "tokyo/title/loader-portrait.webp",
-    "tokyo/title/menu-1600.webp"
+    "tokyo/title/menu-1600.webp",
+    "tokyo/title/menu-2560.webp",
+    "tokyo/title/menu-phone.webp",
+    "tokyo/title/menu-portrait.webp"
   ],
   "unresolved": [
     {
       "status": 404,
       "path": "basis_transcoder.js",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "basis_transcoder.wasm",
       "probes": 1
     },
     {
@@ -185,11 +230,6 @@
     },
     {
       "status": 404,
-      "path": "tokyo/basis_transcoder.wasm",
-      "probes": 1
-    },
-    {
-      "status": 404,
       "path": "tokyo/menu-phone.webp",
       "probes": 1
     },
@@ -203,5 +243,10 @@
   "external": [
     "https://challenges.cloudflare.com/turnstile/v0/api.js",
     "https://va.vercel-scripts.com/v1/script.debug.js"
+  ],
+  "liveBackend": [
+    "https://auth.taipei-rush.app/auth/v1/*, /rest/v1/rpc/* (Supabase-style account backend)",
+    "/api/support/config, /api/support/checkout (same-origin Vercel functions)",
+    "/_vercel/insights/view (Vercel Web Analytics beacon, POST)"
   ]
 }

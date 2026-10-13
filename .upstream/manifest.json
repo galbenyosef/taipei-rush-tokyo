@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T00:02:16.813Z",
+  "generated": "2026-10-13T02:25:44.565Z",
   "origin": "https://www.taipei-rush.app",
   "files": {
     "_vercel/insights/script.js": {
@@ -46,6 +46,186 @@
       "bytes": 1898,
       "sha256": "d5239c7ee43ed4f0b8c4136624d3b8a691c23f7e53a78ce9ab5fb83a666000d1"
     },
+    "avatars/auntie.glb": {
+      "bytes": 211600,
+      "sha256": "b9579ccb2f68f93c6804560f0102a9591402f7147a6e214dd43a91f926d5d9db"
+    },
+    "avatars/auntie.webp.glb": {
+      "bytes": 199140,
+      "sha256": "d3acb9f51ce3feec47d4872d373a08eaedaeb6f65323bc663cd587846c1c7a3e"
+    },
+    "avatars/basis/basis_transcoder.js": {
+      "bytes": 57529,
+      "sha256": "8478b5b6d6b74e7d3082b89f6417321d8d1dc0307f2b30d4484bb11b441696a1"
+    },
+    "avatars/basis/basis_transcoder.wasm": {
+      "bytes": 527333,
+      "sha256": "6cf17dc889352c42e9acf8897107978d127005fe3386c36a0e3845e27967630a"
+    },
+    "avatars/casual-f.glb": {
+      "bytes": 217636,
+      "sha256": "2b8542f8ea0222b2f44e22d7020294ee80cb651837ebc940b31dda15670580ad"
+    },
+    "avatars/casual-f.webp.glb": {
+      "bytes": 201292,
+      "sha256": "636477a806d6547f099de863664042923847d9c11ec82990f7889bc9ed64d81c"
+    },
+    "avatars/casual-m.glb": {
+      "bytes": 197624,
+      "sha256": "5a6edef8b2991ebce8239f271b6d926e92b2a747bb077e79bb970a8c0c38a40f"
+    },
+    "avatars/casual-m.webp.glb": {
+      "bytes": 149036,
+      "sha256": "6c8bbb087361bfeccf016389ab7476eb1c51b348e9b2c04b5645c8a629347aa1"
+    },
+    "avatars/elder-f.glb": {
+      "bytes": 214972,
+      "sha256": "326227437e9cbbd1ee94cebfeb1a056bb9c39e35b9718a6c91376a63dca0c8f3"
+    },
+    "avatars/elder-f.webp.glb": {
+      "bytes": 195096,
+      "sha256": "433a69d0c378f5c0fe3bc0d009bf23715c2756d558305a38c1170074fb31e718"
+    },
+    "avatars/elder-m.glb": {
+      "bytes": 189356,
+      "sha256": "d3c4778fb68ec6084092e3123727a9ca942aa0238ad8d3b6f8f7ffdd8282392b"
+    },
+    "avatars/elder-m.webp.glb": {
+      "bytes": 164284,
+      "sha256": "4df34242d026ef76a12ae26538162261b054e6d021fddf0eaef3dbf08e150a81"
+    },
+    "avatars/jie-lod1.glb": {
+      "bytes": 186924,
+      "sha256": "989aa508e245fd56e15590a8fc60e9a9f979a25deef6a0376d76e1614d26da5d"
+    },
+    "avatars/jie-lod1.webp.glb": {
+      "bytes": 170336,
+      "sha256": "14375efc9548297a62c8fecde4f0f88c29b74a16edcc5be284a1d6bb1bcdf76c"
+    },
+    "avatars/jie.glb": {
+      "bytes": 981936,
+      "sha256": "a552b92cb873a2187da671c3fe93af94b2994c1ae375134e2df1b599212415c2"
+    },
+    "avatars/jie.webp.glb": {
+      "bytes": 725356,
+      "sha256": "150cc23c602efc84bbc322aa440b253896c2472c2a1e18ba774073e978a114e1"
+    },
+    "avatars/jp-ol-suit.glb": {
+      "bytes": 211412,
+      "sha256": "b7ad20b31826a217c352e5af791c8fa97cb1c6a222d38c5e63c1b74c9de7e325"
+    },
+    "avatars/jp-ol-suit.webp.glb": {
+      "bytes": 192504,
+      "sha256": "61f269c957e098a0d1747610eaa69e9a3bfd51df7b27c69fa56a52ecc62cd83c"
+    },
+    "avatars/jp-police.glb": {
+      "bytes": 206344,
+      "sha256": "a555d9b09d911da2aaef7d0ab4badc20a7e683122d63a1dd8ea2d4a02b0e6416"
+    },
+    "avatars/jp-police.webp.glb": {
+      "bytes": 155780,
+      "sha256": "5a0a7da8140a1c63bc3badd849f3d77dc95fee68d2c187d1610dde8bdb508706"
+    },
+    "avatars/jp-salaryman2.glb": {
+      "bytes": 178884,
+      "sha256": "4e225491130822ccf72f824b086b8fed6f5d4904a3a74fbd77ad5b3018efd6b2"
+    },
+    "avatars/jp-salaryman2.webp.glb": {
+      "bytes": 128196,
+      "sha256": "1fe21648eea8c5906165fb364457ba35efef0163a46b145b5d3643a62a946629"
+    },
+    "avatars/jp-shirt-tie.glb": {
+      "bytes": 201016,
+      "sha256": "8239329a3fb3066cba0ab21397487c67b92a9cf526d141e9e7222fb3487c9de8"
+    },
+    "avatars/jp-shirt-tie.webp.glb": {
+      "bytes": 149712,
+      "sha256": "30998de640ed97735af19fdc8b33ce59f4add17be06f2085a730b28f97fa086c"
+    },
+    "avatars/manifest.json": {
+      "bytes": 18452,
+      "sha256": "e2c322d8a6e34a97b0b2f4cc7f3821ce2be9a8c0f34e5ca6570142cd388dc5d9"
+    },
+    "avatars/office-f.glb": {
+      "bytes": 212344,
+      "sha256": "3a88b720caf18306abbb602904d92a5a8e9ce616bd8a149580e6a8d3600447fc"
+    },
+    "avatars/office-f.webp.glb": {
+      "bytes": 191000,
+      "sha256": "7aad68c461c1c7c53d88c0b6b0738428dc04a8fcb0dd8b2b69894fb4baa20898"
+    },
+    "avatars/office-m.glb": {
+      "bytes": 185036,
+      "sha256": "1164d3c4f89a7b618432ff777038591daab91f3cb83cfae1ea1ef7bc2a5a114d"
+    },
+    "avatars/office-m.webp.glb": {
+      "bytes": 133640,
+      "sha256": "4606a12e8721aa0121de8ad1827ba0c3d80aff0636593c62c598d489e8515f7f"
+    },
+    "avatars/office-m2.glb": {
+      "bytes": 193376,
+      "sha256": "f04233f9152afeaa5da3c071ffbcca2c938d9a7120f8ca6281ae8de59d7dc409"
+    },
+    "avatars/office-m2.webp.glb": {
+      "bytes": 139332,
+      "sha256": "b42ee7ab7a33ae0bf3f34dcc1576af44e175c3555acf65326a08fb9600bb1a85"
+    },
+    "avatars/police.glb": {
+      "bytes": 157664,
+      "sha256": "74290290a1658719722eef06b1ae9f9d04d57d11d5aa1516295beffa7cadebdf"
+    },
+    "avatars/police.webp.glb": {
+      "bytes": 90212,
+      "sha256": "898528056b4efda1ff08cad340a5ee0c0376270426bd057e9e38f249070652c9"
+    },
+    "avatars/student-f.glb": {
+      "bytes": 204108,
+      "sha256": "4319a2c23938e73d5835b448c900fbde33e1f1ec25adfcbb286790dd05be5c31"
+    },
+    "avatars/student-f.webp.glb": {
+      "bytes": 168912,
+      "sha256": "00419efd1b319243fbd3744fdd3963a810915e07a0ba839d1b88226e22d31732"
+    },
+    "avatars/student-m.glb": {
+      "bytes": 191708,
+      "sha256": "904d3555cb238952904febe94f4f3f52e223c116f8849d80795b7d77494d83bf"
+    },
+    "avatars/student-m.webp.glb": {
+      "bytes": 149796,
+      "sha256": "7d735f12a2f04bafd2fdc31a6a910a245d5abe7b0a297924926351500d9bed55"
+    },
+    "avatars/uncle.glb": {
+      "bytes": 208208,
+      "sha256": "03b7f42927feea58e44d37452db924e705155596b2da958d5bb2015cbb5c4d89"
+    },
+    "avatars/uncle.webp.glb": {
+      "bytes": 153748,
+      "sha256": "2eefd795a5cf22c2d17ad487a5ce6739a5e42f93ce9cac2094f050d21d0cb733"
+    },
+    "avatars/vendor.glb": {
+      "bytes": 167168,
+      "sha256": "bc71b8791fb6a9190ddbfb2699df26890191340f35c796f04ecb9911b89e61d3"
+    },
+    "avatars/vendor.webp.glb": {
+      "bytes": 90796,
+      "sha256": "ef5cda5e4ba5049ed1dd7c31c501345cb7427c81f0e530ac8ad44f2e81eafade"
+    },
+    "avatars/wen-lod1.glb": {
+      "bytes": 201744,
+      "sha256": "667f854b1dd045cba369cf2deb4298d5af903a9af835c45ea35b2415f0e44b20"
+    },
+    "avatars/wen-lod1.webp.glb": {
+      "bytes": 173888,
+      "sha256": "df6d3df18d3fa54f9673bff6e12c0d9e5a4dfbeab8571ce106deecdf19c2c4d1"
+    },
+    "avatars/wen.glb": {
+      "bytes": 1010100,
+      "sha256": "6b92014e9c4aadca76fe567b63aea659cb00f9bd8b2715f681438946bdcc3b35"
+    },
+    "avatars/wen.webp.glb": {
+      "bytes": 722452,
+      "sha256": "cbfe295ef8695da3cbe125754558fb71ef2705f64108935525f7e6e5e5eb766a"
+    },
     "icons/apple-touch-icon.png": {
       "bytes": 10436,
       "sha256": "de4ef6d37e4173d3e40532294cfdf563012c475ce49755f1b666849fdc98671d"
@@ -89,6 +269,14 @@
     "title/menu-1600.webp": {
       "bytes": 171522,
       "sha256": "128ca8801a9c651ea5ce2296ae03ee0d343dd7abf49784ff8dba8f823bd09859"
+    },
+    "title/menu-2560.webp": {
+      "bytes": 325032,
+      "sha256": "d56a1dfea1cba4639808c2f879fe0cc8c1db47358d7f591e0e2e5574c4d8ebd2"
+    },
+    "title/menu-phone.webp": {
+      "bytes": 168866,
+      "sha256": "f9e5a665c11e75f7d736d3aa10276deb9df4a751841560e5241b6321e48c57c4"
     },
     "title/menu-portrait.webp": {
       "bytes": 163788,
@@ -517,6 +705,18 @@
     "tokyo/title/menu-1600.webp": {
       "bytes": 114640,
       "sha256": "4d3e39628284866983f30b7dbea051c33a45ab82ffa14b0bc230cd38d73040b2"
+    },
+    "tokyo/title/menu-2560.webp": {
+      "bytes": 234300,
+      "sha256": "1338bd0647db5f5f2099075e67d6cfefb329506c7a83cb440979da29e3282678"
+    },
+    "tokyo/title/menu-phone.webp": {
+      "bytes": 101176,
+      "sha256": "fa5fa55af2ba692bc8b2323b2143904f9e6c7591c58fe836affb81aac1fe3fe5"
+    },
+    "tokyo/title/menu-portrait.webp": {
+      "bytes": 158334,
+      "sha256": "97e9ac0cb1d19515123436d69c656195c1dde57059a8aba04089af5e9d410832"
     }
   }
 }
