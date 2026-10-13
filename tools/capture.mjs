@@ -59,9 +59,28 @@ const UA = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126
 // switches to interpolation.
 const KNOWN = ["tokyo/title/loader-1600.webp", "tokyo/title/loader-2560.webp", "tokyo/title/loader-portrait.webp"];
 
-// strings that look like asset paths but are not fetched refs (empty for now;
-// kept for refresh-time exclusions after the closure rounds)
-const EXCLUDE = new Set();
+// strings that look like asset paths but are not fetched refs (refresh-time
+// exclusions, verified by scan over the whole capture):
+//   - i18n translation KEYS whose ids end in an asset-ish extension but are
+//     looked up in the message table, never fetched: akiba.junk.bin /
+//     culture.park.map / ueno.park.map (region-tokyo i18n + sign-painting code)
+//   - source paths written in comments (dev-only provenance, not requests):
+//     src/ui/tools/splash.mjs (entry comment), tokyo/scripts/keyart.mjs
+const EXCLUDE = new Set([
+  "akiba.junk.bin",
+  "tokyo/akiba.junk.bin",
+  "tokyo/assets/akiba.junk.bin",
+  "culture.park.map",
+  "tokyo/culture.park.map",
+  "tokyo/assets/culture.park.map",
+  "ueno.park.map",
+  "tokyo/ueno.park.map",
+  "tokyo/assets/ueno.park.map",
+  "src/ui/tools/splash.mjs",
+  "tokyo/src/ui/tools/splash.mjs",
+  "tokyo/scripts/keyart.mjs",
+  "tokyo/tokyo/scripts/keyart.mjs",
+]);
 
 const sha256 = (buf) => crypto.createHash("sha256").update(buf).digest("hex");
 const EXT =

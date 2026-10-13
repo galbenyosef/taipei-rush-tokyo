@@ -3,7 +3,7 @@
   "origin": "https://www.taipei-rush.app",
   "gated": false,
   "sessionRenewal": "none",
-  "requests": 464,
+  "requests": 451,
   "fetched": 129,
   "bytes": 12136805,
   "paths": [
@@ -140,22 +140,12 @@
   "unresolved": [
     {
       "status": 404,
-      "path": "akiba.junk.bin",
-      "probes": 1
-    },
-    {
-      "status": 404,
       "path": "basis_transcoder.js",
       "probes": 1
     },
     {
       "status": 404,
       "path": "basis_transcoder.wasm",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "culture.park.map",
       "probes": 1
     },
     {
@@ -170,32 +160,12 @@
     },
     {
       "status": 404,
-      "path": "src/ui/tools/splash.mjs",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "tokyo/akiba.junk.bin",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "tokyo/assets/akiba.junk.bin",
-      "probes": 1
-    },
-    {
-      "status": 404,
       "path": "tokyo/assets/basis_transcoder.js",
       "probes": 1
     },
     {
       "status": 404,
       "path": "tokyo/assets/basis_transcoder.wasm",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "tokyo/assets/culture.park.map",
       "probes": 1
     },
     {
@@ -210,11 +180,6 @@
     },
     {
       "status": 404,
-      "path": "tokyo/assets/ueno.park.map",
-      "probes": 1
-    },
-    {
-      "status": 404,
       "path": "tokyo/basis_transcoder.js",
       "probes": 1
     },
@@ -225,42 +190,12 @@
     },
     {
       "status": 404,
-      "path": "tokyo/culture.park.map",
-      "probes": 1
-    },
-    {
-      "status": 404,
       "path": "tokyo/menu-phone.webp",
       "probes": 1
     },
     {
       "status": 404,
-      "path": "tokyo/scripts/keyart.mjs",
-      "probes": 1
-    },
-    {
-      "status": 404,
       "path": "tokyo/sf-keyart-phone.webp",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "tokyo/src/ui/tools/splash.mjs",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "tokyo/tokyo/scripts/keyart.mjs",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "tokyo/ueno.park.map",
-      "probes": 1
-    },
-    {
-      "status": 404,
-      "path": "ueno.park.map",
       "probes": 1
     }
   ],
