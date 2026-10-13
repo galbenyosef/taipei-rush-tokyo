@@ -92,6 +92,15 @@ const LIVE_BACKEND = [
 //   - the Vercel Web Analytics client composes `${base}/insights/script.js`
 //     with base="/_vercel" — the bare "insights/script.js" token is not a
 //     fetchable path (the real file _vercel/insights/script.js is captured)
+//   - template-composed names whose base is a runtime variable — the bare
+//     token itself is never the URL: "basis_transcoder.js"/".wasm" resolve
+//     against transcoderPath="/avatars/basis/" (both captured) and the
+//     "menu-phone.webp" phone key-art token resolves against the city page
+//     ("/tokyo/title/" and "/title/" — both captured; the srcset scan finds
+//     the concrete /tokyo/title/menu-phone.webp form). Excluding the bare
+//     groups keeps _mirror-report.json to genuine 404s only
+//     (sf-keyart-phone.webp is the San-Francisco-only variant this Tokyo
+//     deploy never serves).
 const EXCLUDE = new Set([
   "akiba.junk.bin",
   "tokyo/akiba.junk.bin",
@@ -112,6 +121,15 @@ const EXCLUDE = new Set([
   "insights/script.js",
   "tokyo/insights/script.js",
   "tokyo/assets/insights/script.js",
+  "basis_transcoder.js",
+  "tokyo/basis_transcoder.js",
+  "tokyo/assets/basis_transcoder.js",
+  "basis_transcoder.wasm",
+  "tokyo/basis_transcoder.wasm",
+  "tokyo/assets/basis_transcoder.wasm",
+  "menu-phone.webp",
+  "tokyo/menu-phone.webp",
+  "tokyo/assets/menu-phone.webp",
 ]);
 
 const sha256 = (buf) => crypto.createHash("sha256").update(buf).digest("hex");
