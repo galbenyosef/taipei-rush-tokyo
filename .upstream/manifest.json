@@ -1,0 +1,522 @@
+{
+  "generated": "2026-10-12T23:59:52.520Z",
+  "origin": "https://www.taipei-rush.app",
+  "files": {
+    "_vercel/insights/script.js": {
+      "bytes": 4550,
+      "sha256": "b1fa9fc8104da15958badc63bbebe46eeea4d9ce88e587d7732b2c4f4238d8af"
+    },
+    "assets/bag-DRzQCt3x.css": {
+      "bytes": 4159,
+      "sha256": "dc17fd07c3aeb16b3e4c8ced30db8a9e655f6a0c2da1d9ee4b1c8bcfc905b63f"
+    },
+    "assets/dom-BCt0vy2n.js": {
+      "bytes": 1866,
+      "sha256": "f95ee7b01637dda1117e92e4c8f45306b6709b60f990733d50dc910d65401321"
+    },
+    "assets/market-DnDxqrTc.css": {
+      "bytes": 12355,
+      "sha256": "848916ee51279e03ce8d0e9585cca16a3b6feed046b02ad6240f10a97c0cd16d"
+    },
+    "assets/notice-DnIsya3-.js": {
+      "bytes": 369,
+      "sha256": "b50729d3b160e20011c2ba5cc990de762c5c2991735024327d868425a72c3287"
+    },
+    "assets/panel-DY3g4qQQ.css": {
+      "bytes": 1510,
+      "sha256": "0dabae7e83d1f8caa47388f217779d17f5bdc6abb17d2a224952a86244b07961"
+    },
+    "assets/pose-hAXyTQQR.js": {
+      "bytes": 1818,
+      "sha256": "89c234a7ca34f4094374ff2387e93ca5aaa51bb310fef4bf2e4fb341f77ddeb9"
+    },
+    "assets/profile-OY6SPQJJ.css": {
+      "bytes": 6003,
+      "sha256": "2bcf20e58a045af69db81e109d61272608e0f9dbcad2e1dadd8bb73461a28ed6"
+    },
+    "assets/rig-BjRdQXtM.js": {
+      "bytes": 614,
+      "sha256": "f2c2870d5a4527e1a3abd91b3f7da73024244bc94e4409b974142369c69abb5d"
+    },
+    "assets/rolldown-runtime-DK3Fl9T5.js": {
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    "assets/tabs-C1IhIOn4.js": {
+      "bytes": 1898,
+      "sha256": "d5239c7ee43ed4f0b8c4136624d3b8a691c23f7e53a78ce9ab5fb83a666000d1"
+    },
+    "icons/apple-touch-icon.png": {
+      "bytes": 10436,
+      "sha256": "de4ef6d37e4173d3e40532294cfdf563012c475ce49755f1b666849fdc98671d"
+    },
+    "icons/favicon-32.png": {
+      "bytes": 1069,
+      "sha256": "3cc7d55a2afd2d37fb9add70b965d17b349c8878d2f4986f51b747d1a941605f"
+    },
+    "icons/icon-192.png": {
+      "bytes": 10964,
+      "sha256": "216f4f5fbf063816b49ad8a2eaff53892ab41faeafbca3275c05313ed47a52ce"
+    },
+    "icons/icon-512.png": {
+      "bytes": 32793,
+      "sha256": "abcfcc68ac3cfa8a9bcfec87874a78d0bd23ff9ab9e003f76a12e748f7db46f2"
+    },
+    "icons/icon-maskable-512.png": {
+      "bytes": 27980,
+      "sha256": "db6108b5818eef419d40cbc1b184abe28c317ed5475308c3e198f40b8312ef4a"
+    },
+    "icons/icon.svg": {
+      "bytes": 408,
+      "sha256": "23c86c1b83b0b238fd3bf75b2b9707e7dfc89b6e21e03f69c096b8c0fa0cb9e4"
+    },
+    "manifest.webmanifest": {
+      "bytes": 1855,
+      "sha256": "8eb1283502dc10ce5b52e79787f079cbfda1477c712777ab9f259b3525c2d989"
+    },
+    "title/loader-1600.webp": {
+      "bytes": 181686,
+      "sha256": "ac01c1d5ec7d8bb7d93b4b120941717c7a5054ecf7be7e6adfe54e4d7f4a9ece"
+    },
+    "title/loader-2560.webp": {
+      "bytes": 351252,
+      "sha256": "bf0c1b920ec342059fc48420133d82979034cb1697490ea52edd9796f983b06d"
+    },
+    "title/loader-portrait.webp": {
+      "bytes": 177946,
+      "sha256": "eec099666c2f4f7a03121a980a51c6da430fafad781a112102b9d77925fc68a3"
+    },
+    "title/menu-1600.webp": {
+      "bytes": 171522,
+      "sha256": "128ca8801a9c651ea5ce2296ae03ee0d343dd7abf49784ff8dba8f823bd09859"
+    },
+    "title/menu-portrait.webp": {
+      "bytes": 163788,
+      "sha256": "29ccd9cc2cc1b4fceb92ba42a1de8d8c9cfb34b75735393129436362d59cb14c"
+    },
+    "tokyo/assets/_virtual_tokyo-ja-dict-BB6JHNEu.js": {
+      "bytes": 383212,
+      "sha256": "bf89243ab76d06b851f88635eaa879d6fc2b8e5b08e303dba210d43e3563e51e"
+    },
+    "tokyo/assets/accounts-CpfgQQfK.js": {
+      "bytes": 16257,
+      "sha256": "74f0c878357968669cf654ee673808c5eeb6f425fa5fce84b445bceaafdf7c03"
+    },
+    "tokyo/assets/actors-Bnj6Q1ad.js": {
+      "bytes": 1087310,
+      "sha256": "727ef642ddb8b1fbd91c3b0cfa3109cadb73aad2a181bb4949c74c993724928c"
+    },
+    "tokyo/assets/airliner-Bx-acqWB.js": {
+      "bytes": 5811,
+      "sha256": "0837fc571125a83f0490b447e6200b2b5aa2ea1c130543197680ea32f0b13c0a"
+    },
+    "tokyo/assets/analytics-B76dRwr5.js": {
+      "bytes": 2823,
+      "sha256": "6eea046e069432eef5e689ec100495fe0cf85ee440be03b8f112866f5f6811d0"
+    },
+    "tokyo/assets/anim-CQkLTvTS.bin": {
+      "bytes": 439720,
+      "sha256": "17780bb1144829ae5c6bf4c6c322de266c5647a0caa611efd0b689f32cb8ce2e"
+    },
+    "tokyo/assets/animator-C4Q6-_Wy.js": {
+      "bytes": 28353,
+      "sha256": "1a6c9b4985535e83f5acd8d3fc4c4bc3e4f3769cd279da6fb11d0e2f5b0f623c"
+    },
+    "tokyo/assets/api-tBXVzspF.js": {
+      "bytes": 374,
+      "sha256": "f7b594e2291ca413e77652ef1d69feeba0eb3e15e00567ee5e8de287e85d419a"
+    },
+    "tokyo/assets/art-tokyo-DHp5jBJS.js": {
+      "bytes": 23816,
+      "sha256": "f6e3a1fefbd83d860726cbc75eadcbed22a655bd699f2b86e293fa596adf862d"
+    },
+    "tokyo/assets/artWorker-B424lVEq.js": {
+      "bytes": 5563,
+      "sha256": "e915529248dc77510bd0d7cd3ec8df15840f2d3640946799f2967aeb3377449f"
+    },
+    "tokyo/assets/audio-DzcbodvB.js": {
+      "bytes": 209280,
+      "sha256": "ee3cf530945d36e06c85370acd18bf79e20591de21983c870d54886d38f26660"
+    },
+    "tokyo/assets/avatar-CbvrNwG6.js": {
+      "bytes": 112810,
+      "sha256": "6f5b9ed0b34047351800cf297a1c45bde9b3214fbaa1c6e29ae88903fabfaea7"
+    },
+    "tokyo/assets/bag-DRzQCt3x.css": {
+      "bytes": 4159,
+      "sha256": "dc17fd07c3aeb16b3e4c8ced30db8a9e655f6a0c2da1d9ee4b1c8bcfc905b63f"
+    },
+    "tokyo/assets/bag-LX8mo88s.js": {
+      "bytes": 151388,
+      "sha256": "0af3bbcc179327872618d2bbf9bba41bccdf4eacdcd61d8cab5df52d8ebce1e1"
+    },
+    "tokyo/assets/batch-CN-kL9Gb.js": {
+      "bytes": 2989,
+      "sha256": "0b4f14bf91505c15d7ab16ebe536b91d98b6b3127d6daae20e8520c02310a9e8"
+    },
+    "tokyo/assets/board-CFkVQWI7.js": {
+      "bytes": 28993,
+      "sha256": "b3fd80b5bfb80dd5c0e6590d650f0c95e07ae2c9cce7d4162afa9a15785792f4"
+    },
+    "tokyo/assets/bodyWorker-Bk4d3Tu3.js": {
+      "bytes": 237323,
+      "sha256": "f6388e10476c15170388d7afbc5b1dbfacb9376d5ece2ad010a47bd7820c134a"
+    },
+    "tokyo/assets/boot-C6yF8B4X.js": {
+      "bytes": 1004,
+      "sha256": "a9a707e723827886c4567335fdff4524851a943d2cc3f66387000817bda86499"
+    },
+    "tokyo/assets/charWorker-DPNUr-Eu.js": {
+      "bytes": 250278,
+      "sha256": "18cd0598a70a3e4f93f65c22bbe7a7f2e315dce0f39523530c71e2238afdce8a"
+    },
+    "tokyo/assets/characters-BvEb7Acx.js": {
+      "bytes": 191285,
+      "sha256": "4bf4b56c8a13a5af02ccb98eb15d1bbafb5dba459bfe3f796351810d867d13c3"
+    },
+    "tokyo/assets/cities-8-O8IWPJ.js": {
+      "bytes": 3910,
+      "sha256": "38b410105032b593a582ce11bc1eae2c23da9be21ea03ee5403e4fb91b63317d"
+    },
+    "tokyo/assets/client-NeGl0SRK.js": {
+      "bytes": 12882,
+      "sha256": "984315a0619f168d39291a5f686529c03e70fd7cadcc8033c2872fdb0f79a110"
+    },
+    "tokyo/assets/clips-B74kfFEX.js": {
+      "bytes": 2714,
+      "sha256": "b0e76ba181530dd6724c53ecc5b678d336b736d08597a2b4aa8d28402865d06a"
+    },
+    "tokyo/assets/controllers-mah1C7rD.js": {
+      "bytes": 19695,
+      "sha256": "903d5b7d15407e0bed8964f92d15c8758ef949076242fbfc355cf3c0bbe32789"
+    },
+    "tokyo/assets/coordinator-R8919moQ.js": {
+      "bytes": 4903,
+      "sha256": "2d54e1ad0b6b8cdb597278dc185d3ab0dda3ed6495ccd1076261291248e0a5e2"
+    },
+    "tokyo/assets/dom-BCt0vy2n.js": {
+      "bytes": 1866,
+      "sha256": "f95ee7b01637dda1117e92e4c8f45306b6709b60f990733d50dc910d65401321"
+    },
+    "tokyo/assets/dom-BIQnAwky.js": {
+      "bytes": 16204,
+      "sha256": "dc7d9a2e4310e6820dde899a414be93958b87c9c0f90bbb7c3971a2be0e38cb4"
+    },
+    "tokyo/assets/engine-BuS5QxN0.js": {
+      "bytes": 191785,
+      "sha256": "7cfae4f201aa8b22e9c0ae956e211ed82b0dd25b2593d0dda73912d24d44d387"
+    },
+    "tokyo/assets/fullmap-CXrrUiBa.js": {
+      "bytes": 25379,
+      "sha256": "fa739b539e6204781e93846c75884869d8f31322e46fd7cc4dec68a2cb17b0cf"
+    },
+    "tokyo/assets/game-y-FF2uWA.js": {
+      "bytes": 69567,
+      "sha256": "aacbf0ad4854f139ef63ae5fbaf6e0801941a5965536678773df7bf40c9e2d3e"
+    },
+    "tokyo/assets/icons-DYNV7fxr.js": {
+      "bytes": 13654,
+      "sha256": "05754f90a35d6abccfffc79d3ae0a063fe302a720581257e38bd8eb356cd0a90"
+    },
+    "tokyo/assets/ja-Ci9Qv_M-.js": {
+      "bytes": 3247,
+      "sha256": "619b740c60eebb85fb1fab0f02113e5234607c3f582b37b1b1921c5c8a6ad42a"
+    },
+    "tokyo/assets/lab-CQYp1Cs9.js": {
+      "bytes": 10883,
+      "sha256": "80502d90bbffb85da297c0f9f6490357fb04e4a57d83e94a4262a8458055cf34"
+    },
+    "tokyo/assets/lab-X7McqYcL.js": {
+      "bytes": 8431,
+      "sha256": "dd652c17a2254f67548fa3a9e72363ca5cb83744a525c3399fa3bc40a7051622"
+    },
+    "tokyo/assets/landing-DfZEUEhC.js": {
+      "bytes": 5937,
+      "sha256": "60d460f08a560a002b02dacab4ed141811f669c1cd9eb2a46cc0b6d963a1f611"
+    },
+    "tokyo/assets/market-DnDxqrTc.css": {
+      "bytes": 12355,
+      "sha256": "848916ee51279e03ce8d0e9585cca16a3b6feed046b02ad6240f10a97c0cd16d"
+    },
+    "tokyo/assets/market-l-6OeMtj.js": {
+      "bytes": 24164,
+      "sha256": "68ae0ebfbffb4b5fc0889bfc5f240902ed857971a339ab2e53404e14fb619efd"
+    },
+    "tokyo/assets/material-3lv29trB.js": {
+      "bytes": 14167,
+      "sha256": "b49150fafe750d9b84c2b38290db5b10b86127e4bfc30fdaf66e2d4b152fc121"
+    },
+    "tokyo/assets/notice-DnIsya3-.js": {
+      "bytes": 369,
+      "sha256": "b50729d3b160e20011c2ba5cc990de762c5c2991735024327d868425a72c3287"
+    },
+    "tokyo/assets/panel-D9zvhD2V.js": {
+      "bytes": 4478,
+      "sha256": "30a7ee96fe02201fe623a5840606adccbebfa46c3191b5a14f1f0582144e5158"
+    },
+    "tokyo/assets/panel-DY3g4qQQ.css": {
+      "bytes": 1510,
+      "sha256": "0dabae7e83d1f8caa47388f217779d17f5bdc6abb17d2a224952a86244b07961"
+    },
+    "tokyo/assets/peopleWorker-Cn7UVw8F.js": {
+      "bytes": 490774,
+      "sha256": "b97f29d58a96bdfc3a51d53729e14097c2136f1bbe16ab1c11a23750e12f7963"
+    },
+    "tokyo/assets/phone-BvNRaOR5.js": {
+      "bytes": 8117,
+      "sha256": "02f1222d27a2364e0d3873c83d596c214e7cb02be9391e83283e91677753cdb7"
+    },
+    "tokyo/assets/pose-hAXyTQQR.js": {
+      "bytes": 1818,
+      "sha256": "89c234a7ca34f4094374ff2387e93ca5aaa51bb310fef4bf2e4fb341f77ddeb9"
+    },
+    "tokyo/assets/postfx-Beafm2Vo.js": {
+      "bytes": 320847,
+      "sha256": "4f4933c71b9494f56f07da9615ac14851bbec2f3bf3e4c8b42482b36cfc16475"
+    },
+    "tokyo/assets/prefs-BioZODFl.js": {
+      "bytes": 569,
+      "sha256": "d606061b951c250e8feabd17977bf883e840e9e40f34daab4ccd7008b5ff5e4a"
+    },
+    "tokyo/assets/profile-BmQKTAov.js": {
+      "bytes": 13419,
+      "sha256": "eabd8e7478dbfae02eaab0e8e1e564c0c60d11cb1660a875c0d04ec93617120c"
+    },
+    "tokyo/assets/profile-OY6SPQJJ.css": {
+      "bytes": 6003,
+      "sha256": "2bcf20e58a045af69db81e109d61272608e0f9dbcad2e1dadd8bb73461a28ed6"
+    },
+    "tokyo/assets/recovery-CHWBNwD3.js": {
+      "bytes": 2635,
+      "sha256": "9cb0f007e71a07d3721e9a8f7e5bf7bdea16cf333222f3c0a35fc5ab7fa4bb8a"
+    },
+    "tokyo/assets/region-tokyo-BcM3fReU.js": {
+      "bytes": 2327486,
+      "sha256": "84db7232afe275b88e747505f2d47781b11809788c753a616de157c7182c0986"
+    },
+    "tokyo/assets/region-tokyo-audioWorker-GAP5c6S0.js": {
+      "bytes": 46413,
+      "sha256": "0592467a0dcf72f743ed1e78e7ae7be05de55129281ea8bce7c5c8de18b64a99"
+    },
+    "tokyo/assets/region-tokyo-bodyWorker-CtngWad2.js": {
+      "bytes": 247239,
+      "sha256": "1c7b1152043c86616de9a321b2ce2062886018eb6ba63f030075640d7ed9d999"
+    },
+    "tokyo/assets/region-tokyo-d-akihabara-BJsB2qLX.js": {
+      "bytes": 57967,
+      "sha256": "430dda26089b4ef53f381e4e422838ef3979d8b7fd5d06b61026c09a91f6bc8a"
+    },
+    "tokyo/assets/region-tokyo-d-ameyoko-MDbcAvKx.js": {
+      "bytes": 35538,
+      "sha256": "96a6608f6f26b18630a89b32c9e0635b72ecac41a43948e963d129d6098aeab9"
+    },
+    "tokyo/assets/region-tokyo-d-ginza-B8PkMMHp.js": {
+      "bytes": 35877,
+      "sha256": "e7846f00f4f3675a006d3a537776d27003942375e7eda11e2dfc5e529b063173"
+    },
+    "tokyo/assets/region-tokyo-d-kanda-CYJun2NB.js": {
+      "bytes": 91379,
+      "sha256": "8811b7b8c5d3b3f54a59b0ede4494409eb48aa692187ec21be14087541fce3b4"
+    },
+    "tokyo/assets/region-tokyo-d-marunouchi-BoijeA75.js": {
+      "bytes": 58421,
+      "sha256": "d68f9ba62ce1c7bfe10e14a5f30d052fe2712f557040844bda45adf94d4ea00d"
+    },
+    "tokyo/assets/region-tokyo-d-nihonbashi-DhEI_3CD.js": {
+      "bytes": 62283,
+      "sha256": "dae0ab5aa185ef186de6cf884910718e8415c22afadea52dd60986e206edb0d1"
+    },
+    "tokyo/assets/region-tokyo-d-shared-Cox87eLC.js": {
+      "bytes": 5300,
+      "sha256": "2593c81e85f7e58f0a6e9b4a4b1516907e6969394993542a69d4157b23e996f4"
+    },
+    "tokyo/assets/region-tokyo-d-shimbashi-CU0USnvn.js": {
+      "bytes": 71786,
+      "sha256": "b13e9ed3f33592a316c1ad0f068a36d7dd5482f59b11fec45412061edb0dc338"
+    },
+    "tokyo/assets/region-tokyo-d-ueno-CEorO8m2.js": {
+      "bytes": 64350,
+      "sha256": "a749153b5854241727fd98c3243fa695440b44189572f028a264f5081187fe48"
+    },
+    "tokyo/assets/region-tokyo-interiorsWorker-CQjw7WYB.js": {
+      "bytes": 500704,
+      "sha256": "9ede241884ed278deb3e15aeec0113b3f26d678ff0e5f5187ab930ba1b44b695"
+    },
+    "tokyo/assets/region-tokyo-sans-jp-hyLDYRy3.woff2": {
+      "bytes": 209220,
+      "sha256": "83de48befedd74444efd373938ea7637beb9dd88f428d462853b359a2f281425"
+    },
+    "tokyo/assets/region-tokyo-site-akiba-denshi-center-AnKWMTRu.js": {
+      "bytes": 2328,
+      "sha256": "3a46cfb4a1605e4ecc6641ae8b8f5571594d0a725b256c3fc34b03810b7d09d7"
+    },
+    "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-BZiDEQwf.js": {
+      "bytes": 3854,
+      "sha256": "3bd84275099ee94b389ef13d985d4ad272841abb0089090b945b3b2c321f0f00"
+    },
+    "tokyo/assets/region-tokyo-site-denpa-kaikan-CfqObs2p.js": {
+      "bytes": 2814,
+      "sha256": "15c603708b0ebe04ea31de2bcf1fd06de699fdc0635643ad2281c6679d55cae5"
+    },
+    "tokyo/assets/region-tokyo-site-enrai-yu-CbrURW05.js": {
+      "bytes": 2750,
+      "sha256": "41f4e1e41fb48741598fd09dba1dadca916dd3525191697b34d39fe649164c25"
+    },
+    "tokyo/assets/region-tokyo-site-espark-ueno-WLKqmaWy.js": {
+      "bytes": 2304,
+      "sha256": "acf0edddb62d0179162cd010410c4b33f1dfad14cd977837397ab72151020cd6"
+    },
+    "tokyo/assets/region-tokyo-site-kanda-gado-B73p26Wi.js": {
+      "bytes": 1827,
+      "sha256": "d15eceeff305b871133088fa6f4617a99e707a9b5f50a0077fb0d57cf7ea6711"
+    },
+    "tokyo/assets/region-tokyo-site-karasumori-jinja-ug8EhSbJ.js": {
+      "bytes": 3456,
+      "sha256": "5a1d35d9d1e46fbbe2492abf8d32353688f2e1376a553665fa0db08834fcb603"
+    },
+    "tokyo/assets/region-tokyo-site-namiyoke-jinja-u3VcLqDU.js": {
+      "bytes": 3531,
+      "sha256": "724926a76b72ab450e5cb1f2638f0ec4a403e801ede451b65f47ef6748f4509d"
+    },
+    "tokyo/assets/region-tokyo-site-new-karasumori-bldg-YocW0Jbw.js": {
+      "bytes": 4661,
+      "sha256": "722f3bfb586237d60a31f0fa45fa2a3293e241ade1ea53790aa06d0d85c509e3"
+    },
+    "tokyo/assets/region-tokyo-site-nishiginza-lucky-CBTbuSQh.js": {
+      "bytes": 2886,
+      "sha256": "1abde6cb018360488fdd83a03a7b4e5945d328fde10f6e9d1257f7318946290f"
+    },
+    "tokyo/assets/region-tokyo-site-okachimachi-hoseki-BNQtKGe4.js": {
+      "bytes": 2500,
+      "sha256": "4ce229a2b03d9c92cff67129cbbab626e294147d14a5d0e18a0a660fd15f30c9"
+    },
+    "tokyo/assets/region-tokyo-site-shimizu-shoten-CjSOYUYc.js": {
+      "bytes": 3076,
+      "sha256": "be3ba8dba45ad80941f48e5c23e18f45a6e42b4b1ccff5afbe125a47bcadd9b7"
+    },
+    "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-COiN77rV.js": {
+      "bytes": 2315,
+      "sha256": "bf295ab919f71f1fd71030dcb85bd563a8314e38cdf10b323b7635a32008c4c3"
+    },
+    "tokyo/assets/region-tokyo-site-yamashitaya-ueno-wZAufeba.js": {
+      "bytes": 3115,
+      "sha256": "d2263c5e51a81de071b68f8b3fe32a614f8bce9054065050f775f1f4c7147bdb"
+    },
+    "tokyo/assets/region-tokyo-site-yurakucho-gado-Bh7OarCf.js": {
+      "bytes": 1797,
+      "sha256": "2e5b2fe863141402726bd6d87cea9a75c2d827057d3cbd0151abaa0dfaa8f760"
+    },
+    "tokyo/assets/region-tokyo-sites-kit-X3MRd0jr.js": {
+      "bytes": 49665,
+      "sha256": "2559c096d50086ffbbd8bbbbf9988066795ed3738c875ef7399d0078b5c17fe9"
+    },
+    "tokyo/assets/rig-BjRdQXtM.js": {
+      "bytes": 614,
+      "sha256": "f2c2870d5a4527e1a3abd91b3f7da73024244bc94e4409b974142369c69abb5d"
+    },
+    "tokyo/assets/rolldown-runtime-DK3Fl9T5.js": {
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    "tokyo/assets/scene-MReEd7Ml.js": {
+      "bytes": 6640,
+      "sha256": "da7d7b02c43cb97171692a45899568da817be6a6156400fb64e3e934b7a0d583"
+    },
+    "tokyo/assets/session-CLv8PYlR.js": {
+      "bytes": 6943,
+      "sha256": "1419e77c6d918627c12d75e37b56afa79cb61178bae23bb698332977bd6d3caf"
+    },
+    "tokyo/assets/shared-DcD5mkpI.js": {
+      "bytes": 65134,
+      "sha256": "efa70f27c858d3fa5063ebdd6ca9bc43572fc60ed879c488f53ec5aeb7ecdaea"
+    },
+    "tokyo/assets/signs-CcdyXn0R.js": {
+      "bytes": 2007,
+      "sha256": "1cc4eaa381aad073b203f3850814ca23b4e2390b4b902ecc256144dced44098b"
+    },
+    "tokyo/assets/sites-kit-BhplXgcu.js": {
+      "bytes": 7964,
+      "sha256": "9a0e7f07ba0121e29068fb17b8de52a9d4de8ebec1a9f08e91130d89a491087d"
+    },
+    "tokyo/assets/tabs-C1IhIOn4.js": {
+      "bytes": 1898,
+      "sha256": "d5239c7ee43ed4f0b8c4136624d3b8a691c23f7e53a78ce9ab5fb83a666000d1"
+    },
+    "tokyo/assets/text-0MpKmkwJ.js": {
+      "bytes": 21398,
+      "sha256": "2e9239be7aea9a1c854db3a3945d4b1913c9b426eb20a215991bb99e5e524c7b"
+    },
+    "tokyo/assets/three-CC5Mkdpe.js": {
+      "bytes": 737925,
+      "sha256": "1602ee5ec65880983b28baa43697f33239ea9b479649ad4e50ba78e751231aae"
+    },
+    "tokyo/assets/tokyo-BZXVhKTn.js": {
+      "bytes": 292661,
+      "sha256": "cffdfbb2ceeb8a4717cedd723d37a372aa9387a2045d56b51e0f9f4a6b7d83bb"
+    },
+    "tokyo/assets/tokyo-CchLQfwP.css": {
+      "bytes": 107153,
+      "sha256": "948ec1bda30378f9f69abf5586f4a9818cc4dd88b36cf57fc2463e04ae52a134"
+    },
+    "tokyo/assets/ui-Bz5oqxsZ.js": {
+      "bytes": 19293,
+      "sha256": "e74012e11563e9e0d758b5510b2c3485cc4bf03c064ebe7691dc76b5b610e1ed"
+    },
+    "tokyo/assets/worker-DuEI-Qg4.js": {
+      "bytes": 102087,
+      "sha256": "15959e012fea99620a8a60a5225303c15c0b66e7a2e5b2ca232d908b5b1123e3"
+    },
+    "tokyo/assets/world-Bo9wkXrT.js": {
+      "bytes": 537633,
+      "sha256": "05db0e554d6a04e9408b67f7e7ad42df17fb6e4b5764017fafa73cd7ceae1bdf"
+    },
+    "tokyo/icons/apple-touch-icon.png": {
+      "bytes": 6406,
+      "sha256": "ed2f58aee2ab544f5df6859bc84c4554eeb8527ce1a09d8bcbd9ffbc9156c255"
+    },
+    "tokyo/icons/favicon-32.png": {
+      "bytes": 1156,
+      "sha256": "51826657379945694a5e495ec9decd085e852695405a353c8d2f7fd97fe1b61a"
+    },
+    "tokyo/icons/icon-192.png": {
+      "bytes": 6661,
+      "sha256": "b3c0427b57fbd5fb5613f24a0277c7e0ad0f84f18d6c103d8253519c3549d422"
+    },
+    "tokyo/icons/icon-512.png": {
+      "bytes": 18093,
+      "sha256": "56dbeee93cd98860d812b5000f10c89d038476c7c5fdd143e188e035802a1e90"
+    },
+    "tokyo/icons/icon-maskable-512.png": {
+      "bytes": 13037,
+      "sha256": "5aefbc21b87996d7b25c5ebfa3e93d1cd8a5b5ca7d9af6b484f393f57cfb04f1"
+    },
+    "tokyo/icons/icon.svg": {
+      "bytes": 409,
+      "sha256": "cb364a3499b90282dc2b8f021721a9935758e33b4ea4849b64c658c38888bd64"
+    },
+    "tokyo/index.html": {
+      "bytes": 53065,
+      "sha256": "e29418baa108806aedb916ff3f06bdb1ce4ffa98fb1024d977f9ae5c65552877"
+    },
+    "tokyo/manifest.webmanifest": {
+      "bytes": 1715,
+      "sha256": "7293b816a567a959972ebaeae8c395f3eea50241f53fb740d04d8b3b09ddbd15"
+    },
+    "tokyo/title/loader-1600.webp": {
+      "bytes": 117424,
+      "sha256": "f44a0ab98512093df02bb449196b480d0a5908cbc9906501b09b6b62bd8bb8f5"
+    },
+    "tokyo/title/loader-2560.webp": {
+      "bytes": 243122,
+      "sha256": "ba26cdc91a25b502e36cd97432df23ae3f694aead8696c34d19869483b81ade4"
+    },
+    "tokyo/title/loader-portrait.webp": {
+      "bytes": 102698,
+      "sha256": "4041e8bd5740600d7006c728455d1aed159659e441ca1ee0bdea0b13150651f2"
+    },
+    "tokyo/title/menu-1600.webp": {
+      "bytes": 114640,
+      "sha256": "4d3e39628284866983f30b7dbea051c33a45ab82ffa14b0bc230cd38d73040b2"
+    }
+  }
+}

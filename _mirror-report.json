@@ -1,0 +1,272 @@
+{
+  "start": "https://www.taipei-rush.app/tokyo/",
+  "origin": "https://www.taipei-rush.app",
+  "gated": false,
+  "sessionRenewal": "none",
+  "requests": 464,
+  "fetched": 129,
+  "bytes": 12136805,
+  "paths": [
+    "_vercel/insights/script.js",
+    "assets/bag-DRzQCt3x.css",
+    "assets/dom-BCt0vy2n.js",
+    "assets/market-DnDxqrTc.css",
+    "assets/notice-DnIsya3-.js",
+    "assets/panel-DY3g4qQQ.css",
+    "assets/pose-hAXyTQQR.js",
+    "assets/profile-OY6SPQJJ.css",
+    "assets/rig-BjRdQXtM.js",
+    "assets/rolldown-runtime-DK3Fl9T5.js",
+    "assets/tabs-C1IhIOn4.js",
+    "icons/apple-touch-icon.png",
+    "icons/favicon-32.png",
+    "icons/icon-192.png",
+    "icons/icon-512.png",
+    "icons/icon-maskable-512.png",
+    "icons/icon.svg",
+    "manifest.webmanifest",
+    "title/loader-1600.webp",
+    "title/loader-2560.webp",
+    "title/loader-portrait.webp",
+    "title/menu-1600.webp",
+    "title/menu-portrait.webp",
+    "tokyo/assets/_virtual_tokyo-ja-dict-BB6JHNEu.js",
+    "tokyo/assets/accounts-CpfgQQfK.js",
+    "tokyo/assets/actors-Bnj6Q1ad.js",
+    "tokyo/assets/airliner-Bx-acqWB.js",
+    "tokyo/assets/analytics-B76dRwr5.js",
+    "tokyo/assets/anim-CQkLTvTS.bin",
+    "tokyo/assets/animator-C4Q6-_Wy.js",
+    "tokyo/assets/api-tBXVzspF.js",
+    "tokyo/assets/art-tokyo-DHp5jBJS.js",
+    "tokyo/assets/artWorker-B424lVEq.js",
+    "tokyo/assets/audio-DzcbodvB.js",
+    "tokyo/assets/avatar-CbvrNwG6.js",
+    "tokyo/assets/bag-DRzQCt3x.css",
+    "tokyo/assets/bag-LX8mo88s.js",
+    "tokyo/assets/batch-CN-kL9Gb.js",
+    "tokyo/assets/board-CFkVQWI7.js",
+    "tokyo/assets/bodyWorker-Bk4d3Tu3.js",
+    "tokyo/assets/boot-C6yF8B4X.js",
+    "tokyo/assets/charWorker-DPNUr-Eu.js",
+    "tokyo/assets/characters-BvEb7Acx.js",
+    "tokyo/assets/cities-8-O8IWPJ.js",
+    "tokyo/assets/client-NeGl0SRK.js",
+    "tokyo/assets/clips-B74kfFEX.js",
+    "tokyo/assets/controllers-mah1C7rD.js",
+    "tokyo/assets/coordinator-R8919moQ.js",
+    "tokyo/assets/dom-BCt0vy2n.js",
+    "tokyo/assets/dom-BIQnAwky.js",
+    "tokyo/assets/engine-BuS5QxN0.js",
+    "tokyo/assets/fullmap-CXrrUiBa.js",
+    "tokyo/assets/game-y-FF2uWA.js",
+    "tokyo/assets/icons-DYNV7fxr.js",
+    "tokyo/assets/ja-Ci9Qv_M-.js",
+    "tokyo/assets/lab-CQYp1Cs9.js",
+    "tokyo/assets/lab-X7McqYcL.js",
+    "tokyo/assets/landing-DfZEUEhC.js",
+    "tokyo/assets/market-DnDxqrTc.css",
+    "tokyo/assets/market-l-6OeMtj.js",
+    "tokyo/assets/material-3lv29trB.js",
+    "tokyo/assets/notice-DnIsya3-.js",
+    "tokyo/assets/panel-D9zvhD2V.js",
+    "tokyo/assets/panel-DY3g4qQQ.css",
+    "tokyo/assets/peopleWorker-Cn7UVw8F.js",
+    "tokyo/assets/phone-BvNRaOR5.js",
+    "tokyo/assets/pose-hAXyTQQR.js",
+    "tokyo/assets/postfx-Beafm2Vo.js",
+    "tokyo/assets/prefs-BioZODFl.js",
+    "tokyo/assets/profile-BmQKTAov.js",
+    "tokyo/assets/profile-OY6SPQJJ.css",
+    "tokyo/assets/recovery-CHWBNwD3.js",
+    "tokyo/assets/region-tokyo-BcM3fReU.js",
+    "tokyo/assets/region-tokyo-audioWorker-GAP5c6S0.js",
+    "tokyo/assets/region-tokyo-bodyWorker-CtngWad2.js",
+    "tokyo/assets/region-tokyo-d-akihabara-BJsB2qLX.js",
+    "tokyo/assets/region-tokyo-d-ameyoko-MDbcAvKx.js",
+    "tokyo/assets/region-tokyo-d-ginza-B8PkMMHp.js",
+    "tokyo/assets/region-tokyo-d-kanda-CYJun2NB.js",
+    "tokyo/assets/region-tokyo-d-marunouchi-BoijeA75.js",
+    "tokyo/assets/region-tokyo-d-nihonbashi-DhEI_3CD.js",
+    "tokyo/assets/region-tokyo-d-shared-Cox87eLC.js",
+    "tokyo/assets/region-tokyo-d-shimbashi-CU0USnvn.js",
+    "tokyo/assets/region-tokyo-d-ueno-CEorO8m2.js",
+    "tokyo/assets/region-tokyo-interiorsWorker-CQjw7WYB.js",
+    "tokyo/assets/region-tokyo-sans-jp-hyLDYRy3.woff2",
+    "tokyo/assets/region-tokyo-site-akiba-denshi-center-AnKWMTRu.js",
+    "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-BZiDEQwf.js",
+    "tokyo/assets/region-tokyo-site-denpa-kaikan-CfqObs2p.js",
+    "tokyo/assets/region-tokyo-site-enrai-yu-CbrURW05.js",
+    "tokyo/assets/region-tokyo-site-espark-ueno-WLKqmaWy.js",
+    "tokyo/assets/region-tokyo-site-kanda-gado-B73p26Wi.js",
+    "tokyo/assets/region-tokyo-site-karasumori-jinja-ug8EhSbJ.js",
+    "tokyo/assets/region-tokyo-site-namiyoke-jinja-u3VcLqDU.js",
+    "tokyo/assets/region-tokyo-site-new-karasumori-bldg-YocW0Jbw.js",
+    "tokyo/assets/region-tokyo-site-nishiginza-lucky-CBTbuSQh.js",
+    "tokyo/assets/region-tokyo-site-okachimachi-hoseki-BNQtKGe4.js",
+    "tokyo/assets/region-tokyo-site-shimizu-shoten-CjSOYUYc.js",
+    "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-COiN77rV.js",
+    "tokyo/assets/region-tokyo-site-yamashitaya-ueno-wZAufeba.js",
+    "tokyo/assets/region-tokyo-site-yurakucho-gado-Bh7OarCf.js",
+    "tokyo/assets/region-tokyo-sites-kit-X3MRd0jr.js",
+    "tokyo/assets/rig-BjRdQXtM.js",
+    "tokyo/assets/rolldown-runtime-DK3Fl9T5.js",
+    "tokyo/assets/scene-MReEd7Ml.js",
+    "tokyo/assets/session-CLv8PYlR.js",
+    "tokyo/assets/shared-DcD5mkpI.js",
+    "tokyo/assets/signs-CcdyXn0R.js",
+    "tokyo/assets/sites-kit-BhplXgcu.js",
+    "tokyo/assets/tabs-C1IhIOn4.js",
+    "tokyo/assets/text-0MpKmkwJ.js",
+    "tokyo/assets/three-CC5Mkdpe.js",
+    "tokyo/assets/tokyo-BZXVhKTn.js",
+    "tokyo/assets/tokyo-CchLQfwP.css",
+    "tokyo/assets/ui-Bz5oqxsZ.js",
+    "tokyo/assets/worker-DuEI-Qg4.js",
+    "tokyo/assets/world-Bo9wkXrT.js",
+    "tokyo/icons/apple-touch-icon.png",
+    "tokyo/icons/favicon-32.png",
+    "tokyo/icons/icon-192.png",
+    "tokyo/icons/icon-512.png",
+    "tokyo/icons/icon-maskable-512.png",
+    "tokyo/icons/icon.svg",
+    "tokyo/index.html",
+    "tokyo/manifest.webmanifest",
+    "tokyo/title/loader-1600.webp",
+    "tokyo/title/loader-2560.webp",
+    "tokyo/title/loader-portrait.webp",
+    "tokyo/title/menu-1600.webp"
+  ],
+  "unresolved": [
+    {
+      "status": 404,
+      "path": "akiba.junk.bin",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "basis_transcoder.js",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "basis_transcoder.wasm",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "culture.park.map",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "menu-phone.webp",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "sf-keyart-phone.webp",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "src/ui/tools/splash.mjs",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/akiba.junk.bin",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/akiba.junk.bin",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/basis_transcoder.js",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/basis_transcoder.wasm",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/culture.park.map",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/menu-phone.webp",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/sf-keyart-phone.webp",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/assets/ueno.park.map",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/basis_transcoder.js",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/basis_transcoder.wasm",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/culture.park.map",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/menu-phone.webp",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/scripts/keyart.mjs",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/sf-keyart-phone.webp",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/src/ui/tools/splash.mjs",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/tokyo/scripts/keyart.mjs",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "tokyo/ueno.park.map",
+      "probes": 1
+    },
+    {
+      "status": 404,
+      "path": "ueno.park.map",
+      "probes": 1
+    }
+  ],
+  "unreachable": [],
+  "external": [
+    "https://challenges.cloudflare.com/turnstile/v0/api.js",
+    "https://va.vercel-scripts.com/v1/script.debug.js"
+  ]
+}
