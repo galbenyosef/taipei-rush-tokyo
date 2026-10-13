@@ -1,0 +1,185 @@
+// tokyo__assets__region-tokyo-BcM3fReU 241 — pri
+// Lines 96708-96890 of readable/tokyo__assets__region-tokyo-BcM3fReU.pretty.js (statement-aligned).
+function X$(e, t) {
+  let n = parseInt(t, 10);
+  return o$[(Y$(e) + (Number.isFinite(n) ? n % 2 : 0)) % o$.length];
+}
+var Z$ = (e, t) => {
+    if (!oc(e)) return { ja: ``, zh: e, en: e };
+    let n = ac(e, t);
+    return { ja: t ? ic(e, t) : rc(e).ja, zh: n.zh, en: n.en };
+  },
+  Q$ = (e) => ({
+    bus: `sfx`,
+    gain: 0.8,
+    ref: 5,
+    max: 120,
+    pri: 5,
+    send: 0.12,
+    jitter: 0.03,
+    dedupe: 0.03,
+    ...e,
+  });
+function $$() {
+  Object.assign(Ir, {
+    bike_bell: Q$({
+      gain: 0.7,
+      ref: 3,
+      max: 50,
+      pri: 5,
+      send: 0.08,
+      jitter: 0.02,
+      dedupe: 0.2,
+      recipe: `tk_bell`,
+    }),
+    level_crossing: Q$({
+      gain: 0.8,
+      ref: 8,
+      max: 220,
+      pri: 6,
+      send: 0.2,
+      jitter: 0,
+      dedupe: 0.3,
+      recipe: `tk_kankan`,
+    }),
+    dept_melody: Q$({
+      gain: 0.75,
+      ref: 14,
+      max: 280,
+      pri: 5,
+      send: 0.3,
+      jitter: 0,
+      dedupe: 1.5,
+      recipe: `tk_mel0`,
+    }),
+    tk_pa: Q$({
+      gain: 0.6,
+      ref: 14,
+      max: 160,
+      pri: 4,
+      send: 0.35,
+      jitter: 0,
+      dedupe: 3,
+    }),
+    tk_crow: Q$({
+      bus: `amb`,
+      gain: 0.4,
+      ref: 8,
+      max: 160,
+      pri: 1,
+      send: 0.12,
+      jitter: 0.05,
+      dedupe: 2,
+    }),
+    tk_suzu: Q$({
+      bus: `amb`,
+      gain: 0.55,
+      ref: 5,
+      max: 60,
+      pri: 2,
+      send: 0.12,
+      jitter: 0.02,
+      dedupe: 3,
+    }),
+    tk_siren_far: Q$({
+      bus: `amb`,
+      gain: 0.25,
+      flat: !0,
+      pri: 1,
+      send: 0,
+      jitter: 0.03,
+      dedupe: 5,
+    }),
+    tk_atc: Q$({
+      gain: 0.55,
+      flat: !0,
+      pri: 7,
+      send: 0.02,
+      jitter: 0,
+      dedupe: 0.15,
+    }),
+    tk_atcb: Q$({
+      gain: 0.6,
+      flat: !0,
+      pri: 7,
+      send: 0.02,
+      jitter: 0,
+      dedupe: 0.3,
+    }),
+    tk_buzz: Q$({
+      gain: 0.5,
+      flat: !0,
+      pri: 7,
+      send: 0.02,
+      jitter: 0,
+      dedupe: 0.5,
+    }),
+    tk_yuyake: Q$({
+      bus: `amb`,
+      gain: 0.55,
+      flat: !0,
+      pri: 6,
+      send: 0,
+      jitter: 0,
+      dedupe: 60,
+    }),
+    tk_hotaru: Q$({
+      bus: `amb`,
+      gain: 0.6,
+      ref: 12,
+      max: 90,
+      pri: 3,
+      send: 0.2,
+      jitter: 0,
+      dedupe: 60,
+    }),
+    tk_hyoshigi: Q$({
+      gain: 0.8,
+      ref: 8,
+      max: 120,
+      pri: 3,
+      send: 0.3,
+      jitter: 0.03,
+      dedupe: 1,
+    }),
+    store_chime: { ...Ir.store_chime, recipe: `tk_konbini` },
+    mrt_door_chime: { ...Ir.mrt_door_chime, recipe: `tk_door`, gain: 0.6 },
+    ev_start: { ...Ir.ev_start, recipe: `tk_bikestart` },
+  });
+  for (let e of Object.keys(a$)) yr.add(e);
+  for (let e of s$) xr.add(e);
+  (Object.assign(Sr, c$),
+    (wr.crossing_bell = {
+      bus: `sfx`,
+      ref: 10,
+      max: 220,
+      pri: 6,
+      send: 0.2,
+      doppler: 0,
+    }),
+    (wr.engine_pedal = {
+      bus: `sfx`,
+      ref: 2.5,
+      max: 35,
+      pri: 5,
+      send: 0.03,
+      doppler: 1,
+    }),
+    (jr.engine_pedal = (e) => new _$(e)),
+    (jr.crosswalk_signal = (e) => new p$(e)),
+    (jr.ambient_temple = (e) => new kr(e, [`amb/tk_shrine`], 0.7, !0)),
+    (jr.garbage_truck = (e) => new kr(e, [`amb/tk_packer`], 0.9, !0)),
+    (jr.crossing_bell = (e) => new kr(e, [`amb/tk_crossing`], 0.9, !1)),
+    (jr.ambient_park = (e) => new y$(e)));
+}
+var e1 = {
+  ginza: 1,
+  akihabara: 1,
+  ameyoko: 1,
+  marunouchi: 0.95,
+  shimbashi: 0.95,
+  nihonbashi: 0.9,
+  ueno: 0.9,
+  kanda: 0.85,
+  "tokyo-east-generic": 0.7,
+};

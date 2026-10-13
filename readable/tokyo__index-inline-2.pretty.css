@@ -1,0 +1,135 @@
+#loader .fl {
+  position: absolute;
+  left: 50%;
+  top: calc(env(safe-area-inset-top, 0px) + 9vh);
+  transform: translateX(-50%);
+  z-index: 3;
+  width: min(720px, 88vw);
+  padding: 14px 20px 16px;
+  background: rgba(8, 9, 13, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 3px solid #c8102e;
+  border-radius: 10px;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  font-family:
+    "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Heiti TC", system-ui,
+    sans-serif;
+  color: #f4f1ea;
+}
+#loader .fl-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font:
+    800 12px "Avenir Next Condensed",
+    "Bahnschrift",
+    "DIN Condensed",
+    "Roboto Condensed",
+    "Arial Narrow",
+    sans-serif;
+  letter-spacing: 0.2em;
+  color: #ff8a90;
+  text-transform: uppercase;
+}
+#loader .fl-top b {
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  padding: 2px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 3px;
+}
+#loader .fl-top span {
+  margin-left: auto;
+  color: #cfcac0;
+}
+#loader .fl-route {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+#loader .fl-ap {
+  min-width: 4.6em;
+}
+#loader .fl-ap.r {
+  text-align: right;
+}
+#loader .fl-ap b {
+  display: block;
+  font:
+    800 34px/1 "Avenir Next Condensed",
+    "Bahnschrift",
+    "DIN Condensed",
+    "Roboto Condensed",
+    "Arial Narrow",
+    sans-serif;
+  letter-spacing: 0.02em;
+}
+#loader .fl-ap small {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #d8d3c8;
+}
+#loader .fl-line {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.55) 0 6px,
+    transparent 6px 12px
+  );
+}
+#loader .fl-line i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--fp, 0) * 1%);
+  background: #fff;
+  transition: width 0.6s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+#loader .fl-line em {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--fp, 0) * 1%);
+  transform: translate(-50%, -55%);
+  font-style: normal;
+  font-size: 24px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 90, 98, 0.8);
+  transition: left 0.6s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+#loader .fl-eta {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #d8d3c8;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+#loader .fl-eta b {
+  color: #fff;
+}
+#loader.flight .ld-tip {
+  display: none;
+}
+@media (max-width: 700px) {
+  #loader .fl {
+    top: calc(env(safe-area-inset-top, 0px) + 4vh);
+    padding: 10px 14px 12px;
+  }
+  #loader .fl-ap b {
+    font-size: 26px;
+  }
+}
+#loader.rail .fl {
+  border-top-color: #f26a21;
+}
+#loader.rail .fl-line em {
+  text-shadow: 0 0 10px rgba(242, 106, 33, 0.8);
+}

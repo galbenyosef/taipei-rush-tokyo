@@ -1,0 +1,422 @@
+{
+  "note": "Browser Performance Resource Timing log captured from the served mirror while the game RAN (boot, prologue, kart races). Used to cross-check the static closure scan; it proved three things and is the session evidence for the capture gaps: (1) the programmatic /avatars/ family — manifest.json + basis/basis_transcoder.js|.wasm + the glb models — is really fetched at runtime (21 requests, all 200 here), invisible to the static scanner because the base is a variable (tr=\"/avatars/\"); (2) /tokyo/title/menu-2560.webp — requested by the runtime (2560w srcset on high-DPR screens) and 404ing locally in this log's first pass because the srcset-with-descriptors literal escaped the scanner; it was fetched and is in the final capture; (3) the two same-origin live-backend non-200s (_vercel/insights/view analytics beacon POST; the third-party Turnstile requests are off-origin and blocked). Paths are mirror-root-relative (the local server served the repo root, so /tokyo/... is the served sub-path).",
+  "capturedAt": "2026-10-13",
+  "servedFrom": "http://127.0.0.1:8781 (local static server, repo root)",
+  "entries": [
+    {
+      "path": "/_vercel/insights/script.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/_vercel/insights/view",
+      "type": "fetch",
+      "status": 404
+    },
+    {
+      "path": "/avatars/auntie.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/basis/basis_transcoder.js",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/basis/basis_transcoder.js",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/basis/basis_transcoder.js",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/basis/basis_transcoder.wasm",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/basis/basis_transcoder.wasm",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/basis/basis_transcoder.wasm",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/casual-f.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/casual-m.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/elder-f.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/elder-m.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/jie.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/manifest.json",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/office-f.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/office-m.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/office-m2.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/police.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/student-f.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/student-m.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/uncle.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/avatars/vendor.glb",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/_virtual_tokyo-ja-dict-BB6JHNEu.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/accounts-CpfgQQfK.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/actors-Bnj6Q1ad.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/analytics-B76dRwr5.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/anim-CQkLTvTS.bin",
+      "type": "fetch",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/animator-C4Q6-_Wy.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/api-tBXVzspF.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/audio-DzcbodvB.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/avatar-CbvrNwG6.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/boot-C6yF8B4X.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/characters-BvEb7Acx.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/charWorker-DPNUr-Eu.js",
+      "type": "other",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/cities-8-O8IWPJ.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/clips-B74kfFEX.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/controllers-mah1C7rD.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/coordinator-R8919moQ.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/dom-BCt0vy2n.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/dom-BIQnAwky.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/engine-BuS5QxN0.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/fullmap-CXrrUiBa.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/game-y-FF2uWA.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/icons-DYNV7fxr.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/ja-Ci9Qv_M-.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/landing-DfZEUEhC.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/notice-DnIsya3-.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/pose-hAXyTQQR.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/postfx-Beafm2Vo.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/prefs-BioZODFl.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/recovery-CHWBNwD3.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-BcM3fReU.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-bodyWorker-CtngWad2.js",
+      "type": "other",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-akihabara-BJsB2qLX.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-ameyoko-MDbcAvKx.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-ginza-B8PkMMHp.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-kanda-CYJun2NB.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-marunouchi-BoijeA75.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-nihonbashi-DhEI_3CD.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-shared-Cox87eLC.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-shimbashi-CU0USnvn.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/region-tokyo-d-ueno-CEorO8m2.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/rig-BjRdQXtM.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/rolldown-runtime-DK3Fl9T5.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/session-CLv8PYlR.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/shared-DcD5mkpI.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/tabs-C1IhIOn4.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/text-0MpKmkwJ.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/three-CC5Mkdpe.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/tokyo-BZXVhKTn.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/tokyo-CchLQfwP.css",
+      "type": "link",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/ui-Bz5oqxsZ.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/worker-DuEI-Qg4.js",
+      "type": "other",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/assets/world-Bo9wkXrT.js",
+      "type": "script",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/icons/apple-touch-icon.png",
+      "type": "other",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/icons/icon.svg",
+      "type": "other",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/manifest.webmanifest",
+      "type": "link",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/title/loader-2560.webp",
+      "type": "img",
+      "status": 200
+    },
+    {
+      "path": "/tokyo/title/menu-2560.webp",
+      "type": "img",
+      "status": 404
+    },
+    {
+      "path": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/2fjqi/0x4AAAAAAFPvFluW05hu9g3O/auto/fbE/new/normal?lang=auto",
+      "type": "iframe",
+      "status": 0
+    },
+    {
+      "path": "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit",
+      "type": "script",
+      "status": 0
+    },
+    {
+      "path": "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit",
+      "type": "other",
+      "status": 0
+    }
+  ]
+}
