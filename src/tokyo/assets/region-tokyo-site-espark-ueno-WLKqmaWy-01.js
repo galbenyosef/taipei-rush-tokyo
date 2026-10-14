@@ -1,0 +1,208 @@
+// tokyo/assets/region-tokyo-site-espark-ueno-WLKqmaWy 01 — key
+// Lines 1-206 of readable/tokyo/assets/region-tokyo-site-espark-ueno-WLKqmaWy.pretty.js (statement-aligned).
+import { t as e } from "./rolldown-runtime-DK3Fl9T5.js";
+import { l as t } from "./world-Bo9wkXrT.js";
+import { At as n, p as r, r as i } from "./region-tokyo-BcM3fReU.js";
+import { n as a } from "./sites-kit-BhplXgcu.js";
+import {
+  H as o,
+  I as s,
+  P as c,
+  R as l,
+  W as u,
+  Y as d,
+  l as f,
+  w as p,
+  y as m,
+  z as h,
+} from "./region-tokyo-sites-kit-X3MRd0jr.js";
+var g = e({ default: () => _ }),
+  _ = t({
+    state: (e) => +!!i(r.hours, e),
+    art: [
+      {
+        key: `tenants`,
+        w: 256,
+        h: 64,
+        paint: (e, t, r, i) =>
+          d(
+            e,
+            t,
+            r,
+            [1, 2, 3, 4, 5, 6, 7, 8].map((e) => n(`sites.tenant.${e}`)),
+            i,
+          ),
+      },
+      {
+        key: `name`,
+        w: 512,
+        h: 128,
+        legibility: 9,
+        paint: (e, t, r, i) =>
+          l(
+            e,
+            t,
+            r,
+            {
+              bg: `#b8101c`,
+              fg: `#ffe680`,
+              text: n(`sites.espark.name`),
+              style: `lightbox`,
+              border: `#f2c040`,
+              weight: 900,
+            },
+            i,
+          ),
+      },
+      {
+        key: `led`,
+        w: 512,
+        h: 64,
+        legibility: 3,
+        paint: (e, t, r, i) =>
+          u(
+            e,
+            t,
+            r,
+            { lines: [n(`sites.espark.led-1`), n(`sites.espark.led-2`)] },
+            i,
+          ),
+      },
+      {
+        key: `hall`,
+        w: 256,
+        h: 64,
+        paint: (e, t, n, r) => {
+          ((e.fillStyle = `#f4f6ff`), e.fillRect(0, 0, t, n));
+          for (let r = 0; r < 16; r++)
+            ((e.fillStyle = [`#ff4a6a`, `#3ac8ff`, `#ffd23a`, `#7aff6a`][
+              r % 4
+            ]),
+              e.fillRect((t / 16) * r + 2, n * 0.3, t / 16 - 4, n * 0.38),
+              (e.fillStyle = `#20202a`),
+              e.fillRect((t / 16) * r + 2, n * 0.68, t / 16 - 4, n * 0.32));
+        },
+      },
+      {
+        key: `nobori`,
+        w: 256,
+        h: 256,
+        paint: (e, t, r, i) =>
+          h(
+            e,
+            t,
+            r,
+            {
+              cols: 4,
+              rows: 1,
+              cells: [
+                {
+                  bg: `#c8161c`,
+                  fg: `#ffffff`,
+                  text: n(`sites.espark.nobori-1`),
+                  v: !0,
+                },
+                {
+                  bg: `#1a3a9a`,
+                  fg: `#ffe040`,
+                  text: n(`sites.espark.nobori-2`),
+                  v: !0,
+                },
+                {
+                  bg: `#f2d21e`,
+                  fg: `#c8161c`,
+                  text: n(`sites.espark.nobori-3`),
+                  v: !0,
+                },
+                {
+                  bg: `#ffffff`,
+                  fg: `#1a6a3a`,
+                  text: n(`sites.espark.nobori-4`),
+                  v: !0,
+                },
+              ],
+            },
+            i,
+          ),
+      },
+      {
+        key: `hanawa`,
+        w: 128,
+        h: 128,
+        paint: (e, t, r, i) =>
+          o(
+            e,
+            t,
+            r,
+            {
+              text: n(`sites.espark.hanawa`),
+              from: n(`sites.espark.hanawa-from`),
+            },
+            i,
+          ),
+      },
+      {
+        key: `age`,
+        w: 256,
+        h: 32,
+        paint: (e, t, r, i) =>
+          l(
+            e,
+            t,
+            r,
+            {
+              bg: `#ffffff`,
+              fg: `#c8161c`,
+              text: n(`sites.espark.age`),
+              style: `plain`,
+            },
+            i,
+          ),
+      },
+    ],
+    mid: s,
+    *near(e) {
+      let { w: t, d: n } = e.frame,
+        r = -n / 2,
+        i = e.state > 0;
+      c(e, { x0: -t / 2, z0: r, x1: t / 2, z1: r + 3.2 });
+      let o = yield* p(e, {
+        floors: 4,
+        groundH: 8.2,
+        floorH: 3.2,
+        wall: 13157564,
+        trim: 10131086,
+        windows: `band`,
+        recess: 0,
+        tenants: `tenants`,
+      });
+      (yield* f(e, {
+        x0: o.x0,
+        x1: o.x1,
+        z: r + 0.35,
+        h: 7.9,
+        name: `name`,
+        led: `led`,
+        hall: `hall`,
+        nobori: { key: `nobori`, cols: 4, rows: 1, n: 8 },
+        hanawa: { key: `hanawa`, n: 6 },
+        open: i,
+        grand: e.state === 2,
+        kerb: r - Math.max(1.2, e.frame.sidewalk - 0.6),
+        body: 1710628,
+        trim: 13674552,
+      }),
+        e.art.tex(e.atlas.r(`age`), 16777215, 0),
+        e.art.rectZ(o.x1 - 3.2, 1.2, o.x1 - 0.7, 1.5, r + 0.13, -1),
+        e.lm.setPaint(m(2763312, 0.4, 0.4)),
+        e.lm.box(o.x0 + 0.5, 7.9, r + 0.4, o.x1 - 0.5, 8.2, r + 0.7),
+        i &&
+          a(e, {
+            x: -2,
+            z: r - 0.8,
+            rot: 0,
+            pose: `stand`,
+            palette: `worker`,
+          }));
+    },
+  });
