@@ -1,6 +1,6 @@
 // tokyo/assets/dom-BCt0vy2n 01 — last
 // Lines 1-97 of readable/tokyo/assets/dom-BCt0vy2n.pretty.js (statement-aligned).
-function e(e, t, n, r) {
+function createEl(e, t, n, r) {
   let i = document.createElement(e);
   return (
     t && (i.className = t),
@@ -9,7 +9,7 @@ function e(e, t, n, r) {
     i
   );
 }
-var t = class {
+var TextBinding = class {
     el;
     last = null;
     node = null;
@@ -30,7 +30,7 @@ var t = class {
       return this.last ?? ``;
     }
   },
-  n = class {
+  ClassState = class {
     el;
     cls;
     state = null;
@@ -45,7 +45,7 @@ var t = class {
       return !!this.state;
     }
   },
-  r = class {
+  StylePropBinding = class {
     el;
     prop;
     last = null;
@@ -57,11 +57,11 @@ var t = class {
         ((this.last = e), this.el.style.setProperty(this.prop, e));
     }
   };
-function i(e, t) {
+function retriggerAnim(e, t) {
   (e.classList.remove(t), e.offsetWidth, e.classList.add(t));
 }
-var a = (e) => Math.round(e).toLocaleString(`en-US`);
-function o(e) {
+var formatInt = (e) => Math.round(e).toLocaleString(`en-US`);
+function formatClock(e) {
   let t = Math.floor(((e % 24) + 24) % 24),
     n = Math.floor((e - Math.floor(e)) * 60);
   return `${t < 10 ? `0` : ``}${t}:${n < 10 ? `0` : ``}${n}`;
@@ -73,26 +73,26 @@ function s(e) {
     r = Math.floor(t % 60);
   return `${n}:${r < 10 ? `0` : ``}${r}`;
 }
-var c = null,
-  l = { top: 0, right: 0, bottom: 0, left: 0 };
-function u() {
-  c ||
-    ((c = document.createElement(`div`)),
-    (c.style.cssText = `position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)`),
-    document.body.appendChild(c));
-  let e = getComputedStyle(c);
+var safeAreaProbeEl = null,
+  safeAreaInsets = { top: 0, right: 0, bottom: 0, left: 0 };
+function readSafeAreaInsets() {
+  safeAreaProbeEl ||
+    ((safeAreaProbeEl = document.createElement(`div`)),
+    (safeAreaProbeEl.style.cssText = `position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)`),
+    document.body.appendChild(safeAreaProbeEl));
+  let e = getComputedStyle(safeAreaProbeEl);
   return (
-    (l.top = parseFloat(e.paddingTop) || 0),
-    (l.right = parseFloat(e.paddingRight) || 0),
-    (l.bottom = parseFloat(e.paddingBottom) || 0),
-    (l.left = parseFloat(e.paddingLeft) || 0),
-    l
+    (safeAreaInsets.top = parseFloat(e.paddingTop) || 0),
+    (safeAreaInsets.right = parseFloat(e.paddingRight) || 0),
+    (safeAreaInsets.bottom = parseFloat(e.paddingBottom) || 0),
+    (safeAreaInsets.left = parseFloat(e.paddingLeft) || 0),
+    safeAreaInsets
   );
 }
-function d(e) {
+function resetCanvasSize(e) {
   e && (e.width > 1 || e.height > 1) && (e.width = e.height = 1);
 }
-function f(e, t) {
+function capturePointer(e, t) {
   try {
     e.setPointerCapture(t);
   } catch {}

@@ -62,9 +62,9 @@ var BatchPlan = class {
       );
     }
   },
-  o = new n(),
-  s = new r(0, -1e3, 0),
-  c = new r(0.1, -999.9, 0.1),
+  scratchBox = new n(),
+  EMPTY_BOX_MIN = new r(0, -1e3, 0),
+  EMPTY_BOX_MAX = new r(0.1, -999.9, 0.1),
   PackBatch = class {
     mesh;
     pieces;
@@ -143,16 +143,16 @@ var BatchPlan = class {
       );
     }
     refreshBounds() {
-      ((this.dirty = !1), o.makeEmpty());
+      ((this.dirty = !1), scratchBox.makeEmpty());
       let t = 0;
       for (let e of this.pieces)
-        e.enabled && e.inRange && (o.union(e.box), t++);
-      ((this.visibleCount = t), t === 0 && o.set(s, c));
+        e.enabled && e.inRange && (scratchBox.union(e.box), t++);
+      ((this.visibleCount = t), t === 0 && scratchBox.set(EMPTY_BOX_MIN, EMPTY_BOX_MAX));
       let r = this.mesh;
       ((r.boundingBox ||= new n()),
         (r.boundingSphere ||= new e()),
-        r.boundingBox.copy(o),
-        o.getBoundingSphere(r.boundingSphere));
+        r.boundingBox.copy(scratchBox),
+        scratchBox.getBoundingSphere(r.boundingSphere));
       let i = r.geometry;
       ((i.boundingBox ||= new n()),
         (i.boundingSphere ||= new e()),

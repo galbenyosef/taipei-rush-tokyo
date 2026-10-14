@@ -2,7 +2,7 @@
 // Lines 1-225 of readable/tokyo/assets/scene-MReEd7Ml.pretty.js (statement-aligned).
 import { tr as e } from "./three-CC5Mkdpe.js";
 import { nn as t } from "./engine-BuS5QxN0.js";
-var n = `
+var FLIGHT_OVERLAY_CSS = `
 #flight-ov { position: fixed; inset: 0; z-index: 19; pointer-events: none; overflow: hidden; font-family: ${t}; color: #fff; }
 #flight-ov .fl-bar { position: absolute; left: 0; right: 0; height: 0; background: #000; transition: height .7s cubic-bezier(.3,.8,.3,1); }
 #flight-ov .fl-bar.top { top: 0; } #flight-ov .fl-bar.bot { bottom: 0; }
@@ -24,7 +24,7 @@ var n = `
 #flight-ov .fl-skip .pad { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #3fae49; font: 800 12px ${t}; letter-spacing: 0; }
 @media (max-width: 700px) { #flight-ov .fl-sub { display: none; } #flight-ov .fl-route { font-size: 14px; } }
 `;
-function r(e, t) {
+function widenFovNearGround(e, t) {
   if (t >= 1.3) return e;
   let n = Math.min(1, (1.3 - t) / 0.85);
   return Math.min(92, e * (1 + 0.45 * n));
@@ -56,7 +56,7 @@ var FlightScene = class {
     if (!document.getElementById(`flight-ov-css`)) {
       let e = document.createElement(`style`);
       ((e.id = `flight-ov-css`),
-        (e.textContent = n),
+        (e.textContent = FLIGHT_OVERLAY_CSS),
         document.head.appendChild(e));
     }
     let e = document.createElement(`div`);
@@ -165,7 +165,7 @@ var FlightScene = class {
       o.cameraRig.override(this.pos, this.look);
     } catch {}
     let s = o.camera,
-      c = r(a, s.aspect);
+      c = widenFovNearGround(a, s.aspect);
     Math.abs(s.fov - c) > 0.01 && ((s.fov = c), s.updateProjectionMatrix());
     let l = t.sound?.();
     if (l) {

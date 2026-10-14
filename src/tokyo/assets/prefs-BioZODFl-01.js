@@ -1,33 +1,33 @@
-// tokyo/assets/prefs-BioZODFl 01 — json
+// tokyo/assets/prefs-BioZODFl 01 — pendingwrites
 // Lines 1-33 of readable/tokyo/assets/prefs-BioZODFl.pretty.js (statement-aligned).
-var e = `tokyo-rush-ui`,
-  t = null;
+var STORAGE_KEY = `tokyo-rush-ui`,
+  pendingWrites = null;
 function n() {
   let n = {};
   try {
-    n = JSON.parse(localStorage.getItem(e) || `{}`);
+    n = JSON.parse(localStorage.getItem(STORAGE_KEY) || `{}`);
   } catch {}
-  return t ? { ...n, ...t } : n;
+  return pendingWrites ? { ...n, ...pendingWrites } : n;
 }
 function r(r) {
-  let i = t ? { ...t, ...r } : r;
-  t = null;
+  let i = pendingWrites ? { ...pendingWrites, ...r } : r;
+  pendingWrites = null;
   try {
-    localStorage.setItem(e, JSON.stringify({ ...n(), ...i }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...n(), ...i }));
   } catch {}
 }
 function i(e) {
-  let n = !t;
-  if (((t = { ...(t ?? {}), ...e }), !n)) return;
+  let n = !pendingWrites;
+  if (((pendingWrites = { ...(pendingWrites ?? {}), ...e }), !n)) return;
   let i = () => {
-      t && r({});
+      pendingWrites && r({});
     },
     a = globalThis.requestIdleCallback;
   (a ? a(i, { timeout: 1e3 }) : setTimeout(i, 250),
     typeof window < `u` &&
       window.addEventListener(`pagehide`, i, { once: !0 }));
 }
-function a() {
+function uiScale() {
   return typeof document < `u` &&
     document.body.classList.contains(`tr-is-touch`)
     ? 1.15

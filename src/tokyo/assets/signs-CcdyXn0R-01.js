@@ -1,4 +1,4 @@
-// tokyo/assets/signs-CcdyXn0R 01 — layer
+// tokyo/assets/signs-CcdyXn0R 01 — atlas_cols
 // Lines 1-126 of readable/tokyo/assets/signs-CcdyXn0R.pretty.js (statement-aligned).
 import {
   $t as e,
@@ -11,30 +11,30 @@ import {
 } from "./three-CC5Mkdpe.js";
 import { sn as s } from "./engine-BuS5QxN0.js";
 import "./world-Bo9wkXrT.js";
-var c = 128,
-  l = 4;
+var CELL_PX = 128,
+  ATLAS_COLS = 4;
 function cellTexels(e) {
   let t = e || 1;
   return t <= 0.5 ? 64 : t < 1 ? 96 : 128;
 }
-function d(e, t, n) {
+function allocAtlasRect(e, t, n) {
   for (let r = 0; ; r++) {
     r === e.length && e.push(new Uint8Array(16));
     let i = e[r];
-    for (let e = 0; e + n <= l; e++)
-      for (let a = 0; a + t <= l; a++) {
+    for (let e = 0; e + n <= ATLAS_COLS; e++)
+      for (let a = 0; a + t <= ATLAS_COLS; a++) {
         let o = !0;
         for (let r = e; r < e + n && o; r++)
-          for (let e = a; e < a + t; e++) i[r * l + e] && (o = !1);
+          for (let e = a; e < a + t; e++) i[r * ATLAS_COLS + e] && (o = !1);
         if (o) {
           for (let r = e; r < e + n; r++)
-            for (let e = a; e < a + t; e++) i[r * l + e] = 1;
+            for (let e = a; e < a + t; e++) i[r * ATLAS_COLS + e] = 1;
           return [r, a, e];
         }
       }
   }
 }
-var f = { layer: 0, u0: 0, v0: 0, u1: 1, v1: 1, aspect: 1 },
+var MISSING_RECT = { layer: 0, u0: 0, v0: 0, u1: 1, v1: 1, aspect: 1 },
   PackSigns = class PackSigns {
     rects = new Map();
     texture;
@@ -45,14 +45,14 @@ var f = { layer: 0, u0: 0, v0: 0, u1: 1, v1: 1, aspect: 1 },
         this.rects.get(e) ||
         (typeof console < `u` &&
           console.warn(`[pack-signs] missing sign '${e}'`),
-        f)
+        MISSING_RECT)
       );
     }
     static async create(f, m, h, g, _, v = 2) {
       let y = new PackSigns(),
         b = cellTexels(m),
-        x = b * l,
-        S = b / c,
+        x = b * ATLAS_COLS,
+        S = b / CELL_PX,
         C = Object.entries(f).map(([e, t]) => ({
           key: e,
           d: t,
@@ -62,15 +62,15 @@ var f = { layer: 0, u0: 0, v0: 0, u1: 1, v1: 1, aspect: 1 },
         }));
       C.sort((e, t) => t.d.cw * t.d.ch - e.d.cw * e.d.ch || t.d.cw - e.d.cw);
       let w = [];
-      for (let e of C) [e.layer, e.cx, e.cy] = d(w, e.d.cw, e.d.ch);
+      for (let e of C) [e.layer, e.cx, e.cy] = allocAtlasRect(w, e.d.cw, e.d.ch);
       let T = Math.max(1, w.length),
         E = new Uint8Array(x * x * 4 * T),
         [D, O] = s(x, x),
         k = performance.now();
       for (let { key: e, d: t, layer: n, cx: r, cy: i } of C) {
         performance.now() - k > v && (await g(), (k = performance.now()));
-        let a = t.cw * c,
-          o = t.ch * c,
+        let a = t.cw * CELL_PX,
+          o = t.ch * CELL_PX,
           s = t.cw * b,
           l = t.ch * b;
         (O.setTransform(S, 0, 0, S, 0, 0),

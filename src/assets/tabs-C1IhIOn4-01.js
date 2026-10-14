@@ -1,73 +1,73 @@
 // assets/tabs-C1IhIOn4 01 — promise
 // Lines 1-143 of readable/assets/tabs-C1IhIOn4.pretty.js (statement-aligned).
-var e = Math.random().toString(36).slice(2),
-  t,
-  n = new Set();
-function r() {
-  return t || typeof BroadcastChannel > `u`
-    ? t
-    : ((t = new BroadcastChannel(`taipei-gta-cloud`)),
-      t.unref?.(),
-      (t.onmessage = (e) => {
-        for (let t of n)
+var CLIENT_ID = Math.random().toString(36).slice(2),
+  cloudChannel,
+  channelListeners = new Set();
+function ensureChannel() {
+  return cloudChannel || typeof BroadcastChannel > `u`
+    ? cloudChannel
+    : ((cloudChannel = new BroadcastChannel(`taipei-gta-cloud`)),
+      cloudChannel.unref?.(),
+      (cloudChannel.onmessage = (e) => {
+        for (let t of channelListeners)
           try {
             t(e.data);
           } catch {}
       }),
-      t);
+      cloudChannel);
 }
-function i(e) {
+function subscribeChannel(e) {
   return (
-    r(),
-    n.add(e),
+    ensureChannel(),
+    channelListeners.add(e),
     () => {
-      n.delete(e);
+      channelListeners.delete(e);
     }
   );
 }
-function a() {
+function getLockManager() {
   return typeof navigator < `u` ? navigator.locks : void 0;
 }
-var o,
-  s,
-  c = (e) => `taipei-gta-play:${e}`;
-function l(e) {
-  let t = a();
+var releaseLock,
+  ownerCity,
+  playLockName = (e) => `taipei-gta-play:${e}`;
+function acquirePlayLock(e) {
+  let t = getLockManager();
   return t?.request
-    ? s === e
+    ? ownerCity === e
       ? Promise.resolve(`owner`)
       : new Promise((n) => {
-          t.request(c(e), { ifAvailable: !0 }, (t) => {
+          t.request(playLockName(e), { ifAvailable: !0 }, (t) => {
             if (!t) {
               n(`duplicate`);
               return;
             }
             return (
-              (s = e),
+              (ownerCity = e),
               n(`owner`),
               new Promise((e) => {
-                o = e;
+                releaseLock = e;
               })
             );
           }).catch(() => n(`unsupported`));
         })
     : Promise.resolve(`unsupported`);
 }
-function u(e) {
-  let t = a();
+function requestTakeover(e) {
+  let t = getLockManager();
   if (!t?.request) return Promise.resolve();
-  let n = () => r()?.postMessage({ type: `takeover`, city: e });
+  let n = () => ensureChannel()?.postMessage({ type: `takeover`, city: e });
   n();
   let i = setInterval(n, 1e3);
   return new Promise((n) => {
     t.request(
-      c(e),
+      playLockName(e),
       (t) => (
         clearInterval(i),
-        (s = t ? e : void 0),
+        (ownerCity = t ? e : void 0),
         n(),
         new Promise((e) => {
-          o = e;
+          releaseLock = e;
         })
       ),
     ).catch(() => {
@@ -75,36 +75,36 @@ function u(e) {
     });
   });
 }
-var d,
-  f = !1;
-function p(e) {
-  if (((d = e), f)) return;
-  f = !0;
+var takeoverHandler,
+  takeoverInstalled = !1;
+function installTakeoverHandler(e) {
+  if (((takeoverHandler = e), takeoverInstalled)) return;
+  takeoverInstalled = !0;
   let t = !1;
-  i((e) => {
+  subscribeChannel((e) => {
     e.type === `takeover` &&
-      e.city === s &&
+      e.city === ownerCity &&
       !t &&
-      d &&
+      takeoverHandler &&
       ((t = !0),
-      Promise.resolve(d())
+      Promise.resolve(takeoverHandler())
         .catch(() => {})
         .finally(() => {
           t = !1;
         }));
   });
 }
-var m = !1;
-function h() {
-  ((s = void 0), (m = !0), o?.(), (o = void 0));
+var released = !1;
+function releasePlayLock() {
+  ((ownerCity = void 0), (released = !0), releaseLock?.(), (releaseLock = void 0));
 }
-function g() {
-  return m;
+function isReleased() {
+  return released;
 }
-function _(t) {
-  let n = r();
+function broadcastFlush(t) {
+  let n = ensureChannel();
   if (!n) return Promise.resolve(!0);
-  let a = `${e}-${Date.now()}`,
+  let a = `${CLIENT_ID}-${Date.now()}`,
     o = new Set(),
     s = new Map();
   return new Promise((e) => {
@@ -118,7 +118,7 @@ function _(t) {
           [...o].every((e) => s.has(e)) &&
           l([...s.values()].every(Boolean));
       },
-      d = i((e) => {
+      d = subscribeChannel((e) => {
         (e.type === `flush-ack` && e.id === a && o.add(e.from),
           e.type === `flush-done` &&
             e.id === a &&
@@ -131,15 +131,15 @@ function _(t) {
     n.postMessage({ type: `flush`, id: a });
   });
 }
-function v(t) {
-  i((n) => {
+function respondToFlush(t) {
+  subscribeChannel((n) => {
     if (n.type !== `flush`) return;
-    let i = r();
-    (i?.postMessage({ type: `flush-ack`, id: n.id, from: e }),
+    let i = ensureChannel();
+    (i?.postMessage({ type: `flush-ack`, id: n.id, from: CLIENT_ID }),
       t()
         .catch(() => !1)
         .then((t) =>
-          i?.postMessage({ type: `flush-done`, id: n.id, from: e, ok: t }),
+          i?.postMessage({ type: `flush-done`, id: n.id, from: CLIENT_ID, ok: t }),
         ));
   });
 }

@@ -144,19 +144,19 @@ var Clip = class {
       return this.clips.has(e);
     }
   },
-  n = null,
+  packCache = null,
   DEFAULT_PACK_URL = new URL(`/tokyo/assets/anim-CQkLTvTS.bin`, `` + import.meta.url).href;
 function loadAnimLibrary(e = DEFAULT_PACK_URL) {
   return e === DEFAULT_PACK_URL
-    ? (n ||
-        ((n = fetch(e)
+    ? (packCache ||
+        ((packCache = fetch(e)
           .then((e) => {
             if (!e.ok) throw Error(`anim: clip pack ${e.status}`);
             return e.arrayBuffer();
           })
           .then((e) => new AnimLibrary(e))),
-        n.catch(() => (n = null))),
-      n)
+        packCache.catch(() => (packCache = null))),
+      packCache)
     : fetch(e)
         .then((e) => e.arrayBuffer())
         .then((e) => new AnimLibrary(e));

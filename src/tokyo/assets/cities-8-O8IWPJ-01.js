@@ -1,9 +1,9 @@
 // tokyo/assets/cities-8-O8IWPJ 01 — code
 // Lines 1-217 of readable/tokyo/assets/cities-8-O8IWPJ.pretty.js (statement-aligned).
-var e = [`tokyo`, `taipei`, `hong-kong`, `kaohsiung`],
-  t = (e) =>
+var CITY_IDS = [`tokyo`, `taipei`, `hong-kong`, `kaohsiung`],
+  isCityId = (e) =>
     e === `taipei` || e === `hong-kong` || e === `tokyo` || e === `kaohsiung`,
-  n = {
+  CURRENCIES = {
     TWD: {
       code: `TWD`,
       symbol: `NT$`,
@@ -15,11 +15,11 @@ var e = [`tokyo`, `taipei`, `hong-kong`, `kaohsiung`],
       name: { zh: `港幣`, en: `Hong Kong dollar` },
     },
   };
-n.JPY = { code: `JPY`, symbol: `¥`, name: { zh: `日圓`, en: `Japanese yen` } };
-function r(e, t) {
-  return `${n[t].symbol}${Math.round(e).toLocaleString(`en-US`)}`;
+CURRENCIES.JPY = { code: `JPY`, symbol: `¥`, name: { zh: `日圓`, en: `Japanese yen` } };
+function formatMoney(e, t) {
+  return `${CURRENCIES[t].symbol}${Math.round(e).toLocaleString(`en-US`)}`;
 }
-var i = {
+var CITIES = {
   taipei: {
     id: `taipei`,
     name: { zh: `臺北`, en: `Taipei` },
@@ -57,11 +57,11 @@ var i = {
     utc: 8,
   },
 };
-((i.taipei.hsr = {
+((CITIES.taipei.hsr = {
   code: `TPE`,
   name: { zh: `高鐵臺北站`, en: `HSR Taipei Station` },
 }),
-  (i.kaohsiung = {
+  (CITIES.kaohsiung = {
     id: `kaohsiung`,
     name: { zh: `高雄`, en: `Kaohsiung` },
     game: { zh: `高雄狂飆`, en: `Kaohsiung Rush` },
@@ -77,7 +77,7 @@ var i = {
     checkIn: { zh: `高鐵左營站 · 售票處`, en: `HSR Zuoying Station · Tickets` },
     utc: 8,
   }),
-  (i.tokyo = {
+  (CITIES.tokyo = {
     id: `tokyo`,
     name: { zh: `東京`, en: `Tokyo` },
     game: { zh: `東京狂飆`, en: `Tokyo Rush` },
@@ -95,15 +95,15 @@ var i = {
     },
     utc: 9,
   }));
-var a = { zh: `高鐵`, en: `HSR`, code: `HSR` },
-  o = (e) => (e?.mode === `hsr` ? `hsr` : `flight`),
-  s = (e) => (o(e) === `hsr` ? a : l);
-function c(e, t = `flight`) {
-  let n = i[e];
+var HSR_BRAND = { zh: `高鐵`, en: `HSR`, code: `HSR` },
+  transportModeOf = (e) => (e?.mode === `hsr` ? `hsr` : `flight`),
+  brandFor = (e) => (transportModeOf(e) === `hsr` ? HSR_BRAND : AIRLINE);
+function airportFor(e, t = `flight`) {
+  let n = CITIES[e];
   return t === `hsr` && n.hsr ? n.hsr : n.airport;
 }
-var l = { zh: `狂飆航空`, en: `RUSH AIR`, code: `RX` },
-  u = [
+var AIRLINE = { zh: `狂飆航空`, en: `RUSH AIR`, code: `RX` },
+  ROUTES = [
     {
       from: `taipei`,
       to: `hong-kong`,
@@ -129,7 +129,7 @@ var l = { zh: `狂飆航空`, en: `RUSH AIR`, code: `RX` },
       last: 1270,
     },
   ];
-(u.push(
+(ROUTES.push(
   {
     from: `taipei`,
     to: `kaohsiung`,
@@ -157,7 +157,7 @@ var l = { zh: `狂飆航空`, en: `RUSH AIR`, code: `RX` },
     last: 1350,
   },
 ),
-  u.push(
+  ROUTES.push(
     {
       from: `taipei`,
       to: `tokyo`,
@@ -183,18 +183,18 @@ var l = { zh: `狂飆航空`, en: `RUSH AIR`, code: `RX` },
       last: 1095,
     },
   ));
-function d(e, t) {
+function rateLine(e, t) {
   let r = { JPY: 1, TWD: 5, HKD: 20 },
     [i, a] = r[e] >= r[t] ? [e, t] : [t, e];
-  return `${n[i].symbol}1 = ${n[a].symbol}${r[i] / r[a]}`;
+  return `${CURRENCIES[i].symbol}1 = ${CURRENCIES[a].symbol}${r[i] / r[a]}`;
 }
-var f = (e) => (i[e]?.utc ?? 8) - 8;
-function p(e, t) {
-  return u.find((n) => n.from === e && n.to === t) ?? null;
+var utcOffsetFromTaipei = (e) => (CITIES[e]?.utc ?? 8) - 8;
+function findRoute(e, t) {
+  return ROUTES.find((n) => n.from === e && n.to === t) ?? null;
 }
-var m = (e) => (e === `taipei` ? `hong-kong` : `taipei`),
-  h = (t) => e.filter((e) => e !== t);
-function g(e, t, n = 1, r = e.close) {
+var counterpartCity = (e) => (e === `taipei` ? `hong-kong` : `taipei`),
+  otherCities = (t) => CITY_IDS.filter((e) => e !== t);
+function upcomingDepartures(e, t, n = 1, r = e.close) {
   let i = Math.floor((((t % 24) + 24) % 24) * 60) + r,
     s = [],
     c = Math.floor((e.last - e.first) / e.every) + 1,
@@ -206,14 +206,14 @@ function g(e, t, n = 1, r = e.close) {
         min: e.first + u * e.every,
         nextDay: d,
         flight:
-          o(e) === `hsr`
-            ? `${a.code} ${String(e.flightNo + 2 * u).padStart(4, `0`)}`
-            : `${l.code} ${e.flightNo + 2 * u}`,
+          transportModeOf(e) === `hsr`
+            ? `${HSR_BRAND.code} ${String(e.flightNo + 2 * u).padStart(4, `0`)}`
+            : `${AIRLINE.code} ${e.flightNo + 2 * u}`,
       }),
       u++);
   return s;
 }
-function _(e) {
+function formatHhMm(e) {
   let t = ((Math.round(e) % 1440) + 1440) % 1440;
   return `${String(Math.floor(t / 60)).padStart(2, `0`)}:${String(t % 60).padStart(2, `0`)}`;
 }

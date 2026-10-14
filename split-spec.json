@@ -9,12 +9,12 @@
     "css": "parser css, no plugins",
     "json": "parser json, no plugins (inline importmap blocks, if any)"
   },
-  "source": "readable/: 104 JS pretties (92 app chunk(s) sliced, 3 vendor wholeFile) + 11 CSS pretties (incl. 11 inline twin(s)); src/: 1187 statement-aligned slices across 92 app chunk(s) (served-path layout, <chunk>-NN.js); 84 skipped section(s); 23 wholeFile section(s); rename campaign: 28 app chunk(s) with recorded renames (90 name record(s), 92 indexed occurrence(s)) through rename-map.json; capture: 179 files under .upstream/manifest.json; inline scan: tokyo/index.html (11 inline content block(s)).",
+  "source": "readable/: 104 JS pretties (92 app chunk(s) sliced, 3 vendor wholeFile) + 11 CSS pretties (incl. 11 inline twin(s)); src/: 1187 statement-aligned slices across 92 app chunk(s) (served-path layout, <chunk>-NN.js); 84 skipped section(s); 23 wholeFile section(s); rename campaign: 37 app chunk(s) with recorded renames (243 name record(s), 325 indexed occurrence(s)) through rename-map.json; capture: 179 files under .upstream/manifest.json; inline scan: tokyo/index.html (11 inline content block(s)).",
   "rename": {
     "map": "rename-map.json",
-    "chunks": 28,
-    "names": 90,
-    "indexedOccurrences": 92,
+    "chunks": 37,
+    "names": 243,
+    "indexedOccurrences": 325,
     "note": "Semantic renames are recorded per slice in rename-map.json and re-applied on every re-cut. Vendor identifiers and public export names keep their served names (vendor/non-standalone rule)."
   },
   "inline": {
@@ -53,8 +53,21 @@
       "idempotent": true,
       "tag": "assets/dom-BCt0vy2n",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "createEl",
+        "t": "TextBinding",
+        "n": "ClassState",
+        "r": "StylePropBinding",
+        "i": "retriggerAnim",
+        "a": "formatInt",
+        "o": "formatClock",
+        "c": "safeAreaProbeEl",
+        "l": "safeAreaInsets",
+        "u": "readSafeAreaInsets",
+        "d": "resetCanvasSize",
+        "f": "capturePointer"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/assets/notice-DnIsya3-.pretty.js",
@@ -68,8 +81,10 @@
       "idempotent": true,
       "tag": "assets/notice-DnIsya3-",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "NOTICE_KEY"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/assets/pose-hAXyTQQR.pretty.js",
@@ -132,8 +147,28 @@
       "idempotent": true,
       "tag": "assets/tabs-C1IhIOn4",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "CLIENT_ID",
+        "t": "cloudChannel",
+        "n": "channelListeners",
+        "r": "ensureChannel",
+        "i": "subscribeChannel",
+        "a": "getLockManager",
+        "o": "releaseLock",
+        "s": "ownerCity",
+        "c": "playLockName",
+        "l": "acquirePlayLock",
+        "u": "requestTakeover",
+        "d": "takeoverHandler",
+        "f": "takeoverInstalled",
+        "p": "installTakeoverHandler",
+        "m": "released",
+        "h": "releasePlayLock",
+        "g": "isReleased",
+        "_": "broadcastFlush",
+        "v": "respondToFlush"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/_virtual_tokyo-ja-dict-BB6JHNEu.pretty.js",
@@ -361,7 +396,10 @@
       "slices": 1,
       "renameBindings": {
         "a": "BatchPlan",
-        "l": "PackBatch"
+        "l": "PackBatch",
+        "o": "scratchBox",
+        "s": "EMPTY_BOX_MIN",
+        "c": "EMPTY_BOX_MAX"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -457,8 +495,27 @@
       "idempotent": true,
       "tag": "tokyo/assets/cities-8-O8IWPJ",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "CITY_IDS",
+        "t": "isCityId",
+        "n": "CURRENCIES",
+        "r": "formatMoney",
+        "i": "CITIES",
+        "a": "HSR_BRAND",
+        "o": "transportModeOf",
+        "s": "brandFor",
+        "c": "airportFor",
+        "l": "AIRLINE",
+        "u": "ROUTES",
+        "d": "rateLine",
+        "f": "utcOffsetFromTaipei",
+        "p": "findRoute",
+        "m": "counterpartCity",
+        "h": "otherCities",
+        "g": "upcomingDepartures",
+        "_": "formatHhMm"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/client-NeGl0SRK.pretty.js",
@@ -494,7 +551,8 @@
         "e": "Clip",
         "i": "loadAnimLibrary",
         "r": "DEFAULT_PACK_URL",
-        "t": "AnimLibrary"
+        "t": "AnimLibrary",
+        "n": "packCache"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -531,7 +589,13 @@
         "R": "syncNow",
         "U": "deleteFlow",
         "W": "flushDeparture",
-        "z": "signOutFlow"
+        "z": "signOutFlow",
+        "A": "StartGate",
+        "j": "cloudSave",
+        "M": "game",
+        "N": "switchingIdentity",
+        "P": "delay",
+        "F": "identityKeyOf"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -547,8 +611,21 @@
       "idempotent": true,
       "tag": "tokyo/assets/dom-BCt0vy2n",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "createEl",
+        "t": "TextBinding",
+        "n": "ClassState",
+        "r": "StylePropBinding",
+        "i": "retriggerAnim",
+        "a": "formatInt",
+        "o": "formatClock",
+        "c": "safeAreaProbeEl",
+        "l": "safeAreaInsets",
+        "u": "readSafeAreaInsets",
+        "d": "resetCanvasSize",
+        "f": "capturePointer"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/dom-BIQnAwky.pretty.js",
@@ -732,8 +809,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/notice-DnIsya3-",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "NOTICE_KEY"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/panel-D9zvhD2V.pretty.js",
@@ -748,7 +827,11 @@
       "tag": "tokyo/assets/panel-D9zvhD2V",
       "slices": 1,
       "renameBindings": {
-        "l": "mountFeedbackPanel"
+        "l": "mountFeedbackPanel",
+        "a": "MAX_LENGTH",
+        "o": "collectClientInfo",
+        "s": "submitFeedback",
+        "c": "TEXT"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -829,8 +912,12 @@
       "idempotent": true,
       "tag": "tokyo/assets/prefs-BioZODFl",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "STORAGE_KEY",
+        "t": "pendingWrites",
+        "a": "uiScale"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/profile-BmQKTAov.pretty.js",
@@ -867,7 +954,12 @@
       "renameBindings": {
         "l": "hasPendingMarketTicket",
         "p": "resolveInBackground",
-        "u": "notifyMarketTicketChange"
+        "u": "notifyMarketTicketChange",
+        "o": "TICKET_KEY_PREFIX",
+        "s": "changeSubscribers",
+        "c": "readPendingTicket",
+        "d": "subscribeTicketChanges",
+        "f": "BACKOFF_SECONDS"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -1353,7 +1445,9 @@
       "tag": "tokyo/assets/scene-MReEd7Ml",
       "slices": 1,
       "renameBindings": {
-        "i": "FlightScene"
+        "i": "FlightScene",
+        "n": "FLIGHT_OVERLAY_CSS",
+        "r": "widenFovNearGround"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -1369,8 +1463,52 @@
       "idempotent": true,
       "tag": "tokyo/assets/session-CLv8PYlR",
       "slices": 2,
-      "renameBindings": {},
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "s": "turnstileScriptPromise",
+        "c": "isMenuOpen",
+        "l": "TurnstileDeferredError",
+        "u": "setMenuOpenCheck",
+        "d": "loadTurnstile",
+        "f": "runTurnstile",
+        "p": "authState",
+        "m": "authPromise",
+        "h": "REFRESH_MARGIN_S",
+        "g": "authGeneration",
+        "_": "signedOutFlag",
+        "v": "lastErrorWasDeferred",
+        "y": "wasDeferred",
+        "b": "sessionListeners",
+        "x": "accountListeners",
+        "S": "getAuthGeneration",
+        "C": "bumpAuthGeneration",
+        "w": "subscribeSession",
+        "T": "subscribeAccount",
+        "E": "notifyAccountChange",
+        "D": "emitSession",
+        "O": "storageHookInstalled",
+        "k": "installStorageSync",
+        "A": "refreshTimer",
+        "j": "refreshing",
+        "M": "refreshPromise",
+        "N": "scheduleRefresh",
+        "P": "suspendRefresh",
+        "F": "isLocalOnly",
+        "I": "signOutFlow",
+        "L": "currentSession",
+        "R": "completeSignIn",
+        "z": "isPlainObject",
+        "B": "parseSession",
+        "V": "SUPABASE_API_VERSION",
+        "H": "authFetch",
+        "U": "sessionFromAuthResponse",
+        "W": "DEAD_SESSION_ERRORS",
+        "G": "isDeadSessionResponse",
+        "K": "withAuthLock",
+        "q": "acceptAuthResponse",
+        "J": "refreshOrSignIn",
+        "Y": "ensureSession"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/shared-DcD5mkpI.pretty.js",
@@ -1401,7 +1539,11 @@
       "slices": 1,
       "renameBindings": {
         "p": "PackSigns",
-        "u": "cellTexels"
+        "u": "cellTexels",
+        "c": "CELL_PX",
+        "l": "ATLAS_COLS",
+        "d": "allocAtlasRect",
+        "f": "MISSING_RECT"
       },
       "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
@@ -1432,8 +1574,28 @@
       "idempotent": true,
       "tag": "tokyo/assets/tabs-C1IhIOn4",
       "slices": 1,
-      "renameBindings": {},
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "CLIENT_ID",
+        "t": "cloudChannel",
+        "n": "channelListeners",
+        "r": "ensureChannel",
+        "i": "subscribeChannel",
+        "a": "getLockManager",
+        "o": "releaseLock",
+        "s": "ownerCity",
+        "c": "playLockName",
+        "l": "acquirePlayLock",
+        "u": "requestTakeover",
+        "d": "takeoverHandler",
+        "f": "takeoverInstalled",
+        "p": "installTakeoverHandler",
+        "m": "released",
+        "h": "releasePlayLock",
+        "g": "isReleased",
+        "_": "broadcastFlush",
+        "v": "respondToFlush"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/text-0MpKmkwJ.pretty.js",
@@ -1926,7 +2088,7 @@
     {
       "file": "assets/dom-BCt0vy2n-01.js",
       "title": "assets/dom-BCt0vy2n 01 — last",
-      "desc": "Lines 1-97. Markers: last(7), math(7).",
+      "desc": "Lines 1-97. Markers: last(7), math(7). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 97,
       "sourceFile": "readable/assets/dom-BCt0vy2n.pretty.js"
@@ -1945,7 +2107,7 @@
     {
       "file": "assets/notice-DnIsya3--01.js",
       "title": "assets/notice-DnIsya3- 01 — detail",
-      "desc": "Lines 1-21. Markers: detail(4), notice(4).",
+      "desc": "Lines 1-21. Markers: detail(4), notice(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 21,
       "sourceFile": "readable/assets/notice-DnIsya3-.pretty.js"
@@ -2021,7 +2183,7 @@
     {
       "file": "assets/tabs-C1IhIOn4-01.js",
       "title": "assets/tabs-C1IhIOn4 01 — promise",
-      "desc": "Lines 1-143. Markers: promise(10), resolve(5).",
+      "desc": "Lines 1-143. Markers: promise(10), cloudchannel(7). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 143,
       "sourceFile": "readable/assets/tabs-C1IhIOn4.pretty.js"
@@ -4733,7 +4895,7 @@
     {
       "file": "tokyo/assets/cities-8-O8IWPJ-01.js",
       "title": "tokyo/assets/cities-8-O8IWPJ 01 — code",
-      "desc": "Lines 1-217. Markers: code(11), first(10).",
+      "desc": "Lines 1-217. Markers: code(11), first(10). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 217,
       "sourceFile": "readable/tokyo/assets/cities-8-O8IWPJ.pretty.js"
@@ -4841,7 +5003,7 @@
     {
       "file": "tokyo/assets/coordinator-R8919moQ-01.js",
       "title": "tokyo/assets/coordinator-R8919moQ 01 — state",
-      "desc": "Lines 1-255. Markers: state(18), promise(10). Range re-cut through the recorded semantic rename map.",
+      "desc": "Lines 1-255. Markers: state(18), game(12). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 255,
       "sourceFile": "readable/tokyo/assets/coordinator-R8919moQ.pretty.js"
@@ -4860,7 +5022,7 @@
     {
       "file": "tokyo/assets/dom-BCt0vy2n-01.js",
       "title": "tokyo/assets/dom-BCt0vy2n 01 — last",
-      "desc": "Lines 1-97. Markers: last(7), math(7).",
+      "desc": "Lines 1-97. Markers: last(7), math(7). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 97,
       "sourceFile": "readable/tokyo/assets/dom-BCt0vy2n.pretty.js"
@@ -5341,7 +5503,7 @@
     {
       "file": "tokyo/assets/notice-DnIsya3--01.js",
       "title": "tokyo/assets/notice-DnIsya3- 01 — detail",
-      "desc": "Lines 1-21. Markers: detail(4), notice(4).",
+      "desc": "Lines 1-21. Markers: detail(4), notice(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 21,
       "sourceFile": "readable/tokyo/assets/notice-DnIsya3-.pretty.js"
@@ -6027,8 +6189,8 @@
     },
     {
       "file": "tokyo/assets/prefs-BioZODFl-01.js",
-      "title": "tokyo/assets/prefs-BioZODFl 01 — json",
-      "desc": "Lines 1-33. Markers: json(2), localstorage(2).",
+      "title": "tokyo/assets/prefs-BioZODFl 01 — pendingwrites",
+      "desc": "Lines 1-33. Markers: pendingwrites(10), storage_key(3). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 33,
       "sourceFile": "readable/tokyo/assets/prefs-BioZODFl.pretty.js"
@@ -6073,8 +6235,8 @@
     },
     {
       "file": "tokyo/assets/recovery-CHWBNwD3-01.js",
-      "title": "tokyo/assets/recovery-CHWBNwD3 01 — buy",
-      "desc": "Lines 1-152. Markers: buy(4), haspendingmarketticket(4). Range re-cut through the recorded semantic rename map.",
+      "title": "tokyo/assets/recovery-CHWBNwD3 01 — readpendingticket",
+      "desc": "Lines 1-152. Markers: readpendingticket(5), buy(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 152,
       "sourceFile": "readable/tokyo/assets/recovery-CHWBNwD3.pretty.js"
@@ -10940,15 +11102,15 @@
     {
       "file": "tokyo/assets/session-CLv8PYlR-01.js",
       "title": "tokyo/assets/session-CLv8PYlR 01 — user",
-      "desc": "Lines 1-329. Markers: user(12), expires_at(9).",
+      "desc": "Lines 1-329. Markers: user(12), refreshtimer(10). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 329,
       "sourceFile": "readable/tokyo/assets/session-CLv8PYlR.pretty.js"
     },
     {
       "file": "tokyo/assets/session-CLv8PYlR-02.js",
-      "title": "tokyo/assets/session-CLv8PYlR 02 — refresh_token",
-      "desc": "Lines 330-400. Markers: refresh_token(4), status(4).",
+      "title": "tokyo/assets/session-CLv8PYlR 02 — authgeneration",
+      "desc": "Lines 330-400. Markers: authgeneration(7), authpromise(6). Range re-cut through the recorded semantic rename map.",
       "startLine": 330,
       "endLine": 400,
       "sourceFile": "readable/tokyo/assets/session-CLv8PYlR.pretty.js"
@@ -11033,8 +11195,8 @@
     },
     {
       "file": "tokyo/assets/signs-CcdyXn0R-01.js",
-      "title": "tokyo/assets/signs-CcdyXn0R 01 — layer",
-      "desc": "Lines 1-126. Markers: layer(5), now(3). Range re-cut through the recorded semantic rename map.",
+      "title": "tokyo/assets/signs-CcdyXn0R 01 — atlas_cols",
+      "desc": "Lines 1-126. Markers: atlas_cols(6), layer(5). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 126,
       "sourceFile": "readable/tokyo/assets/signs-CcdyXn0R.pretty.js"
@@ -11080,7 +11242,7 @@
     {
       "file": "tokyo/assets/tabs-C1IhIOn4-01.js",
       "title": "tokyo/assets/tabs-C1IhIOn4 01 — promise",
-      "desc": "Lines 1-143. Markers: promise(10), resolve(5).",
+      "desc": "Lines 1-143. Markers: promise(10), cloudchannel(7). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 143,
       "sourceFile": "readable/tokyo/assets/tabs-C1IhIOn4.pretty.js"

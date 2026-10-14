@@ -54,7 +54,7 @@ import {
 } from "./controllers-mah1C7rD.js";
 import { h as C, o as w } from "./accounts-CpfgQQfK.js";
 import { a as T, i as E, o as D, r as O, t as k } from "./tabs-C1IhIOn4.js";
-var A = class {
+var StartGate = class {
     host;
     started = !1;
     pending = !1;
@@ -78,15 +78,15 @@ var A = class {
       }
     }
   },
-  j,
-  M,
-  N = !1,
-  P = (e) => new Promise((t) => setTimeout(t, e)),
-  F = (e) => (e && e.anonymous === !1 ? e.user_id : `guest`);
+  cloudSave,
+  game,
+  switchingIdentity = !1,
+  delay = (e) => new Promise((t) => setTimeout(t, e)),
+  identityKeyOf = (e) => (e && e.anonymous === !1 ? e.user_id : `guest`);
 function installCloud(n) {
-  if (j) return j;
-  ((M = n), t());
-  let r = (j = S());
+  if (cloudSave) return cloudSave;
+  ((game = n), t());
+  let r = (cloudSave = S());
   r.setPorts({
     apply: (e, t = !0) => {
       if (!n.state.restoreSave(e)) throw Error(`Local storage unavailable`);
@@ -98,7 +98,7 @@ function installCloud(n) {
     !!document.querySelector(`dialog.cloud-overlay[open]`) ||
     [`main`, `phone`, `pause`].includes(n.ui.menuOpen ?? ``);
   f(a);
-  let c = new A({
+  let c = new StartGate({
     playTime: () => n.state.totalPlayTime,
     stored: () => m() !== null,
     menu: a,
@@ -109,8 +109,8 @@ function installCloud(n) {
     return ((n.state.resetting = !0), n.setPaused(!0), r);
   let l = ``,
     u = (e, t) => {
-      if (N) return;
-      let i = F(e);
+      if (switchingIdentity) return;
+      let i = identityKeyOf(e);
       if (o() !== i) {
         L(n, r, i, e, t);
         return;
@@ -169,7 +169,7 @@ function installCloud(n) {
         n.setPaused(!0),
         await Promise.race([
           Promise.all([r.flushNow(3e3), v().flushNow(3e3)]),
-          P(3500),
+          delay(3500),
         ]),
         r.disconnect(),
         v().disconnect(),
@@ -199,7 +199,7 @@ function L(e, t, n, a, l) {
     return;
   }
   (b(n),
-    (N = !0),
+    (switchingIdentity = !0),
     l === `signout`
       ? u(`signed_out`)
       : l === `expired`
@@ -215,9 +215,9 @@ function L(e, t, n, a, l) {
     location.reload());
 }
 async function syncNow(e = 1e4) {
-  if (!j) return !1;
-  M && !M.state.resetting && M.state.saveNow();
-  let [t, n] = await Promise.all([j.flushNow(e), v().flushNow(e)]);
+  if (!cloudSave) return !1;
+  game && !game.state.resetting && game.state.saveNow();
+  let [t, n] = await Promise.all([cloudSave.flushNow(e), v().flushNow(e)]);
   return t && n;
 }
 async function signOutFlow(e = !1) {
@@ -230,13 +230,13 @@ async function signOutFlow(e = !1) {
 var B = !1,
   V = !1;
 async function leaveForGoogle() {
-  (M && !M.state.resetting && M.state.saveNow(),
-    await Promise.race([syncNow(4e3), P(4500)]),
-    M && (M.state.resetting = !0),
+  (game && !game.state.resetting && game.state.saveNow(),
+    await Promise.race([syncNow(4e3), delay(4500)]),
+    game && (game.state.resetting = !0),
     a(),
     V ||
       window.addEventListener(`pageshow`, (e) => {
-        e.persisted && B && M && ((M.state.resetting = !1), (B = !1));
+        e.persisted && B && game && ((game.state.resetting = !1), (B = !1));
       }),
     (V = !0),
     (B = !0));
@@ -250,7 +250,7 @@ async function deleteFlow(e) {
 }
 async function flushDeparture() {
   (await Promise.race([
-    Promise.all([j?.flushForNavigation(), x()]),
+    Promise.all([cloudSave?.flushForNavigation(), x()]),
     new Promise((e) => setTimeout(e, 3e3)),
   ]),
     await p());

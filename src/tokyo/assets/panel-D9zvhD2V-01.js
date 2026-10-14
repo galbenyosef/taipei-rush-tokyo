@@ -4,8 +4,8 @@ import { t as e } from "./ja-Ci9Qv_M-.js";
 import { $n as t } from "./engine-BuS5QxN0.js";
 import { i as n } from "./game-y-FF2uWA.js";
 import { i as r, o as i } from "./session-CLv8PYlR.js";
-var a = 1e3;
-function o() {
+var MAX_LENGTH = 1e3;
+function collectClientInfo() {
   let e = ``;
   try {
     e = (location.pathname + location.search).slice(0, 200);
@@ -20,12 +20,12 @@ function o() {
   } catch {}
   return { page: e, client: t };
 }
-async function s(e) {
+async function submitFeedback(e) {
   try {
     let a = r(),
       s = a && a.expires_at > Date.now() / 1e3 + 60 ? a : await i(!0);
     if (!s) return { status: `no_session` };
-    let { page: c, client: l } = o(),
+    let { page: c, client: l } = collectClientInfo(),
       u = await fetch(`${t.url}/rest/v1/rpc/submit_feedback`, {
         method: `POST`,
         headers: {
@@ -50,7 +50,7 @@ async function s(e) {
     return { status: `unavailable` };
   }
 }
-var c = {
+var TEXT = {
   heading: { zh: `意見回饋`, en: `Feedback` },
   copy: {
     zh: `遇到 bug、卡住了，或有想法？寫給開發團隊，每一則我們都會看。`,
@@ -70,9 +70,9 @@ var c = {
   empty: { zh: `請先寫點內容。`, en: `Please write something first.` },
   tooLong: {
     zh: e.on
-      ? e.t(`最多 ${a} 個字。`, `最大 ${a} 文字です。`)
-      : `最多 ${a} 個字。`,
-    en: `${a} characters at most.`,
+      ? e.t(`最多 ${MAX_LENGTH} 個字。`, `最大 ${MAX_LENGTH} 文字です。`)
+      : `最多 ${MAX_LENGTH} 個字。`,
+    en: `${MAX_LENGTH} characters at most.`,
   },
   offline: {
     zh: `目前連不上伺服器，請稍後再試。你的文字還在。`,
@@ -95,7 +95,7 @@ function mountFeedbackPanel(t, n) {
   i.className = `fb-copy`;
   let o = document.createElement(`textarea`);
   ((o.className = `fb-field`),
-    (o.maxLength = a),
+    (o.maxLength = MAX_LENGTH),
     (o.rows = 5),
     (o.dataset.nav = `1`));
   let l = document.createElement(`div`);
@@ -117,26 +117,26 @@ function mountFeedbackPanel(t, n) {
     h = null,
     g = `ok`,
     _ = () => {
-      ((r.textContent = n.t(c.heading)),
-        (i.textContent = n.t(c.copy)),
-        (o.placeholder = n.t(c.placeholder)),
-        o.setAttribute(`aria-label`, n.t(c.heading)),
-        (d.textContent = n.t(c.note)),
-        (u.textContent = `${o.value.length} / ${a}`),
+      ((r.textContent = n.t(TEXT.heading)),
+        (i.textContent = n.t(TEXT.copy)),
+        (o.placeholder = n.t(TEXT.placeholder)),
+        o.setAttribute(`aria-label`, n.t(TEXT.heading)),
+        (d.textContent = n.t(TEXT.note)),
+        (u.textContent = `${o.value.length} / ${MAX_LENGTH}`),
         (f.textContent = h ? n.t(h) : ``),
         (f.dataset.kind = g),
-        (p.textContent = n.t(m ? c.sending : c.send)),
+        (p.textContent = n.t(m ? TEXT.sending : TEXT.send)),
         (p.disabled = m || !o.value.trim()),
         p.setAttribute(`aria-busy`, String(m)));
     },
     v = (t) => {
       switch (t.status) {
         case `ok`:
-          return c.ok;
+          return TEXT.ok;
         case `empty_message`:
-          return c.empty;
+          return TEXT.empty;
         case `message_too_long`:
-          return c.tooLong;
+          return TEXT.tooLong;
         case `rate_limited`: {
           let n = Math.max(1, Math.ceil((t.retry_after_s ?? 60) / 60));
           return n > 60
@@ -155,11 +155,11 @@ function mountFeedbackPanel(t, n) {
               };
         }
         case `no_session`:
-          return c.noSession;
+          return TEXT.noSession;
         case `unavailable`:
-          return c.offline;
+          return TEXT.offline;
         default:
-          return c.unavailable;
+          return TEXT.unavailable;
       }
     };
   (o.addEventListener(`input`, () => {
@@ -169,7 +169,7 @@ function mountFeedbackPanel(t, n) {
       let e = o.value.trim();
       if (m || !e) return;
       ((m = !0), (h = null), _());
-      let t = await s(e);
+      let t = await submitFeedback(e);
       ((m = !1),
         (h = v(t)),
         (g = t.status === `ok` ? `ok` : `error`),

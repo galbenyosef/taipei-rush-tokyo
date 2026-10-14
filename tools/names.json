@@ -109,14 +109,20 @@
     }
   },
   "tokyo/assets/batch-CN-kL9Gb.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "instanced batch builder (curated): geometry/instance plan -> BatchedMesh pack with per-piece cull bounds",
     "renames": {
       "a": "BatchPlan",
-      "l": "PackBatch"
+      "l": "PackBatch",
+      "o": "scratchBox",
+      "s": "EMPTY_BOX_MIN",
+      "c": "EMPTY_BOX_MAX"
     },
     "evidence": {
       "a": "own export table: local `a` is exported as `BatchPlan`",
-      "l": "own export table: local `l` is exported as `PackBatch`"
+      "l": "own export table: local `l` is exported as `PackBatch`",
+      "o": "curated: reused Box3 for the pack bounds",
+      "s": "curated: degenerate empty-box minimum (0,-1000,0)",
+      "c": "curated: degenerate empty-box maximum (0.1,-999.9,0.1)"
     }
   },
   "tokyo/assets/board-CFkVQWI7.js": {
@@ -151,29 +157,37 @@
     }
   },
   "tokyo/assets/clips-B74kfFEX.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "animation clip library (curated): ANM1 pack parse + 19-bone quaternion/root/contact sampling",
     "renames": {
       "e": "Clip",
       "i": "loadAnimLibrary",
       "r": "DEFAULT_PACK_URL",
-      "t": "AnimLibrary"
+      "t": "AnimLibrary",
+      "n": "packCache"
     },
     "evidence": {
       "e": "own export table: local `e` is exported as `Clip`",
       "i": "own export table: local `i` is exported as `loadAnimLibrary`",
       "r": "own export table: local `r` is exported as `DEFAULT_PACK_URL`",
-      "t": "own export table: local `t` is exported as `AnimLibrary`"
+      "t": "own export table: local `t` is exported as `AnimLibrary`",
+      "n": "curated: cached default-pack promise"
     }
   },
   "tokyo/assets/coordinator-R8919moQ.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "cloud-save coordinator (curated): installs the save/account/tab machinery around the game instance",
     "renames": {
       "H": "leaveForGoogle",
       "I": "installCloud",
       "R": "syncNow",
       "U": "deleteFlow",
       "W": "flushDeparture",
-      "z": "signOutFlow"
+      "z": "signOutFlow",
+      "A": "StartGate",
+      "j": "cloudSave",
+      "M": "game",
+      "N": "switchingIdentity",
+      "P": "delay",
+      "F": "identityKeyOf"
     },
     "evidence": {
       "H": "own export table: local `H` is exported as `leaveForGoogle`",
@@ -181,7 +195,13 @@
       "R": "own export table: local `R` is exported as `syncNow`",
       "U": "own export table: local `U` is exported as `deleteFlow`",
       "W": "own export table: local `W` is exported as `flushDeparture`",
-      "z": "own export table: local `z` is exported as `signOutFlow`"
+      "z": "own export table: local `z` is exported as `signOutFlow`",
+      "A": "curated: waits for play time / stored save before starting",
+      "j": "curated: installed cloud save controller",
+      "M": "curated: the game host instance",
+      "N": "curated: identity switch in flight",
+      "P": "curated: promise delay helper",
+      "F": "curated: session -> user_id|guest identity key"
     }
   },
   "tokyo/assets/fullmap-CXrrUiBa.js": {
@@ -255,12 +275,20 @@
     }
   },
   "tokyo/assets/panel-D9zvhD2V.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "feedback panel (curated): Supabase RPC submit_feedback + zh/en copy",
     "renames": {
-      "l": "mountFeedbackPanel"
+      "l": "mountFeedbackPanel",
+      "a": "MAX_LENGTH",
+      "o": "collectClientInfo",
+      "s": "submitFeedback",
+      "c": "TEXT"
     },
     "evidence": {
-      "l": "own export table: local `l` is exported as `mountFeedbackPanel`"
+      "l": "own export table: local `l` is exported as `mountFeedbackPanel`",
+      "a": "curated: message length limit (1000)",
+      "o": "curated: collects page + user agent/size info",
+      "s": "curated: submits the feedback message",
+      "c": "curated: zh/en UI copy"
     }
   },
   "tokyo/assets/phone-BvNRaOR5.js": {
@@ -294,16 +322,26 @@
     }
   },
   "tokyo/assets/recovery-CHWBNwD3.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "market-order ticket recovery (curated): localStorage ticket polled with backoff, resolved through the market client",
     "renames": {
       "l": "hasPendingMarketTicket",
       "p": "resolveInBackground",
-      "u": "notifyMarketTicketChange"
+      "u": "notifyMarketTicketChange",
+      "o": "TICKET_KEY_PREFIX",
+      "s": "changeSubscribers",
+      "c": "readPendingTicket",
+      "d": "subscribeTicketChanges",
+      "f": "BACKOFF_SECONDS"
     },
     "evidence": {
       "l": "own export table: local `l` is exported as `hasPendingMarketTicket`",
       "p": "own export table: local `p` is exported as `resolveInBackground`",
-      "u": "own export table: local `u` is exported as `notifyMarketTicketChange`"
+      "u": "own export table: local `u` is exported as `notifyMarketTicketChange`",
+      "o": "curated: key prefix 'taipei-rush-market-ticket-v3:'",
+      "s": "curated: subscriber set notified on ticket change",
+      "c": "curated: reads the stored ticket for the current session user",
+      "d": "curated: subscribes to ticket changes (storage event + session poll)",
+      "f": "curated: retry backoff schedule in seconds"
     }
   },
   "tokyo/assets/rig-BjRdQXtM.js": {
@@ -320,23 +358,35 @@
     }
   },
   "tokyo/assets/scene-MReEd7Ml.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "flight scene overlay (curated): CSS-in-JS overlay + camera FOV horizon effect",
     "renames": {
-      "i": "FlightScene"
+      "i": "FlightScene",
+      "n": "FLIGHT_OVERLAY_CSS",
+      "r": "widenFovNearGround"
     },
     "evidence": {
-      "i": "own export table: local `i` is exported as `FlightScene`"
+      "i": "curated: flight scene controller (exported as FlightScene)",
+      "n": "curated: inline CSS for the #flight-ov overlay",
+      "r": "curated: widens FOV as the camera nears the ground"
     }
   },
   "tokyo/assets/signs-CcdyXn0R.js": {
-    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "note": "sign atlas packer (curated): 128px cells, 4-col atlas layers, first-fit rect allocator",
     "renames": {
       "p": "PackSigns",
-      "u": "cellTexels"
+      "u": "cellTexels",
+      "c": "CELL_PX",
+      "l": "ATLAS_COLS",
+      "d": "allocAtlasRect",
+      "f": "MISSING_RECT"
     },
     "evidence": {
       "p": "own export table: local `p` is exported as `PackSigns`",
-      "u": "own export table: local `u` is exported as `cellTexels`"
+      "u": "own export table: local `u` is exported as `cellTexels`",
+      "c": "curated: 128px sign cell size",
+      "l": "curated: atlas columns per layer",
+      "d": "curated: first-fit rectangle allocation across 16-byte bitmask layers",
+      "f": "curated: fallback rect for a missing sign"
     }
   },
   "tokyo/assets/tokyo-BZXVhKTn.js": {
@@ -375,6 +425,325 @@
       "v": "import { installCloud as v } from \"./coordinator-R8919moQ.js\" — public name is semantic",
       "y": "import { leaveForGoogle as y } from \"./coordinator-R8919moQ.js\" — public name is semantic",
       "z": "own export table: local `z` is exported as `showStartupNotices`"
+    }
+  },
+  "tokyo/assets/dom-BCt0vy2n.js": {
+    "note": "DOM/UI helpers (curated): element+text/class/style bindings, count/clock formatters, safe-area probe",
+    "renames": {
+      "e": "createEl",
+      "t": "TextBinding",
+      "n": "ClassState",
+      "r": "StylePropBinding",
+      "i": "retriggerAnim",
+      "a": "formatInt",
+      "o": "formatClock",
+      "c": "safeAreaProbeEl",
+      "l": "safeAreaInsets",
+      "u": "readSafeAreaInsets",
+      "d": "resetCanvasSize",
+      "f": "capturePointer"
+    },
+    "evidence": {
+      "e": "curated: creates an element (doc.createElement wrapper)",
+      "t": "curated: text setter binding (el/data swap)",
+      "n": "curated: class toggle binding (classList.toggle)",
+      "r": "curated: style property binding (style.setProperty)",
+      "i": "curated: restarts a CSS animation (remove/offsetWidth/add)",
+      "a": "curated: thousands-separated integer formatter (en-US)",
+      "o": "curated: hh:mm clock formatter from fractional hours",
+      "c": "curated: hidden safe-area probe element",
+      "l": "curated: cached safe-area insets object",
+      "u": "curated: reads env(safe-area-inset-*) insets",
+      "d": "curated: clamps an FBO/canvas to 1x1",
+      "f": "curated: setPointerCapture wrapped in try/catch"
+    }
+  },
+  "assets/dom-BCt0vy2n.js": {
+    "note": "DOM/UI helpers (curated): element+text/class/style bindings, count/clock formatters, safe-area probe",
+    "renames": {
+      "e": "createEl",
+      "t": "TextBinding",
+      "n": "ClassState",
+      "r": "StylePropBinding",
+      "i": "retriggerAnim",
+      "a": "formatInt",
+      "o": "formatClock",
+      "c": "safeAreaProbeEl",
+      "l": "safeAreaInsets",
+      "u": "readSafeAreaInsets",
+      "d": "resetCanvasSize",
+      "f": "capturePointer"
+    },
+    "evidence": {
+      "e": "curated: creates an element (doc.createElement wrapper)",
+      "t": "curated: text setter binding (el/data swap)",
+      "n": "curated: class toggle binding (classList.toggle)",
+      "r": "curated: style property binding (style.setProperty)",
+      "i": "curated: restarts a CSS animation (remove/offsetWidth/add)",
+      "a": "curated: thousands-separated integer formatter (en-US)",
+      "o": "curated: hh:mm clock formatter from fractional hours",
+      "c": "curated: hidden safe-area probe element",
+      "l": "curated: cached safe-area insets object",
+      "u": "curated: reads env(safe-area-inset-*) insets",
+      "d": "curated: clamps an FBO/canvas to 1x1",
+      "f": "curated: setPointerCapture wrapped in try/catch"
+    }
+  },
+  "tokyo/assets/tabs-C1IhIOn4.js": {
+    "note": "cross-tab coordination (curated): BroadcastChannel 'taipei-gta-cloud' + navigator.locks play lock, takeover + flush protocol",
+    "renames": {
+      "e": "CLIENT_ID",
+      "t": "cloudChannel",
+      "n": "channelListeners",
+      "r": "ensureChannel",
+      "i": "subscribeChannel",
+      "a": "getLockManager",
+      "o": "releaseLock",
+      "s": "ownerCity",
+      "c": "playLockName",
+      "l": "acquirePlayLock",
+      "u": "requestTakeover",
+      "d": "takeoverHandler",
+      "f": "takeoverInstalled",
+      "p": "installTakeoverHandler",
+      "m": "released",
+      "h": "releasePlayLock",
+      "g": "isReleased",
+      "_": "broadcastFlush",
+      "v": "respondToFlush"
+    },
+    "evidence": {
+      "e": "curated: per-tab random client id",
+      "t": "curated: BroadcastChannel('taipei-gta-cloud')",
+      "n": "curated: message listener set",
+      "r": "curated: lazily creates the channel",
+      "i": "curated: subscribes a listener to channel messages",
+      "a": "curated: navigator.locks manager",
+      "o": "curated: resolves the held lock promise",
+      "s": "curated: city this tab owns",
+      "c": "curated: lock name 'taipei-gta-play:<city>'",
+      "l": "curated: acquires the play lock (owner/duplicate/unsupported)",
+      "u": "curated: requests takeover of a held city",
+      "d": "curated: takeover callback",
+      "f": "curated: takeover handler installed",
+      "p": "curated: installs the takeover listener",
+      "m": "curated: released flag",
+      "h": "curated: releases the play lock",
+      "g": "curated: is released",
+      "_": "curated: broadcast flush request and collect acks",
+      "v": "curated: answers a flush request"
+    }
+  },
+  "assets/tabs-C1IhIOn4.js": {
+    "note": "cross-tab coordination (curated): BroadcastChannel 'taipei-gta-cloud' + navigator.locks play lock, takeover + flush protocol",
+    "renames": {
+      "e": "CLIENT_ID",
+      "t": "cloudChannel",
+      "n": "channelListeners",
+      "r": "ensureChannel",
+      "i": "subscribeChannel",
+      "a": "getLockManager",
+      "o": "releaseLock",
+      "s": "ownerCity",
+      "c": "playLockName",
+      "l": "acquirePlayLock",
+      "u": "requestTakeover",
+      "d": "takeoverHandler",
+      "f": "takeoverInstalled",
+      "p": "installTakeoverHandler",
+      "m": "released",
+      "h": "releasePlayLock",
+      "g": "isReleased",
+      "_": "broadcastFlush",
+      "v": "respondToFlush"
+    },
+    "evidence": {
+      "e": "curated: per-tab random client id",
+      "t": "curated: BroadcastChannel('taipei-gta-cloud')",
+      "n": "curated: message listener set",
+      "r": "curated: lazily creates the channel",
+      "i": "curated: subscribes a listener to channel messages",
+      "a": "curated: navigator.locks manager",
+      "o": "curated: resolves the held lock promise",
+      "s": "curated: city this tab owns",
+      "c": "curated: lock name 'taipei-gta-play:<city>'",
+      "l": "curated: acquires the play lock (owner/duplicate/unsupported)",
+      "u": "curated: requests takeover of a held city",
+      "d": "curated: takeover callback",
+      "f": "curated: takeover handler installed",
+      "p": "curated: installs the takeover listener",
+      "m": "curated: released flag",
+      "h": "curated: releases the play lock",
+      "g": "curated: is released",
+      "_": "curated: broadcast flush request and collect acks",
+      "v": "curated: answers a flush request"
+    }
+  },
+  "tokyo/assets/notice-DnIsya3-.js": {
+    "note": "cloud-notice hand-off through sessionStorage (curated); the exported functions keep their public names (unaliased export table)",
+    "renames": {
+      "e": "NOTICE_KEY"
+    },
+    "evidence": {
+      "e": "curated: sessionStorage key 'taipei-rush-cloud-notice-v1'"
+    }
+  },
+  "assets/notice-DnIsya3-.js": {
+    "note": "cloud-notice hand-off through sessionStorage (curated); the exported functions keep their public names (unaliased export table)",
+    "renames": {
+      "e": "NOTICE_KEY"
+    },
+    "evidence": {
+      "e": "curated: sessionStorage key 'taipei-rush-cloud-notice-v1'"
+    }
+  },
+  "tokyo/assets/prefs-BioZODFl.js": {
+    "note": "UI prefs (curated): persisted 'tokyo-rush-ui' blob, buffered writes flushed on idle; readPrefs/writePrefs/queuePrefs keep their public names (unaliased exports)",
+    "renames": {
+      "e": "STORAGE_KEY",
+      "t": "pendingWrites",
+      "a": "uiScale"
+    },
+    "evidence": {
+      "e": "curated: localStorage key 'tokyo-rush-ui'",
+      "t": "curated: pending writes merged into the stored blob",
+      "a": "curated: UI scale from the tr-is-touch body class"
+    }
+  },
+  "tokyo/assets/cities-8-O8IWPJ.js": {
+    "note": "city/travel data (curated): city ids+utc, currencies, airlines/HSR, flight routes, departure scheduling",
+    "renames": {
+      "e": "CITY_IDS",
+      "t": "isCityId",
+      "n": "CURRENCIES",
+      "r": "formatMoney",
+      "i": "CITIES",
+      "a": "HSR_BRAND",
+      "o": "transportModeOf",
+      "s": "brandFor",
+      "c": "airportFor",
+      "l": "AIRLINE",
+      "u": "ROUTES",
+      "d": "rateLine",
+      "f": "utcOffsetFromTaipei",
+      "p": "findRoute",
+      "m": "counterpartCity",
+      "h": "otherCities",
+      "g": "upcomingDepartures",
+      "_": "formatHhMm"
+    },
+    "evidence": {
+      "e": "curated: city id list",
+      "t": "curated: isCityId guard",
+      "n": "curated: currency table (TWD/HKD/JPY)",
+      "r": "curated: formats an amount in a currency",
+      "i": "curated: city profiles (page/saveKey/airport/utc)",
+      "a": "curated: HSR brand",
+      "o": "curated: hsr|flight mode of a route",
+      "s": "curated: brand of a route",
+      "c": "curated: airport/hsr terminal of a city",
+      "l": "curated: RUSH AIR brand",
+      "u": "curated: flight/HSR route table",
+      "d": "curated: currency cross-rate line",
+      "f": "curated: utc offset relative to Taipei",
+      "p": "curated: finds a route",
+      "m": "curated: taipei<->other city counterpart",
+      "h": "curated: all cities but one",
+      "g": "curated: next departures for a route",
+      "_": "curated: hh:mm formatter"
+    }
+  },
+  "tokyo/assets/session-CLv8PYlR.js": {
+    "note": "account/session layer (curated): turnstile gate, Supabase auth (signup/refresh), generation-guarded listeners, storage sync",
+    "renames": {
+      "s": "turnstileScriptPromise",
+      "c": "isMenuOpen",
+      "l": "TurnstileDeferredError",
+      "u": "setMenuOpenCheck",
+      "d": "loadTurnstile",
+      "f": "runTurnstile",
+      "p": "authState",
+      "m": "authPromise",
+      "h": "REFRESH_MARGIN_S",
+      "g": "authGeneration",
+      "_": "signedOutFlag",
+      "v": "lastErrorWasDeferred",
+      "y": "wasDeferred",
+      "b": "sessionListeners",
+      "x": "accountListeners",
+      "S": "getAuthGeneration",
+      "C": "bumpAuthGeneration",
+      "w": "subscribeSession",
+      "T": "subscribeAccount",
+      "E": "notifyAccountChange",
+      "D": "emitSession",
+      "O": "storageHookInstalled",
+      "k": "installStorageSync",
+      "A": "refreshTimer",
+      "j": "refreshing",
+      "M": "refreshPromise",
+      "N": "scheduleRefresh",
+      "P": "suspendRefresh",
+      "F": "isLocalOnly",
+      "I": "signOutFlow",
+      "L": "currentSession",
+      "R": "completeSignIn",
+      "z": "isPlainObject",
+      "B": "parseSession",
+      "V": "SUPABASE_API_VERSION",
+      "H": "authFetch",
+      "U": "sessionFromAuthResponse",
+      "W": "DEAD_SESSION_ERRORS",
+      "G": "isDeadSessionResponse",
+      "K": "withAuthLock",
+      "q": "acceptAuthResponse",
+      "J": "refreshOrSignIn",
+      "Y": "ensureSession"
+    },
+    "evidence": {
+      "s": "curated: lazy turnstile script promise",
+      "c": "curated: menu-open check installed by installCloud",
+      "l": "curated: deferred-until-menu error type",
+      "u": "curated: installs the menu-open check",
+      "d": "curated: loads the Cloudflare Turnstile script",
+      "f": "curated: runs turnstile verification (sitekey, action)",
+      "p": "curated: auth state object ({status})",
+      "m": "curated: in-flight ensureSession promise",
+      "h": "curated: refresh margin in seconds (120)",
+      "g": "curated: auth generation counter",
+      "_": "curated: local-only signed-out flag",
+      "v": "curated: last error was the deferred type",
+      "y": "curated: was the last failure deferred",
+      "b": "curated: session listeners",
+      "x": "curated: account listeners",
+      "S": "curated: returns the auth generation",
+      "C": "curated: bumps the auth generation",
+      "w": "curated: subscribes to session changes",
+      "T": "curated: subscribes to account changes",
+      "E": "curated: notifies account listeners",
+      "D": "curated: emits a session change",
+      "O": "curated: storage hook installed",
+      "k": "curated: installs the storage-event sync",
+      "A": "curated: refresh timer handle",
+      "j": "curated: refresh in flight",
+      "M": "curated: in-flight refresh promise",
+      "N": "curated: schedules the token refresh",
+      "P": "curated: suspends refresh (flushForNavigation)",
+      "F": "curated: is local-only (signed out)",
+      "I": "curated: sign-out flow",
+      "L": "curated: current stored session",
+      "R": "curated: completes a sign-in",
+      "z": "curated: plain-object guard",
+      "B": "curated: validates/parses a stored session",
+      "V": "curated: X-Supabase-Api-Version value",
+      "H": "curated: authenticated Supabase fetch",
+      "U": "curated: session from an auth response",
+      "W": "curated: dead-session error codes",
+      "G": "curated: is the response a dead session",
+      "K": "curated: runs under the taipei-gta-auth-refresh lock",
+      "q": "curated: accepts an auth response",
+      "J": "curated: refresh or sign in",
+      "Y": "curated: ensures a session (public entry)"
     }
   }
 }

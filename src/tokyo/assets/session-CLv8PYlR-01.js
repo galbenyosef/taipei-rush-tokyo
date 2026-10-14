@@ -9,16 +9,16 @@ import {
   qn as a,
   wn as o,
 } from "./engine-BuS5QxN0.js";
-var s,
-  c = () => !1,
-  l = class extends Error {};
-function u(e) {
-  c = e;
+var turnstileScriptPromise,
+  isMenuOpen = () => !1,
+  TurnstileDeferredError = class extends Error {};
+function setMenuOpenCheck(e) {
+  isMenuOpen = e;
 }
-function d() {
+function loadTurnstile() {
   return window.turnstile
     ? Promise.resolve(window.turnstile)
-    : ((s ||= new Promise((e, t) => {
+    : ((turnstileScriptPromise ||= new Promise((e, t) => {
         let n = document.createElement(`script`),
           r = setTimeout(() => {
             (n.remove(), t(Error(`Turnstile script timeout`)));
@@ -36,9 +36,9 @@ function d() {
           }),
           document.head.appendChild(n));
       })),
-      s);
+      turnstileScriptPromise);
 }
-function f(e, t, n = !1) {
+function runTurnstile(e, t, n = !1) {
   return new Promise((r, i) => {
     let a,
       o,
@@ -55,20 +55,20 @@ function f(e, t, n = !1) {
               ? r(e)
               : i(
                   t
-                    ? new l(`Interaction deferred until a menu opens`)
+                    ? new TurnstileDeferredError(`Interaction deferred until a menu opens`)
                     : Error(`Turnstile verification failed`),
                 ));
         }
       },
       p = setTimeout(() => f(), 3e4);
-    d()
+    loadTurnstile()
       .then((r) => {
         u ||
           ((s = r),
           (a = document.createElement(`div`)),
           (a.className = `cloud-turnstile`),
           (a.style.cssText = `position:fixed;bottom:16px;right:16px;z-index:10000;max-width:calc(100vw - 32px)`),
-          n && !c() && (a.style.visibility = `hidden`),
+          n && !isMenuOpen() && (a.style.visibility = `hidden`),
           (
             document.querySelector(`dialog.cloud-overlay[open]`) ??
             document.body
@@ -82,7 +82,7 @@ function f(e, t, n = !1) {
             "refresh-expired": `never`,
             callback: (e) => f(e),
             "before-interactive-callback": () => {
-              n && !c() ? f(void 0, !0) : a && (a.style.visibility = ``);
+              n && !isMenuOpen() ? f(void 0, !0) : a && (a.style.visibility = ``);
             },
             "error-callback": () => f(),
             "expired-callback": () => f(),
@@ -93,92 +93,92 @@ function f(e, t, n = !1) {
       .catch(() => f());
   });
 }
-var p = { status: `idle` },
-  m,
-  h = 120,
-  g = 0,
-  _ = !1,
-  v = !1;
-function y() {
-  return v;
+var authState = { status: `idle` },
+  authPromise,
+  REFRESH_MARGIN_S = 120,
+  authGeneration = 0,
+  signedOutFlag = !1,
+  lastErrorWasDeferred = !1;
+function wasDeferred() {
+  return lastErrorWasDeferred;
 }
-var b = new Set(),
-  x = new Set();
-function S() {
-  return g;
+var sessionListeners = new Set(),
+  accountListeners = new Set();
+function getAuthGeneration() {
+  return authGeneration;
 }
-function C() {
-  return ((m = void 0), ++g);
+function bumpAuthGeneration() {
+  return ((authPromise = void 0), ++authGeneration);
 }
-function w(e) {
+function subscribeSession(e) {
   return (
-    k(),
-    b.add(e),
+    installStorageSync(),
+    sessionListeners.add(e),
     () => {
-      b.delete(e);
+      sessionListeners.delete(e);
     }
   );
 }
-function T(e) {
+function subscribeAccount(e) {
   return (
-    k(),
-    x.add(e),
+    installStorageSync(),
+    accountListeners.add(e),
     () => {
-      x.delete(e);
+      accountListeners.delete(e);
     }
   );
 }
-function E() {
-  for (let e of x)
+function notifyAccountChange() {
+  for (let e of accountListeners)
     try {
       e();
     } catch {}
 }
-function D(e, t) {
-  N(e);
-  for (let n of b)
+function emitSession(e, t) {
+  scheduleRefresh(e);
+  for (let n of sessionListeners)
     try {
       n(e, t);
     } catch {}
 }
-var O = !1;
-function k() {
-  O ||
+var storageHookInstalled = !1;
+function installStorageSync() {
+  storageHookInstalled ||
     typeof window > `u` ||
     typeof window.addEventListener != `function` ||
-    ((O = !0),
+    ((storageHookInstalled = !0),
     window.addEventListener(`storage`, (e) => {
       if (e.key === `taipei-rush-cloud-session-v1` || e.key === null) {
-        m = void 0;
-        let e = L();
+        authPromise = void 0;
+        let e = currentSession();
         (e
-          ? ((_ = !1), (p = { status: `authenticated`, user_id: e.user_id }))
-          : ((_ = i().signedOut === !0), (p = { status: `local_only` })),
-          D(e, `remote`));
+          ? ((signedOutFlag = !1), (authState = { status: `authenticated`, user_id: e.user_id }))
+          : ((signedOutFlag = i().signedOut === !0), (authState = { status: `local_only` })),
+          emitSession(e, `remote`));
       }
-      (e.key === `taipei-rush-cloud-account-v1` || e.key === null) && E();
+      (e.key === `taipei-rush-cloud-account-v1` || e.key === null) && notifyAccountChange();
     }));
 }
-var A,
-  j = !1,
-  M;
-function N(e) {
+var refreshTimer,
+  refreshing = !1,
+  refreshPromise;
+function scheduleRefresh(e) {
   if (
-    (A !== void 0 && clearTimeout(A),
-    (A = void 0),
-    !e || j || typeof window > `u`)
+    (refreshTimer !== void 0 && clearTimeout(refreshTimer),
+    (refreshTimer = void 0),
+    !e || refreshing || typeof window > `u`)
   )
     return;
-  let t = Math.max(5e3, (e.expires_at - h) * 1e3 - Date.now());
+  let t = Math.max(5e3, (e.expires_at - REFRESH_MARGIN_S) * 1e3 - Date.now());
   t > 2 ** 31 - 1 ||
-    ((A = setTimeout(() => {
-      ((A = void 0), Y(!1).catch(() => {}));
+    ((refreshTimer = setTimeout(() => {
+      ((refreshTimer = void 0), ensureSession(!1).catch(() => {}));
     }, t)),
-    A.unref?.());
+    refreshTimer.unref?.());
 }
-async function P(e = 8e3) {
-  ((j = !0), A !== void 0 && clearTimeout(A), (A = void 0));
-  let t = M;
+async function suspendRefresh(e = 8e3) {
+  ((refreshing = !0), refreshTimer !== void 0 && clearTimeout(refreshTimer), (refreshTimer = void 0));
+  let t = refreshPromise;
   if (!t) return;
   let n;
   (await Promise.race([
@@ -189,42 +189,42 @@ async function P(e = 8e3) {
   ]),
     clearTimeout(n));
 }
-function F() {
-  return _ || i().signedOut === !0;
+function isLocalOnly() {
+  return signedOutFlag || i().signedOut === !0;
 }
-function I(e, n) {
-  ((v = !1),
-    g++,
-    (m = void 0),
-    (_ = !0),
+function signOutFlow(e, n) {
+  ((lastErrorWasDeferred = !1),
+    authGeneration++,
+    (authPromise = void 0),
+    (signedOutFlag = !0),
     t({
       signedOut: !0,
       pendingPassword: !1,
       expired: e === `expired` ? (n ? { email: n } : {}) : void 0,
     }),
     o(),
-    (p = { status: `local_only` }),
-    D(null, e),
-    E());
+    (authState = { status: `local_only` }),
+    emitSession(null, e),
+    notifyAccountChange());
 }
-function L() {
-  return B(n());
+function currentSession() {
+  return parseSession(n());
 }
-function R(e, n = `signin`) {
-  ((v = !1),
-    (_ = !1),
+function completeSignIn(e, n = `signin`) {
+  ((lastErrorWasDeferred = !1),
+    (signedOutFlag = !1),
     t({ signedOut: !1, expired: void 0 }),
     a(e),
-    (p = { status: `authenticated`, user_id: e.user_id }),
-    D(e, n),
-    E());
+    (authState = { status: `authenticated`, user_id: e.user_id }),
+    emitSession(e, n),
+    notifyAccountChange());
 }
-function z(e) {
+function isPlainObject(e) {
   return typeof e == `object` && !!e && !Array.isArray(e);
 }
-function B(e) {
+function parseSession(e) {
   if (
-    !z(e) ||
+    !isPlainObject(e) ||
     typeof e.access_token != `string` ||
     !e.access_token.trim() ||
     typeof e.refresh_token != `string` ||
@@ -255,27 +255,27 @@ function B(e) {
     t
   );
 }
-var V = `2024-01-01`;
-async function H(t, n, r = `POST`, i, a = 1e4) {
+var SUPABASE_API_VERSION = `2024-01-01`;
+async function authFetch(t, n, r = `POST`, i, a = 1e4) {
   return fetch(`${e.url}/auth/v1/${t}`, {
     method: r,
     headers: {
       apikey: e.publishableKey,
       "Content-Type": `application/json`,
-      "X-Supabase-Api-Version": V,
+      "X-Supabase-Api-Version": SUPABASE_API_VERSION,
       ...(i ? { Authorization: `Bearer ${i.access_token}` } : {}),
     },
     body: n === void 0 ? void 0 : JSON.stringify(n),
     signal: AbortSignal.timeout(a),
   });
 }
-function U(e) {
-  if (!z(e) || !z(e.user)) return null;
+function sessionFromAuthResponse(e) {
+  if (!isPlainObject(e) || !isPlainObject(e.user)) return null;
   let t = e.expires_at;
   typeof t != `number` &&
     typeof e.expires_in == `number` &&
     (t = Math.floor(Date.now() / 1e3) + e.expires_in);
-  let n = B({ ...e, expires_at: t, user_id: e.user.id });
+  let n = parseSession({ ...e, expires_at: t, user_id: e.user.id });
   if (!n || n.expires_at <= Date.now() / 1e3 + 60) return null;
   (typeof e.user.email == `string` && (n.email = e.user.email),
     typeof e.user.is_anonymous == `boolean` &&
@@ -293,7 +293,7 @@ function U(e) {
     );
   return (a.length && (n.providers = [...new Set(a)]), n);
 }
-var W = [
+var DEAD_SESSION_ERRORS = [
   `refresh_token_not_found`,
   `refresh_token_already_used`,
   `session_not_found`,
@@ -303,7 +303,7 @@ var W = [
   `invalid_grant`,
   `bad_jwt`,
 ];
-async function G(e) {
+async function isDeadSessionResponse(e) {
   if (e.status === 401 || e.status === 403) return !0;
   if (e.status !== 400 && e.status !== 404) return !1;
   try {
@@ -315,17 +315,17 @@ async function G(e) {
             ? t.code
             : (t.error ?? ``),
       );
-    return !n || W.includes(n);
+    return !n || DEAD_SESSION_ERRORS.includes(n);
   } catch {
     return !0;
   }
 }
-function K(e) {
+function withAuthLock(e) {
   let t = typeof navigator < `u` ? navigator.locks : void 0;
   return t?.request ? t.request(`taipei-gta-auth-refresh`, e) : e();
 }
-async function q(e, t, n) {
+async function acceptAuthResponse(e, t, n) {
   if (!e.ok) return null;
-  let r = U(await e.json());
-  return !r || g !== t || F() ? null : (R(r, n), r);
+  let r = sessionFromAuthResponse(await e.json());
+  return !r || authGeneration !== t || isLocalOnly() ? null : (completeSignIn(r, n), r);
 }

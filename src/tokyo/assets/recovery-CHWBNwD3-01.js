@@ -1,4 +1,4 @@
-// tokyo/assets/recovery-CHWBNwD3 01 — buy
+// tokyo/assets/recovery-CHWBNwD3 01 — readpendingticket
 // Lines 1-152 of readable/tokyo/assets/recovery-CHWBNwD3.pretty.js (statement-aligned).
 const __vite__mapDeps = (
   i,
@@ -20,47 +20,47 @@ const __vite__mapDeps = (
 import { a as e, t } from "./ja-Ci9Qv_M-.js";
 import { Sn as n, zn as r } from "./engine-BuS5QxN0.js";
 import { f as i, i as a } from "./session-CLv8PYlR.js";
-var o = `taipei-rush-market-ticket-v3:`,
-  s = new Set();
-function c() {
+var TICKET_KEY_PREFIX = `taipei-rush-market-ticket-v3:`,
+  changeSubscribers = new Set();
+function readPendingTicket() {
   let e = a();
   if (!e) return null;
   let t = e.anonymous === !1 ? e.user_id : `guest`;
   if (n() !== t) return null;
   try {
-    return r(o + e.user_id)?.ticket ?? null;
+    return r(TICKET_KEY_PREFIX + e.user_id)?.ticket ?? null;
   } catch {
     return `unreadable`;
   }
 }
 function hasPendingMarketTicket() {
-  return c() !== null;
+  return readPendingTicket() !== null;
 }
 function notifyMarketTicketChange() {
-  for (let e of s)
+  for (let e of changeSubscribers)
     try {
       e();
     } catch {}
 }
-function d(e) {
+function subscribeTicketChanges(e) {
   let t = !1,
     n = () => {
       let n = hasPendingMarketTicket();
       (n && !t && e(), (t = n));
     },
     r = (e) => {
-      (!e.key || e.key.startsWith(o)) && n();
+      (!e.key || e.key.startsWith(TICKET_KEY_PREFIX)) && n();
     };
-  (s.add(n), window.addEventListener(`storage`, r));
+  (changeSubscribers.add(n), window.addEventListener(`storage`, r));
   let a = i(n);
   return (
     n(),
     () => {
-      (s.delete(n), window.removeEventListener(`storage`, r), a());
+      (changeSubscribers.delete(n), window.removeEventListener(`storage`, r), a());
     }
   );
 }
-var f = [8, 20, 45, 90, 180, 300];
+var BACKOFF_SECONDS = [8, 20, 45, 90, 180, 300];
 function resolveInBackground(n, r) {
   let i,
     a = 0,
@@ -69,10 +69,10 @@ function resolveInBackground(n, r) {
     u = (e) => {
       (clearTimeout(i), s || (i = setTimeout(() => void m(), e * 1e3)));
     },
-    p = () => u(f[Math.min(a++, f.length - 1)]);
+    p = () => u(BACKOFF_SECONDS[Math.min(a++, BACKOFF_SECONDS.length - 1)]);
   async function m() {
     if (o || s) return;
-    let i = c();
+    let i = readPendingTicket();
     if (!i) {
       a = 0;
       return;
@@ -90,7 +90,7 @@ function resolveInBackground(n, r) {
             __vite__mapDeps([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
           ),
           s = await (await o(n)).account();
-        if (c() !== null) {
+        if (readPendingTicket() !== null) {
           p();
           return;
         }
@@ -111,7 +111,7 @@ function resolveInBackground(n, r) {
           ),
           (a = 0));
       } catch {
-        if (c() !== null) {
+        if (readPendingTicket() !== null) {
           p();
           return;
         }
@@ -133,7 +133,7 @@ function resolveInBackground(n, r) {
       }
     }
   }
-  let h = d(() => u(2)),
+  let h = subscribeTicketChanges(() => u(2)),
     g = () => {
       hasPendingMarketTicket() && ((a = 0), u(1));
     };
