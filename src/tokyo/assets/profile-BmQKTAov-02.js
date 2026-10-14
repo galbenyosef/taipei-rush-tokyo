@@ -1,6 +1,6 @@
 // tokyo/assets/profile-BmQKTAov 02 — append
 // Lines 306-517 of readable/tokyo/assets/profile-BmQKTAov.pretty.js (statement-aligned).
-function C(e, t) {
+function mountNameView(e, t) {
   let n = document.createElement(`div`);
   ((n.className = `social-name-view`), e.append(n));
   let r = (e, t = `info`) => {
@@ -115,7 +115,7 @@ function C(e, t) {
         p(t);
     }));
 }
-function w(e, t, n) {
+function mountProfile(e, t, n) {
   let r = (e, n) => h(e, n, t),
     a = document.createElement(`section`);
   ((a.className = `social-profile`), e.append(a));

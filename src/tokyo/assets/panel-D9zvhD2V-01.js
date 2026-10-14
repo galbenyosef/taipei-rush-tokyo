@@ -87,7 +87,7 @@ var c = {
     en: `Please sign in to send this (the guest check did not go through). Your text is kept.`,
   },
 };
-function l(t, n) {
+function mountFeedbackPanel(t, n) {
   t.classList.add(`fb-body`);
   let r = document.createElement(`h2`);
   r.className = `fb-heading`;

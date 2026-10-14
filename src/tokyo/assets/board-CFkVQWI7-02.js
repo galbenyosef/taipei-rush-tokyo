@@ -78,7 +78,7 @@ function E(e, n, i, o) {
       </div>
       <div class="trb-acts"><button class="trb-sec" type="button" data-act="back">${b(l(v.back))}</button><button class="trb-go" type="button" data-act="board">${b(l(v.board))} ${_ ? `▶` : `✈`} <kbd>Enter</kbd></button></div>`;
 }
-var D = class {
+var DepartureBoard = class {
   host;
   root = null;
   data = null;

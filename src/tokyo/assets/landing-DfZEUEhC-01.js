@@ -283,7 +283,7 @@ function R(e) {
     );
   });
 }
-function z() {
+function showMovedNotice() {
   return D(({ panel: e }) => {
     (O(e, T.movedTitle), b(e, T.movedBody));
     let t = document.createElement(`div`);
@@ -299,7 +299,7 @@ function B() {
     }, 5e3);
   return () => clearInterval(t);
 }
-async function V() {
+async function runLanding() {
   let e = B();
   try {
     let e = await i();
@@ -326,7 +326,7 @@ async function V() {
       )),
       a !== `unsupported` &&
         p(() => {
-          (d(), z());
+          (d(), showMovedNotice());
         }));
   } finally {
     e();

@@ -83,7 +83,7 @@ var A = class {
   N = !1,
   P = (e) => new Promise((t) => setTimeout(t, e)),
   F = (e) => (e && e.anonymous === !1 ? e.user_id : `guest`);
-function I(n) {
+function installCloud(n) {
   if (j) return j;
   ((M = n), t());
   let r = (j = S());
@@ -214,24 +214,24 @@ function L(e, t, n, a, l) {
     e.setPaused(!0),
     location.reload());
 }
-async function R(e = 1e4) {
+async function syncNow(e = 1e4) {
   if (!j) return !1;
   M && !M.state.resetting && M.state.saveNow();
   let [t, n] = await Promise.all([j.flushNow(e), v().flushNow(e)]);
   return t && n;
 }
-async function z(e = !1) {
+async function signOutFlow(e = !1) {
   if (!e) {
-    let [e, t] = await Promise.all([R(8e3), T(8e3)]);
+    let [e, t] = await Promise.all([syncNow(8e3), T(8e3)]);
     if (!(e && t)) return { synced: !1, signedOut: !1 };
   }
   return (await C(), { synced: !e, signedOut: !0 });
 }
 var B = !1,
   V = !1;
-async function H() {
+async function leaveForGoogle() {
   (M && !M.state.resetting && M.state.saveNow(),
-    await Promise.race([R(4e3), P(4500)]),
+    await Promise.race([syncNow(4e3), P(4500)]),
     M && (M.state.resetting = !0),
     a(),
     V ||
@@ -241,14 +241,14 @@ async function H() {
     (V = !0),
     (B = !0));
 }
-async function U(e) {
+async function deleteFlow(e) {
   let t = m()?.user_id,
     r = await w(e);
   if (r.ok && t)
     for (let e of Object.values(l)) n(t, `${e.saveKey}:identities-v1`);
   return r;
 }
-async function W() {
+async function flushDeparture() {
   (await Promise.race([
     Promise.all([j?.flushForNavigation(), x()]),
     new Promise((e) => setTimeout(e, 3e3)),

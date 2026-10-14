@@ -1,6 +1,6 @@
 // tokyo/assets/phone-BvNRaOR5 02 — classname
 // Lines 67-411 of readable/tokyo/assets/phone-BvNRaOR5.pretty.js (statement-aligned).
-function l(c, l, u) {
+function mountSocialApp(c, l, u) {
   let d = (e, t) => a(e, t, u);
   function f(e, t, n) {
     let r = document.createElement(t);
@@ -61,7 +61,7 @@ function l(c, l, u) {
       (s.dataset.key = `copy-id`),
       (s.disabled = !0),
       (f(t, `p`, r.myIdHint).className = `social-hint`),
-      n().then((e) => {
+      myProfile().then((e) => {
         if (!e || !t.isConnected) {
           t.remove();
           return;
@@ -130,7 +130,7 @@ function l(c, l, u) {
           (x = void 0),
           (S = void 0),
           a.status === `name_required` &&
-            t(g, u, () => {
+            mountProfile(g, u, () => {
               (s(), j());
             }),
           p(g, r.refresh, async () => {

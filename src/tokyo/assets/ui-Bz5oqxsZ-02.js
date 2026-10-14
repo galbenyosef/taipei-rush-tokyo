@@ -1,11 +1,11 @@
 // tokyo/assets/ui-Bz5oqxsZ 02 — createelement
 // Lines 253-1005 of readable/tokyo/assets/ui-Bz5oqxsZ.pretty.js (statement-aligned).
-function V(e, t = `home`, n = {}) {
+function showCloudPanel(e, t = `home`, n = {}) {
   if ((D(), B)) {
     B.go(t, n);
     return;
   }
-  let o = v(e),
+  let o = installCloud(e),
     c = e.paused,
     T = document.activeElement;
   (e.ui.setExternalMenu?.(!0), e.setPaused(!0));
@@ -215,7 +215,7 @@ function V(e, t = `home`, n = {}) {
           ((P = { message: j.googleLeaving, kind: `info` }), $(!1));
           let e = await f(_());
           return e.ok
-            ? (await y(), location.assign(e.url), new Promise(() => {}))
+            ? (await leaveForGoogle(), location.assign(e.url), new Promise(() => {}))
             : {
                 ok: !1,
                 error: `invalid`,
@@ -383,7 +383,7 @@ function V(e, t = `home`, n = {}) {
                 V?.getAttribute(`aria-disabled`) === `true` ||
                 ((I = !0),
                 G(),
-                de().then((e) => {
+                syncNow().then((e) => {
                   ((I = !1),
                     B === H &&
                       ((P = {
@@ -639,7 +639,7 @@ function V(e, t = `home`, n = {}) {
             ((I = !0),
               (P = { message: j.signoutWorking, kind: `info` }),
               $(!1),
-              ue(t).then((e) => {
+              signOutFlow(t).then((e) => {
                 B === H &&
                   ((I = !1),
                   e.signedOut ||
@@ -677,7 +677,7 @@ function V(e, t = `home`, n = {}) {
           if ((e.preventDefault(), I || !a())) return;
           let t = n.value;
           K(
-            () => le(t),
+            () => deleteFlow(t),
             () => {
               ((P = { message: j.working, kind: `info` }), $(!1));
             },

@@ -230,7 +230,7 @@ var e = `#1b1d24`,
     `<path d="M14 18h36l-2 30H16z" transform="rotate(-6 32 33)" fill="#fbfaf3"/><g transform="rotate(-6 32 33)"><path d="M21 24v18M27 24v14M33 24v18M39 24v10" stroke="#9aa1ad" stroke-width="1.8"/><rect x="13" y="29" width="38" height="6" fill="#d8323a"/><path d="M13 32h38" stroke="#f4c94e" stroke-width="1"/></g><path d="${l(48, 14, 5, 5, 0.45)}" fill="#ffd23a" stroke-width="1.4"/>`,
   ),
   F = `M10 24L32 10l22 14v26a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3z`,
-  I = {
+  TOKYO_ART = {
     "jp-onigiri": m,
     "jp-nikuman": h,
     "jp-oden": g,

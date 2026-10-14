@@ -1,0 +1,380 @@
+{
+  "assets/rig-BjRdQXtM.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "e": "CANON_HIP_Y",
+      "n": "applyPose",
+      "t": "bindRig"
+    },
+    "evidence": {
+      "e": "own export table: local `e` is exported as `CANON_HIP_Y`",
+      "n": "own export table: local `n` is exported as `applyPose`",
+      "t": "own export table: local `t` is exported as `bindRig`"
+    }
+  },
+  "tokyo/assets/airliner-Bx-acqWB.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "_": "AIRLINER_SIGNS",
+      "a": "BODY_Y",
+      "c": "LENGTH",
+      "l": "SPAN",
+      "s": "MAIN_GEAR_Z",
+      "x": "buildAirliner"
+    },
+    "evidence": {
+      "_": "own export table: local `_` is exported as `AIRLINER_SIGNS`",
+      "a": "own export table: local `a` is exported as `BODY_Y`",
+      "c": "own export table: local `c` is exported as `LENGTH`",
+      "l": "own export table: local `l` is exported as `SPAN`",
+      "s": "own export table: local `s` is exported as `MAIN_GEAR_Z`",
+      "x": "own export table: local `x` is exported as `buildAirliner`"
+    }
+  },
+  "tokyo/assets/analytics-B76dRwr5.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "g": "trackEvent"
+    },
+    "evidence": {
+      "g": "own export table: local `g` is exported as `trackEvent`"
+    }
+  },
+  "tokyo/assets/animator-C4Q6-_Wy.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "E": "ACTION_DEFAULTS",
+      "T": "makeAnimInput",
+      "fe": "Animator",
+      "m": "applyPose",
+      "o": "POSE_LEN"
+    },
+    "evidence": {
+      "E": "own export table: local `E` is exported as `ACTION_DEFAULTS`",
+      "T": "own export table: local `T` is exported as `makeAnimInput`",
+      "fe": "own export table: local `fe` is exported as `Animator`",
+      "m": "import { applyPose as m } from \"./rig-BjRdQXtM.js\" — public name is semantic",
+      "o": "own export table: local `o` is exported as `POSE_LEN`"
+    }
+  },
+  "tokyo/assets/api-tBXVzspF.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "a": "setAvatarRenderer",
+      "c": "BipedAdapter",
+      "d": "RocketboxAvatar",
+      "e": "loadAvatarAsset",
+      "f": "avatarMaterial",
+      "i": "createAvatar",
+      "l": "avatarTextureMode",
+      "n": "setSss",
+      "o": "avatarManifest",
+      "r": "BIP_MAP",
+      "s": "pickLod",
+      "t": "releaseAvatarAsset",
+      "u": "preloadAvatars"
+    },
+    "evidence": {
+      "a": "own export table: local `a` is exported as `setAvatarRenderer`",
+      "c": "own export table: local `c` is exported as `BipedAdapter`",
+      "d": "own export table: local `d` is exported as `RocketboxAvatar`",
+      "e": "own export table: local `e` is exported as `loadAvatarAsset`",
+      "f": "own export table: local `f` is exported as `avatarMaterial`",
+      "i": "own export table: local `i` is exported as `createAvatar`",
+      "l": "own export table: local `l` is exported as `avatarTextureMode`",
+      "n": "own export table: local `n` is exported as `setSss`",
+      "o": "own export table: local `o` is exported as `avatarManifest`",
+      "r": "own export table: local `r` is exported as `BIP_MAP`",
+      "s": "own export table: local `s` is exported as `pickLod`",
+      "t": "own export table: local `t` is exported as `releaseAvatarAsset`",
+      "u": "own export table: local `u` is exported as `preloadAvatars`"
+    }
+  },
+  "tokyo/assets/art-tokyo-DHp5jBJS.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "I": "TOKYO_ART"
+    },
+    "evidence": {
+      "I": "own export table: local `I` is exported as `TOKYO_ART`"
+    }
+  },
+  "tokyo/assets/bag-LX8mo88s.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "ma": "mountBag"
+    },
+    "evidence": {
+      "ma": "own export table: local `ma` is exported as `mountBag`"
+    }
+  },
+  "tokyo/assets/batch-CN-kL9Gb.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "a": "BatchPlan",
+      "l": "PackBatch"
+    },
+    "evidence": {
+      "a": "own export table: local `a` is exported as `BatchPlan`",
+      "l": "own export table: local `l` is exported as `PackBatch`"
+    }
+  },
+  "tokyo/assets/board-CFkVQWI7.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "D": "DepartureBoard"
+    },
+    "evidence": {
+      "D": "own export table: local `D` is exported as `DepartureBoard`"
+    }
+  },
+  "tokyo/assets/boot-C6yF8B4X.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "h": "hydrateBeforeTravel",
+      "m": "settleIdentity"
+    },
+    "evidence": {
+      "h": "own export table: local `h` is exported as `hydrateBeforeTravel`",
+      "m": "own export table: local `m` is exported as `settleIdentity`"
+    }
+  },
+  "tokyo/assets/client-NeGl0SRK.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "L": "createMarketClient",
+      "_": "notifyMarketTicketChange"
+    },
+    "evidence": {
+      "L": "own export table: local `L` is exported as `createMarketClient`",
+      "_": "import { notifyMarketTicketChange as _ } from \"./recovery-CHWBNwD3.js\" — public name is semantic"
+    }
+  },
+  "tokyo/assets/clips-B74kfFEX.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "e": "Clip",
+      "i": "loadAnimLibrary",
+      "r": "DEFAULT_PACK_URL",
+      "t": "AnimLibrary"
+    },
+    "evidence": {
+      "e": "own export table: local `e` is exported as `Clip`",
+      "i": "own export table: local `i` is exported as `loadAnimLibrary`",
+      "r": "own export table: local `r` is exported as `DEFAULT_PACK_URL`",
+      "t": "own export table: local `t` is exported as `AnimLibrary`"
+    }
+  },
+  "tokyo/assets/coordinator-R8919moQ.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "H": "leaveForGoogle",
+      "I": "installCloud",
+      "R": "syncNow",
+      "U": "deleteFlow",
+      "W": "flushDeparture",
+      "z": "signOutFlow"
+    },
+    "evidence": {
+      "H": "own export table: local `H` is exported as `leaveForGoogle`",
+      "I": "own export table: local `I` is exported as `installCloud`",
+      "R": "own export table: local `R` is exported as `syncNow`",
+      "U": "own export table: local `U` is exported as `deleteFlow`",
+      "W": "own export table: local `W` is exported as `flushDeparture`",
+      "z": "own export table: local `z` is exported as `signOutFlow`"
+    }
+  },
+  "tokyo/assets/fullmap-CXrrUiBa.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "k": "FullMap"
+    },
+    "evidence": {
+      "k": "own export table: local `k` is exported as `FullMap`"
+    }
+  },
+  "tokyo/assets/lab-CQYp1Cs9.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "N": "createAnimLab",
+      "f": "bindRig",
+      "m": "loadAnimLibrary",
+      "p": "Animator"
+    },
+    "evidence": {
+      "N": "own export table: local `N` is exported as `createAnimLab`",
+      "f": "import { bindRig as f } from \"./rig-BjRdQXtM.js\" — public name is semantic",
+      "m": "import { loadAnimLibrary as m } from \"./clips-B74kfFEX.js\" — public name is semantic",
+      "p": "import { Animator as p } from \"./animator-C4Q6-_Wy.js\" — public name is semantic"
+    }
+  },
+  "tokyo/assets/lab-X7McqYcL.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "M": "createAvatarLab"
+    },
+    "evidence": {
+      "M": "own export table: local `M` is exported as `createAvatarLab`"
+    }
+  },
+  "tokyo/assets/landing-DfZEUEhC.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "V": "runLanding",
+      "z": "showMovedNotice"
+    },
+    "evidence": {
+      "V": "own export table: local `V` is exported as `runLanding`",
+      "z": "own export table: local `z` is exported as `showMovedNotice`"
+    }
+  },
+  "tokyo/assets/market-l-6OeMtj.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "E": "mountMarket",
+      "l": "hasPendingMarketTicket",
+      "u": "createMarketClient"
+    },
+    "evidence": {
+      "E": "own export table: local `E` is exported as `mountMarket`",
+      "l": "import { hasPendingMarketTicket as l } from \"./recovery-CHWBNwD3.js\" — public name is semantic",
+      "u": "import { createMarketClient as u } from \"./client-NeGl0SRK.js\" — public name is semantic"
+    }
+  },
+  "tokyo/assets/material-3lv29trB.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "E": "landmarkLayers",
+      "M": "lmPrototype",
+      "k": "packMaterial"
+    },
+    "evidence": {
+      "E": "own export table: local `E` is exported as `landmarkLayers`",
+      "M": "own export table: local `M` is exported as `lmPrototype`",
+      "k": "own export table: local `k` is exported as `packMaterial`"
+    }
+  },
+  "tokyo/assets/panel-D9zvhD2V.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "l": "mountFeedbackPanel"
+    },
+    "evidence": {
+      "l": "own export table: local `l` is exported as `mountFeedbackPanel`"
+    }
+  },
+  "tokyo/assets/phone-BvNRaOR5.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "c": "startSummaryPolling",
+      "l": "mountSocialApp",
+      "n": "myProfile",
+      "t": "mountProfile"
+    },
+    "evidence": {
+      "c": "own export table: local `c` is exported as `startSummaryPolling`",
+      "l": "own export table: local `l` is exported as `mountSocialApp`",
+      "n": "import { myProfile as n } from \"./profile-BmQKTAov.js\" — public name is semantic",
+      "t": "import { mountProfile as t } from \"./profile-BmQKTAov.js\" — public name is semantic"
+    }
+  },
+  "tokyo/assets/profile-BmQKTAov.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "C": "mountNameView",
+      "S": "mountNameRow",
+      "w": "mountProfile",
+      "y": "myProfile"
+    },
+    "evidence": {
+      "C": "own export table: local `C` is exported as `mountNameView`",
+      "S": "own export table: local `S` is exported as `mountNameRow`",
+      "w": "own export table: local `w` is exported as `mountProfile`",
+      "y": "own export table: local `y` is exported as `myProfile`"
+    }
+  },
+  "tokyo/assets/recovery-CHWBNwD3.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "l": "hasPendingMarketTicket",
+      "p": "resolveInBackground",
+      "u": "notifyMarketTicketChange"
+    },
+    "evidence": {
+      "l": "own export table: local `l` is exported as `hasPendingMarketTicket`",
+      "p": "own export table: local `p` is exported as `resolveInBackground`",
+      "u": "own export table: local `u` is exported as `notifyMarketTicketChange`"
+    }
+  },
+  "tokyo/assets/rig-BjRdQXtM.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "e": "CANON_HIP_Y",
+      "n": "applyPose",
+      "t": "bindRig"
+    },
+    "evidence": {
+      "e": "own export table: local `e` is exported as `CANON_HIP_Y`",
+      "n": "own export table: local `n` is exported as `applyPose`",
+      "t": "own export table: local `t` is exported as `bindRig`"
+    }
+  },
+  "tokyo/assets/scene-MReEd7Ml.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "i": "FlightScene"
+    },
+    "evidence": {
+      "i": "own export table: local `i` is exported as `FlightScene`"
+    }
+  },
+  "tokyo/assets/signs-CcdyXn0R.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "p": "PackSigns",
+      "u": "cellTexels"
+    },
+    "evidence": {
+      "p": "own export table: local `p` is exported as `PackSigns`",
+      "u": "own export table: local `u` is exported as `cellTexels`"
+    }
+  },
+  "tokyo/assets/tokyo-BZXVhKTn.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "lt": "TOKYO"
+    },
+    "evidence": {
+      "lt": "own export table: local `lt` is exported as `TOKYO`"
+    }
+  },
+  "tokyo/assets/ui-Bz5oqxsZ.js": {
+    "note": "evidence-driven proposals (tools/propose-names.mjs): own export table + semantic imports",
+    "renames": {
+      "F": "mountCloudTitle",
+      "I": "mountCloudPhoneStatus",
+      "P": "mountCloudSettings",
+      "R": "showSaveUndo",
+      "V": "showCloudPanel",
+      "de": "syncNow",
+      "le": "deleteFlow",
+      "ue": "signOutFlow",
+      "v": "installCloud",
+      "y": "leaveForGoogle",
+      "z": "showStartupNotices"
+    },
+    "evidence": {
+      "F": "own export table: local `F` is exported as `mountCloudTitle`",
+      "I": "own export table: local `I` is exported as `mountCloudPhoneStatus`",
+      "P": "own export table: local `P` is exported as `mountCloudSettings`",
+      "R": "own export table: local `R` is exported as `showSaveUndo`",
+      "V": "own export table: local `V` is exported as `showCloudPanel`",
+      "de": "import { syncNow as de } from \"./coordinator-R8919moQ.js\" — public name is semantic",
+      "le": "import { deleteFlow as le } from \"./coordinator-R8919moQ.js\" — public name is semantic",
+      "ue": "import { signOutFlow as ue } from \"./coordinator-R8919moQ.js\" — public name is semantic",
+      "v": "import { installCloud as v } from \"./coordinator-R8919moQ.js\" — public name is semantic",
+      "y": "import { leaveForGoogle as y } from \"./coordinator-R8919moQ.js\" — public name is semantic",
+      "z": "own export table: local `z` is exported as `showStartupNotices`"
+    }
+  }
+}

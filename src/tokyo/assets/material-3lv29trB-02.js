@@ -1,6 +1,6 @@
 // tokyo/assets/material-3lv29trB 02 — setattribute
 // Lines 341-438 of readable/tokyo/assets/material-3lv29trB.pretty.js (statement-aligned).
-function E(e) {
+function landmarkLayers(e) {
   let t = e.landmarks?.material;
   if (!t) return null;
   let n = null;
@@ -37,8 +37,8 @@ function O() {
     n
   );
 }
-function k(e, t, n) {
-  let r = E(e),
+function packMaterial(e, t, n) {
+  let r = landmarkLayers(e),
     i = { value: r ?? O() },
     a = !!r,
     o = T(i.value, t);
@@ -55,7 +55,7 @@ function k(e, t, n) {
       },
       resolve() {
         if (a) return !0;
-        let t = E(e);
+        let t = landmarkLayers(e);
         return t ? ((i.value = t), (a = !0), !0) : !1;
       },
     }
@@ -63,7 +63,7 @@ function k(e, t, n) {
 }
 var A = null,
   j = null;
-function M(e) {
+function lmPrototype(e) {
   let t = e.landmarks?.material;
   if (!t) return [];
   if (A && j === t) return [A];

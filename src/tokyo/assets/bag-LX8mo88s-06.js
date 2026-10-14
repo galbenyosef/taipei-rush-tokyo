@@ -1,6 +1,6 @@
 // tokyo/assets/bag-LX8mo88s 06 — setattribute
 // Lines 2994-3356 of readable/tokyo/assets/bag-LX8mo88s.pretty.js (statement-aligned).
-function ma(e, f) {
+function mountBag(e, f) {
   let p = f.ctx,
     m = (e, t) => f.t({ zh: e, en: t }),
     h = (e) => f.t(e),

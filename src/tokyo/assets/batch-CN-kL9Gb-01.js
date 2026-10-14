@@ -1,7 +1,7 @@
 // tokyo/assets/batch-CN-kL9Gb 01 — mesh
 // Lines 1-163 of readable/tokyo/assets/batch-CN-kL9Gb.pretty.js (statement-aligned).
 import { Nn as e, d as t, p as n, tr as r, wt as i } from "./three-CC5Mkdpe.js";
-var a = class {
+var BatchPlan = class {
     geos = [];
     defs = [];
     geometry(e) {
@@ -58,14 +58,14 @@ var a = class {
         (s.castShadow = !1),
         (s.receiveShadow = !0),
         (s.frustumCulled = !0),
-        new l(s, u)
+        new PackBatch(s, u)
       );
     }
   },
   o = new n(),
   s = new r(0, -1e3, 0),
   c = new r(0.1, -999.9, 0.1),
-  l = class {
+  PackBatch = class {
     mesh;
     pieces;
     shadowHide = [];

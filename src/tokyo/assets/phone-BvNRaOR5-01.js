@@ -2,15 +2,15 @@
 // Lines 1-66 of readable/tokyo/assets/phone-BvNRaOR5.pretty.js (statement-aligned).
 import {
   i as e,
-  mountProfile as t,
-  myProfile as n,
+  mountProfile as mountProfile,
+  myProfile as myProfile,
   n as r,
   r as i,
   t as a,
 } from "./profile-BmQKTAov.js";
 var o = (e) => `${e.name}#${e.tag}`,
   s = () => document.dispatchEvent(new Event(`social:changed`));
-function c(t, n) {
+function startSummaryPolling(t, n) {
   let i = !0,
     a = !1,
     o = ``,

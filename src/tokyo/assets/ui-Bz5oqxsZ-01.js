@@ -29,11 +29,11 @@ import {
   y as _,
 } from "./accounts-CpfgQQfK.js";
 import {
-  deleteFlow as le,
-  installCloud as v,
-  leaveForGoogle as y,
-  signOutFlow as ue,
-  syncNow as de,
+  deleteFlow as deleteFlow,
+  installCloud as installCloud,
+  leaveForGoogle as leaveForGoogle,
+  signOutFlow as signOutFlow,
+  syncNow as syncNow,
 } from "./coordinator-R8919moQ.js";
 import {
   a as fe,
@@ -56,7 +56,7 @@ function N(e) {
     ? { guest: !1, label: e.email ?? `` }
     : { guest: !0, label: j.guest };
 }
-function P(e, t) {
+function mountCloudSettings(e, t) {
   D();
   let n = document.createElement(`button`);
   ((n.type = `button`),
@@ -74,11 +74,11 @@ function P(e, t) {
   (u(a),
     a(),
     (n.onclick = (e) => {
-      (e.stopPropagation(), n.focus(), V(t));
+      (e.stopPropagation(), n.focus(), showCloudPanel(t));
     }),
     e.prepend(n));
 }
-function F(e, t) {
+function mountCloudTitle(e, t) {
   D();
   let n = document.createElement(`button`);
   ((n.type = `button`),
@@ -118,11 +118,11 @@ function F(e, t) {
     t.events.on(`settings:changed`, c),
     c(),
     (n.onclick = (e) => {
-      (e.stopPropagation(), n.focus(), V(t));
+      (e.stopPropagation(), n.focus(), showCloudPanel(t));
     }),
     e.append(n));
 }
-function I(e, t) {
+function mountCloudPhoneStatus(e, t) {
   D();
   let n = document.createElement(`span`);
   ((n.className = `cloud-guest-dot`), n.setAttribute(`aria-hidden`, `true`));
@@ -164,7 +164,7 @@ function L(e, t, n, r = 8e3) {
     i.appendChild(a),
     setTimeout(() => a.remove(), n ? r + 4e3 : r));
 }
-function R(e, t) {
+function showSaveUndo(e, t) {
   D();
   let r = !1,
     i = () => {
@@ -194,7 +194,7 @@ function R(e, t) {
     };
   (t.subscribe(i), i());
 }
-function z(e) {
+function showStartupNotices(e) {
   let t = c(),
     n = (e) => {
       let t = () => {
@@ -218,14 +218,14 @@ function z(e) {
           google_fallback: b(j.noticeGoogleFallback, { email: t.detail }),
         };
       t.notice === `expired`
-        ? V(e, `expired`)
+        ? showCloudPanel(e, `expired`)
         : r[t.notice]
-          ? V(e, `home`, { notice: { message: r[t.notice], kind: `ok` } })
+          ? showCloudPanel(e, `home`, { notice: { message: r[t.notice], kind: `ok` } })
           : t.notice === `google_cancelled`
             ? L(e, j.noticeGoogleCancelled)
             : n[t.notice] && L(e, n[t.notice]);
     }),
-    h() && n(() => V(e, `password`)));
+    h() && n(() => showCloudPanel(e, `password`)));
 }
 var B;
 function _e(n, r, i) {

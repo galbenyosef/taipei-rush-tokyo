@@ -1,0 +1,626 @@
+{
+  "note": "Semantic rename map for src/, recovered mechanically by anchor alignment from the committed slices (tools/recover-scoped-map.mjs): the token streams of a slice and its readable range must be identical in every non-identifier position, so every differing identifier pair is a proven rename, not a guess. `files` is a word-boundary map, used only where a name means the same thing everywhere in the slice and is never a property or object key; `scoped` addresses the rest by exact token index as { name: [[i, target], …] }. tools/derive.mjs re-applies this map when it re-cuts src/ (index-validated), tools/verify-rename.mjs and tools/audit.js re-prove every slice from it, and tools/check-chunk.mjs proves cross-slice references still resolve. Regenerate with `node tools/recover-scoped-map.mjs` after any rename batch.",
+  "files": {
+    "tokyo/assets/analytics-B76dRwr5-01.js": {
+      "g": "trackEvent"
+    },
+    "tokyo/assets/animator-C4Q6-_Wy-02.js": {
+      "E": "ACTION_DEFAULTS",
+      "T": "makeAnimInput",
+      "fe": "Animator"
+    },
+    "tokyo/assets/api-tBXVzspF-01.js": {
+      "e": "loadAvatarAsset"
+    },
+    "tokyo/assets/art-tokyo-DHp5jBJS-01.js": {
+      "I": "TOKYO_ART"
+    },
+    "tokyo/assets/bag-LX8mo88s-06.js": {
+      "ma": "mountBag"
+    },
+    "tokyo/assets/board-CFkVQWI7-02.js": {
+      "D": "DepartureBoard"
+    },
+    "tokyo/assets/boot-C6yF8B4X-01.js": {
+      "h": "hydrateBeforeTravel",
+      "m": "settleIdentity"
+    },
+    "tokyo/assets/client-NeGl0SRK-01.js": {
+      "_": "notifyMarketTicketChange"
+    },
+    "tokyo/assets/client-NeGl0SRK-02.js": {
+      "L": "createMarketClient"
+    },
+    "tokyo/assets/coordinator-R8919moQ-01.js": {
+      "H": "leaveForGoogle",
+      "I": "installCloud",
+      "R": "syncNow",
+      "U": "deleteFlow",
+      "W": "flushDeparture",
+      "z": "signOutFlow"
+    },
+    "tokyo/assets/landing-DfZEUEhC-01.js": {
+      "V": "runLanding",
+      "z": "showMovedNotice"
+    },
+    "tokyo/assets/market-l-6OeMtj-01.js": {
+      "u": "createMarketClient"
+    },
+    "tokyo/assets/material-3lv29trB-02.js": {
+      "E": "landmarkLayers",
+      "M": "lmPrototype",
+      "k": "packMaterial"
+    },
+    "tokyo/assets/profile-BmQKTAov-01.js": {
+      "S": "mountNameRow",
+      "y": "myProfile"
+    },
+    "tokyo/assets/tokyo-BZXVhKTn-01.js": {
+      "lt": "TOKYO"
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-01.js": {
+      "F": "mountCloudTitle",
+      "I": "mountCloudPhoneStatus",
+      "P": "mountCloudSettings",
+      "R": "showSaveUndo",
+      "V": "showCloudPanel",
+      "de": "syncNow",
+      "le": "deleteFlow",
+      "ue": "signOutFlow",
+      "z": "showStartupNotices"
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-02.js": {
+      "de": "syncNow",
+      "le": "deleteFlow",
+      "ue": "signOutFlow"
+    }
+  },
+  "scoped": {
+    "assets/rig-BjRdQXtM-01.js": {
+      "e": [
+        [
+          4,
+          "CANON_HIP_Y"
+        ],
+        [
+          68,
+          "CANON_HIP_Y"
+        ]
+      ],
+      "n": [
+        [
+          189,
+          "applyPose"
+        ]
+      ],
+      "t": [
+        [
+          9,
+          "bindRig"
+        ]
+      ]
+    },
+    "tokyo/assets/airliner-Bx-acqWB-01.js": {
+      "_": [
+        [
+          529,
+          "AIRLINER_SIGNS"
+        ]
+      ],
+      "a": [
+        [
+          31,
+          "BODY_Y"
+        ],
+        [
+          1477,
+          "BODY_Y"
+        ],
+        [
+          1503,
+          "BODY_Y"
+        ],
+        [
+          1895,
+          "BODY_Y"
+        ],
+        [
+          2139,
+          "BODY_Y"
+        ],
+        [
+          2165,
+          "BODY_Y"
+        ],
+        [
+          2191,
+          "BODY_Y"
+        ],
+        [
+          2217,
+          "BODY_Y"
+        ],
+        [
+          2360,
+          "BODY_Y"
+        ],
+        [
+          2388,
+          "BODY_Y"
+        ],
+        [
+          2417,
+          "BODY_Y"
+        ],
+        [
+          2446,
+          "BODY_Y"
+        ]
+      ],
+      "c": [
+        [
+          43,
+          "LENGTH"
+        ]
+      ],
+      "l": [
+        [
+          47,
+          "SPAN"
+        ]
+      ],
+      "s": [
+        [
+          39,
+          "MAIN_GEAR_Z"
+        ],
+        [
+          3325,
+          "MAIN_GEAR_Z"
+        ]
+      ],
+      "x": [
+        [
+          1743,
+          "buildAirliner"
+        ]
+      ]
+    },
+    "tokyo/assets/animator-C4Q6-_Wy-01.js": {
+      "T": [
+        [
+          1408,
+          "makeAnimInput"
+        ]
+      ],
+      "m": [
+        [
+          71,
+          "applyPose"
+        ]
+      ],
+      "o": [
+        [
+          33,
+          "POSE_LEN"
+        ]
+      ]
+    },
+    "tokyo/assets/animator-C4Q6-_Wy-02.js": {
+      "m": [
+        [
+          3940,
+          "applyPose"
+        ]
+      ]
+    },
+    "tokyo/assets/api-tBXVzspF-01.js": {
+      "a": [
+        [
+          22,
+          "setAvatarRenderer"
+        ]
+      ],
+      "c": [
+        [
+          34,
+          "BipedAdapter"
+        ]
+      ],
+      "d": [
+        [
+          46,
+          "RocketboxAvatar"
+        ]
+      ],
+      "f": [
+        [
+          50,
+          "avatarMaterial"
+        ]
+      ],
+      "l": [
+        [
+          38,
+          "avatarTextureMode"
+        ]
+      ],
+      "n": [
+        [
+          12,
+          "setSss"
+        ]
+      ],
+      "o": [
+        [
+          26,
+          "avatarManifest"
+        ]
+      ],
+      "r": [
+        [
+          16,
+          "BIP_MAP"
+        ]
+      ],
+      "s": [
+        [
+          30,
+          "pickLod"
+        ]
+      ],
+      "t": [
+        [
+          8,
+          "releaseAvatarAsset"
+        ]
+      ],
+      "u": [
+        [
+          42,
+          "preloadAvatars"
+        ]
+      ]
+    },
+    "tokyo/assets/batch-CN-kL9Gb-01.js": {
+      "a": [
+        [
+          26,
+          "BatchPlan"
+        ]
+      ],
+      "l": [
+        [
+          529,
+          "PackBatch"
+        ],
+        [
+          573,
+          "PackBatch"
+        ]
+      ]
+    },
+    "tokyo/assets/clips-B74kfFEX-01.js": {
+      "e": [
+        [
+          4,
+          "Clip"
+        ],
+        [
+          1404,
+          "Clip"
+        ]
+      ],
+      "i": [
+        [
+          1503,
+          "loadAnimLibrary"
+        ]
+      ],
+      "r": [
+        [
+          1481,
+          "DEFAULT_PACK_URL"
+        ],
+        [
+          1507,
+          "DEFAULT_PACK_URL"
+        ],
+        [
+          1515,
+          "DEFAULT_PACK_URL"
+        ]
+      ],
+      "t": [
+        [
+          1175,
+          "AnimLibrary"
+        ],
+        [
+          1576,
+          "AnimLibrary"
+        ],
+        [
+          1629,
+          "AnimLibrary"
+        ]
+      ]
+    },
+    "tokyo/assets/fullmap-CXrrUiBa-02.js": {
+      "k": [
+        [
+          509,
+          "FullMap"
+        ]
+      ]
+    },
+    "tokyo/assets/lab-CQYp1Cs9-01.js": {
+      "f": [
+        [
+          63,
+          "bindRig"
+        ]
+      ],
+      "m": [
+        [
+          81,
+          "loadAnimLibrary"
+        ]
+      ],
+      "p": [
+        [
+          72,
+          "Animator"
+        ]
+      ]
+    },
+    "tokyo/assets/lab-CQYp1Cs9-02.js": {
+      "N": [
+        [
+          2,
+          "createAnimLab"
+        ]
+      ],
+      "f": [
+        [
+          345,
+          "bindRig"
+        ]
+      ],
+      "m": [
+        [
+          52,
+          "loadAnimLibrary"
+        ]
+      ],
+      "p": [
+        [
+          343,
+          "Animator"
+        ]
+      ]
+    },
+    "tokyo/assets/lab-X7McqYcL-02.js": {
+      "M": [
+        [
+          2,
+          "createAvatarLab"
+        ]
+      ]
+    },
+    "tokyo/assets/market-l-6OeMtj-01.js": {
+      "l": [
+        [
+          60,
+          "hasPendingMarketTicket"
+        ]
+      ]
+    },
+    "tokyo/assets/market-l-6OeMtj-02.js": {
+      "E": [
+        [
+          1,
+          "mountMarket"
+        ]
+      ],
+      "l": [
+        [
+          808,
+          "hasPendingMarketTicket"
+        ]
+      ],
+      "u": [
+        [
+          9830,
+          "createMarketClient"
+        ]
+      ]
+    },
+    "tokyo/assets/panel-D9zvhD2V-01.js": {
+      "l": [
+        [
+          622,
+          "mountFeedbackPanel"
+        ]
+      ]
+    },
+    "tokyo/assets/phone-BvNRaOR5-01.js": {
+      "c": [
+        [
+          72,
+          "startSummaryPolling"
+        ]
+      ],
+      "n": [
+        [
+          12,
+          "myProfile"
+        ]
+      ],
+      "t": [
+        [
+          8,
+          "mountProfile"
+        ]
+      ]
+    },
+    "tokyo/assets/phone-BvNRaOR5-02.js": {
+      "l": [
+        [
+          1,
+          "mountSocialApp"
+        ]
+      ],
+      "n": [
+        [
+          662,
+          "myProfile"
+        ]
+      ],
+      "t": [
+        [
+          1224,
+          "mountProfile"
+        ]
+      ]
+    },
+    "tokyo/assets/profile-BmQKTAov-02.js": {
+      "C": [
+        [
+          1,
+          "mountNameView"
+        ]
+      ],
+      "w": [
+        [
+          1218,
+          "mountProfile"
+        ]
+      ]
+    },
+    "tokyo/assets/recovery-CHWBNwD3-01.js": {
+      "l": [
+        [
+          197,
+          "hasPendingMarketTicket"
+        ],
+        [
+          256,
+          "hasPendingMarketTicket"
+        ],
+        [
+          975,
+          "hasPendingMarketTicket"
+        ],
+        [
+          1008,
+          "hasPendingMarketTicket"
+        ]
+      ],
+      "p": [
+        [
+          398,
+          "resolveInBackground"
+        ]
+      ],
+      "u": [
+        [
+          212,
+          "notifyMarketTicketChange"
+        ]
+      ]
+    },
+    "tokyo/assets/rig-BjRdQXtM-01.js": {
+      "e": [
+        [
+          4,
+          "CANON_HIP_Y"
+        ],
+        [
+          68,
+          "CANON_HIP_Y"
+        ]
+      ],
+      "n": [
+        [
+          189,
+          "applyPose"
+        ]
+      ],
+      "t": [
+        [
+          9,
+          "bindRig"
+        ]
+      ]
+    },
+    "tokyo/assets/scene-MReEd7Ml-01.js": {
+      "i": [
+        [
+          97,
+          "FlightScene"
+        ]
+      ]
+    },
+    "tokyo/assets/signs-CcdyXn0R-01.js": {
+      "p": [
+        [
+          326,
+          "PackSigns"
+        ],
+        [
+          329,
+          "PackSigns"
+        ],
+        [
+          415,
+          "PackSigns"
+        ]
+      ],
+      "u": [
+        [
+          56,
+          "cellTexels"
+        ],
+        [
+          421,
+          "cellTexels"
+        ]
+      ]
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-01.js": {
+      "v": [
+        [
+          141,
+          "installCloud"
+        ]
+      ],
+      "y": [
+        [
+          145,
+          "leaveForGoogle"
+        ]
+      ]
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-02.js": {
+      "V": [
+        [
+          1,
+          "showCloudPanel"
+        ]
+      ],
+      "v": [
+        [
+          43,
+          "installCloud"
+        ]
+      ],
+      "y": [
+        [
+          2089,
+          "leaveForGoogle"
+        ]
+      ]
+    }
+  }
+}

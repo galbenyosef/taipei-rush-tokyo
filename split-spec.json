@@ -9,12 +9,12 @@
     "css": "parser css, no plugins",
     "json": "parser json, no plugins (inline importmap blocks, if any)"
   },
-  "source": "readable/: 104 JS pretties (92 app chunk(s) sliced, 3 vendor wholeFile) + 11 CSS pretties (incl. 11 inline twin(s)); src/: 1187 statement-aligned slices across 92 app chunk(s) (served-path layout, <chunk>-NN.js); 84 skipped section(s); 23 wholeFile section(s); rename campaign: 0 app chunk(s) with recorded renames (0 name record(s), 0 indexed occurrence(s)) through rename-map.json; capture: 179 files under .upstream/manifest.json; inline scan: tokyo/index.html (11 inline content block(s)).",
+  "source": "readable/: 104 JS pretties (92 app chunk(s) sliced, 3 vendor wholeFile) + 11 CSS pretties (incl. 11 inline twin(s)); src/: 1187 statement-aligned slices across 92 app chunk(s) (served-path layout, <chunk>-NN.js); 84 skipped section(s); 23 wholeFile section(s); rename campaign: 28 app chunk(s) with recorded renames (90 name record(s), 92 indexed occurrence(s)) through rename-map.json; capture: 179 files under .upstream/manifest.json; inline scan: tokyo/index.html (11 inline content block(s)).",
   "rename": {
     "map": "rename-map.json",
-    "chunks": 0,
-    "names": 0,
-    "indexedOccurrences": 0,
+    "chunks": 28,
+    "names": 90,
+    "indexedOccurrences": 92,
     "note": "Semantic renames are recorded per slice in rename-map.json and re-applied on every re-cut. Vendor identifiers and public export names keep their served names (vendor/non-standalone rule)."
   },
   "inline": {
@@ -38,6 +38,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/game-y-FF2uWA",
       "slices": 7,
+      "renameBindings": {},
       "derived": "readable + 7 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -52,6 +53,7 @@
       "idempotent": true,
       "tag": "assets/dom-BCt0vy2n",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -66,6 +68,7 @@
       "idempotent": true,
       "tag": "assets/notice-DnIsya3-",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -80,6 +83,7 @@
       "idempotent": true,
       "tag": "assets/pose-hAXyTQQR",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -94,7 +98,12 @@
       "idempotent": true,
       "tag": "assets/rig-BjRdQXtM",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "CANON_HIP_Y",
+        "n": "applyPose",
+        "t": "bindRig"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/assets/rolldown-runtime-DK3Fl9T5.pretty.js",
@@ -108,6 +117,7 @@
       "idempotent": true,
       "tag": "assets/rolldown-runtime-DK3Fl9T5",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -122,6 +132,7 @@
       "idempotent": true,
       "tag": "assets/tabs-C1IhIOn4",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -136,6 +147,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/_virtual_tokyo-ja-dict-BB6JHNEu",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -150,6 +162,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/accounts-CpfgQQfK",
       "slices": 3,
+      "renameBindings": {},
       "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -164,6 +177,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/actors-Bnj6Q1ad",
       "slices": 128,
+      "renameBindings": {},
       "derived": "readable + 128 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -178,7 +192,15 @@
       "idempotent": true,
       "tag": "tokyo/assets/airliner-Bx-acqWB",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "_": "AIRLINER_SIGNS",
+        "a": "BODY_Y",
+        "c": "LENGTH",
+        "l": "SPAN",
+        "s": "MAIN_GEAR_Z",
+        "x": "buildAirliner"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/analytics-B76dRwr5.pretty.js",
@@ -192,7 +214,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/analytics-B76dRwr5",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "g": "trackEvent"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/animator-C4Q6-_Wy.pretty.js",
@@ -206,7 +231,14 @@
       "idempotent": true,
       "tag": "tokyo/assets/animator-C4Q6-_Wy",
       "slices": 3,
-      "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "E": "ACTION_DEFAULTS",
+        "T": "makeAnimInput",
+        "fe": "Animator",
+        "m": "applyPose",
+        "o": "POSE_LEN"
+      },
+      "derived": "readable + 3 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/api-tBXVzspF.pretty.js",
@@ -220,7 +252,21 @@
       "idempotent": true,
       "tag": "tokyo/assets/api-tBXVzspF",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "a": "setAvatarRenderer",
+        "c": "BipedAdapter",
+        "d": "RocketboxAvatar",
+        "e": "loadAvatarAsset",
+        "f": "avatarMaterial",
+        "l": "avatarTextureMode",
+        "n": "setSss",
+        "o": "avatarManifest",
+        "r": "BIP_MAP",
+        "s": "pickLod",
+        "t": "releaseAvatarAsset",
+        "u": "preloadAvatars"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/art-tokyo-DHp5jBJS.pretty.js",
@@ -234,7 +280,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/art-tokyo-DHp5jBJS",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "I": "TOKYO_ART"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/artWorker-B424lVEq.pretty.js",
@@ -248,6 +297,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/artWorker-B424lVEq",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s)"
     },
     {
@@ -262,6 +312,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/audio-DzcbodvB",
       "slices": 27,
+      "renameBindings": {},
       "derived": "readable + 27 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -276,6 +327,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/avatar-CbvrNwG6",
       "slices": 14,
+      "renameBindings": {},
       "derived": "readable + 14 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -290,7 +342,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/bag-LX8mo88s",
       "slices": 6,
-      "derived": "readable + 6 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "ma": "mountBag"
+      },
+      "derived": "readable + 6 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/batch-CN-kL9Gb.pretty.js",
@@ -304,7 +359,11 @@
       "idempotent": true,
       "tag": "tokyo/assets/batch-CN-kL9Gb",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "a": "BatchPlan",
+        "l": "PackBatch"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/board-CFkVQWI7.pretty.js",
@@ -318,7 +377,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/board-CFkVQWI7",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "D": "DepartureBoard"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/bodyWorker-Bk4d3Tu3.pretty.js",
@@ -332,6 +394,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/bodyWorker-Bk4d3Tu3",
       "slices": 43,
+      "renameBindings": {},
       "derived": "readable + 43 statement-aligned slice(s)"
     },
     {
@@ -346,7 +409,11 @@
       "idempotent": true,
       "tag": "tokyo/assets/boot-C6yF8B4X",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "h": "hydrateBeforeTravel",
+        "m": "settleIdentity"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/characters-BvEb7Acx.pretty.js",
@@ -360,6 +427,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/characters-BvEb7Acx",
       "slices": 37,
+      "renameBindings": {},
       "derived": "readable + 37 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -374,6 +442,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/charWorker-DPNUr-Eu",
       "slices": 45,
+      "renameBindings": {},
       "derived": "readable + 45 statement-aligned slice(s)"
     },
     {
@@ -388,6 +457,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/cities-8-O8IWPJ",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -402,7 +472,11 @@
       "idempotent": true,
       "tag": "tokyo/assets/client-NeGl0SRK",
       "slices": 3,
-      "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "L": "createMarketClient",
+        "_": "notifyMarketTicketChange"
+      },
+      "derived": "readable + 3 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/clips-B74kfFEX.pretty.js",
@@ -416,7 +490,13 @@
       "idempotent": true,
       "tag": "tokyo/assets/clips-B74kfFEX",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "Clip",
+        "i": "loadAnimLibrary",
+        "r": "DEFAULT_PACK_URL",
+        "t": "AnimLibrary"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/controllers-mah1C7rD.pretty.js",
@@ -430,6 +510,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/controllers-mah1C7rD",
       "slices": 3,
+      "renameBindings": {},
       "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -444,7 +525,15 @@
       "idempotent": true,
       "tag": "tokyo/assets/coordinator-R8919moQ",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "H": "leaveForGoogle",
+        "I": "installCloud",
+        "R": "syncNow",
+        "U": "deleteFlow",
+        "W": "flushDeparture",
+        "z": "signOutFlow"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/dom-BCt0vy2n.pretty.js",
@@ -458,6 +547,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/dom-BCt0vy2n",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -472,6 +562,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/dom-BIQnAwky",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -486,6 +577,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/engine-BuS5QxN0",
       "slices": 27,
+      "renameBindings": {},
       "derived": "readable + 27 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -500,7 +592,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/fullmap-CXrrUiBa",
       "slices": 3,
-      "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "k": "FullMap"
+      },
+      "derived": "readable + 3 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/icons-DYNV7fxr.pretty.js",
@@ -514,6 +609,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/icons-DYNV7fxr",
       "slices": 2,
+      "renameBindings": {},
       "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -528,6 +624,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/ja-Ci9Qv_M-",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -542,7 +639,13 @@
       "idempotent": true,
       "tag": "tokyo/assets/lab-CQYp1Cs9",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "N": "createAnimLab",
+        "f": "bindRig",
+        "m": "loadAnimLibrary",
+        "p": "Animator"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/lab-X7McqYcL.pretty.js",
@@ -556,7 +659,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/lab-X7McqYcL",
       "slices": 3,
-      "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "M": "createAvatarLab"
+      },
+      "derived": "readable + 3 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/landing-DfZEUEhC.pretty.js",
@@ -570,7 +676,11 @@
       "idempotent": true,
       "tag": "tokyo/assets/landing-DfZEUEhC",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "V": "runLanding",
+        "z": "showMovedNotice"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/market-l-6OeMtj.pretty.js",
@@ -584,7 +694,12 @@
       "idempotent": true,
       "tag": "tokyo/assets/market-l-6OeMtj",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "E": "mountMarket",
+        "l": "hasPendingMarketTicket",
+        "u": "createMarketClient"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/material-3lv29trB.pretty.js",
@@ -598,7 +713,12 @@
       "idempotent": true,
       "tag": "tokyo/assets/material-3lv29trB",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "E": "landmarkLayers",
+        "M": "lmPrototype",
+        "k": "packMaterial"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/notice-DnIsya3-.pretty.js",
@@ -612,6 +732,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/notice-DnIsya3-",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -626,7 +747,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/panel-D9zvhD2V",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "l": "mountFeedbackPanel"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/peopleWorker-Cn7UVw8F.pretty.js",
@@ -640,6 +764,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/peopleWorker-Cn7UVw8F",
       "slices": 58,
+      "renameBindings": {},
       "derived": "readable + 58 statement-aligned slice(s)"
     },
     {
@@ -654,7 +779,13 @@
       "idempotent": true,
       "tag": "tokyo/assets/phone-BvNRaOR5",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "c": "startSummaryPolling",
+        "l": "mountSocialApp",
+        "n": "myProfile",
+        "t": "mountProfile"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/pose-hAXyTQQR.pretty.js",
@@ -668,6 +799,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/pose-hAXyTQQR",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -682,6 +814,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/postfx-Beafm2Vo",
       "slices": 16,
+      "renameBindings": {},
       "derived": "readable + 16 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -696,6 +829,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/prefs-BioZODFl",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -710,7 +844,13 @@
       "idempotent": true,
       "tag": "tokyo/assets/profile-BmQKTAov",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "C": "mountNameView",
+        "S": "mountNameRow",
+        "w": "mountProfile",
+        "y": "myProfile"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/recovery-CHWBNwD3.pretty.js",
@@ -724,7 +864,12 @@
       "idempotent": true,
       "tag": "tokyo/assets/recovery-CHWBNwD3",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "l": "hasPendingMarketTicket",
+        "p": "resolveInBackground",
+        "u": "notifyMarketTicketChange"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/region-tokyo-audioWorker-GAP5c6S0.pretty.js",
@@ -738,6 +883,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-audioWorker-GAP5c6S0",
       "slices": 11,
+      "renameBindings": {},
       "derived": "readable + 11 statement-aligned slice(s)"
     },
     {
@@ -752,6 +898,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-BcM3fReU",
       "slices": 314,
+      "renameBindings": {},
       "derived": "readable + 314 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -766,6 +913,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-bodyWorker-CtngWad2",
       "slices": 45,
+      "renameBindings": {},
       "derived": "readable + 45 statement-aligned slice(s)"
     },
     {
@@ -780,6 +928,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-akihabara-BJsB2qLX",
       "slices": 14,
+      "renameBindings": {},
       "derived": "readable + 14 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -794,6 +943,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-ameyoko-MDbcAvKx",
       "slices": 9,
+      "renameBindings": {},
       "derived": "readable + 9 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -808,6 +958,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-ginza-B8PkMMHp",
       "slices": 8,
+      "renameBindings": {},
       "derived": "readable + 8 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -822,6 +973,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-kanda-CYJun2NB",
       "slices": 19,
+      "renameBindings": {},
       "derived": "readable + 19 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -836,6 +988,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-marunouchi-BoijeA75",
       "slices": 14,
+      "renameBindings": {},
       "derived": "readable + 14 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -850,6 +1003,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-nihonbashi-DhEI_3CD",
       "slices": 11,
+      "renameBindings": {},
       "derived": "readable + 11 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -864,6 +1018,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-shared-Cox87eLC",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -878,6 +1033,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-shimbashi-CU0USnvn",
       "slices": 16,
+      "renameBindings": {},
       "derived": "readable + 16 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -892,6 +1048,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-d-ueno-CEorO8m2",
       "slices": 15,
+      "renameBindings": {},
       "derived": "readable + 15 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -906,6 +1063,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-interiorsWorker-CQjw7WYB",
       "slices": 60,
+      "renameBindings": {},
       "derived": "readable + 60 statement-aligned slice(s)"
     },
     {
@@ -920,6 +1078,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-akiba-denshi-center-AnKWMTRu",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -934,6 +1093,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-BZiDEQwf",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -948,6 +1108,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-denpa-kaikan-CfqObs2p",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -962,6 +1123,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-enrai-yu-CbrURW05",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -976,6 +1138,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-espark-ueno-WLKqmaWy",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -990,6 +1153,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-kanda-gado-B73p26Wi",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1004,6 +1168,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-karasumori-jinja-ug8EhSbJ",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1018,6 +1183,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-namiyoke-jinja-u3VcLqDU",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1032,6 +1198,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-new-karasumori-bldg-YocW0Jbw",
       "slices": 2,
+      "renameBindings": {},
       "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1046,6 +1213,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-nishiginza-lucky-CBTbuSQh",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1060,6 +1228,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-okachimachi-hoseki-BNQtKGe4",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1074,6 +1243,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-shimizu-shoten-CjSOYUYc",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1088,6 +1258,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-COiN77rV",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1102,6 +1273,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-yamashitaya-ueno-wZAufeba",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1116,6 +1288,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-site-yurakucho-gado-Bh7OarCf",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1130,6 +1303,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/region-tokyo-sites-kit-X3MRd0jr",
       "slices": 10,
+      "renameBindings": {},
       "derived": "readable + 10 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1144,7 +1318,12 @@
       "idempotent": true,
       "tag": "tokyo/assets/rig-BjRdQXtM",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "e": "CANON_HIP_Y",
+        "n": "applyPose",
+        "t": "bindRig"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/rolldown-runtime-DK3Fl9T5.pretty.js",
@@ -1158,6 +1337,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/rolldown-runtime-DK3Fl9T5",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1172,7 +1352,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/scene-MReEd7Ml",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "i": "FlightScene"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/session-CLv8PYlR.pretty.js",
@@ -1186,6 +1369,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/session-CLv8PYlR",
       "slices": 2,
+      "renameBindings": {},
       "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1200,6 +1384,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/shared-DcD5mkpI",
       "slices": 7,
+      "renameBindings": {},
       "derived": "readable + 7 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1214,7 +1399,11 @@
       "idempotent": true,
       "tag": "tokyo/assets/signs-CcdyXn0R",
       "slices": 1,
-      "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "p": "PackSigns",
+        "u": "cellTexels"
+      },
+      "derived": "readable + 1 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/sites-kit-BhplXgcu.pretty.js",
@@ -1228,6 +1417,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/sites-kit-BhplXgcu",
       "slices": 2,
+      "renameBindings": {},
       "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1242,6 +1432,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/tabs-C1IhIOn4",
       "slices": 1,
+      "renameBindings": {},
       "derived": "readable + 1 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1256,6 +1447,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/text-0MpKmkwJ",
       "slices": 3,
+      "renameBindings": {},
       "derived": "readable + 3 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1270,7 +1462,10 @@
       "idempotent": true,
       "tag": "tokyo/assets/tokyo-BZXVhKTn",
       "slices": 35,
-      "derived": "readable + 35 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "lt": "TOKYO"
+      },
+      "derived": "readable + 35 statement-aligned slice(s) (1 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/ui-Bz5oqxsZ.pretty.js",
@@ -1284,7 +1479,20 @@
       "idempotent": true,
       "tag": "tokyo/assets/ui-Bz5oqxsZ",
       "slices": 2,
-      "derived": "readable + 2 statement-aligned slice(s) + 1 skipped section(s)"
+      "renameBindings": {
+        "F": "mountCloudTitle",
+        "I": "mountCloudPhoneStatus",
+        "P": "mountCloudSettings",
+        "R": "showSaveUndo",
+        "V": "showCloudPanel",
+        "de": "syncNow",
+        "le": "deleteFlow",
+        "ue": "signOutFlow",
+        "v": "installCloud",
+        "y": "leaveForGoogle",
+        "z": "showStartupNotices"
+      },
+      "derived": "readable + 2 statement-aligned slice(s) (2 through the recorded rename map) + 1 skipped section(s)"
     },
     {
       "sourceFile": "readable/tokyo/assets/worker-DuEI-Qg4.pretty.js",
@@ -1298,6 +1506,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/worker-DuEI-Qg4",
       "slices": 18,
+      "renameBindings": {},
       "derived": "readable + 18 statement-aligned slice(s)"
     },
     {
@@ -1312,6 +1521,7 @@
       "idempotent": true,
       "tag": "tokyo/assets/world-Bo9wkXrT",
       "slices": 84,
+      "renameBindings": {},
       "derived": "readable + 84 statement-aligned slice(s) + 1 skipped section(s)"
     },
     {
@@ -1773,7 +1983,7 @@
     {
       "file": "assets/rig-BjRdQXtM-01.js",
       "title": "assets/rig-BjRdQXtM 01 — bones",
-      "desc": "Lines 1-31. Markers: bones(10), distanceto(2).",
+      "desc": "Lines 1-31. Markers: bones(10), canon_hip_y(2). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 31,
       "sourceFile": "readable/assets/rig-BjRdQXtM.pretty.js"
@@ -2919,7 +3129,7 @@
     {
       "file": "tokyo/assets/airliner-Bx-acqWB-01.js",
       "title": "tokyo/assets/airliner-Bx-acqWB 01 — math",
-      "desc": "Lines 1-342. Markers: math(27), cos(10).",
+      "desc": "Lines 1-342. Markers: math(27), body_y(12). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 342,
       "sourceFile": "readable/tokyo/assets/airliner-Bx-acqWB.pretty.js"
@@ -2938,7 +3148,7 @@
     {
       "file": "tokyo/assets/analytics-B76dRwr5-01.js",
       "title": "tokyo/assets/analytics-B76dRwr5 01 — beforesend",
-      "desc": "Lines 1-139. Markers: beforesend(4), endpoint(4).",
+      "desc": "Lines 1-139. Markers: beforesend(4), endpoint(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 139,
       "sourceFile": "readable/tokyo/assets/analytics-B76dRwr5.pretty.js"
@@ -2957,7 +3167,7 @@
     {
       "file": "tokyo/assets/animator-C4Q6-_Wy-01.js",
       "title": "tokyo/assets/animator-C4Q6-_Wy 01 — copy",
-      "desc": "Lines 1-138. Markers: copy(22), sub(11).",
+      "desc": "Lines 1-138. Markers: copy(22), sub(11). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 138,
       "sourceFile": "readable/tokyo/assets/animator-C4Q6-_Wy.pretty.js"
@@ -2965,7 +3175,7 @@
     {
       "file": "tokyo/assets/animator-C4Q6-_Wy-02.js",
       "title": "tokyo/assets/animator-C4Q6-_Wy 02 — math",
-      "desc": "Oversized single declaration (kept whole). Lines 139-1408. Markers: math(96), layer(41).",
+      "desc": "Oversized single declaration (kept whole). Lines 139-1408. Markers: math(96), layer(41). Range re-cut through the recorded semantic rename map.",
       "startLine": 139,
       "endLine": 1408,
       "sourceFile": "readable/tokyo/assets/animator-C4Q6-_Wy.pretty.js"
@@ -2991,8 +3201,8 @@
     },
     {
       "file": "tokyo/assets/api-tBXVzspF-01.js",
-      "title": "tokyo/assets/api-tBXVzspF 01 — imports",
-      "desc": "Lines 1-15. Markers: .",
+      "title": "tokyo/assets/api-tBXVzspF 01 — avatarmanifest",
+      "desc": "Lines 1-15. Markers: avatarmanifest(1), avatarmaterial(1). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 15,
       "sourceFile": "readable/tokyo/assets/api-tBXVzspF.pretty.js"
@@ -3011,7 +3221,7 @@
     {
       "file": "tokyo/assets/art-tokyo-DHp5jBJS-01.js",
       "title": "tokyo/assets/art-tokyo-DHp5jBJS 01 — math",
-      "desc": "Oversized single declaration (kept whole). Lines 1-399. Markers: math(3), cc8e8(1).",
+      "desc": "Oversized single declaration (kept whole). Lines 1-399. Markers: math(3), cc8e8(1). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 399,
       "sourceFile": "readable/tokyo/assets/art-tokyo-DHp5jBJS.pretty.js"
@@ -3428,7 +3638,7 @@
     {
       "file": "tokyo/assets/bag-LX8mo88s-06.js",
       "title": "tokyo/assets/bag-LX8mo88s 06 — setattribute",
-      "desc": "Oversized single declaration (kept whole). Lines 2994-3356. Markers: setattribute(14), filter(4).",
+      "desc": "Oversized single declaration (kept whole). Lines 2994-3356. Markers: setattribute(14), filter(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 2994,
       "endLine": 3356,
       "sourceFile": "readable/tokyo/assets/bag-LX8mo88s.pretty.js"
@@ -3447,7 +3657,7 @@
     {
       "file": "tokyo/assets/batch-CN-kL9Gb-01.js",
       "title": "tokyo/assets/batch-CN-kL9Gb 01 — mesh",
-      "desc": "Lines 1-163. Markers: mesh(10), enabled(8).",
+      "desc": "Lines 1-163. Markers: mesh(10), enabled(8). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 163,
       "sourceFile": "readable/tokyo/assets/batch-CN-kL9Gb.pretty.js"
@@ -3474,7 +3684,7 @@
     {
       "file": "tokyo/assets/board-CFkVQWI7-02.js",
       "title": "tokyo/assets/board-CFkVQWI7 02 — host",
-      "desc": "Lines 344-636. Markers: host(19), root(11).",
+      "desc": "Lines 344-636. Markers: host(19), root(11). Range re-cut through the recorded semantic rename map.",
       "startLine": 344,
       "endLine": 636,
       "sourceFile": "readable/tokyo/assets/board-CFkVQWI7.pretty.js"
@@ -3836,8 +4046,8 @@
     },
     {
       "file": "tokyo/assets/boot-C6yF8B4X-01.js",
-      "title": "tokyo/assets/boot-C6yF8B4X 01 — anonymous",
-      "desc": "Lines 1-55. Markers: anonymous(2), disconnect(2).",
+      "title": "tokyo/assets/boot-C6yF8B4X 01 — settleidentity",
+      "desc": "Lines 1-55. Markers: settleidentity(4), anonymous(2). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 55,
       "sourceFile": "readable/tokyo/assets/boot-C6yF8B4X.pretty.js"
@@ -4542,7 +4752,7 @@
     {
       "file": "tokyo/assets/client-NeGl0SRK-01.js",
       "title": "tokyo/assets/client-NeGl0SRK 01 — ports",
-      "desc": "Lines 1-221. Markers: ports(13), owner(8).",
+      "desc": "Lines 1-221. Markers: ports(13), owner(8). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 221,
       "sourceFile": "readable/tokyo/assets/client-NeGl0SRK.pretty.js"
@@ -4550,7 +4760,7 @@
     {
       "file": "tokyo/assets/client-NeGl0SRK-02.js",
       "title": "tokyo/assets/client-NeGl0SRK 02 — receipt",
-      "desc": "Lines 222-397. Markers: receipt(12), trading_status(11).",
+      "desc": "Lines 222-397. Markers: receipt(12), trading_status(11). Range re-cut through the recorded semantic rename map.",
       "startLine": 222,
       "endLine": 397,
       "sourceFile": "readable/tokyo/assets/client-NeGl0SRK.pretty.js"
@@ -4577,7 +4787,7 @@
     {
       "file": "tokyo/assets/clips-B74kfFEX-01.js",
       "title": "tokyo/assets/clips-B74kfFEX 01 — math",
-      "desc": "Lines 1-161. Markers: math(11), loop(8).",
+      "desc": "Lines 1-161. Markers: math(11), loop(8). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 161,
       "sourceFile": "readable/tokyo/assets/clips-B74kfFEX.pretty.js"
@@ -4631,7 +4841,7 @@
     {
       "file": "tokyo/assets/coordinator-R8919moQ-01.js",
       "title": "tokyo/assets/coordinator-R8919moQ 01 — state",
-      "desc": "Lines 1-255. Markers: state(18), promise(10).",
+      "desc": "Lines 1-255. Markers: state(18), promise(10). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 255,
       "sourceFile": "readable/tokyo/assets/coordinator-R8919moQ.pretty.js"
@@ -4923,7 +5133,7 @@
     {
       "file": "tokyo/assets/fullmap-CXrrUiBa-02.js",
       "title": "tokyo/assets/fullmap-CXrrUiBa 02 — math",
-      "desc": "Oversized single declaration (kept whole). Lines 24-1300. Markers: math(62), kit(49).",
+      "desc": "Oversized single declaration (kept whole). Lines 24-1300. Markers: math(62), kit(49). Range re-cut through the recorded semantic rename map.",
       "startLine": 24,
       "endLine": 1300,
       "sourceFile": "readable/tokyo/assets/fullmap-CXrrUiBa.pretty.js"
@@ -4996,7 +5206,7 @@
     {
       "file": "tokyo/assets/lab-CQYp1Cs9-01.js",
       "title": "tokyo/assets/lab-CQYp1Cs9 01 — speed",
-      "desc": "Lines 1-341. Markers: speed(70), play(38).",
+      "desc": "Lines 1-341. Markers: speed(70), play(38). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 341,
       "sourceFile": "readable/tokyo/assets/lab-CQYp1Cs9.pretty.js"
@@ -5004,7 +5214,7 @@
     {
       "file": "tokyo/assets/lab-CQYp1Cs9-02.js",
       "title": "tokyo/assets/lab-CQYp1Cs9 02 — drv",
-      "desc": "Lines 342-626. Markers: drv(25), pos(13).",
+      "desc": "Lines 342-626. Markers: drv(25), pos(13). Range re-cut through the recorded semantic rename map.",
       "startLine": 342,
       "endLine": 626,
       "sourceFile": "readable/tokyo/assets/lab-CQYp1Cs9.pretty.js"
@@ -5031,7 +5241,7 @@
     {
       "file": "tokyo/assets/lab-X7McqYcL-02.js",
       "title": "tokyo/assets/lab-X7McqYcL 02 — params",
-      "desc": "Lines 52-379. Markers: params(13), rbx(13).",
+      "desc": "Lines 52-379. Markers: params(13), rbx(13). Range re-cut through the recorded semantic rename map.",
       "startLine": 52,
       "endLine": 379,
       "sourceFile": "readable/tokyo/assets/lab-X7McqYcL.pretty.js"
@@ -5058,7 +5268,7 @@
     {
       "file": "tokyo/assets/landing-DfZEUEhC-01.js",
       "title": "tokyo/assets/landing-DfZEUEhC 01 — appendchild",
-      "desc": "Lines 1-332. Markers: appendchild(13), createelement(13).",
+      "desc": "Lines 1-332. Markers: appendchild(13), createelement(13). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 332,
       "sourceFile": "readable/tokyo/assets/landing-DfZEUEhC.pretty.js"
@@ -5077,7 +5287,7 @@
     {
       "file": "tokyo/assets/market-l-6OeMtj-01.js",
       "title": "tokyo/assets/market-l-6OeMtj 01 — date",
-      "desc": "Lines 1-197. Markers: date(6), bigint(5).",
+      "desc": "Lines 1-197. Markers: date(6), bigint(5). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 197,
       "sourceFile": "readable/tokyo/assets/market-l-6OeMtj.pretty.js"
@@ -5085,7 +5295,7 @@
     {
       "file": "tokyo/assets/market-l-6OeMtj-02.js",
       "title": "tokyo/assets/market-l-6OeMtj 02 — symbol",
-      "desc": "Oversized single declaration (kept whole). Lines 198-1261. Markers: symbol(34), setattribute(25).",
+      "desc": "Oversized single declaration (kept whole). Lines 198-1261. Markers: symbol(34), setattribute(25). Range re-cut through the recorded semantic rename map.",
       "startLine": 198,
       "endLine": 1261,
       "sourceFile": "readable/tokyo/assets/market-l-6OeMtj.pretty.js"
@@ -5112,7 +5322,7 @@
     {
       "file": "tokyo/assets/material-3lv29trB-02.js",
       "title": "tokyo/assets/material-3lv29trB 02 — setattribute",
-      "desc": "Lines 341-438. Markers: setattribute(7), uint8array(5).",
+      "desc": "Lines 341-438. Markers: setattribute(7), uint8array(5). Range re-cut through the recorded semantic rename map.",
       "startLine": 341,
       "endLine": 438,
       "sourceFile": "readable/tokyo/assets/material-3lv29trB.pretty.js"
@@ -5150,7 +5360,7 @@
     {
       "file": "tokyo/assets/panel-D9zvhD2V-01.js",
       "title": "tokyo/assets/panel-D9zvhD2V 01 — status",
-      "desc": "Lines 1-179. Markers: status(10), classname(8).",
+      "desc": "Lines 1-179. Markers: status(10), classname(8). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 179,
       "sourceFile": "readable/tokyo/assets/panel-D9zvhD2V.pretty.js"
@@ -5633,7 +5843,7 @@
     {
       "file": "tokyo/assets/phone-BvNRaOR5-01.js",
       "title": "tokyo/assets/phone-BvNRaOR5 01 — dispatchevent",
-      "desc": "Lines 1-66. Markers: dispatchevent(2), event(2).",
+      "desc": "Lines 1-66. Markers: dispatchevent(2), event(2). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 66,
       "sourceFile": "readable/tokyo/assets/phone-BvNRaOR5.pretty.js"
@@ -5641,7 +5851,7 @@
     {
       "file": "tokyo/assets/phone-BvNRaOR5-02.js",
       "title": "tokyo/assets/phone-BvNRaOR5 02 — classname",
-      "desc": "Lines 67-411. Markers: classname(33), createelement(25).",
+      "desc": "Lines 67-411. Markers: classname(33), createelement(25). Range re-cut through the recorded semantic rename map.",
       "startLine": 67,
       "endLine": 411,
       "sourceFile": "readable/tokyo/assets/phone-BvNRaOR5.pretty.js"
@@ -5837,7 +6047,7 @@
     {
       "file": "tokyo/assets/profile-BmQKTAov-01.js",
       "title": "tokyo/assets/profile-BmQKTAov 01 — status",
-      "desc": "Lines 1-305. Markers: status(12), createelement(8).",
+      "desc": "Lines 1-305. Markers: status(12), createelement(8). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 305,
       "sourceFile": "readable/tokyo/assets/profile-BmQKTAov.pretty.js"
@@ -5845,7 +6055,7 @@
     {
       "file": "tokyo/assets/profile-BmQKTAov-02.js",
       "title": "tokyo/assets/profile-BmQKTAov 02 — append",
-      "desc": "Lines 306-517. Markers: append(19), createelement(19).",
+      "desc": "Lines 306-517. Markers: append(19), createelement(19). Range re-cut through the recorded semantic rename map.",
       "startLine": 306,
       "endLine": 517,
       "sourceFile": "readable/tokyo/assets/profile-BmQKTAov.pretty.js"
@@ -5864,7 +6074,7 @@
     {
       "file": "tokyo/assets/recovery-CHWBNwD3-01.js",
       "title": "tokyo/assets/recovery-CHWBNwD3 01 — buy",
-      "desc": "Lines 1-152. Markers: buy(4), createmarketclient(3).",
+      "desc": "Lines 1-152. Markers: buy(4), haspendingmarketticket(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 152,
       "sourceFile": "readable/tokyo/assets/recovery-CHWBNwD3.pretty.js"
@@ -10673,7 +10883,7 @@
     {
       "file": "tokyo/assets/rig-BjRdQXtM-01.js",
       "title": "tokyo/assets/rig-BjRdQXtM 01 — bones",
-      "desc": "Lines 1-31. Markers: bones(10), distanceto(2).",
+      "desc": "Lines 1-31. Markers: bones(10), canon_hip_y(2). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 31,
       "sourceFile": "readable/tokyo/assets/rig-BjRdQXtM.pretty.js"
@@ -10711,7 +10921,7 @@
     {
       "file": "tokyo/assets/scene-MReEd7Ml-01.js",
       "title": "tokyo/assets/scene-MReEd7Ml 01 — script",
-      "desc": "Lines 1-225. Markers: script(11), card(9).",
+      "desc": "Lines 1-225. Markers: script(11), card(9). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 225,
       "sourceFile": "readable/tokyo/assets/scene-MReEd7Ml.pretty.js"
@@ -10824,7 +11034,7 @@
     {
       "file": "tokyo/assets/signs-CcdyXn0R-01.js",
       "title": "tokyo/assets/signs-CcdyXn0R 01 — layer",
-      "desc": "Lines 1-126. Markers: layer(5), now(3).",
+      "desc": "Lines 1-126. Markers: layer(5), now(3). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 126,
       "sourceFile": "readable/tokyo/assets/signs-CcdyXn0R.pretty.js"
@@ -10924,7 +11134,7 @@
     {
       "file": "tokyo/assets/tokyo-BZXVhKTn-01.js",
       "title": "tokyo/assets/tokyo-BZXVhKTn 01 — math",
-      "desc": "Lines 1-306. Markers: math(7), bagbook(4).",
+      "desc": "Lines 1-306. Markers: math(7), bagbook(4). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 306,
       "sourceFile": "readable/tokyo/assets/tokyo-BZXVhKTn.pretty.js"
@@ -11215,7 +11425,7 @@
     {
       "file": "tokyo/assets/ui-Bz5oqxsZ-01.js",
       "title": "tokyo/assets/ui-Bz5oqxsZ 01 — createelement",
-      "desc": "Lines 1-252. Markers: createelement(13), label(13).",
+      "desc": "Lines 1-252. Markers: createelement(13), label(13). Range re-cut through the recorded semantic rename map.",
       "startLine": 1,
       "endLine": 252,
       "sourceFile": "readable/tokyo/assets/ui-Bz5oqxsZ.pretty.js"
@@ -11223,7 +11433,7 @@
     {
       "file": "tokyo/assets/ui-Bz5oqxsZ-02.js",
       "title": "tokyo/assets/ui-Bz5oqxsZ 02 — createelement",
-      "desc": "Oversized single declaration (kept whole). Lines 253-1005. Markers: createelement(27), kind(27).",
+      "desc": "Oversized single declaration (kept whole). Lines 253-1005. Markers: createelement(27), kind(27). Range re-cut through the recorded semantic rename map.",
       "startLine": 253,
       "endLine": 1005,
       "sourceFile": "readable/tokyo/assets/ui-Bz5oqxsZ.pretty.js"

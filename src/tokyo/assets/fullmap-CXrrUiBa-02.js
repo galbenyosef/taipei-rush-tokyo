@@ -43,7 +43,7 @@ var C = `"PingFang TC","Noto Sans TC","Microsoft JhengHei","Heiti TC",system-ui,
     race: `race`,
     culture: `culture`,
   },
-  k = class {
+  FullMap = class {
     kit;
     blips;
     gps;

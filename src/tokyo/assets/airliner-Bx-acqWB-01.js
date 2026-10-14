@@ -2,11 +2,11 @@
 // Lines 1-342 of readable/tokyo/assets/airliner-Bx-acqWB.pretty.js (statement-aligned).
 import { nn as e } from "./engine-BuS5QxN0.js";
 import { $ as t, et as n, nt as r, rt as i } from "./world-Bo9wkXrT.js";
-var a = 3.4,
+var BODY_Y = 3.4,
   o = 2,
-  s = 1.6,
-  c = 44,
-  l = 34,
+  MAIN_GEAR_Z = 1.6,
+  LENGTH = 44,
+  SPAN = 34,
   u = {
     rush: {
       tail: 13111342,
@@ -63,7 +63,7 @@ function g(e, t) {
     ((n.fillStyle = e), n.fillRect(0, 0, r, i), t(n, r, i));
   };
 }
-var _ = {
+var AIRLINER_SIGNS = {
   "rx-title": { cw: 4, ch: 1, paint: h(`狂飆航空`, `RUSH AIR`, `#c8102e`) },
   "rx-logo": {
     cw: 2,
@@ -153,9 +153,9 @@ function y(e, t, n, r, i, o, s, c, l) {
     let f = r + ((i - r) * d) / c,
       p = r + ((i - r) * (d + 1)) / c,
       m = n * u * Math.cos(f),
-      h = a + u * Math.sin(f),
+      h = BODY_Y + u * Math.sin(f),
       g = n * u * Math.cos(p),
-      _ = a + u * Math.sin(p),
+      _ = BODY_Y + u * Math.sin(p),
       v = t.v0 + ((t.v1 - t.v0) * d) / c,
       y = t.v0 + ((t.v1 - t.v0) * (d + 1)) / c,
       b = n > 0 ? s : o,
@@ -169,7 +169,7 @@ function b(e, t, n, r, i) {
   for (let e = 0; e < t.length; e += 2) a.push(t[e], -t[e + 1]);
   (e.extrude(a, r, i), e.pop());
 }
-function x(e, c, l = `rush`, d = !0) {
+function buildAirliner(e, c, l = `rush`, d = !0) {
   let f = u[l],
     p = i(15922422, t.PLAIN, { rough: 0.38, metal: 0.12 }),
     m = i(12172996, t.PLAIN, { rough: 0.45, metal: 0.3 }),
@@ -178,7 +178,7 @@ function x(e, c, l = `rush`, d = !0) {
     _ = i(1317668, t.PLAIN, { rough: 0.12, metal: 0.6 }),
     x = e.vcount;
   (e.push(),
-    e.translate(0, a, 22),
+    e.translate(0, BODY_Y, 22),
     e.rotateX(-Math.PI / 2),
     e.lathe(
       0,
@@ -224,10 +224,10 @@ function x(e, c, l = `rush`, d = !0) {
       o = t > 0 ? 15.5 : -17.5,
       s = t > 0 ? -17.5 : 15.5;
     (e.quad(
-      [t * n * Math.cos(i), a + n * Math.sin(i), o],
-      [t * n * Math.cos(i), a + n * Math.sin(i), s],
-      [t * n * Math.cos(r), a + n * Math.sin(r), s],
-      [t * n * Math.cos(r), a + n * Math.sin(r), o],
+      [t * n * Math.cos(i), BODY_Y + n * Math.sin(i), o],
+      [t * n * Math.cos(i), BODY_Y + n * Math.sin(i), s],
+      [t * n * Math.cos(r), BODY_Y + n * Math.sin(r), s],
+      [t * n * Math.cos(r), BODY_Y + n * Math.sin(r), o],
       0,
       0,
       S,
@@ -243,10 +243,10 @@ function x(e, c, l = `rush`, d = !0) {
       i = 1.51,
       o = 1.81;
     for (let s of [-1, 1]) {
-      let c = [s * i * Math.cos(t), a + i * Math.sin(t), r],
-        l = [s * o * Math.cos(t), a + o * Math.sin(t), -18],
-        u = [s * o * Math.cos(n), a + o * Math.sin(n), -18],
-        d = [s * i * Math.cos(n), a + i * Math.sin(n), r];
+      let c = [s * i * Math.cos(t), BODY_Y + i * Math.sin(t), r],
+        l = [s * o * Math.cos(t), BODY_Y + o * Math.sin(t), -18],
+        u = [s * o * Math.cos(n), BODY_Y + o * Math.sin(n), -18],
+        d = [s * i * Math.cos(n), BODY_Y + i * Math.sin(n), r];
       s > 0 ? e.quad(l, c, d, u, 0, 0, _) : e.quad(c, l, u, d, 0, 0, _);
     }
   }
@@ -328,7 +328,7 @@ function x(e, c, l = `rush`, d = !0) {
     (e.cylinder(0, -17, 0.09, 0.09, 0.45, 1.7, 6, !1, m),
       e.setPaint(n).box(-0.38, 0, -17.35, 0.38, 0.72, -16.65, 63));
     for (let t of [-1, 1])
-      (e.cylinder(t * 3.2, s, 0.13, 0.13, 0.6, 2.0999999999999996, 6, !1, m),
+      (e.cylinder(t * 3.2, MAIN_GEAR_Z, 0.13, 0.13, 0.6, 2.0999999999999996, 6, !1, m),
         e
           .setPaint(n)
           .box(

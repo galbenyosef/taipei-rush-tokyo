@@ -1,6 +1,6 @@
 // tokyo/assets/market-l-6OeMtj 02 — symbol
 // Lines 198-1261 of readable/tokyo/assets/market-l-6OeMtj.pretty.js (statement-aligned).
-function E(y, x) {
+function mountMarket(y, x) {
   let S = (e, t) => x.t({ zh: e, en: t }),
     E = (e) => x.t(e),
     D = () => {
@@ -86,7 +86,7 @@ function E(y, x) {
       (fe(e) || Y(e)?.tradable === !0),
     me = () => {
       try {
-        return l();
+        return hasPendingMarketTicket();
       } catch {
         return !1;
       }
@@ -1012,7 +1012,7 @@ function E(y, x) {
     let e = ++k;
     ((te = D()), (H = ``), (B = !1), Q());
     try {
-      let t = await u(x.ctx);
+      let t = await createMarketClient(x.ctx);
       if (!O || e !== k) return;
       A = t;
       let { snapshot: n, account: r } = await t.refresh();

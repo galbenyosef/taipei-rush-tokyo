@@ -1,4 +1,4 @@
-// tokyo/assets/boot-C6yF8B4X 01 — anonymous
+// tokyo/assets/boot-C6yF8B4X 01 — settleidentity
 // Lines 1-55 of readable/tokyo/assets/boot-C6yF8B4X.pretty.js (statement-aligned).
 import { Dn as e, Sn as t, jn as n, xn as r } from "./engine-BuS5QxN0.js";
 import { f as i } from "./shared-DcD5mkpI.js";
@@ -12,25 +12,25 @@ import {
   r as f,
   t as p,
 } from "./controllers-mah1C7rD.js";
-function m() {
+function settleIdentity() {
   e();
   let n = o(),
     i = n && !s() && n.anonymous === !1 ? n.user_id : `guest`,
     a = t();
   return (a !== i && r(i, a === `guest`), f(t()), t());
 }
-async function h() {
-  if ((m(), !o() || s())) return;
+async function hydrateBeforeTravel() {
+  if ((settleIdentity(), !o() || s())) return;
   let e = p(),
     t = !1,
     r = async () => {
       let r = await c(!1);
       if (!r) {
-        (!o() && n().expired && a(`expired`), m());
+        (!o() && n().expired && a(`expired`), settleIdentity());
         return;
       }
       t ||
-        m() !== (r.anonymous === !1 ? r.user_id : `guest`) ||
+        settleIdentity() !== (r.anonymous === !1 ? r.user_id : `guest`) ||
         (await l(r), t) ||
         (await e.connect(r),
         i(),

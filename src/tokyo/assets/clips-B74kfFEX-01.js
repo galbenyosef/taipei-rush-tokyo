@@ -1,7 +1,7 @@
 // tokyo/assets/clips-B74kfFEX 01 — math
 // Lines 1-161 of readable/tokyo/assets/clips-B74kfFEX.pretty.js (statement-aligned).
 import "./pose-hAXyTQQR.js";
-var e = class {
+var Clip = class {
     name;
     n;
     loop;
@@ -111,7 +111,7 @@ var e = class {
       return this.info.events?.[e];
     }
   },
-  t = class {
+  AnimLibrary = class {
     clips = new Map();
     fps;
     bytes;
@@ -133,7 +133,7 @@ var e = class {
       let a = 8 + r + ((4 - ((8 + r) % 4)) % 4),
         o = new Int16Array(t, a, (t.byteLength - a) >> 1);
       ((this.fps = i.fps), (this.bytes = t.byteLength));
-      for (let t of i.clips) this.clips.set(t.name, new e(t, o, i.per, i.fps));
+      for (let t of i.clips) this.clips.set(t.name, new Clip(t, o, i.per, i.fps));
     }
     get(e) {
       let t = this.clips.get(e);
@@ -145,19 +145,19 @@ var e = class {
     }
   },
   n = null,
-  r = new URL(`/tokyo/assets/anim-CQkLTvTS.bin`, `` + import.meta.url).href;
-function i(e = r) {
-  return e === r
+  DEFAULT_PACK_URL = new URL(`/tokyo/assets/anim-CQkLTvTS.bin`, `` + import.meta.url).href;
+function loadAnimLibrary(e = DEFAULT_PACK_URL) {
+  return e === DEFAULT_PACK_URL
     ? (n ||
         ((n = fetch(e)
           .then((e) => {
             if (!e.ok) throw Error(`anim: clip pack ${e.status}`);
             return e.arrayBuffer();
           })
-          .then((e) => new t(e))),
+          .then((e) => new AnimLibrary(e))),
         n.catch(() => (n = null))),
       n)
     : fetch(e)
         .then((e) => e.arrayBuffer())
-        .then((e) => new t(e));
+        .then((e) => new AnimLibrary(e));
 }

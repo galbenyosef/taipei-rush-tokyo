@@ -247,7 +247,7 @@ function h(e, t, n) {
 var g,
   _ = (e) => (e.status === `ok` && (g = e.profile ?? null), e),
   v = () => u(`get_my_profile`).then(_),
-  y = () =>
+  myProfile = () =>
     g === void 0
       ? v().then((e) => (e.status === `ok` ? (e.profile ?? null) : null))
       : Promise.resolve(g);
@@ -274,7 +274,7 @@ function x(e) {
     en: d.renameWait.en.replace(`{date}`, n.toLocaleString(`en-US`, r)),
   };
 }
-function S(e, t) {
+function mountNameRow(e, t) {
   let n = document.createElement(`button`);
   ((n.type = `button`),
     (n.className = `cloud-row social-name-row`),

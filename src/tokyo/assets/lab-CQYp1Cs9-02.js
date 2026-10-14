@@ -1,11 +1,11 @@
 // tokyo/assets/lab-CQYp1Cs9 02 — drv
 // Lines 342-626 of readable/tokyo/assets/lab-CQYp1Cs9.pretty.js (statement-aligned).
-async function N(e) {
+async function createAnimLab(e) {
   let n = e.params.get(`animlab`);
   if (!n) return null;
   let r = n in T ? n : `showcase`,
     i = T[r],
-    a = await m(),
+    a = await loadAnimLibrary(),
     o = new t();
   ((o.name = `animlab`), e.scene.add(o));
   try {
@@ -27,7 +27,7 @@ async function N(e) {
       S,
       C;
     if (l === `mocap`)
-      ((S = new p(f(d), a, {
+      ((S = new Animator(bindRig(d), a, {
         groundAt: (t, n, r) =>
           e.groundAt ? e.groundAt(t, n, r) : e.plan.groundHeight(t, n),
         seed: 11 + r,

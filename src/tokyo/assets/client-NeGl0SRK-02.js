@@ -168,7 +168,7 @@ async function I() {
       .catch(t);
   });
 }
-function L(e) {
+function createMarketClient(e) {
   return (
     F?.(),
     (N ??= R(e).catch((e) => {

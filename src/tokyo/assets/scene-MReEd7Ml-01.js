@@ -29,7 +29,7 @@ function r(e, t) {
   let n = Math.min(1, (1.3 - t) / 0.85);
   return Math.min(92, e * (1 + 0.45 * n));
 }
-var i = class {
+var FlightScene = class {
   ctx;
   root = null;
   card = null;

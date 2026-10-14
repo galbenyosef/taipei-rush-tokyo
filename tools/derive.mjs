@@ -257,6 +257,19 @@ const recordsFor = (rm, srcRel) => {
   if (!files && !scoped) return null;
   return { files, scoped };
 };
+// The authored binding map (tools/names.json): chunk capture rel -> {old: new}
+// for the chunk's top-level bindings. It is recorded into split-spec per source
+// as `renameBindings` (only the rules that actually fired) so the reconstruction
+// gates can rename the index-only export tables too — their local-side names
+// reference the renamed bindings and are not part of any src slice.
+function loadNames() {
+  const p = path.join(here, "names.json");
+  if (!fs.existsSync(p)) return {};
+  const all = JSON.parse(fs.readFileSync(p, "utf8"));
+  const out = {};
+  for (const [k, v] of Object.entries(all)) if (!k.startsWith("__")) out[k] = v.renames || v;
+  return out;
+}
 
 async function main() {
   const { mod: prettier, at } = await loadPrettier();
@@ -279,6 +292,7 @@ async function main() {
   fs.mkdirSync(srcDir, { recursive: true });
   const written = { readable: new Set(), src: new Set() };
   const renameMap = loadRenameMap();
+  const names = { byCapture: loadNames() };
   let renamedFiles = 0;
   let renamedNames = 0;
   let renamedOccurrences = 0;
@@ -412,6 +426,12 @@ async function main() {
     let perFileSkipped = 0;
     let perFileVendor = 0;
     let perFileRenamed = 0;
+    const chunkSliceFiles = [];
+    const targetsByOld = new Map(); // rename map: old name -> Set(targets) seen in this chunk's slices
+    const noteTarget = (old, target) => {
+      if (!targetsByOld.has(old)) targetsByOld.set(old, new Set());
+      targetsByOld.get(old).add(target);
+    };
     for (const b of blocks) {
       if (b.kind === "slice") {
         nn++;
@@ -422,12 +442,11 @@ async function main() {
         const body = record ? applyRecordedMap(rawBody, record) : rawBody;
         if (record) {
           perFileRenamed++;
-          for (const [name, hits] of Object.entries(record.scoped || {})) {
-            renamedNames++;
-            renamedOccurrences += hits.length;
-          }
-          for (const name of Object.keys(record.files || {})) renamedNames++;
+          for (const [old, target] of Object.entries(record.files || {})) noteTarget(old, target);
+          for (const [old, hits] of Object.entries(record.scoped || {}))
+            for (const [, target] of hits) noteTarget(old, target);
         }
+        chunkSliceFiles.push(file);
         const ms = markerWords(body);
         const oversized = b.count === 1 && b.B - b.A + 1 > MAX_WINDOW;
         const sliceText =
@@ -472,6 +491,16 @@ async function main() {
       }
     }
     if (perFileRenamed) renamedFiles++;
+    // the authored rules that actually fired (evidence: their targets appear in
+    // this chunk's recorded map) — the chunk-level binding map recorded in the spec
+    const authored = names.byCapture?.[rel] || {};
+    const renameBindings = {};
+    for (const [old, target] of Object.entries(authored)) {
+      if (targetsByOld.get(old)?.has(target)) {
+        renameBindings[old] = target;
+        renamedNames++;
+      }
+    }
     slicedTotal += nn;
     skippedTotal += perFileSkipped;
     sources.push({
@@ -486,6 +515,7 @@ async function main() {
       idempotent: true,
       tag,
       slices: nn,
+      renameBindings,
       derived:
         `readable + ${nn} statement-aligned slice(s)` +
         (perFileRenamed ? ` (${perFileRenamed} through the recorded rename map)` : "") +
@@ -697,6 +727,11 @@ async function main() {
   }
 
   // ── 5) split-spec.json (2-space indent + trailing newline) ─────────────
+  const recordedIndexedOccurrences = Object.values(renameMap.scoped).reduce(
+    (n, m) => n + Object.values(m).reduce((k, hits) => k + hits.length, 0),
+    0,
+  );
+  renamedOccurrences = recordedIndexedOccurrences;
   const appJs = sources.filter((s) => s.derived.startsWith("readable +"));
   const vendorJsS = sources.filter((s) => /wholeFile\)$/.test(s.derived) && s.capture.endsWith(".js"));
   const cssSources = sources.filter((s) => s.sourceFile.endsWith(".pretty.css"));

@@ -159,7 +159,7 @@ import {
   r as st,
   s as ct,
 } from "./audio-DzcbodvB.js";
-import { t as lt } from "./region-tokyo-BcM3fReU.js";
+import { t as TOKYO } from "./region-tokyo-BcM3fReU.js";
 var ut = { renderer: null, mobile: null, halveHeroMaps: null },
   dt = Ee === `tokyo`,
   ft = new Set(),

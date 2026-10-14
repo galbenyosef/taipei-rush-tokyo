@@ -371,6 +371,38 @@ export function applyRecordedMap(text, record) {
   return out + text.slice(last);
 }
 
+/**
+ * Apply a chunk-level BINDING map ({ oldTopLevelName: newName }) to a piece of
+ * the chunk that is NOT re-cut into src/ — the final `export {…}` table, which
+ * split-spec records as an index-only skipped section. Its local-side names are
+ * references to the chunk's own top-level bindings, so the campaign renames them
+ * too; the public (aliased) side is foreign and stays. The reconstruction gates
+ * use this to make the whole chunk parse and resolve again. Property accesses,
+ * object keys, labels and foreign positions are left alone, exactly as in
+ * applyRecordedMap.
+ */
+export function applyBindingMap(text, map) {
+  if (!map || !Object.keys(map).length) return text;
+  const ts = tokens(text);
+  const foreign = foreignNameIndices(ts);
+  const reps = [];
+  for (let i = 0; i < ts.length; i++) {
+    const t = ts[i];
+    if (t.t !== "id") continue;
+    if (!Object.prototype.hasOwnProperty.call(map, t.v)) continue;
+    if (foreign.has(i)) continue;
+    const prev = ts[i - 1];
+    const isSpread =
+      prev && prev.t === "pun" && prev.v === "." && ts[i - 2] && ts[i - 2].t === "pun" && ts[i - 2].v === ".";
+    const isProp = prev && prev.t === "pun" && prev.v !== "?" && (prev.v === "." || prev.v === "?.") && !isSpread;
+    const next = ts[i + 1];
+    const isKey = next && next.t === "pun" && next.v === ":" && !(prev && prev.t === "pun" && prev.v === "?");
+    if (isProp || isKey) continue;
+    reps.push({ s: t.s, e: t.e, to: map[t.v] });
+  }
+  return spliceTokens(text, reps);
+}
+
 // ---- recovery --------------------------------------------------------------
 // Drop whole-line `//` comments -- but only lines where that `//` is real code.
 // A slice can carry a GLSL or shader template literal whose lines begin with

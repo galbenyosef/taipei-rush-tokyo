@@ -134,7 +134,7 @@ m({
     return ((t.search = ``), (t.hash = ``), { ...e, url: t.toString() });
   },
 });
-function g(e, t) {
+function trackEvent(e, t) {
   try {
     h(e, t);
   } catch {}

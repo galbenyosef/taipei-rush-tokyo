@@ -1,6 +1,6 @@
 // tokyo/assets/animator-C4Q6-_Wy 02 — math
 // Lines 139-1408 of readable/tokyo/assets/animator-C4Q6-_Wy.pretty.js (statement-aligned).
-var E = {
+var ACTION_DEFAULTS = {
     jab: { layer: `auto`, fadeIn: 0.06, fadeOut: 0.2 },
     cross: { layer: `auto`, fadeIn: 0.06, fadeOut: 0.2 },
     hook: { layer: `auto`, fadeIn: 0.07, fadeOut: 0.22 },
@@ -78,10 +78,10 @@ var E = {
     .multiply(new e().setFromAxisAngle(new n(0, 1, 0), -0.25)),
   ue = new n(-0.55, -1, 0.45),
   de = [`walk`, `walk_fast`, `jog`, `run`, `sprint`],
-  fe = class {
+  Animator = class {
     rig;
     lib;
-    input = T();
+    input = makeAnimInput();
     kin;
     pose = p();
     rootDelta = { x: 0, z: 0, yaw: 0 };
@@ -274,7 +274,7 @@ var E = {
     play(e, t = {}) {
       let n = ee[e];
       if (!n && !this.lib.has(e)) return !1;
-      let r = { ...(E[e] ?? {}), ...t },
+      let r = { ...(ACTION_DEFAULTS[e] ?? {}), ...t },
         i = n ? null : this.lib.get(e),
         a =
           r.layer === `upper` ||
@@ -421,7 +421,7 @@ var E = {
       (r.fk(n, i),
         t > 0 && (this.lookAt(t, n), this.armsIK(n)),
         this.footIK && e && t > 0 && this.feetIK(t, n, e),
-        m(this.rig, n),
+        applyPose(this.rig, n),
         t > 0 && this.extras(t));
     }
     weights(e, t, n) {

@@ -33,10 +33,10 @@ function c() {
     return `unreadable`;
   }
 }
-function l() {
+function hasPendingMarketTicket() {
   return c() !== null;
 }
-function u() {
+function notifyMarketTicketChange() {
   for (let e of s)
     try {
       e();
@@ -45,7 +45,7 @@ function u() {
 function d(e) {
   let t = !1,
     n = () => {
-      let n = l();
+      let n = hasPendingMarketTicket();
       (n && !t && e(), (t = n));
     },
     r = (e) => {
@@ -61,7 +61,7 @@ function d(e) {
   );
 }
 var f = [8, 20, 45, 90, 180, 300];
-function p(n, r) {
+function resolveInBackground(n, r) {
   let i,
     a = 0,
     o = !1,
@@ -135,11 +135,11 @@ function p(n, r) {
   }
   let h = d(() => u(2)),
     g = () => {
-      l() && ((a = 0), u(1));
+      hasPendingMarketTicket() && ((a = 0), u(1));
     };
   return (
     window.addEventListener(`online`, g),
-    l() &&
+    hasPendingMarketTicket() &&
       r(
         {
           zh: `上一筆股票委託確認中…`,

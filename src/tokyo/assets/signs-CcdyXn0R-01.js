@@ -13,7 +13,7 @@ import { sn as s } from "./engine-BuS5QxN0.js";
 import "./world-Bo9wkXrT.js";
 var c = 128,
   l = 4;
-function u(e) {
+function cellTexels(e) {
   let t = e || 1;
   return t <= 0.5 ? 64 : t < 1 ? 96 : 128;
 }
@@ -35,7 +35,7 @@ function d(e, t, n) {
   }
 }
 var f = { layer: 0, u0: 0, v0: 0, u1: 1, v1: 1, aspect: 1 },
-  p = class p {
+  PackSigns = class PackSigns {
     rects = new Map();
     texture;
     layers = 0;
@@ -49,8 +49,8 @@ var f = { layer: 0, u0: 0, v0: 0, u1: 1, v1: 1, aspect: 1 },
       );
     }
     static async create(f, m, h, g, _, v = 2) {
-      let y = new p(),
-        b = u(m),
+      let y = new PackSigns(),
+        b = cellTexels(m),
         x = b * l,
         S = b / c,
         C = Object.entries(f).map(([e, t]) => ({

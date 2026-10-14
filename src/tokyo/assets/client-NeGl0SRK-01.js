@@ -16,7 +16,7 @@ import {
   t as h,
   u as g,
 } from "./controllers-mah1C7rD.js";
-import { notifyMarketTicketChange as _ } from "./recovery-CHWBNwD3.js";
+import { notifyMarketTicketChange as notifyMarketTicketChange } from "./recovery-CHWBNwD3.js";
 var v = class extends Error {
     code;
     constructor(e) {
@@ -106,7 +106,7 @@ var S = new Set([
         }))
       )
         throw new v(`storage_unavailable`);
-      _();
+      notifyMarketTicketChange();
     }
     async trade(e) {
       if (!x(e)) throw new v(`invalid_order`);

@@ -4,7 +4,7 @@ import { Kt as e, R as t, tr as n, wt as r } from "./three-CC5Mkdpe.js";
 import {
   a as i,
   c as a,
-  i as o,
+  i as POSE_LEN,
   l as s,
   n as c,
   o as l,
@@ -13,7 +13,7 @@ import {
   t as f,
   u as p,
 } from "./pose-hAXyTQQR.js";
-import { applyPose as m } from "./rig-BjRdQXtM.js";
+import { applyPose as applyPose } from "./rig-BjRdQXtM.js";
 var h = new e(),
   g = new e(),
   _ = new n(),
@@ -120,7 +120,7 @@ function w(e, t, n, r, i, a, o, s = 1, c = 0.03) {
     ee
   );
 }
-function T() {
+function makeAnimInput() {
   return {
     speed: 0,
     dirX: 0,

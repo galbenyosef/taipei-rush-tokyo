@@ -1,15 +1,15 @@
 // tokyo/assets/rig-BjRdQXtM 01 — bones
 // Lines 1-31 of readable/tokyo/assets/rig-BjRdQXtM.pretty.js (statement-aligned).
 import "./pose-hAXyTQQR.js";
-var e = 0.977;
-function t(t) {
+var CANON_HIP_Y = 0.977;
+function bindRig(t) {
   let n = t.joints,
     r = n[0].y;
   return {
     bones: t.bones,
     joints: n,
     rest: t.bones.map((e) => e.position.clone()),
-    scale: r / e,
+    scale: r / CANON_HIP_Y,
     hipY: r,
     thighLen: n[11].distanceTo(n[12]),
     shinLen: n[12].distanceTo(n[13]),
@@ -22,7 +22,7 @@ function t(t) {
     jaw: t.bones[24] ?? null,
   };
 }
-function n(e, t, n = 0) {
+function applyPose(e, t, n = 0) {
   let r = e.bones;
   for (let e = 0; e < 19; e++) {
     let n = e * 4;

@@ -1,6 +1,6 @@
 // tokyo/assets/lab-X7McqYcL 02 — params
 // Lines 52-379 of readable/tokyo/assets/lab-X7McqYcL.pretty.js (statement-aligned).
-async function M(t) {
+async function createAvatarLab(t) {
   let r = t.params.get(`avatarlab`);
   if (!r) return null;
   let i = r === `1` ? `compare` : r,

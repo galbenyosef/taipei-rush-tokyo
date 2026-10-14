@@ -14,9 +14,9 @@ import {
   v as u,
 } from "./three-CC5Mkdpe.js";
 import { nn as d } from "./engine-BuS5QxN0.js";
-import { bindRig as f } from "./rig-BjRdQXtM.js";
-import { Animator as p } from "./animator-C4Q6-_Wy.js";
-import { loadAnimLibrary as m } from "./clips-B74kfFEX.js";
+import { bindRig as bindRig } from "./rig-BjRdQXtM.js";
+import { Animator as Animator } from "./animator-C4Q6-_Wy.js";
+import { loadAnimLibrary as loadAnimLibrary } from "./clips-B74kfFEX.js";
 import { a as h, m as g, n as _, s as v } from "./characters-BvEb7Acx.js";
 import { Ut as y } from "./actors-Bnj6Q1ad.js";
 var b = 1.75,
