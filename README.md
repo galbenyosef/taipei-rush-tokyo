@@ -63,12 +63,26 @@ San-Francisco-only phone key art this Tokyo deploy never serves.
 - `.upstream/manifest.json` — sha256 for every captured file (Gen-A)
 - `_mirror-report.json` — crawl record (fetched paths, 404 gaps, external and
   live-backend lists)
-- `readable/` — prettified derived layer (pinned prettier 3.9.6): 104 JS + 11
-  CSS pretties plus 11 inline-block twins and `index-inline-map.json`
+- `readable/` — prettified derived layer (pinned prettier 3.9.6) that **mirrors
+  the served paths**: 104 JS + 11 CSS pretties under `readable/tokyo/assets/…`,
+  `readable/assets/…`, `readable/avatars/basis/…`, `readable/_vercel/…`, plus 11
+  inline-block twins (`readable/tokyo/index-inline-*.pretty.*`) and
+  `readable/index-inline-map.json`
 - `src/` + `split-spec.json` — 1,187 statement-aligned slices across 92 app
-  chunks, with the recorded derivation spec
+  chunks in the same served-path structure (`src/tokyo/assets/<chunk>-NN.js`),
+  re-cut through the recorded rename map, with the derivation spec
+- `rename-map.json` + `tools/names.json` — the identifier rename campaign: the
+  recovered per-slice map (`files` word-boundary + `scoped` token-index records)
+  and the reviewed worklist with per-name evidence
 - `tools/derive.mjs` — rebuild `readable/` + `src/` + `split-spec.json`
-- `tools/audit.js` — integrity gate for the derived layers (`AUDIT PASS`)
+- `tools/audit.js` — integrity gate for the derived layers and the rename map
+  (`AUDIT PASS`)
+- `tools/apply-names.mjs`, `tools/propose-names.mjs`,
+  `tools/recover-scoped-map.mjs` — write / propose / record rename batches
+- `tools/verify-rename.mjs`, `tools/check-chunk.mjs`, `tools/refcheck.mjs`,
+  `tools/engine/rename-layer.mjs`, `tools/lib-acorn.mjs` (+ gitignored
+  `tools/.deps`, acorn 8.14.1, authoring-time only) — the rename gates and the
+  shared tokenizer layer
 - `tools/verify.mjs` — re-hash the capture against the manifest
 - `tools/update.mjs` — read-only drift probe against the live site
 - `tools/capture.mjs` — the byte-exact capture + runtime-closure fetcher
@@ -108,9 +122,15 @@ needed for cloud saves.
 ## Verify
 
 ```
-node tools/verify.mjs     # re-hash the capture against the manifest
-node tools/audit.js       # derived-layer integrity gate (AUDIT PASS)
+node tools/verify.mjs                # re-hash the capture against the manifest
+node tools/audit.js                  # derived-layer + rename-map gate (AUDIT PASS)
+node tools/verify-rename.mjs --all   # per-slice reproduction + references/bindings
+node tools/check-chunk.mjs --all     # cross-slice calls resolve after renames
 ```
+
+The rename gates need acorn (authoring-time only): it installs into the
+gitignored `tools/.deps/` on first use (`npm install --prefix tools/.deps acorn@8.14.1`)
+and is never needed by `derive.mjs`, the capture or the served app.
 
 ## Updating from upstream
 
@@ -122,6 +142,15 @@ The probe never rewrites the capture — a mirror is a point-in-time snapshot.
 Refreshing means re-running `node tools/capture.mjs` (byte-exact fetch +
 closure to fixpoint), re-cutting `readable/` + `src/` with `node tools/derive.mjs`,
 and re-passing `node tools/audit.js`; files being replaced go to `legacy/<date>/`.
+
+After a capture refresh the chunk hashes in the filenames change, so the rename
+campaign is re-derived too: `tools/names.json` keys are the old capture paths,
+`tools/propose-names.mjs` re-proposes the evidence-driven rules for the new
+hashes, `tools/apply-names.mjs --all` rewrites the slices,
+`tools/recover-scoped-map.mjs` re-records `rename-map.json`, and the four gates
+above must pass again. `tools/derive.mjs` then re-cuts byte-identically from the
+recorded map (its self-check fails loudly if the map addresses a token the
+readable no longer has).
 
 ### 2026-10-13 capture, derivation + boot note
 
@@ -194,8 +223,135 @@ and re-passing `node tools/audit.js`; files being replaced go to `legacy/<date>/
   e.g. `xpfasd2/taipei-gta`, self-described "taipei-rush-clone", embeds the
   real game in an iframe and is not its source. The library credits (three.js,
   Rocketbox) are not the project's source. The mirror stands.
-- **Open task** — the identifier rename campaign (PLAN §5) is not done:
-  `src/` keeps the bundle's own minified names.
+- **Open task (2026-10-13)** — the identifier rename campaign (PLAN §5) was open
+  as of this note (`src/` kept the bundle's own minified names). **Started and
+  partially applied 2026-10-14** — see the section below: the tooling exists, 244
+  rules are reviewed and 243 are applied over 37 of 92 chunks, and the exact
+  remaining scope is listed there.
+
+### 2026-10-14 structure + rename campaign (reversal pass)
+
+Mission of this pass: converge the derived layers on the real project shape and
+run the PLAN §5 identifier rename campaign. The capture was **not** touched —
+`verify.mjs` still re-hashes all 179 files (0 problems) — so this section is
+entirely about `readable/`, `src/`, `split-spec.json`, `rename-map.json` and
+`tools/`.
+
+- **Inventory (source maps + module boundaries) — both negative, recorded**:
+  - *Source maps*: zero `sourceMappingURL` occurrences across the capture
+    (html/js/css) and no `.map` file in it, so no original tree can be
+    reconstructed from maps; the derivation stays a prettier/slice pass.
+  - *Module boundaries*: the 92 app chunks are **flat rolldown ES modules**
+    (single top-level statement lists, no Turbopack/module-factory wrappers,
+    no `__esm`/`__commonJS`/`require_` machinery; each chunk opens with its own
+    `import` clauses and ends with a plain `export {…}` table). There is no
+    factory family to split on, so the factory-family split of the
+    spawn-dust-2-dm / mindfall precedents is **not applicable here** — the
+    statement-aligned slice remains the true boundary this bundle exposes.
+- **Structure — `readable/` and `src/` now mirror the served paths** (PLAN §2
+  "capture path is the real path"): a captured file at
+  `tokyo/assets/actors-Bnj6Q1ad.js` derives to
+  `readable/tokyo/assets/actors-Bnj6Q1ad.pretty.js` and
+  `src/tokyo/assets/actors-Bnj6Q1ad-NN.js`; `__`-flattening is gone. Before/after
+  counts: `readable/` 115 files flat → 115 files under `readable/tokyo/assets/`,
+  `readable/assets/`, `readable/avatars/basis/`, `readable/_vercel/insights/`
+  (+ `readable/index-inline-map.json` at the root); `src/` 1,187 slices flat →
+  1,187 slices under `src/tokyo/assets/` (1,181), `src/assets/` (6 root-form
+  twins), plus the 107 index-only section names (3 vendor wholeFile, 84 skipped
+  export tables, 11 inline twins, 9 CSS wholeFile) whose `file` paths now also
+  read as served paths (`tokyo/assets/three-CC5Mkdpe-vendor.js`,
+  `tokyo/assets/actors-Bnj6Q1ad-tail-export.js`, `tokyo/index-inline-1.js`, …).
+  Slice headers carry the served tag (e.g. `// tokyo/assets/actors-Bnj6Q1ad 03 —
+  …`); `split-spec.json`'s `file`/`sourceFile`/`defaultFile` all use the new
+  paths.
+- **The 84 skipped export-table sections keep their semantics** and are now
+  *documented in the spec*: each is the chunk's final `export {…}` table — its
+  bindings live in the earlier slices, so a standalone tail carries no new
+  statements and is indexed (firstLine/lastLine re-verified textually) but never
+  sliced. New in this pass: the campaign renames the *local* side of those
+  tables too, so `split-spec.sources[].renameBindings` records the chunk's fired
+  binding map and the reconstruction gates (`verify-rename`, `check-chunk`) apply
+  it to the table when they rebuild a chunk — the public side is foreign and
+  stays.
+- **Rename campaign (PLAN §5) — batches 1+2, tooling + 244 reviewed rules over
+  37 chunks**: `tools/names.json` is the reviewed worklist (every entry carries
+  its evidence: own export table, semantic import, or a curated `curated:`
+  reason); `tools/apply-names.mjs` is the scope-aware writer (renames only
+  identifiers resolving to a chunk's top-level bindings and import aliases);
+  `tools/recover-scoped-map.mjs` records what actually fired into
+  `rename-map.json` by mechanical token alignment (both sides must agree in
+  every non-identifier position); `tools/derive.mjs` re-applies that map on
+  every re-cut, so the layer is reproducible. Renames applied: **243 (of 244
+  rules; 1 skipped — shorthand import) across 37 of 92 app chunks, 769
+  identifier occurrences**; the recovered map holds 136 word-boundary records
+  plus 139 indexed names over 325 occurrences (461 records, all index-validated
+  by the audit). Highlights: `session` (auth/turnstile/listener layer, 41 names:
+  `installStorageSync`, `ensureSession`, `runTurnstile`, `scheduleRefresh`, …),
+  `cities` (travel data, 18), `dom`/`tabs` (+ their root twins; helpers,
+  cross-tab play lock), `ui` (cloud panel entry points), `coordinator`
+  (`installCloud`/`deleteFlow`/`syncNow`/…), `airliner`, `clips`, `animator`,
+  `batch`, `board`, `fullmap`, `lab`, `market`, `panel`, `recovery`, `signs`,
+  `prefs`, `notice`, `boot`, `scene`.
+- **What the campaign deliberately does not rename** (honest scope):
+  - **public API names** — the aliased side of every `export { local as Public }`
+    (importers in other chunks use them) and, for chunks whose tables are
+    unaliased (`export { n, t }`), the exported locals themselves: a token
+    substitution there would change the served public name, so they are refused;
+  - names in shorthand positions (`{x}`, `const {x} = …`, `import {x}`) — the
+    key shares the token text, so splicing would rewrite a property name;
+  - **locals inside function bodies** — the campaign renames top-level bindings
+    and import aliases only (≈14k top-level names exist; 244 are named so far);
+  - **vendor identifiers** — the three.js r186 chunk, the Basis transcoder and
+    the Vercel insights script are wholeFile and never renamed, and the
+    three.js/Basis public names (`Kt`, `Wt`, …) are not derivable from this
+    capture, so importers keep them;
+  - the **55 chunks with no recorded renames** (the giant `region-tokyo`,
+    `actors`, `world`, worker/engine/asset chunks) keep the bundle's own
+    minified top-level names — the tooling is in place for further batches;
+    `split-spec.sources[].renameBindings` and `rename-map.json` are the record
+    of exactly what is applied.
+- **Gates (verbatim tails, 2026-10-14)**:
+  - `node tools/verify.mjs` → `179 files checked, 0 problems`
+  - `node tools/audit.js` → `AUDIT PASS — 1294 spec sections (1187/1187
+    src↔pretty round-trips byte-exact through the recorded rename map, 45
+    renamed slice(s), 115/115 pretty sources tiled contiguously, 84/84 skipped
+    export-table sections re-verified textually, 1187/1187 src slices + 104/104
+    readable/*.pretty.js parse standalone (node --input-type=module --check -),
+    115/115 pretties provably distinct from their capture source, 107 index-only
+    wholeFile/skipped sections carry no src file, 11 inline content block(s)
+    with twins + index-inline-map.json, 358/367 imports resolve inside the
+    capture (9 whitelisted machinery, 0 accepted as recorded 404 gaps), rename
+    map: 461 record(s) over 45 slice(s), all indices address the recorded
+    identifiers and no foreign position, 115/115 pretties re-render byte-exact
+    under pinned prettier 3.9.6 (format-to-fixed-point), capture manifest free
+    of derived layers)`
+  - `node tools/verify-rename.mjs --all` → `verify-rename: 1187/1187 slice(s)
+    reproduce byte-exact, 45 renamed slice(s) (325 indexed occurrence(s)),
+    92/92 chunk(s) references+bindings YES`
+  - `node tools/check-chunk.mjs --all` → `check-chunk: 92 chunk(s), 1187 slice
+    body(ies) substituted — all cross-slice calls resolve`
+  - `node tools/derive.mjs` → re-run byte-identical (readable/ + src/ +
+    split-spec.json hash-for-hash; proof run twice) and the self-check tail:
+    `derive: 116 readable file(s), 1187 src slices (1187/1187 parse standalone,
+    1187/1187 round-trip byte-exact through the recorded map), 84 skipped, 23
+    wholeFile, 104 pretty js parse clean, 70 notRendered, 0 orphan(s) pruned —
+    self-check clean`
+  - serve probe — mirror root served on loopback; `/tokyo/` (53,065 B),
+    `tokyo/assets/game-y-FF2uWA.js` (69,567 B), `/avatars/manifest.json`
+    (18,452 B), `/tokyo/title/menu-2560.webp` (234,300 B) and
+    `/avatars/basis/basis_transcoder.wasm` (527,333 B) all HTTP 200; the
+    listener (PID 7308) killed and the port verified closed (`netstat`, no
+    LISTENING on 8791).
+- **Upstream drift observed 2026-10-14 — the next refresh trigger**: the
+  read-only probe reports `DRIFT: 2 changed, 64 live-missing (of 179 captured)`
+  — `tokyo/index.html` and `avatars/manifest.json` changed and 64 hashed chunks
+  are no longer served (the live deploy was replaced, so the old chunk names
+  rotated away). The mirror is the **2026-10-13 point-in-time snapshot** and
+  stays as captured. A refresh is the PLAN §3 flow: capture → copy every file
+  being replaced into `legacy/2026-10-14/` → re-cut `readable/` + `src/` →
+  re-author the rename batch for the new hashes (`tools/propose-names.mjs`
+  regenerates the evidence rules; `terms/names.json` keys are capture paths) →
+  re-pass the four gates → boot test + cover re-shoot.
 
 ## Mirror conventions
 
@@ -209,6 +365,12 @@ and re-passing `node tools/audit.js`; files being replaced go to `legacy/<date>/
   and never rewrites the capture. (Local-only records like `_mirror-report.json`
   and the root-form duplicates always probe fine; the entry and all HTML are
   compared normalized.)
+- **Rename layer** — semantic identifiers in `src/` are a *recorded* layer, not
+  hand edits: `tools/names.json` (reviewed, evidence-annotated) → applied by
+  `tools/apply-names.mjs` → recovered into `rename-map.json` → re-applied by
+  `tools/derive.mjs` on every re-cut, and re-proved by `tools/audit.js`,
+  `tools/verify-rename.mjs` and `tools/check-chunk.mjs`. Public/vendor names and
+  shorthand positions are never renamed (see the 2026-10-14 note).
 
 ## Fleet status
 
