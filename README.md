@@ -473,6 +473,18 @@ serve probe (loopback 8791): /tokyo/ -> 200 (53,044 B); tokyo/assets/game-CPWU_Q
   connection refused)
 ```
 
+- **Origin redeploys with rotated chunk hashes — an external, non-content condition.** The
+  `update.mjs` tail above was green at capture time (2026-10-15 ~09:37 UTC). The origin then
+  **re-deployed the identical app with a fresh set of chunk hashes within minutes**, and does so
+  repeatedly: by ~13:00, ~13:10 and ~13:25 the live entry referenced three different `game-*.js`
+  names. The content is **provably unchanged** — the live entry (53,044 B) and the live entry chunk
+  are byte-identical to the capture **after collapsing hashed filenames** (normalized sha256 match),
+  and the avatars manifest/key art are unchanged. So the raw probe's `live-missing`/`changed` rows
+  are **hash churn, not content drift**: a strict byte probe against a per-deploy rehashing origin
+  cannot stay green, and the mirror records the captured deploy as its point-in-time snapshot. The
+  probe is deliberately **not weakened** (PLAN §2); this is recorded as the refresh's known
+  external condition. Re-verify content equivalence any time with the normalized compare in this
+  note (collapse `-<hash>` before `.js`/`.css`/… on both sides).
 - **Boot test** (`docs/boot-2026-10-15.png`, gameplay `docs/gameplay-2026-10-15.png`) — the served
   mirror boots to the TOKYO RUSH title screen (3D Tokyo night cityscape with Tokyo Tower/Shibuya
   Skye), enters the world as a guest (no login) and plays: the character 阿傑 on a Tokyo street with
