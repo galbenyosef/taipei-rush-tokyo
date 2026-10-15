@@ -571,8 +571,8 @@ if (manifest) {
 // ── vendor rule: wholeFile sections carry the recorded shape ────────────
 // (the VENDOR_GUARDS entries are required for this mirror; absence is a problem)
 const VENDOR_GUARDS = [
-  ["tokyo/assets/three-CC5Mkdpe-vendor.js", /WebGLRenderer/, /__THREE__/],
-  ["tokyo/assets/three-CC5Mkdpe-vendor.js", /REVISION\s*:\s*\(\)\s*=>\s*[`"']186[`"']/, /getContext/],
+  ["tokyo/assets/three-x0mFGRTI-vendor.js", /WebGLRenderer/, /__THREE__/],
+  ["tokyo/assets/three-x0mFGRTI-vendor.js", /REVISION\s*:\s*\(\)\s*=>\s*[`"']186[`"']/, /getContext/],
   ["avatars/basis/basis_transcoder-vendor.js", /var BASIS/, /basis_transcoder|wasmBinary/],
   ["_vercel/insights/script-vendor.js", /\/_vercel\/insights/, /addEventListener|XMLHttpRequest|fetch/],
 ];

@@ -1,0 +1,1820 @@
+import { R as e, qt as t, rr as n, wt as r } from "./three-x0mFGRTI.js";
+import { mr as i } from "./engine-wUBYs8Z3.js";
+import {
+  a,
+  c as o,
+  i as s,
+  l as c,
+  n as l,
+  o as u,
+  r as d,
+  s as f,
+  t as p,
+  u as m,
+} from "./pose-hAXyTQQR.js";
+import { applyPose as h } from "./rig-BjRdQXtM.js";
+var g = new t(),
+  _ = new t(),
+  v = new n(),
+  y = new n(),
+  b = new n(),
+  x = new n(),
+  S = new n(),
+  C = new t(),
+  w = class {
+    off = [];
+    gq = [];
+    gp = [];
+    constructor(e) {
+      for (let r = 0; r < 19; r++)
+        (this.off.push(e.rest[r].clone()),
+          this.gq.push(new t()),
+          this.gp.push(new n()));
+    }
+    fk(e, t) {
+      for (let n = 0; n < 19; n++) this.fkBone(e, n, t);
+    }
+    fkBone(e, t, n) {
+      let r = t * 4,
+        i = d[t];
+      i < 0
+        ? (this.gq[t].set(e[r], e[r + 1], e[r + 2], e[r + 3]),
+          this.gp[t].set(e[76] * n, e[77] * n, e[78] * n))
+        : (g.set(e[r], e[r + 1], e[r + 2], e[r + 3]),
+          this.gq[t].copy(this.gq[i]).multiply(g),
+          this.gp[t]
+            .copy(this.off[t])
+            .applyQuaternion(this.gq[i])
+            .add(this.gp[i]));
+    }
+    fkFrom(e, t, n) {
+      this.fkBone(e, t, n);
+      for (let r = 0; r < 19; r++) {
+        if (r === t) continue;
+        let i = d[r];
+        for (; i >= 0 && i !== t;) i = d[i];
+        i === t && this.fkBone(e, r, n);
+      }
+    }
+    setGlobal(e, t, n) {
+      let r = d[t];
+      r < 0 ? g.copy(n) : g.copy(this.gq[r]).invert().multiply(n);
+      let i = t * 4;
+      ((e[i] = g.x),
+        (e[i + 1] = g.y),
+        (e[i + 2] = g.z),
+        (e[i + 3] = g.w),
+        this.gq[t].copy(n));
+    }
+    rotateGlobal(e, t, n) {
+      (_.copy(n).multiply(this.gq[t]), this.setGlobal(e, t, _));
+    }
+  };
+function ee(e, t, n, r, i, a, o, s = 1, c = 0.03) {
+  let l = e.gp[n],
+    u = e.gp[r],
+    d = e.gp[i],
+    f = v.copy(u).sub(l).length(),
+    p = v.copy(u).sub(d).length(),
+    m = b.copy(a);
+  s < 1 && m.sub(d).multiplyScalar(s).add(d);
+  let h = v.copy(m).sub(l).length(),
+    w = f + p,
+    ee = w * c,
+    T = w - ee,
+    E = h / w;
+  if (h > T) {
+    let e = h - T;
+    h = T + ee * (1 - Math.exp(-e / ee));
+  }
+  h = Math.max(0.01, Math.min(w * 0.9999, h));
+  let D = (e) => (e < -1 ? -1 : e > 1 ? 1 : e),
+    O = v.copy(d).sub(l),
+    k = y.copy(u).sub(l),
+    A = O.length(),
+    j = Math.acos(D(O.dot(k) / (A * f + 1e-9))),
+    M = y.copy(l).sub(u),
+    N = b.copy(d).sub(u),
+    P = Math.acos(D(M.dot(N) / (f * p + 1e-9))),
+    F = Math.acos(D((p * p - f * f - h * h) / (-2 * f * h))),
+    I = Math.acos(D((h * h - f * f - p * p) / (-2 * f * p)));
+  (x.copy(O).cross(y.copy(u).sub(l)),
+    x.lengthSq() < 1e-8 && x.copy(o),
+    x.normalize());
+  let L = b.copy(a);
+  (s < 1 && L.sub(d).multiplyScalar(s).add(d), L.sub(l), S.copy(O).cross(L));
+  let R = Math.acos(D(O.dot(L) / (A * L.length() + 1e-9))),
+    z = S.lengthSq() > 1e-10;
+  z && S.normalize();
+  let B = e.gq[n];
+  (g.setFromAxisAngle(x, F - j),
+    z ? _.setFromAxisAngle(S, R).multiply(g) : _.copy(g),
+    C.copy(_).multiply(B),
+    e.setGlobal(t, n, C));
+  let V = e.gq[r];
+  return (
+    g.setFromAxisAngle(x, I - P),
+    C.copy(_).multiply(g).multiply(V),
+    e.setGlobal(t, r, C),
+    E
+  );
+}
+function T() {
+  return {
+    speed: 0,
+    dirX: 0,
+    dirZ: -1,
+    turnRate: 0,
+    accel: 0,
+    grounded: !0,
+    verticalSpeed: 0,
+    aim: 0,
+    aimYaw: 0,
+    aimPitch: 0,
+    lookYaw: 0,
+    lookPitch: -0.05,
+    lookWeight: 0.65,
+    guard: 0,
+  };
+}
+var E = {
+    jab: { layer: `auto`, fadeIn: 0.06, fadeOut: 0.2 },
+    cross: { layer: `auto`, fadeIn: 0.06, fadeOut: 0.2 },
+    hook: { layer: `auto`, fadeIn: 0.07, fadeOut: 0.22 },
+    uppercut: { layer: `auto`, fadeIn: 0.07, fadeOut: 0.22 },
+    kick: { layer: `full`, fadeIn: 0.1, fadeOut: 0.25 },
+    knockdown_back: { layer: `full`, fadeIn: 0.06, hold: !0 },
+    knockdown_front: { layer: `full`, fadeIn: 0.06, hold: !0 },
+    getup_back: { layer: `full`, fadeIn: 0.25, fadeOut: 0.45 },
+    getup_front: { layer: `full`, fadeIn: 0.25, fadeOut: 0.45 },
+    stagger: { layer: `full`, fadeIn: 0.08, fadeOut: 0.3 },
+    sit_down: { layer: `full`, fadeIn: 0.3, hold: !0 },
+    sit_idle: { layer: `full`, fadeIn: 0.25, loop: !0 },
+    stand_up: { layer: `full`, fadeIn: 0.2, fadeOut: 0.4 },
+    push: { layer: `full`, fadeIn: 0.3, loop: !0 },
+    wave: { layer: `auto`, fadeIn: 0.25, fadeOut: 0.4 },
+    cheer: { layer: `auto`, fadeIn: 0.2, fadeOut: 0.35 },
+    point: { layer: `auto`, fadeIn: 0.2, fadeOut: 0.35 },
+    clap: { layer: `auto`, fadeIn: 0.25, fadeOut: 0.35 },
+    bow: { layer: `full`, fadeIn: 0.3, fadeOut: 0.4 },
+    idle_stretch: { layer: `full`, fadeIn: 0.5, fadeOut: 0.6 },
+    dance_macarena: { layer: `full`, fadeIn: 0.4, loop: !0 },
+    dance_chicken: { layer: `full`, fadeIn: 0.4, loop: !0 },
+    dance_twist: { layer: `full`, fadeIn: 0.4, loop: !0 },
+    fight_idle: { layer: `full`, fadeIn: 0.3, loop: !0 },
+    roll: { layer: `full`, fadeIn: 0.08, fadeOut: 0.3 },
+    jump_over: { layer: `full`, fadeIn: 0.1, fadeOut: 0.25 },
+    dodge_l: { layer: `full`, fadeIn: 0.1, fadeOut: 0.25 },
+    dodge_r: { layer: `full`, fadeIn: 0.1, fadeOut: 0.25 },
+  },
+  D = { pray: 3.8, phone: 1e9 },
+  O = Math.PI * 2,
+  k = (e, t, n) => (e < t ? t : e > n ? n : e),
+  A = (e, t, n, r) => e + (t - e) * (1 - Math.exp(-n * r)),
+  j = (e) => (e <= 0 ? 0 : e >= 1 ? 1 : e * e * (3 - 2 * e)),
+  M = (e) => {
+    if (e > Math.PI || e < -Math.PI) {
+      if (!Number.isFinite(e)) return 0;
+      e = ((((e + Math.PI) % O) + O) % O) - Math.PI;
+    }
+    return e;
+  },
+  N = (e, t, n, r, i, a) => {
+    let o = i > 1 / 60 ? Math.ceil(i * 60) : 1,
+      s = i / o;
+    for (let i = 0; i < o; i++) ((t += (-e * n - t * r) * s), (e += t * s));
+    ((!Number.isFinite(e) || !Number.isFinite(t)) && ((e = 0), (t = 0)),
+      (a[0] = e),
+      (a[1] = t));
+  },
+  P = [0, 0],
+  F = new n(),
+  I = new n(),
+  L = new n(),
+  R = new n(),
+  z = new t(),
+  B = new t(),
+  V = new t(),
+  H = new r(),
+  te = new r(),
+  ne = new n(),
+  U = new n(),
+  W = { x: 0, z: 0, yaw: 0 },
+  re = new n(0, 1, 0),
+  ie = new t().setFromEuler(new e(Math.PI - 0.35, 0, 0)),
+  ae = new n(-0.035, 0.02, -0.21),
+  oe = new n(0.035, 0.02, -0.21),
+  se = new n(-0.06, 0, -0.27),
+  ce = new t()
+    .setFromEuler(new e(0.3, -0.42, 0, `YXZ`))
+    .multiply(
+      new t().setFromRotationMatrix(
+        new r().makeBasis(new n(0, 1, 0), new n(0, 0, 1), new n(1, 0, 0)),
+      ),
+    )
+    .multiply(new t().setFromAxisAngle(new n(0, 1, 0), -0.25)),
+  le = new n(-0.55, -1, 0.45),
+  ue = i
+    ? [`walk_n`, `walk_fast_n`, `jog_n`, `run_n`, `sprint_n`]
+    : [`walk`, `walk_fast`, `jog`, `run`, `sprint`],
+  de = { walk_n: 1.37, walk_fast_n: 1.75, jog_n: 3, run_n: 4.5, sprint_n: 7 },
+  fe = 0.55,
+  pe = -0.32,
+  me = -0.04,
+  he = 2.4,
+  ge = 4.2,
+  _e = 0.36,
+  ve = 0.5,
+  ye = class {
+    rig;
+    lib;
+    input = T();
+    kin;
+    pose = m();
+    rootDelta = { x: 0, z: 0, yaw: 0 };
+    feet = [0, 1].map(() => ({
+      lock: 0,
+      locked: !1,
+      pos: new n(),
+      yaw: 0,
+      contact: 1,
+      offset: 0,
+      stepping: !1,
+      stepU: 0,
+      from: new n(),
+      lastStep: 0,
+      spent: !1,
+    }));
+    onFootstep = null;
+    onEvent = null;
+    groundAt;
+    footIK;
+    timeScale = 1;
+    handIK = [
+      { pos: new n(), weight: 0, rot: null, pole: null },
+      { pos: new n(), weight: 0, rot: null, pole: null },
+    ];
+    autoRootMotion;
+    autoLand;
+    autoStop;
+    loco = m();
+    tmp = m();
+    acc = m();
+    airP = m();
+    actP = m();
+    out = m();
+    last = m();
+    lastVel = new Float32Array(60);
+    dbPose = m();
+    dbVel = new Float32Array(60);
+    dbT = 1;
+    dbDur = 0;
+    fwd = [];
+    back = [];
+    anchors = [];
+    dirA = 0;
+    idle = null;
+    idleAlt = [];
+    idleClip = null;
+    idleT = 0;
+    idleNext = 6;
+    idleTime = 0;
+    nextFidget = 14;
+    phase = 0;
+    spd = 0;
+    moveW = 0;
+    moving = !1;
+    aimW = 0;
+    backSet = !1;
+    warp = 0;
+    time = 0;
+    lastContact = [1, 1];
+    stopping = !1;
+    rootYaw = 0;
+    rootYawInit = !1;
+    yawOff = 0;
+    yawOffV = 0;
+    airW = 0;
+    airT = 0;
+    airClip = null;
+    wasGrounded = !0;
+    vy0 = 5;
+    lastVy = 0;
+    impact = -1;
+    act = null;
+    lean = 0;
+    reach = 1;
+    warpDrop = 0;
+    pathX = 0;
+    pathZ = 0;
+    pathYaw = 0;
+    pathRate = 0;
+    pathInit = !1;
+    pathYawOk = !1;
+    gazeP = 0;
+    gazeInit = !1;
+    cutT = -1;
+    cutDir = 0;
+    cutAmt = 0;
+    cutCool = 0;
+    cutEnv = 0;
+    pitch = 0;
+    breath = 0;
+    exert = 0;
+    flinch = { x: 0, z: 0, vx: 0, vz: 0 };
+    recoilA = 0;
+    recoilV = 0;
+    landDip = 0;
+    landV = 0;
+    headYaw = 0;
+    headPitch = 0;
+    gazeYaw = 0;
+    gazePitch = 0;
+    gazeT = 3;
+    guardW = 0;
+    blinkT = 2;
+    blinkP = -1;
+    hairA = 0;
+    hairV = 0;
+    fist = 0.25;
+    rng;
+    pelvisOff = 0;
+    brake = 0;
+    dead = !1;
+    constructor(e, t, n = {}) {
+      ((this.rig = e),
+        (this.lib = t),
+        (this.kin = new w(e)),
+        (this.groundAt = n.groundAt),
+        (this.footIK = n.footIK !== !1),
+        (this.autoRootMotion = n.autoRootMotion ?? `extract`),
+        (this.autoLand = n.autoLand !== !1),
+        (this.autoStop = n.autoStop !== !1),
+        (this.rng = (n.seed ?? 1) >>> 0 || 1));
+      let r = e.scale,
+        a = (e, n = !1) => {
+          if (!t.has(e)) return null;
+          let a = t.get(e),
+            o = a.speed * r,
+            s = a.dur,
+            c = 1,
+            l = i && !n ? de[e] : void 0;
+          if (l) {
+            let e = Math.max(1, (l * r) / o);
+            ((c = this.footIK ? e ** fe : 1), (s = a.dur / (e / c)), (o *= e));
+          }
+          return {
+            clip: a,
+            speed: o,
+            stride: o * s,
+            cycle: a.dur,
+            period: s,
+            reverse: n,
+            reach: c,
+          };
+        };
+      for (let e of ue) {
+        let t = a(e);
+        t && this.fwd.push(t);
+      }
+      this.fwd.sort((e, t) => e.speed - t.speed);
+      let o = a(`walk_back`);
+      o && this.back.push(o);
+      let s = a(`jog`, !0);
+      s && o && this.back.push(s);
+      let c = a(`strafe_r`),
+        l = a(`strafe_l`),
+        u = (e) => ({
+          nodes: e,
+          w: 0,
+          warp: 0,
+          fw: new Float32Array(Math.max(1, e.length)),
+        });
+      ((this.anchors = [
+        u(this.fwd),
+        u(c ? [c] : []),
+        u(this.back),
+        u(l ? [l] : []),
+      ]),
+        (this.anchors[0].w = 1),
+        (this.idle = t.has(`idle`) ? t.get(`idle`) : null));
+      for (let e of [`idle_look`, `idle_shift`])
+        t.has(e) && this.idleAlt.push(t.get(e));
+      ((this.idleClip = this.idle),
+        this.sampleLoco(0),
+        this.out.set(this.loco),
+        this.last.set(this.loco),
+        this.pose.set(this.loco));
+    }
+    rand() {
+      return (
+        (this.rng = (this.rng * 1664525 + 1013904223) >>> 0),
+        this.rng / 4294967296
+      );
+    }
+    get action() {
+      return this.act ? this.act.name : null;
+    }
+    get actionProgress() {
+      let e = this.act;
+      return e ? k((e.t - e.t0) / Math.max(0.001, e.t1 - e.t0), 0, 1) : -1;
+    }
+    get actionRate() {
+      return this.act ? this.act.speed : 1;
+    }
+    set actionRate(e) {
+      this.act && Number.isFinite(e) && e > 0 && (this.act.speed = e);
+    }
+    get actionTime() {
+      return this.act ? this.act.t : -1;
+    }
+    get gaitPhase() {
+      return this.phase;
+    }
+    get locoState() {
+      return {
+        speed: this.spd,
+        move: this.moveW,
+        aim: this.aimW,
+        warp: this.warp,
+        back: this.backSet,
+        stopping: this.stopping,
+      };
+    }
+    duration(e) {
+      return D[e] ? D[e] : this.lib.has(e) ? this.lib.get(e).dur : 0;
+    }
+    play(e, t = {}) {
+      let n = D[e];
+      if (!n && !this.lib.has(e)) return !1;
+      let r = { ...(E[e] ?? {}), ...t },
+        i = n ? null : this.lib.get(e),
+        a =
+          r.layer === `upper` ||
+          (r.layer === `auto` && (this.spd > 0.7 || !this.input.grounded))
+            ? `upper`
+            : `full`;
+      n && (a = `full`);
+      let o = i ? i.dur : n,
+        s = k(r.from ?? 0, 0, o),
+        c = Math.min(o, r.to ?? o),
+        l = {
+          clip: i,
+          gesture: n ? e : null,
+          name: e,
+          t: s,
+          t0: s,
+          t1: c,
+          speed: r.speed ?? 1,
+          layer: a,
+          fadeIn: r.fadeIn ?? (a === `upper` ? 0.1 : 0.2),
+          fadeOut: r.fadeOut ?? 0.25,
+          loop: !!r.loop,
+          hold: !!r.hold,
+          root: r.rootMotion ?? `pose`,
+          hitAt: i?.event(`hit`) ?? -1,
+          hitDone: !1,
+          onHit: r.onHit,
+          onEnd: r.onEnd,
+          stop: !1,
+        };
+      return (
+        (a === `full` || this.act) && this.transition(l.fadeIn),
+        (this.act = l),
+        (this.stopping = e.startsWith(`stop_`)),
+        (this.dead = !1),
+        !0
+      );
+    }
+    stop(e = 0.25) {
+      this.act &&
+        (this.transition(e),
+        (this.act = null),
+        (this.stopping = !1),
+        (this.dead = !1));
+    }
+    die(e = !1) {
+      (this.play(e ? `knockdown_front` : `knockdown_back`, {
+        hold: !0,
+        fadeIn: 0.06,
+      }),
+        (this.dead = !0));
+    }
+    hit(e, t, n = 0.6) {
+      let r = Math.hypot(e, t) || 1;
+      ((this.flinch.vx += (-t / r) * 10 * n),
+        (this.flinch.vz += (e / r) * 8 * n),
+        (this.landV -= 1.2 * n),
+        n >= 1 &&
+          this.input.grounded &&
+          (!this.act || this.act.layer === `upper`) &&
+          this.lib.has(`stagger`) &&
+          this.play(`stagger`, { fadeIn: 0.06 }));
+    }
+    recoil(e = 0.5) {
+      this.recoilV += 14 * e;
+    }
+    land(e) {
+      this.impact = e;
+    }
+    transition(e = 0.2) {
+      e <= 0 ||
+        (this.dbPose.set(this.last),
+        this.dbVel.set(this.lastVel),
+        (this.dbT = 0),
+        (this.dbDur = e));
+    }
+    transitionFromRig(e = 0.25) {
+      let t = this.rig.bones,
+        n = this.last;
+      for (let e = 0; e < 19; e++) {
+        let r = t[e].quaternion,
+          i = e * 4;
+        ((n[i] = r.x), (n[i + 1] = r.y), (n[i + 2] = r.z), (n[i + 3] = r.w));
+      }
+      let r = t[0].position,
+        i = this.rig.scale || 1;
+      ((n[76] = r.x / i),
+        (n[77] = r.y / i),
+        (n[78] = r.z / i),
+        this.lastVel.fill(0),
+        this.out.set(n),
+        this.transition(e));
+      for (let e of this.feet)
+        ((e.locked = !1), (e.lock = 0), (e.stepping = !1), (e.offset = 0));
+      ((this.rootYawInit = !1),
+        (this.yawOff = this.yawOffV = 0),
+        (this.pelvisOff = 0));
+    }
+    update(e, t) {
+      if (
+        ((e *= this.timeScale),
+        (this.rootDelta.x = this.rootDelta.z = this.rootDelta.yaw = 0),
+        e <= 0)
+      ) {
+        this.finish(t, 0);
+        return;
+      }
+      ((e = Math.min(e, 0.1)), (this.time += e));
+      let n = 0;
+      if (t) {
+        t.updateMatrixWorld();
+        let r = t.matrixWorld.elements,
+          a = Math.atan2(-r[8], r[10]);
+        (this.rootYawInit && (n = M(a - this.rootYaw)),
+          (this.rootYaw = a),
+          (this.rootYawInit = !0),
+          i && this.trackPath(r[12], r[14], e));
+      }
+      let r = this.out;
+      if (
+        (this.locomotion(e),
+        r.set(this.loco),
+        this.air(e, r),
+        this.additive(e, r),
+        this.actions(e, r),
+        (this.brake = A(this.brake, 0, 3.2, e)),
+        this.brake > 0.01)
+      ) {
+        let e = this.brake * (this.stopping ? 1 : 0.5);
+        ($(r, 1, 1, 0, 0, e * 0.14),
+          $(r, 2, 1, 0, 0, e * 0.08),
+          $(r, 3, 1, 0, 0, -e * 0.12),
+          (r[77] -= e * 0.05));
+      }
+      (this.turnInPlace(e, n, r),
+        i && this.cutStep(e, n, r),
+        this.deadBlend(e, r),
+        this.trackVelocity(e, r),
+        this.pose.set(r),
+        this.finish(t, e));
+    }
+    finish(e, t) {
+      let n = this.out,
+        r = this.kin,
+        a = this.rig.scale;
+      (r.fk(n, a),
+        t > 0 &&
+          (this.lookAt(t, n), i && this.steadyGaze(n, t), this.armsIK(n)),
+        this.footIK && e && t > 0 && this.feetIK(t, n, e),
+        h(this.rig, n),
+        t > 0 && this.extras(t));
+    }
+    trackPath(e, t, n) {
+      let r = e - this.pathX,
+        i = t - this.pathZ,
+        a = Math.hypot(r, i);
+      if (((this.pathX = e), (this.pathZ = t), !this.pathInit || a > 3)) {
+        ((this.pathInit = !0), (this.pathYawOk = !1), (this.pathRate = 0));
+        return;
+      }
+      if (a > 0.4 * n) {
+        let e = Math.atan2(r, -i),
+          t = this.pathYawOk ? k(M(e - this.pathYaw) / n, -6, 6) : 0;
+        ((this.pathRate = A(this.pathRate, t, 8, n)),
+          (this.pathYaw = e),
+          (this.pathYawOk = !0));
+      } else
+        ((this.pathRate = A(this.pathRate, 0, 8, n)), (this.pathYawOk = !1));
+    }
+    weights(e, t, n) {
+      n.fill(0);
+      let r = t.length;
+      if (r) {
+        if (e <= t[0].speed) {
+          n[0] = 1;
+          return;
+        }
+        if (e >= t[r - 1].speed) {
+          n[r - 1] = 1;
+          return;
+        }
+        for (let i = 0; i < r - 1; i++) {
+          let r = t[i].speed,
+            a = t[i + 1].speed;
+          if (e >= r && e < a) {
+            let t = (e - r) / (a - r);
+            ((n[i] = 1 - t), (n[i + 1] = t));
+            return;
+          }
+        }
+      }
+    }
+    capSprint(e, t) {
+      let n = e.length;
+      n < 2 ||
+        e[n - 1].clip.name !== `sprint` ||
+        t[n - 1] <= ve ||
+        ((t[n - 2] += t[n - 1] - ve), (t[n - 1] = ve));
+    }
+    locomotion(e) {
+      let t = this.input,
+        n = t.grounded ? t.speed : this.spd,
+        r = this.spd;
+      this.spd = A(this.spd, n, 14, e);
+      let i = this.spd;
+      this.aimW = A(this.aimW, +(t.aim > 0.5), 8, e);
+      let a = this.moving;
+      ((this.moving = this.moving
+        ? i > 0.08
+        : Math.max(i, t.grounded ? t.speed : 0) > 0.2),
+        this.moving &&
+          !a &&
+          this.moveW < 0.3 &&
+          (this.phase = t.turnRate < -0.5 ? 0.77 : 0.27),
+        (this.moveW = A(this.moveW, +!!this.moving, this.moving ? 13 : 6, e)));
+      let o = this.anchors,
+        s = this.aimW,
+        c = 1,
+        l = 0,
+        u = 0,
+        d = 0,
+        f = 0,
+        p = 0;
+      if (s > 0.02) {
+        Math.hypot(t.dirX, t.dirZ) > 0.1 &&
+          (this.dirA = Math.atan2(t.dirX, -t.dirZ));
+        let e = this.dirA,
+          n = (((e / (Math.PI / 2)) % 4) + 4) % 4,
+          r = Math.floor(n) % 4,
+          i = n - Math.floor(n),
+          a = Ee;
+        if (
+          ((a[0] = a[1] = a[2] = a[3] = 0),
+          (a[r] = 1 - i),
+          (a[(r + 1) % 4] += i),
+          !o[1].nodes.length || !o[3].nodes.length)
+        ) {
+          let t = Math.abs(e) < Math.PI / 2 ? 0 : 2;
+          ((a[t] += a[1] + a[3]), (a[1] = a[3] = 0));
+        }
+        (o[2].nodes.length || ((a[0] += a[2]), (a[2] = 0)),
+          (c = 1 - s + s * a[0]),
+          (l = s * a[1]),
+          (u = s * a[2]),
+          (d = s * a[3]),
+          (f =
+            k(Math.abs(e) <= Math.PI / 2 ? e : 0, -Math.PI / 4, Math.PI / 4) *
+            s),
+          (p = k(M(e - Math.PI), -Math.PI / 4, Math.PI / 4) * s));
+      }
+      let m = 1 - Math.exp(-9 * e);
+      ((o[0].w += (c - o[0].w) * m),
+        (o[1].w += (l - o[1].w) * m),
+        (o[2].w += (u - o[2].w) * m),
+        (o[3].w += (d - o[3].w) * m),
+        (o[0].warp += (f - o[0].warp) * m),
+        (o[2].warp += (p - o[2].warp) * m),
+        (this.warp = o[0].warp * o[0].w + o[2].warp * o[2].w),
+        (this.backSet = o[2].w > 0.5));
+      let h = 0,
+        g = 0,
+        _ = 0,
+        v = 0;
+      for (let e = 0; e < 4; e++) {
+        let t = o[e];
+        if (!(t.w < 0.001 || !t.nodes.length)) {
+          (this.weights(i, t.nodes, t.fw),
+            e === 0 && this.capSprint(t.nodes, t.fw));
+          for (let e = 0; e < t.nodes.length; e++)
+            ((h += t.w * t.fw[e] * t.nodes[e].stride),
+              (g += t.w * t.fw[e] * t.nodes[e].period),
+              (_ += t.w * t.fw[e] * t.nodes[e].reach));
+          v += t.w;
+        }
+      }
+      (v > 1e-4 ? ((h /= v), (g /= v), (_ /= v)) : (_ = 1),
+        (this.reach = 1 + (Math.max(1, _) - 1) * this.moveW));
+      let y = h > 0.001 ? (t.grounded ? t.speed : i) / h : 0;
+      (g > 0 && (y = k(y, 0.5 / g, 1.5 / g)),
+        this.moving || (y = g > 0 ? 0.75 / g : 0),
+        (this.phase = (this.phase + y * e) % 1));
+      let b = this.act;
+      (!b &&
+      this.autoStop &&
+      t.grounded &&
+      this.moveW > 0.6 &&
+      r > 1.3 &&
+      t.speed < 0.25 * r &&
+      t.speed < 0.6 &&
+      this.aimW < 0.5
+        ? this.startStop(r)
+        : b && b.name.startsWith(`stop_`) && t.speed > 0.6 && this.stop(0.2),
+        this.sampleLoco(e));
+      for (let e = 0; e < 2; e++) {
+        let t = this.feet[e].contact;
+        (t > 0.5 &&
+          this.lastContact[e] <= 0.5 &&
+          (this.moveW > 0.3 || this.feet[e].stepping) &&
+          this.onFootstep?.(e, k(i / 6, 0.15, 1)),
+          (this.lastContact[e] = t));
+      }
+      !this.moving &&
+      !this.act &&
+      t.grounded &&
+      this.aimW < 0.1 &&
+      t.guard < 0.1
+        ? ((this.idleTime += e),
+          this.idleTime > this.nextFidget &&
+            this.lib.has(`idle_stretch`) &&
+            (this.play(`idle_stretch`),
+            (this.nextFidget = this.idleTime + 25 + this.rand() * 25)))
+        : this.moving && (this.idleTime = 0);
+    }
+    startStop(e) {
+      let t =
+        e > 2.3 && this.lib.has(`stop_run`)
+          ? `stop_run`
+          : this.lib.has(`stop_walk`)
+            ? `stop_walk`
+            : ``;
+      if (!t) return;
+      let n = this.lib.get(t),
+        r = Math.max(7, -this.input.accel),
+        i = (e * e) / (2 * r),
+        a = -(n.info.move?.[1] ?? 0) * this.rig.scale,
+        o = 0;
+      for (let e = 0; e <= 24; e++) {
+        let t = (n.dur * e) / 24;
+        if ((n.root(t, W), a - -W.z * this.rig.scale <= i)) {
+          o = t;
+          break;
+        }
+        o = t;
+      }
+      (this.play(t, {
+        from: Math.min(o, n.dur * 0.7),
+        rootMotion: `none`,
+        fadeIn: 0.22,
+        fadeOut: 0.5,
+      }),
+        (this.brake = k((e - 1.5) / 5, 0, 1)));
+    }
+    sampleLoco(e) {
+      let t = this.tmp,
+        n = this.acc,
+        r = this.phase;
+      u(n);
+      let i = 0,
+        o = 0,
+        s = 0,
+        c = this.fwd.length ? this.moveW : 0;
+      if (c > 0.001) {
+        let e = this.anchors,
+          l = 0;
+        for (let t = 0; t < 4; t++) e[t].nodes.length && (l += e[t].w);
+        for (let u = 0; u < 4; u++) {
+          let d = e[u];
+          if (d.w < 0.001 || !d.nodes.length) continue;
+          let f = (d.w / Math.max(l, 1e-6)) * c;
+          for (let e = 0; e < d.nodes.length; e++) {
+            let c = d.fw[e] * f;
+            if (c < 1e-4) continue;
+            let l = d.nodes[e],
+              u = (l.reverse ? 1 - r : r) * l.cycle;
+            l.clip.sample(u, t);
+            let p = d.warp;
+            if (Math.abs(p) > 1e-4) {
+              Q(t, 0, 0, 1, 0, -p);
+              let e = Math.cos(-p),
+                n = Math.sin(-p),
+                r = t[76],
+                i = t[78];
+              ((t[76] = r * e + i * n),
+                (t[78] = -r * n + i * e),
+                $(t, 1, 0, 1, 0, p * 0.45),
+                $(t, 2, 0, 1, 0, p * 0.4),
+                $(t, 3, 0, 1, 0, p * 0.15));
+            }
+            (a(n, t, c),
+              (i += l.clip.contactW(u, 0) * c),
+              (o += l.clip.contactW(u, 1) * c),
+              (s += c));
+          }
+        }
+      }
+      let l = 1 - c;
+      if (l > 0.001 || s < 1e-4) {
+        let r = this.idleClip;
+        if (r) {
+          if (
+            ((this.idleT += e),
+            r.sample(this.idleT, t),
+            this.idleT >= this.idleNext && this.moveW < 0.05 && !this.act)
+          ) {
+            let e =
+              this.idleAlt.length && this.rand() < 0.4
+                ? this.idleAlt[Math.floor(this.rand() * this.idleAlt.length)]
+                : this.idle;
+            e && e !== r
+              ? (this.transition(0.8),
+                (this.idleClip = e),
+                (this.idleT = 0),
+                (this.idleNext = e.dur - 0.05))
+              : (this.idleNext += r.dur);
+          }
+        } else {
+          t.fill(0);
+          for (let e = 0; e < 19; e++) t[e * 4 + 3] = 1;
+          t[77] = 0.977;
+        }
+        let c = Math.max(l, +(s < 1e-4));
+        (a(n, t, c), (i += c), (o += c), (s += c));
+      }
+      (f(n, s),
+        this.loco.set(n),
+        (this.feet[0].contact = i / Math.max(s, 1e-6)),
+        (this.feet[1].contact = o / Math.max(s, 1e-6)));
+    }
+    air(e, t) {
+      let n = this.input;
+      if (n.grounded)
+        (this.wasGrounded || this.landed(),
+          (this.airW = A(this.airW, 0, 22, e)),
+          this.airW > 0.01 && c(t, t, this.airP, this.airW));
+      else {
+        (this.wasGrounded &&
+          ((this.airT = 0),
+          (this.vy0 = Math.max(3, n.verticalSpeed)),
+          (this.airClip =
+            this.spd > 2.5 && this.lib.has(`jump_run`)
+              ? this.lib.get(`jump_run`)
+              : this.lib.has(`jump`)
+                ? this.lib.get(`jump`)
+                : null),
+          this.act && this.act.layer === `full`
+            ? this.stop(0.12)
+            : this.transition(0.12),
+          this.onEvent?.(`takeoff`, ``)),
+          (this.airT += e),
+          (this.lastVy = n.verticalSpeed));
+        let r = this.airClip;
+        if (!r) return;
+        this.airW = A(this.airW, 1, 18, e);
+        let i = r.info.events ?? Se,
+          a = (i.takeoff ?? 0.3) * r.dur,
+          o = (i.land ?? 0.7) * r.dur,
+          s = k((this.vy0 - n.verticalSpeed) / (2 * this.vy0), 0, 1);
+        (r.sample(a + (o - a) * s * 0.94, this.airP), r.sample(a, this.tmp));
+        let l = this.tmp[77];
+        if (n.verticalSpeed < -this.vy0 * 1.15 && this.lib.has(`drop_land`)) {
+          let e = this.lib.get(`drop_land`),
+            t = (e.info.events?.land ?? 0.23) * e.dur;
+          e.sample(t * 0.55, this.tmp);
+          let r = k((-n.verticalSpeed - this.vy0 * 1.15) / 5, 0, 1),
+            i = this.airP[77];
+          (c(this.airP, this.airP, this.tmp, r), (this.airP[77] = i));
+        }
+        ((this.airP[76] = t[76]),
+          (this.airP[78] = t[78]),
+          (this.airP[77] = t[77] + (this.airP[77] - l) * 0.35),
+          c(t, t, this.airP, this.airW));
+      }
+      this.wasGrounded = n.grounded;
+    }
+    landed() {
+      let e = this.impact >= 0 ? this.impact : Math.max(0, -this.lastVy);
+      ((this.impact = -1), this.onEvent?.(`land`, ``));
+      let t = this.spd > 1.5;
+      if (!this.autoLand) {
+        ((this.landV -= k(e / 9, 0.25, 1.1) * 2.2), this.transition(0.1));
+        return;
+      }
+      if (e > 15 && t && this.lib.has(`roll`))
+        this.play(`roll`, { rootMotion: this.autoRootMotion });
+      else if (e > 10.5 && this.lib.has(`drop_land`)) {
+        let e = this.lib.get(`drop_land`),
+          n = (e.info.events?.land ?? 0.23) * e.dur;
+        (this.play(`drop_land`, {
+          from: n,
+          fadeIn: 0.06,
+          fadeOut: t ? 0.2 : 0.4,
+          layer: t ? `upper` : `full`,
+          rootMotion: `none`,
+          to: t ? n + 0.35 : e.dur,
+        }),
+          (this.landV -= 1.5));
+      } else if (!t && this.airT > 0.3 && this.lib.has(`jump`)) {
+        let e = this.lib.get(`jump`),
+          t = (e.info.events?.land ?? 0.56) * e.dur;
+        this.play(`jump`, {
+          from: t,
+          to: Math.min(e.dur, t + 0.8),
+          fadeIn: 0.06,
+          fadeOut: 0.3,
+          rootMotion: `none`,
+        });
+      } else ((this.landV -= k(e / 9, 0.25, 1.1) * 2.2), this.transition(0.1));
+    }
+    actions(e, t) {
+      let n = this.act;
+      if (!n) return;
+      let r = n.t;
+      n.t += e * n.speed;
+      let i = !1;
+      n.loop
+        ? n.t > n.t1 &&
+          (n.t = n.t0 + ((n.t - n.t0) % Math.max(0.001, n.t1 - n.t0)))
+        : n.t >= n.t1 && ((n.t = n.t1), (i = !n.hold));
+      let a = n.clip;
+      if (!a) {
+        (this.gesture(n, t),
+          i && ((this.act = null), this.transition(n.fadeOut), n.onEnd?.()));
+        return;
+      }
+      if (
+        (!n.hitDone &&
+          n.hitAt >= 0 &&
+          r <= n.hitAt * a.dur &&
+          n.t >= n.hitAt * a.dur &&
+          ((n.hitDone = !0), n.onHit?.(), this.onEvent?.(`hit`, n.name)),
+        a.sample(n.t, this.actP),
+        n.root !== `none` && !a.loop)
+      ) {
+        a.root(n.t, W);
+        let e = W.x,
+          t = W.z,
+          i = W.yaw;
+        if (n.root === `extract`) {
+          a.root(r, W);
+          let n = Math.cos(W.yaw),
+            o = Math.sin(W.yaw),
+            s = e - W.x,
+            c = t - W.z,
+            l = this.rig.scale;
+          ((this.rootDelta.x += (s * n + c * o) * l),
+            (this.rootDelta.z += (-s * o + c * n) * l),
+            (this.rootDelta.yaw += i - W.yaw));
+        } else {
+          a.root(n.t0, W);
+          let r = Math.cos(W.yaw),
+            o = Math.sin(W.yaw),
+            s = e - W.x,
+            c = t - W.z,
+            l = s * r + c * o,
+            u = -s * o + c * r;
+          z.setFromAxisAngle(re, -(i - W.yaw));
+          let d = this.actP;
+          (F.set(d[76], d[77], d[78]).applyQuaternion(z),
+            (d[76] = F.x + l),
+            (d[77] = F.y),
+            (d[78] = F.z + u),
+            B.set(d[0], d[1], d[2], d[3]).premultiply(z),
+            (d[0] = B.x),
+            (d[1] = B.y),
+            (d[2] = B.z),
+            (d[3] = B.w));
+        }
+      }
+      let s = 1;
+      if (
+        (n.layer === `upper` &&
+          (s = Math.min(1, (n.t - n.t0) / Math.max(0.001, n.fadeIn * n.speed))),
+        !n.loop &&
+          !n.hold &&
+          (s = Math.min(
+            s,
+            (n.t1 - n.t) / Math.max(0.001, n.fadeOut * n.speed),
+          )),
+        (s = j(s)),
+        o(t, this.actP, s, n.layer === `upper` ? l : p),
+        n.layer === `full`)
+      )
+        for (let e = 0; e < 2; e++)
+          this.feet[e].contact +=
+            (a.contactW(n.t, e) - this.feet[e].contact) * s;
+      i &&
+        ((this.act = null),
+        (this.stopping = !1),
+        s > 0.05 && this.transition(n.fadeOut),
+        n.onEnd?.());
+    }
+    gesture(e, t) {
+      let n = (e.t - e.t0) / Math.max(0.001, e.t1 - e.t0);
+      if (e.gesture === `pray`) {
+        let r =
+          Math.max(0, Math.sin(k((n - 0.15) / 0.75, 0, 1) * Math.PI * 3)) *
+          j(Math.min(1, (e.t - e.t0) / 0.6));
+        ($(t, 1, 1, 0, 0, -0.22 * r),
+          $(t, 2, 1, 0, 0, -0.18 * r),
+          $(t, 3, 1, 0, 0, -0.2 * r - 0.1),
+          $(t, 4, 1, 0, 0, -0.12));
+      } else
+        e.gesture === `phone` &&
+          ($(t, 3, 1, 0, 0, -0.25), $(t, 4, 1, 0, 0, -0.3));
+    }
+    turnInPlace(e, t, n) {
+      let r =
+        this.moveW < 0.35 &&
+        this.input.grounded &&
+        (!this.act ||
+          this.act.layer === `upper` ||
+          this.act.name.startsWith(`idle`));
+      r &&
+        Math.abs(t) > 1e-5 &&
+        (this.yawOff = k(M(this.yawOff - t), -2.8, 2.8));
+      let i = r ? 6.5 : 22,
+        a = Math.exp(-i * e),
+        o = (this.yawOffV + i * this.yawOff) * e;
+      if (
+        ((this.yawOff = (this.yawOff + o) * a),
+        (this.yawOffV = (this.yawOffV - i * o) * a),
+        !Number.isFinite(this.yawOff) ||
+          !Number.isFinite(this.yawOffV) ||
+          (Math.abs(this.yawOff) < 1e-4 && Math.abs(this.yawOffV) < 0.001))
+      ) {
+        ((this.yawOff = 0), (this.yawOffV = 0));
+        return;
+      }
+      Q(n, 0, 0, 1, 0, -this.yawOff);
+      let s = Math.cos(-this.yawOff),
+        c = Math.sin(-this.yawOff),
+        l = n[76],
+        u = n[78];
+      ((n[76] = l * s + u * c), (n[78] = -l * c + u * s));
+    }
+    cutStep(e, t, n) {
+      let r = t / Math.max(e, 1e-4);
+      this.cutCool -= e;
+      let i =
+        this.input.grounded &&
+        this.moveW > 0.7 &&
+        this.spd > he &&
+        !this.act &&
+        this.aimW < 0.3 &&
+        this.airW < 0.2;
+      if (
+        (this.cutT < 0 &&
+          i &&
+          this.cutCool <= 0 &&
+          Math.abs(r) > ge &&
+          ((this.cutT = 0),
+          (this.cutDir = Math.sign(r)),
+          (this.cutAmt = 0),
+          (this.cutCool = 0.51)),
+        (this.cutEnv = 0),
+        this.cutT < 0)
+      )
+        return;
+      ((this.cutT += e),
+        this.cutT < 0.12 &&
+          Math.sign(r) === this.cutDir &&
+          (this.cutAmt = Math.max(
+            this.cutAmt,
+            j((Math.abs(r) - ge * 0.8) / 4),
+          )));
+      let a = this.cutT;
+      if (a >= _e || !this.input.grounded || this.act) {
+        this.cutT = -1;
+        return;
+      }
+      let o =
+        (a < 0.07 ? j(a / 0.07) : 1 - j((a - 0.14) / 0.21999999999999997)) *
+        this.cutAmt *
+        this.moveW;
+      if (((this.cutEnv = o), o < 0.001)) return;
+      let s = this.cutDir,
+        c = 0.42 * o * s;
+      (Q(n, 0, 0, 1, 0, c),
+        $(n, 1, 0, 1, 0, -c * 0.45),
+        $(n, 2, 0, 1, 0, -c * 0.45),
+        $(n, 3, 0, 1, 0, -c * 0.25));
+      let l = 0.17 * o * s;
+      (Q(n, 0, 0, 0, 1, -l),
+        (n[76] += Math.sin(l) * n[77] * 0.6),
+        $(n, 3, 0, 0, 1, l * 0.5),
+        $(n, 4, 0, 0, 1, l * 0.4),
+        (n[77] -= 0.07 * o),
+        $(n, 1, 1, 0, 0, -0.07 * o),
+        $(n, 3, 1, 0, 0, 0.05 * o));
+    }
+    additive(e, t) {
+      let n = this.input,
+        r = this.spd,
+        a;
+      if (i) {
+        let e = this.pathInit ? this.pathRate : n.turnRate,
+          t = 0.14 + 0.07 * k((r - 4.5) / 2.5, 0, 1);
+        a =
+          k(Math.atan((r * e) / 9.81) * 0.55, -t, t) *
+          j((r - 1.8) / 2.2) *
+          this.moveW *
+          (1 - this.aimW * 0.7);
+      } else
+        a =
+          k(Math.atan((r * n.turnRate) / 9.81) * 0.8, -0.38, 0.38) *
+          this.moveW *
+          (1 - this.aimW * 0.7);
+      this.lean = A(this.lean, a, 7, e);
+      let o = k(n.accel * 0.016, -0.1, 0.13) * this.moveW;
+      ((this.pitch = A(this.pitch, o, 5, e)),
+        (this.exert = k(
+          this.exert + (r > 5 ? 0.1 : r > 3 ? 0.03 : -0.05) * e,
+          0,
+          1,
+        )),
+        (this.breath += e * O * (0.27 + 0.4 * this.exert)));
+      let s =
+          Math.sin(this.breath) *
+          (0.014 + 0.03 * this.exert) *
+          (1 - this.moveW * 0.75),
+        c = this.flinch;
+      (N(c.x, c.vx, 150, 17, e, P),
+        (c.x = P[0]),
+        (c.vx = P[1]),
+        N(c.z, c.vz, 150, 17, e, P),
+        (c.z = P[0]),
+        (c.vz = P[1]),
+        N(this.recoilA, this.recoilV, 260, 22, e, P),
+        (this.recoilA = P[0]),
+        (this.recoilV = P[1]),
+        N(this.landDip, this.landV, 130, 15, e, P),
+        (this.landDip = P[0]),
+        (this.landV = P[1]),
+        Math.abs(this.lean) > 1e-4 &&
+          (Q(t, 0, 0, 0, 1, -this.lean),
+          (t[76] += Math.sin(this.lean) * t[77] * 0.9),
+          i
+            ? ($(t, 2, 0, 0, 1, this.lean * 0.1),
+              $(t, 3, 0, 0, 1, -this.lean * 0.6),
+              $(t, 4, 0, 0, 1, -this.lean * 0.4))
+            : ($(t, 2, 0, 0, 1, this.lean * 0.3),
+              $(t, 3, 0, 0, 1, this.lean * 0.25))));
+      let l = i ? 0 : k((r - 4.4) / 2.8, 0, 1) * 0.1 * this.moveW;
+      if (i && r > 4.5) {
+        let e = j((r - 4.5) / 2.5) * 0.2 * this.moveW;
+        ($(t, 1, 1, 0, 0, e * 0.6), $(t, 2, 1, 0, 0, e * 0.4));
+      }
+      if (
+        ((Math.abs(this.pitch) > 1e-4 || l > 1e-4) &&
+          ($(t, 1, 1, 0, 0, -this.pitch * 0.6 - l * 0.55),
+          $(t, 2, 1, 0, 0, -this.pitch * 0.4 - l * 0.45),
+          l > 1e-4 && $(t, 3, 1, 0, 0, l * 0.6)),
+        s !== 0 &&
+          ($(t, 2, 1, 0, 0, s),
+          $(t, 3, 1, 0, 0, -s * 0.8),
+          $(t, 17, 0, 0, 1, s * 0.7),
+          $(t, 18, 0, 0, 1, -s * 0.7)),
+        Math.abs(c.x) + Math.abs(c.z) > 1e-4 &&
+          ($(t, 1, 1, 0, 0, c.x * 0.35),
+          $(t, 2, 1, 0, 0, c.x * 0.45),
+          $(t, 3, 1, 0, 0, c.x * 0.3),
+          $(t, 4, 1, 0, 0, c.x * 0.45),
+          $(t, 1, 0, 0, 1, c.z * 0.3),
+          $(t, 2, 0, 0, 1, c.z * 0.35),
+          $(t, 4, 0, 0, 1, c.z * 0.35)),
+        Math.abs(this.recoilA) > 1e-4 &&
+          ($(t, 2, 1, 0, 0, this.recoilA * 0.08),
+          $(t, 8, 1, 0, 0, this.recoilA * 0.25),
+          $(t, 9, 1, 0, 0, this.recoilA * 0.2),
+          $(t, 4, 1, 0, 0, this.recoilA * 0.05)),
+        Math.abs(this.landDip) > 1e-4)
+      ) {
+        let e = k(this.landDip, -0.6, 0.3);
+        ((t[77] += e * 0.17),
+          $(t, 1, 1, 0, 0, e * 0.28),
+          $(t, 3, 1, 0, 0, -e * 0.15));
+      }
+      if (
+        ((this.warpDrop =
+          i && this.footIK && n.grounded ? (this.reach - 1) * 0.1 : 0),
+        this.warpDrop > 1e-4 && (t[77] -= this.warpDrop),
+        i && this.moveW > 0.01)
+      ) {
+        let e = this.moveW * (0.35 + 0.35 * j((r - 1.5) / 2)) * (1 - this.aimW);
+        for (let n = 0; n < 2; n++) {
+          let r = (n ? 10 : 7) * 4;
+          (z.set(t[r], t[r + 1], t[r + 2], t[r + 3]).slerp(B.identity(), e),
+            (t[r] = z.x),
+            (t[r + 1] = z.y),
+            (t[r + 2] = z.z),
+            (t[r + 3] = z.w));
+        }
+      }
+      let u = i
+        ? 0
+        : j((r - 2) / 1.4) * this.moveW * (1 - this.aimW) * (1 - this.airW);
+      (u > 0.001 && this.runArms(t, u, r),
+        (this.guardW = A(
+          this.guardW,
+          +(n.guard > 0.5 && !(this.act && this.act.layer === `full`)),
+          9,
+          e,
+        )),
+        this.guardW > 0.01 && this.guardPose(t, this.guardW));
+    }
+    runArms(e, t, n) {
+      let r = this.phase * O,
+        i = j((n - 4.2) / 2.3),
+        a = 0.1 * t,
+        o = (0.3 + 0.08 * i) * t;
+      (Q(e, 5, 1, 0, 0, a + o * Math.cos(r - 0.3 * O)),
+        Q(e, 8, 1, 0, 0, a + o * Math.cos(r - 0.8 * O)),
+        Q(e, 5, 0, 0, 1, -0.16 * t),
+        Q(e, 8, 0, 0, 1, 0.16 * t),
+        He(e, 6, 1.52 + 0.14 * Math.cos(r - 0.3 * O), t),
+        He(e, 9, 1.52 + 0.14 * Math.cos(r - 0.8 * O), t),
+        Ve(e, 7, 0.6 * t),
+        Ve(e, 10, 0.6 * t));
+    }
+    guardPose(e, t) {
+      let n = this.tmp;
+      if (this.lib.has(`fight_idle`)) {
+        (this.lib.get(`fight_idle`).sample(this.time, n), o(e, n, t, G));
+        return;
+      }
+      (n.set(e),
+        We(n, 5, 0.75, -0.25, 0.35),
+        We(n, 6, 1.9, 0, 0),
+        We(n, 8, 0.62, 0.25, -0.35),
+        We(n, 9, 2.05, 0, 0),
+        o(e, n, t, G));
+    }
+    deadBlend(e, t) {
+      if (this.dbT >= this.dbDur) return;
+      this.dbT += e;
+      let n = Math.exp(-e * 12),
+        r = this.dbVel,
+        i = this.dbPose;
+      for (let t = 0; t < 19; t++) {
+        let a = t * 4,
+          o = t * 3;
+        ((r[o] *= n), (r[o + 1] *= n), (r[o + 2] *= n));
+        let s = r[o] * e * 0.5,
+          c = r[o + 1] * e * 0.5,
+          l = r[o + 2] * e * 0.5,
+          u = i[a],
+          d = i[a + 1],
+          f = i[a + 2],
+          p = i[a + 3],
+          m = p * s + u + d * l - f * c,
+          h = p * c - u * l + d + f * s,
+          g = p * l + u * c - d * s + f,
+          _ = p - u * s - d * c - f * l,
+          v = 1 / Math.sqrt(m * m + h * h + g * g + _ * _);
+        ((i[a] = m * v),
+          (i[a + 1] = h * v),
+          (i[a + 2] = g * v),
+          (i[a + 3] = _ * v));
+      }
+      ((r[57] *= n),
+        (r[58] *= n),
+        (r[59] *= n),
+        (i[76] += r[57] * e),
+        (i[77] += r[58] * e),
+        (i[78] += r[59] * e));
+      let a = 1 - j(this.dbT / this.dbDur);
+      c(t, t, i, a);
+    }
+    trackVelocity(e, t) {
+      let n = this.lastVel,
+        r = this.last,
+        i = 1 / e;
+      for (let e = 0; e < 19; e++) {
+        let a = e * 4,
+          o = -r[a],
+          s = -r[a + 1],
+          c = -r[a + 2],
+          l = r[a + 3],
+          u = t[a],
+          d = t[a + 1],
+          f = t[a + 2],
+          p = t[a + 3];
+        r[a] * u + r[a + 1] * d + r[a + 2] * f + l * p < 0 &&
+          ((u = -u), (d = -d), (f = -f), (p = -p));
+        let m = l * u + o * p + s * f - c * d,
+          h = l * d - o * f + s * p + c * u,
+          g = l * f + o * d - s * u + c * p;
+        ((n[e * 3] = k(2 * m * i, -25, 25)),
+          (n[e * 3 + 1] = k(2 * h * i, -25, 25)),
+          (n[e * 3 + 2] = k(2 * g * i, -25, 25)));
+      }
+      ((n[57] = k((t[76] - r[76]) * i, -6, 6)),
+        (n[58] = k((t[77] - r[77]) * i, -6, 6)),
+        (n[59] = k((t[78] - r[78]) * i, -6, 6)),
+        r.set(t));
+    }
+    lookAt(e, t) {
+      let n = this.input,
+        r = this.kin,
+        i = this.act,
+        a = this.rig.scale;
+      if (((this.gazeT -= e), this.gazeT <= 0)) {
+        let e = this.moveW < 0.2 && !i;
+        ((this.gazeYaw =
+          e && this.rand() < 0.7 ? (this.rand() - 0.5) * 1.3 : 0),
+          (this.gazePitch = e ? (this.rand() - 0.6) * 0.25 : 0),
+          (this.gazeT = 1.5 + this.rand() * 3.5));
+      }
+      let o = (1 - this.moveW) * (1 - this.aimW),
+        s = this.aimW,
+        c = i ? (i.layer === `full` || i.gesture ? 1 : 0.5) : 0,
+        l = (n.lookYaw + this.gazeYaw * o) * (1 - s) + n.aimYaw * s,
+        u = (n.lookPitch + this.gazePitch * o) * (1 - s) + n.aimPitch * s;
+      ((l = k(M(l), -1.35, 1.35)),
+        (u = k(u, -0.7, 0.6)),
+        (this.headYaw = A(this.headYaw, l, 5, e)),
+        (this.headPitch = A(this.headPitch, u, 5, e)));
+      let d = k(n.lookWeight * (1 - c) + s * 0.95, 0, 1);
+      if (d < 0.01) return;
+      let f = Math.cos(this.headPitch);
+      (I.set(
+        Math.sin(this.headYaw) * f,
+        Math.sin(this.headPitch),
+        -Math.cos(this.headYaw) * f,
+      ),
+        F.set(0, 0, -1).applyQuaternion(r.gq[4]),
+        z.setFromUnitVectors(F, I));
+      let p = 2 * Math.acos(k(Math.abs(z.w), 0, 1)),
+        m = 1.7,
+        h = p > m ? m / p : 1;
+      for (let e = 0; e < De.length; e++) {
+        let n = (s > 0.5 ? ke : Oe)[e];
+        (B.identity().slerp(z, n * d * h),
+          r.rotateGlobal(t, De[e], B),
+          r.fkFrom(t, De[e], a));
+      }
+    }
+    steadyGaze(e, t) {
+      let n = this.act,
+        r =
+          this.moveW *
+          (1 - this.aimW) *
+          (n && (n.layer === `full` || n.gesture) ? 0 : 1) *
+          (this.airW > 0.5 ? 0 : 1);
+      if (r < 0.01) {
+        this.gazeInit = !1;
+        return;
+      }
+      let i = this.kin,
+        a = this.rig.scale;
+      F.set(0, 0, -1).applyQuaternion(i.gq[4]);
+      let o = Math.asin(k(F.y, -1, 1));
+      L.set(0, 0, -1).applyQuaternion(i.gq[2]);
+      let s = Math.asin(k(L.y, -1, 1)),
+        c = Math.min(me, s + 0.05),
+        l = k(o, Math.min(c, Math.max(pe, s - 0.1)), c);
+      ((this.gazeP = this.gazeInit ? A(this.gazeP, l, 3.5, t) : l),
+        (this.gazeInit = !0));
+      let u = (this.gazeP - o) * r;
+      Math.abs(u) < 1e-4 ||
+        (I.set(1, 0, 0).applyQuaternion(i.gq[4]),
+        (I.y = 0),
+        !(I.lengthSq() < 1e-6) &&
+          (I.normalize(),
+          z.setFromAxisAngle(I, u * 0.4),
+          i.rotateGlobal(e, 3, z),
+          i.fkFrom(e, 3, a),
+          z.setFromAxisAngle(I, u * 0.6),
+          i.rotateGlobal(e, 4, z),
+          i.fkFrom(e, 4, a)));
+    }
+    armsIK(e) {
+      let t = this.kin,
+        n = this.rig.scale,
+        r = this.act,
+        i = this.handIK[0].weight,
+        a = this.handIK[1].weight,
+        o = 0;
+      if (r && r.gesture === `pray`) {
+        let e = r.t - r.t0,
+          t = r.t1 - r.t0;
+        o = j(Math.min(e / 0.5, (t - e) / 0.5));
+      }
+      if (r && r.gesture === `phone`) {
+        let i = j((r.t - r.t0) / 0.45);
+        (F.copy(se).multiplyScalar(n).applyQuaternion(t.gq[2]).add(t.gp[2]),
+          Ie(t, e, 0, F, le, i, n),
+          V.copy(t.gq[2]).multiply(ce),
+          Le(t, e, 7, V, i, n));
+      }
+      o > 0.001 &&
+        (F.copy(ae).multiplyScalar(n).applyQuaternion(t.gq[2]).add(t.gp[2]),
+        U.set(-1, -0.6, 0.4),
+        Ie(t, e, 0, F, U, o, n),
+        F.copy(oe).multiplyScalar(n).applyQuaternion(t.gq[2]).add(t.gp[2]),
+        U.set(1, -0.6, 0.4),
+        Ie(t, e, 1, F, U, o, n),
+        V.copy(t.gq[2]).multiply(ie),
+        Le(t, e, 7, V, o, n),
+        Le(t, e, 10, V, o, n),
+        (i = a = 0));
+      for (let r = 0; r < 2; r++) {
+        let o = this.handIK[r],
+          s = r ? a : i;
+        s <= 0.001 ||
+          (o.pole ? U.copy(o.pole) : U.set(r ? 1 : -1, -0.8, 0.3),
+          Ie(t, e, r, o.pos, U, s, n),
+          o.rot && Le(t, e, r ? 10 : 7, o.rot, s, n));
+      }
+    }
+    feetIK(e, t, n) {
+      let r = this.kin,
+        a = this.rig.scale;
+      (H.copy(n.matrixWorld), te.copy(H).invert());
+      let o = H.elements[13],
+        s = this.airW > 0.5 || !this.input.grounded,
+        c = this.act,
+        l = c && c.layer === `full` ? c : null,
+        u = !s && (!l || Ce.test(l.name)),
+        d = u && this.moveW < 0.1 && (!l || we.test(l.name)),
+        f = this.rootYaw + this.yawOff,
+        p = 0;
+      for (let t = 0; t < 2; t++) {
+        let n = t ? 16 : 13,
+          i = this.feet[t],
+          c = 0;
+        if (this.groundAt && !s) {
+          (F.copy(r.gp[n]).applyMatrix4(H),
+            I.set(0, 0, -0.1 * a).applyQuaternion(r.gq[n]));
+          let e = this.groundAt(F.x + I.x, F.z + I.z, o + 0.6),
+            t = this.groundAt(F.x - I.x * 0.4, F.z - I.z * 0.4, o + 0.6);
+          c = k(Math.max(e, t) - o, -0.45, 0.45);
+        }
+        ((i.offset = A(i.offset, c, 18, e)),
+          (be[t] = i.offset),
+          (p = Math.min(p, i.offset)));
+      }
+      this.pelvisOff = A(this.pelvisOff, s ? 0 : p, 12, e);
+      let m = s ? 1 : this.reach,
+        h = s ? 0 : this.warpDrop;
+      Math.abs(this.pelvisOff) > 1e-4 &&
+        ((t[77] += this.pelvisOff / a), r.fk(t, a));
+      let g = r.gp[0].z,
+        _ = i && !s && this.spd > 2.2 && this.moveW > 0.5 ? 0.47 * a : 0,
+        v = i && !s ? 1 - 0.12 * j((this.spd - 2) / 2) * this.moveW : 1,
+        y = xe;
+      for (let n = 0; n < 2; n++) {
+        let o = this.feet[n],
+          s = n ? 16 : 13,
+          c = n ? 14 : 11,
+          l = n ? 15 : 12,
+          p = r.gp[s],
+          b = L.copy(p);
+        if (
+          ((b.y += be[n] - this.pelvisOff + h * a),
+          this.cutEnv > 0.001 &&
+            (this.cutDir > 0 ? n === 0 : n === 1) &&
+            (b.x += (n === 0 ? -1 : 1) * 0.17 * a * this.cutEnv),
+          v < 0.999 || m > 1.001)
+        ) {
+          let e = b.z - g;
+          b.z = g + e * (e < 0 ? m : v);
+        }
+        R.copy(b).applyMatrix4(H);
+        let x = u && o.contact > 0.55;
+        if (
+          (x || (o.spent = !1),
+          _ > 0 &&
+            o.locked &&
+            !o.stepping &&
+            (F.copy(o.pos).applyMatrix4(te),
+            F.z - g > _ && ((o.locked = !1), (o.spent = !0))),
+          x && !o.locked && !o.stepping && !o.spent
+            ? ((o.locked = !0), o.pos.copy(R), (o.yaw = f))
+            : !x && o.locked && (o.locked = !1),
+          d &&
+            o.locked &&
+            !o.stepping &&
+            !this.feet[y[n]].stepping &&
+            this.time - this.feet[y[n]].lastStep > 0.12)
+        ) {
+          let e = Math.hypot(o.pos.x - R.x, o.pos.z - R.z),
+            t = Math.abs(M(f - o.yaw));
+          (e > 0.11 * a || t > 0.55) &&
+            ((o.stepping = !0),
+            (o.stepU = 0),
+            o.from.copy(o.pos),
+            (o.locked = !1));
+        }
+        if (o.stepping) {
+          o.stepU += e / 0.3;
+          let t = j(o.stepU);
+          (o.pos.lerpVectors(o.from, R, t),
+            (o.pos.y += Math.sin(Math.min(1, o.stepU) * Math.PI) * 0.075 * a),
+            (o.lock = 1),
+            o.stepU >= 1 &&
+              ((o.stepping = !1),
+              (o.locked = !0),
+              o.pos.copy(R),
+              (o.yaw = f),
+              (o.lastStep = this.time),
+              this.onFootstep?.(n, 0.2)));
+        } else {
+          let t = this.moveW > 0.3 ? (i ? 22 + 16 * this.spd : 22) : 10;
+          o.lock = A(o.lock, +!!o.locked, o.locked ? 30 : t, e);
+        }
+        let S = o.lock;
+        if (S > 0.001) {
+          F.copy(o.pos).applyMatrix4(te);
+          let e = F.distanceTo(b);
+          !o.stepping && e > 0.4 * a
+            ? ((o.locked = !1), (o.lock = 0))
+            : (o.stepping || (F.y = b.y), b.lerp(F, S));
+        }
+        let C = b.x - p.x,
+          w = b.y - p.y,
+          T = b.z - p.z,
+          E = o.stepping
+            ? M(o.yaw - f) * (1 - j(o.stepU))
+            : S > 0.001
+              ? M(o.yaw - f) * S
+              : 0;
+        (C * C + w * w + T * T > 1e-8 || Math.abs(E) > 1e-4) &&
+          (z.copy(r.gq[s]),
+          Math.abs(E) > 1e-4 && z.premultiply(B.setFromAxisAngle(re, -E)),
+          ne.set(1, 0, 0).applyQuaternion(r.gq[c]),
+          ee(r, t, c, l, s, b, ne, 1),
+          r.setGlobal(t, s, z),
+          r.fkFrom(t, c, a));
+      }
+    }
+    extras(e) {
+      let t = this.rig,
+        n = this.act,
+        r = !!n && Te.test(n.name),
+        a =
+          this.guardW > 0.3 || r
+            ? 1
+            : n?.gesture === `pray`
+              ? 0
+              : i
+                ? 0.3 + j((this.spd - 1.2) / 2.5) * 0.55
+                : 0.2 + k(this.spd, 0, 6) * 0.06;
+      ((this.fist = A(this.fist, Math.min(1, a), 12, e)),
+        t.fingersL && t.fingersL.rotation.set(0, 0, this.fist * 1.5),
+        t.fingersR && t.fingersR.rotation.set(0, 0, -this.fist * 1.5),
+        (this.blinkT -= e));
+      let o = 0;
+      if (this.blinkP >= 0) {
+        this.blinkP += e;
+        let t = this.blinkP;
+        ((o = t < 0.06 ? t / 0.06 : t < 0.16 ? 1 - (t - 0.06) / 0.1 : 0),
+          t >= 0.16 && (this.blinkP = -1));
+      } else
+        this.blinkT <= 0 &&
+          ((this.blinkP = 0),
+          (this.blinkT = 2 + this.rand() * 3.5),
+          this.rand() < 0.15 && (this.blinkT = 0.25));
+      let s = this.dead
+          ? 1
+          : n?.gesture === `pray`
+            ? 0.85
+            : n && n.name.startsWith(`knockdown`)
+              ? 0.6
+              : 0,
+        c = Math.max(0.001, o, s);
+      if ((t.lidL?.scale.set(1, c, 1), t.lidR?.scale.set(1, c, 1), t.hair)) {
+        let n =
+          -0.2 -
+          this.spd * 0.06 +
+          Math.sin(this.time * 1.7) * 0.02 -
+          Math.max(0, -this.input.verticalSpeed) * 0.03;
+        ((this.hairV +=
+          ((n - this.hairA) * 80 - this.hairV * 8) * e -
+          this.input.turnRate * 0.3 * e),
+          (this.hairA += this.hairV * e),
+          t.hair.rotation.set(
+            this.hairA +
+              Math.sin(this.phase * O * 2) * 0.07 * k(this.spd / 4, 0, 1),
+            0,
+            k(-this.input.turnRate * 0.05, -0.3, 0.3),
+          ));
+      }
+    }
+  },
+  be = new Float32Array(2),
+  xe = [1, 0],
+  Se = {},
+  Ce =
+    /^(stop_|idle|jab|cross|hook|uppercut|wave|cheer|point|clap|bow|fight|sit_|stand_up|pray|phone)/,
+  we = /^(idle|pray|phone|stop_)/,
+  Te = /^(jab|cross|hook|uppercut|fight)/,
+  Ee = new Float32Array(4),
+  De = [1, 2, 3, 4],
+  Oe = [0.1, 0.18, 0.3, 0.42],
+  ke = [0.3, 0.35, 0.15, 0.2],
+  G = new Float32Array(19);
+for (let e of [5, 6, 7, 8, 9, 10, 17, 18]) G[e] = 1;
+((G[2] = 0.35), (G[3] = 0.3));
+var K = new n(),
+  q = new n(),
+  J = new n(),
+  Y = new n(),
+  X = new n(),
+  Z = new t(),
+  Ae = new t(),
+  je = new t(),
+  Me = new r(),
+  Ne = new r(),
+  Pe = new n(0, 0, -1),
+  Fe = 0.12;
+function Ie(e, t, n, r, i, a, o) {
+  let s = n ? 8 : 5,
+    c = n ? 9 : 6,
+    l = n ? 10 : 7;
+  V.copy(e.gq[l]);
+  let u = e.off[c],
+    d = e.off[l],
+    f = u.length(),
+    p = d.length();
+  K.copy(u).cross(Pe).normalize();
+  let m = f + p,
+    h = m * 0.03,
+    g = m - h,
+    _ = q.copy(r).sub(e.gp[s]).length();
+  (_ > g && (_ = g + h * (1 - Math.exp(-(_ - g) / h))),
+    (_ = Math.max(Math.abs(f - p) + 0.001, _)));
+  let v = k((_ * _ - f * f - p * p) / (2 * f * p), -1, 1);
+  J.copy(d).multiplyScalar(1 / p);
+  let y = J.dot(K);
+  Y.copy(J).addScaledVector(K, -y);
+  let b = Y.length();
+  X.copy(u).multiplyScalar(1 / f);
+  let x = Math.atan2(R.copy(X).cross(Y).dot(K), X.dot(Y)),
+    S = Math.max(Fe, Math.acos(k(v / Math.max(1e-4, b), -1, 1))) - x;
+  (Z.setFromAxisAngle(K, S), q.copy(d).applyQuaternion(Z).add(u));
+  let C = q.length();
+  if (
+    (q.multiplyScalar(1 / C),
+    J.copy(u).addScaledVector(q, -u.dot(q)).normalize(),
+    X.copy(q).cross(J),
+    Me.makeBasis(q, J, X),
+    q.copy(r).sub(e.gp[s]),
+    q.lengthSq() < 1e-10)
+  )
+    return;
+  if (
+    (q.normalize(),
+    Y.copy(i).addScaledVector(q, -i.dot(q)),
+    Y.lengthSq() < 1e-8 && Y.set(0, -1, 0).addScaledVector(q, -q.y),
+    Y.normalize(),
+    X.copy(q).cross(Y),
+    Ne.makeBasis(q, Y, X),
+    Ne.multiply(Me.transpose()),
+    Ae.setFromRotationMatrix(Ne),
+    a < 1)
+  ) {
+    Ae.copy(je.copy(e.gq[s]).slerp(Ae, a));
+    let n = c * 4;
+    (je.set(t[n], t[n + 1], t[n + 2], t[n + 3]).slerp(Z, a), Z.copy(je));
+  }
+  e.setGlobal(t, s, Ae);
+  let w = c * 4;
+  ((t[w] = Z.x),
+    (t[w + 1] = Z.y),
+    (t[w + 2] = Z.z),
+    (t[w + 3] = Z.w),
+    e.fkFrom(t, s, o),
+    e.setGlobal(t, l, V),
+    Be(e, t, l, o));
+}
+function Le(e, t, n, r, i, a) {
+  (B.copy(e.gq[n]).slerp(r, i), e.setGlobal(t, n, B), Be(e, t, n, a));
+}
+var Re = new t(),
+  ze = new t();
+function Be(e, t, n, r) {
+  let i = d[n];
+  (ze.copy(e.gq[n]), Re.copy(e.gq[i]).invert().multiply(ze));
+  let a = R.copy(e.off[n]).normalize(),
+    o = Re.x * a.x + Re.y * a.y + Re.z * a.z,
+    s = Re.w,
+    c = a.x * o,
+    l = a.y * o,
+    u = a.z * o,
+    f = Math.sqrt(c * c + l * l + u * u + s * s);
+  if (f < 1e-6 || Math.abs(o) < 1e-4) return;
+  s < 0 && ((c = -c), (l = -l), (u = -u), (s = -s));
+  let p = i * 4,
+    m = t[p],
+    h = t[p + 1],
+    g = t[p + 2],
+    _ = t[p + 3],
+    v = c / f,
+    y = l / f,
+    b = u / f,
+    x = s / f;
+  ((t[p] = _ * v + m * x + h * b - g * y),
+    (t[p + 1] = _ * y - m * b + h * x + g * v),
+    (t[p + 2] = _ * b + m * y - h * v + g * x),
+    (t[p + 3] = _ * x - m * v - h * y - g * b),
+    e.fkBone(t, i, r),
+    e.setGlobal(t, n, ze),
+    e.fkBone(t, n, r));
+}
+function Q(e, t, n, r, i, a) {
+  let o = a * 0.5,
+    s = Math.sin(o),
+    c = n * s,
+    l = r * s,
+    u = i * s,
+    d = Math.cos(o),
+    f = t * 4,
+    p = e[f],
+    m = e[f + 1],
+    h = e[f + 2],
+    g = e[f + 3];
+  ((e[f] = d * p + c * g + l * h - u * m),
+    (e[f + 1] = d * m - c * h + l * g + u * p),
+    (e[f + 2] = d * h + c * m - l * p + u * g),
+    (e[f + 3] = d * g - c * p - l * m - u * h));
+}
+function $(e, t, n, r, i, a) {
+  let o = a * 0.5,
+    s = Math.sin(o),
+    c = n * s,
+    l = r * s,
+    u = i * s,
+    d = Math.cos(o),
+    f = t * 4,
+    p = e[f],
+    m = e[f + 1],
+    h = e[f + 2],
+    g = e[f + 3];
+  ((e[f] = g * c + p * d + m * u - h * l),
+    (e[f + 1] = g * l - p * u + m * d + h * c),
+    (e[f + 2] = g * u + p * l - m * c + h * d),
+    (e[f + 3] = g * d - p * c - m * l - h * u));
+}
+function Ve(e, t, n) {
+  let r = t * 4,
+    i = e[r + 3] < 0 ? -1 : 1,
+    a = 1 - n,
+    o = e[r] * a,
+    s = e[r + 1] * a,
+    c = e[r + 2] * a,
+    l = e[r + 3] * a + i * n,
+    u = 1 / Math.sqrt(o * o + s * s + c * c + l * l);
+  ((e[r] = o * u), (e[r + 1] = s * u), (e[r + 2] = c * u), (e[r + 3] = l * u));
+}
+function He(e, t, n, r) {
+  let i = t * 4,
+    a = e[i],
+    o = e[i + 1],
+    s = e[i + 2],
+    c = e[i + 3];
+  c < 0 && ((a = -a), (o = -o), (s = -s), (c = -c));
+  let l = Math.sqrt(a * a + o * o + s * s);
+  if (l < 1e-5) return;
+  let u = 2 * Math.atan2(l, c);
+  if (u <= n) return;
+  let d = (u + (n - u) * r) * 0.5,
+    f = Math.sin(d) / l;
+  ((e[i] = a * f),
+    (e[i + 1] = o * f),
+    (e[i + 2] = s * f),
+    (e[i + 3] = Math.cos(d)));
+}
+var Ue = new e();
+function We(e, t, n, r, i) {
+  (Ue.set(n, r, i, `XYZ`), z.setFromEuler(Ue));
+  let a = t * 4;
+  ((e[a] = z.x), (e[a + 1] = z.y), (e[a + 2] = z.z), (e[a + 3] = z.w));
+}
+export {
+  E as ACTION_DEFAULTS,
+  ye as Animator,
+  s as POSE_LEN,
+  T as makeAnimInput,
+};

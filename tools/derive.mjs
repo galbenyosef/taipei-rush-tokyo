@@ -10,9 +10,9 @@
 //
 // Layout: the capture preserves the served URL structure, so both derived
 // layers MIRROR it — no __-flattening. A captured file at
-// tokyo/assets/actors-Bnj6Q1ad.js becomes
-//   readable/tokyo/assets/actors-Bnj6Q1ad.pretty.js   (prettified twin)
-//   src/tokyo/assets/actors-Bnj6Q1ad-NN.js            (statement-aligned slice)
+// tokyo/assets/actors-qKVitB-C.js becomes
+//   readable/tokyo/assets/actors-qKVitB-C.pretty.js   (prettified twin)
+//   src/tokyo/assets/actors-qKVitB-C-NN.js            (statement-aligned slice)
 // The inline twins of the entry document live at readable/tokyo/index-inline-N.*.
 //
 // Pipeline:
@@ -23,7 +23,7 @@
 //   the capture *.css -> readable/<served path>.pretty.css, wholeFile section
 //                        (stylesheet rule: stylesheets are never sliced).
 //   vendor bundles     -> readable/ + wholeFile section (vendor rule): the
-//                        bundled three.js r186 chunk (assets/three-CC5Mkdpe.js),
+//                        bundled three.js r186 chunk (assets/three-x0mFGRTI.js),
 //                        the Google Basis KTX2 transcoder (avatars/basis/…) and
 //                        the Vercel Web Analytics platform script
 //                        (_vercel/insights/script.js) are indexed whole.
@@ -74,24 +74,42 @@ const PINNED = "3.9.6";
 const MIN_WINDOW = 250;
 const MAX_WINDOW = 350;
 const TODAY = "2026-10-13";
+// --check: recompute the whole derivation and compare against the committed
+// derived layer, writing nothing (exits 1 on any drift). The derivation is
+// deterministic (pinned prettier to a layout fixed point + recorded rename map),
+// so a clean --check proves readable/ + src/ + split-spec.json are current.
+const CHECK = process.argv.includes("--check");
+const pending = new Map(); // CHECK mode: rel -> intended bytes (nothing written)
 
 const sha256 = (buf) => crypto.createHash("sha256").update(buf).digest("hex");
-const readLines = (abs) => {
-  const t = fs.readFileSync(abs, "utf8");
-  const l = t.split("\n");
-  if (l.length && l[l.length - 1] === "") l.pop();
-  return l;
-};
 const linesOf = (text) => text.replace(/\n$/, "").split("\n");
 const lineOf = (text, offset) => text.slice(0, offset).split("\n").length;
+// the intended derived bytes (CHECK) or the committed file (normal run)
+const readOut = (rel) => (pending.has(rel) ? pending.get(rel) : fs.readFileSync(path.join(proj, rel), "utf8"));
+
+// recursive file walk (posix rels against base)
+function walkFiles(dir, base = dir, out = []) {
+  if (!fs.existsSync(dir)) return out;
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) walkFiles(p, base, out);
+    else out.push(path.relative(base, p).split(path.sep).join("/"));
+  }
+  return out;
+}
 
 // capture-relative name -> derived twin name (served path kept, extension swapped)
 const tagOf = (capRel) => capRel.replace(/\.(js|css)$/i, "");
 const prettyRelFor = (capRel) =>
   "readable/" + tagOf(capRel) + (/\.css$/i.test(capRel) ? ".pretty.css" : ".pretty.js");
 
-// write a derived file, creating its (served-path) directory chain
+// write a derived file, creating its (served-path) directory chain; in --check
+// mode the intended bytes are staged in memory instead (nothing is written)
 function writeDerived(rel, text) {
+  if (CHECK) {
+    pending.set(rel, text);
+    return;
+  }
   const abs = path.join(proj, rel);
   fs.mkdirSync(path.dirname(abs), { recursive: true });
   fs.writeFileSync(abs, text);
@@ -218,9 +236,9 @@ function scanBlocks(buf) {
 
 // ── curated content-anchored classification (guards fail loudly) ────────
 const WHOLE_FILE = {
-  "tokyo/assets/three-CC5Mkdpe": {
+  "tokyo/assets/three-x0mFGRTI": {
     title:
-      "tokyo/assets/three-CC5Mkdpe.js — bundled three.js r186 engine (vendor, whole-file, never sliced)",
+      "tokyo/assets/three-x0mFGRTI.js — bundled three.js r186 engine (vendor, whole-file, never sliced)",
     desc:
       "the bundled three.js r186 engine chunk — the vendored `__THREE__` revision registration (r186), WebGLRenderer, the math/geometry/material/texture/renderer machinery — third-party engine code, not app logic. Vendor rule — indexed whole-file in readable/, never sliced or rewritten.",
     guard: (t) => t.includes("WebGLRenderer") && t.includes("__THREE__") && /REVISION\s*:\s*\(\)\s*=>\s*[`"']186[`"']/.test(t),
@@ -308,10 +326,20 @@ async function main() {
   const cssRels = captured.filter((r) => /\.css$/i.test(r));
   const htmlRels = captured.filter((r) => /\.html$/i.test(r));
   // entry chunk first (the module graph's entry point), then the app chunks,
-  // then the vendored engines — a reading order, not a build order
+  // then the vendored engines — a reading order, not a build order. The entry
+  // chunk is found from the entry document's module <script src> (hash-stable
+  // across refreshes), and the vendored engines from the WHOLE_FILE table — no
+  // per-build hash is hardcoded here.
+  const entryChunkRel = (() => {
+    const html = captured.find((r) => /(^|\/)index\.html$/.test(r));
+    if (!html) return null;
+    const t = fs.readFileSync(path.join(proj, html), "utf8");
+    const m = /<script[^>]*type="module"[^>]*\bsrc="\/?([^"]+\.js)"/.exec(t);
+    return m ? m[1] : null;
+  })();
   const rank = (rel) => {
-    if (/\/game-y-/.test(rel)) return 0;
-    if (rel.includes("/three-CC5Mkdpe") || rel.includes("basis_transcoder") || rel.includes("insights/script")) return 2;
+    if (rel === entryChunkRel) return 0;
+    if (WHOLE_FILE[tagOf(rel)]) return 2;
     return 1;
   };
   const jsRels = jsRelsAll.slice().sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
@@ -689,15 +717,6 @@ async function main() {
 
   // ── 4) prune orphan derived files (capture untouched) ──────────────────
   let pruned = 0;
-  const walkFiles = (dir, base = dir, out = []) => {
-    if (!fs.existsSync(dir)) return out;
-    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      const p = path.join(dir, e.name);
-      if (e.isDirectory()) walkFiles(p, base, out);
-      else out.push(path.relative(base, p).split(path.sep).join("/"));
-    }
-    return out;
-  };
   const removeEmptyDirs = (dir) => {
     if (!fs.existsSync(dir)) return;
     let empty = true;
@@ -718,12 +737,13 @@ async function main() {
     for (const f of walkFiles(dir)) {
       const relFull = path.posix.join(path.basename(dir), f);
       if (exts.test(f) && !keep.has(relFull)) {
+        if (CHECK) continue; // --check reports orphans below, never deletes
         fs.rmSync(path.join(dir, f));
         pruned++;
         console.log(`derive: pruned orphan derived file ${relFull}`);
       }
     }
-    removeEmptyDirs(dir);
+    if (!CHECK) removeEmptyDirs(dir);
   }
 
   // ── 5) split-spec.json (2-space indent + trailing newline) ─────────────
@@ -763,7 +783,7 @@ async function main() {
       "exports are excluded (documented in README). Every slice parses standalone under `node " +
       "--input-type=module --check -` and round-trips byte-exact to its recorded readable line range " +
       "(through the recorded rename map where the chunk is renamed). Vendor rule — wholeFile sections, " +
-      "never sliced: tokyo/assets/three-CC5Mkdpe.js (bundled three.js r186 engine: WebGLRenderer + " +
+      "never sliced: tokyo/assets/three-x0mFGRTI.js (bundled three.js r186 engine: WebGLRenderer + " +
       "__THREE__ r186 revision registration), avatars/basis/basis_transcoder.js (Google Basis KTX2 " +
       "transcoder wrapper) and _vercel/insights/script.js (Vercel Web Analytics platform script) — all " +
       "content-anchored and guarded. Stylesheet rule — every captured .css is wholeFile. Non-standalone " +
@@ -834,7 +854,7 @@ async function main() {
     bySource.get(s.sourceFile).push(s);
   }
   for (const [sourceFile, list] of bySource) {
-    const lines = readLines(path.join(proj, sourceFile));
+    const lines = linesOf(readOut(sourceFile));
     const sorted = [...list].sort((a, b) => a.startLine - b.startLine);
     if (sorted[0].startLine !== 1) {
       console.error(`TILING FAIL ${sourceFile}: starts at line ${sorted[0].startLine}`);
@@ -856,11 +876,10 @@ async function main() {
   for (const s of sections) {
     if (s.wholeFile || s.skipped) continue;
     ranged++;
-    const abs = path.join(proj, "src", s.file);
-    const text = fs.readFileSync(abs, "utf8");
+    const text = readOut(path.posix.join("src", s.file));
     const nl2 = text.indexOf("\n", text.indexOf("\n") + 1);
     const body = text.slice(nl2 + 1);
-    const raw = readLines(path.join(proj, s.sourceFile)).slice(s.startLine - 1, s.endLine).join("\n") + "\n";
+    const raw = linesOf(readOut(s.sourceFile)).slice(s.startLine - 1, s.endLine).join("\n") + "\n";
     const record = recordsFor(renameMap, s.file);
     const expected = record ? applyRecordedMap(raw, record) : raw;
     if (body !== expected) {
@@ -875,7 +894,7 @@ async function main() {
   let prettyParsed = 0;
   for (const s of sources) {
     if (!s.sourceFile?.endsWith(".pretty.js")) continue;
-    if (!parses(fs.readFileSync(path.join(proj, s.sourceFile), "utf8")).ok) {
+    if (!parses(readOut(s.sourceFile)).ok) {
       console.error(`PARSE FAIL ${s.sourceFile}`);
       bad++;
     } else prettyParsed++;
@@ -887,6 +906,31 @@ async function main() {
       `${prettyParsed} pretty js parse clean, ${notRendered.length} notRendered, ${pruned} orphan(s) pruned — ` +
       `self-check ${bad ? bad + " FAILURE(S)" : "clean"}`,
   );
+
+  // ── 7) --check: compare the intended layer against the committed one ────
+  if (CHECK) {
+    const problems = [];
+    for (const [rel, text] of pending) {
+      const abs = path.join(proj, rel);
+      if (!fs.existsSync(abs)) problems.push(`missing derived file: ${rel}`);
+      else if (fs.readFileSync(abs, "utf8") !== text) problems.push(`stale derived file: ${rel}`);
+    }
+    for (const dir of ["readable", "src"]) {
+      for (const f of walkFiles(path.join(proj, dir))) {
+        const rel = path.posix.join(dir, f);
+        if (!pending.has(rel)) problems.push(`orphan derived file: ${rel}`);
+      }
+    }
+    if (bad || problems.length) {
+      console.error(`DERIVE CHECK FAIL — ${bad + problems.length} problem(s) (nothing written)`);
+      for (const p of problems.slice(0, 30)) console.error("  " + p);
+      process.exit(1);
+    }
+    console.log(
+      `DERIVE CHECK PASS — readable/ + src/ + split-spec.json are current under pinned prettier ${PINNED} (nothing written)`,
+    );
+    process.exit(0);
+  }
   if (bad) process.exit(1);
 }
 

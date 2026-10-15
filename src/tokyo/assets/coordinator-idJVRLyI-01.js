@@ -1,0 +1,258 @@
+// tokyo/assets/coordinator-idJVRLyI 01 — state
+// Lines 1-256 of readable/tokyo/assets/coordinator-idJVRLyI.pretty.js (statement-aligned).
+const __vite__mapDeps = (
+  i,
+  m = __vite__mapDeps,
+  d = m.f ||
+    (m.f = [
+      "assets/landing-BF9tCPAp.js",
+      "assets/engine-wUBYs8Z3.js",
+      "assets/rolldown-runtime-DK3Fl9T5.js",
+      "assets/ja-DY7SMsVw.js",
+      "assets/three-x0mFGRTI.js",
+      "assets/cities-8-O8IWPJ.js",
+      "assets/shared-DC9fKqx_.js",
+      "assets/game-CPWU_QWx.js",
+      "assets/notice-DnIsya3-.js",
+      "assets/session-B5ukzynC.js",
+      "assets/accounts-BNXdphZj.js",
+      "assets/tabs-C1IhIOn4.js",
+      "assets/dom-COFDPdeV.js",
+      "assets/text-BwU1KB-o.js",
+      "assets/ui-wGTeK-Dn.js",
+      "assets/controllers-DIi301oL.js",
+      "assets/icons-DYNV7fxr.js",
+    ]),
+) => i.map((i) => d[i]);
+import { a as e } from "./ja-DY7SMsVw.js";
+import {
+  Hn as t,
+  In as n,
+  Ln as r,
+  Vn as i,
+  Xn as a,
+  Zn as o,
+  _r as s,
+  zt as c,
+} from "./engine-wUBYs8Z3.js";
+import { n as l } from "./cities-8-O8IWPJ.js";
+import { t as u } from "./notice-DnIsya3-.js";
+import {
+  f as d,
+  g as f,
+  h as p,
+  i as m,
+  o as h,
+  s as g,
+} from "./session-B5ukzynC.js";
+import {
+  c as _,
+  i as v,
+  l as y,
+  o as b,
+  t as x,
+  u as S,
+} from "./controllers-DIi301oL.js";
+import { h as C, o as w } from "./accounts-BNXdphZj.js";
+import { a as T, i as E, o as D, r as O, t as k } from "./tabs-C1IhIOn4.js";
+var StartGate = class {
+    host;
+    started = !1;
+    pending = !1;
+    constructor(e) {
+      this.host = e;
+    }
+    async tick() {
+      if (
+        this.pending ||
+        (this.started && (!this.host.deferred() || !this.host.menu()))
+      )
+        return;
+      let e = this.host.stored();
+      if (!(!this.started && !e && this.host.playTime() < 180)) {
+        ((this.started = !0), (this.pending = !0));
+        try {
+          await this.host.start(!e, !this.host.menu());
+        } finally {
+          this.pending = !1;
+        }
+      }
+    }
+  },
+  cloudSave,
+  game,
+  switchingIdentity = !1,
+  delay = (e) => new Promise((t) => setTimeout(t, e)),
+  identityKeyOf = (e) => (e && e.anonymous === !1 ? e.user_id : `guest`);
+function installCloud(n) {
+  if (cloudSave) return cloudSave;
+  ((game = n), t());
+  let i = (cloudSave = x());
+  i.setPorts({
+    apply: (e, t = !0) => {
+      if (!n.state.restoreSave(e)) throw Error(`Local storage unavailable`);
+      t && location.reload();
+    },
+    reload: () => location.reload(),
+  });
+  let a = () =>
+    !!document.querySelector(`dialog.cloud-overlay[open]`) ||
+    [`main`, `phone`, `pause`].includes(n.ui.menuOpen ?? ``);
+  f(a);
+  let c = new StartGate({
+    playTime: () => n.state.totalPlayTime,
+    stored: () => m() !== null,
+    menu: a,
+    deferred: g,
+    start: h,
+  });
+  if ((s(o()) && i.protectNewerSave(), D()))
+    return ((n.state.resetting = !0), n.setPaused(!0), i);
+  let l = ``,
+    u = (e, t) => {
+      if (switchingIdentity) return;
+      let a = identityKeyOf(e);
+      if (r() !== a) {
+        L(n, i, a, e, t);
+        return;
+      }
+      let o = e ? `${e.user_id}:${e.anonymous ?? !0}` : ``;
+      o !== l &&
+        ((l = o),
+        e
+          ? b(e).then(() => {
+              if (!i.connectedTo(e.user_id)) return i.connect(e);
+            })
+          : (i.disconnect(), y().disconnect()));
+    };
+  d(u);
+  let p = m();
+  return (
+    p && i.connectedTo(p.user_id) && (l = `${p.user_id}:${p.anonymous ?? !0}`),
+    p ? h(!1) : u(null, `restore`),
+    n.events.on(`state:saved`, ({ data: e }) => {
+      let t = e?.travel;
+      (t?.arrivalOnly && !S(e) && delete t.arrivalOnly, i.markDirty());
+    }),
+    n.events.on(`mission:completed`, () => {
+      (n.state.saveNow(), i.flush(!0));
+    }),
+    window.addEventListener(`pagehide`, () => {
+      i.flush(!0, !0);
+    }),
+    window.addEventListener(`travel:changed`, () => {
+      y().markDirty();
+    }),
+    y().markDirty(),
+    document.addEventListener(`visibilitychange`, () => {
+      document.visibilityState === `hidden` ? i.flush(!0, !0) : h(!1);
+    }),
+    setInterval(() => {
+      (c.tick().catch(() => {}),
+        i.tick().catch(() => {}),
+        y()
+          .tick()
+          .catch(() => {}));
+    }, 1e3),
+    n.events.on(`game:pause`, () =>
+      queueMicrotask(() => {
+        c.tick().catch(() => {});
+      }),
+    ),
+    k(async () => {
+      n.state.resetting || n.state.saveNow();
+      let [e, t] = await Promise.all([i.flushNow(6e3), y().flushNow(6e3)]);
+      return e && t;
+    }),
+    O(async () => {
+      (n.state.saveNow(),
+        (n.state.resetting = !0),
+        n.setPaused(!0),
+        await Promise.race([
+          Promise.all([i.flushNow(3e3), y().flushNow(3e3)]),
+          delay(3500),
+        ]),
+        i.disconnect(),
+        y().disconnect(),
+        E(),
+        await e(
+          () =>
+            import(`./landing-BF9tCPAp.js`).then((e) => e.showMovedNotice()),
+          __vite__mapDeps([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]),
+        ).catch(() => {}));
+    }),
+    e(
+      () =>
+        import(`./ui-wGTeK-Dn.js`).then((e) => {
+          (e.showSaveUndo(n, i), e.showStartupNotices(n), e.showWalletGuard(n));
+        }),
+      __vite__mapDeps([14, 3, 1, 2, 4, 5, 6, 7, 8, 9, 15, 10, 12, 13, 16]),
+    ).catch(() => {}),
+    c.tick().catch(() => {}),
+    i
+  );
+}
+function L(e, t, i, c, l) {
+  (e.state.resetting || e.state.saveNow(), t.disconnect(), y().disconnect());
+  let d = i !== `guest` && r() === `guest`;
+  if (!n(i, d)) {
+    (s(o()) || s(a(i))) && t.protectNewerSave();
+    return;
+  }
+  (v(i),
+    (switchingIdentity = !0),
+    l === `signout`
+      ? u(`signed_out`)
+      : l === `expired`
+        ? u(`expired`)
+        : l === `deleted`
+          ? u(`deleted`)
+          : c && (l === `signin` || l === `remote`)
+            ? u(`signed_in`, c.email ?? ``)
+            : !c && l === `remote` && u(`signed_out`),
+    e.state.restoreSave(o()),
+    (e.state.resetting = !0),
+    e.setPaused(!0),
+    location.reload());
+}
+async function syncNow(e = 1e4) {
+  if (!cloudSave) return !1;
+  game && !game.state.resetting && game.state.saveNow();
+  let [t, n] = await Promise.all([cloudSave.flushNow(e), y().flushNow(e)]);
+  return t && n;
+}
+async function signOutFlow(e = !1) {
+  if (!e) {
+    let [e, t] = await Promise.all([syncNow(8e3), T(8e3)]);
+    if (!(e && t)) return { synced: !1, signedOut: !1 };
+  }
+  return (await C(), { synced: !e, signedOut: !0 });
+}
+var B = !1,
+  V = !1;
+async function leaveForGoogle() {
+  (game && !game.state.resetting && game.state.saveNow(),
+    await Promise.race([syncNow(4e3), delay(4500)]),
+    game && (game.state.resetting = !0),
+    c(),
+    V ||
+      window.addEventListener(`pageshow`, (e) => {
+        e.persisted && B && game && ((game.state.resetting = !1), (B = !1));
+      }),
+    (V = !0),
+    (B = !0));
+}
+async function deleteFlow(e) {
+  let t = m()?.user_id,
+    n = await w(e);
+  if (n.ok && t)
+    for (let e of Object.values(l)) i(t, `${e.saveKey}:identities-v1`);
+  return n;
+}
+async function flushDeparture() {
+  (await Promise.race([
+    Promise.all([cloudSave?.flushForNavigation(), _()]),
+    new Promise((e) => setTimeout(e, 3e3)),
+  ]),
+    await p());
+}
