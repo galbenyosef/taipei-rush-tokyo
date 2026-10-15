@@ -117,6 +117,66 @@
    "lodOf": "wen"
   },
   {
+   "id": "kai",
+   "file": "kai.glb",
+   "fallback": "kai.webp.glb",
+   "role": "hero",
+   "sex": "m",
+   "label": { "zh": "寫實 阿凱", "en": "Rocketbox Kai" },
+   "source": "Male_Adult_17",
+   "head": "Business_Male_02",
+   "height": 1.78,
+   "tris": 7092,
+   "bones": 80,
+   "bytes": 979920,
+   "textureBytes": 887384,
+   "textures": 7,
+   "gpuBytes": 6247984,
+   "gpuBytesEtc": 4150800,
+   "fallbackBytes": 689668,
+   "fallbackTextureBytes": 597150,
+   "fallbackGpuBytes": 32855380,
+   "maps": [
+    { "name": "body-color", "mode": "etc1s", "size": [1024, 1024], "bytes": 173283, "webp": 114330 },
+    { "name": "body-mask", "mode": "uastc", "size": [256, 256], "bytes": 31084, "webp": 5636 },
+    { "name": "body-normal", "mode": "uastc", "size": [512, 512], "bytes": 188969, "webp": 142282 },
+    { "name": "hair-color", "mode": "etc1s+a", "size": [1024, 1024], "bytes": 115337, "webp": 147562 },
+    { "name": "head-color", "mode": "etc1s", "size": [2048, 1024], "bytes": 281855, "webp": 150434 },
+    { "name": "head-mask", "mode": "uastc", "size": [256, 128], "bytes": 20419, "webp": 5426 },
+    { "name": "head-normal", "mode": "uastc", "size": [512, 256], "bytes": 76437, "webp": 31480 }
+   ]
+  },
+  {
+   "id": "mei",
+   "file": "mei.glb",
+   "fallback": "mei.webp.glb",
+   "role": "hero",
+   "sex": "f",
+   "label": { "zh": "寫實 小美", "en": "Rocketbox Mei" },
+   "source": "Female_Adult_12",
+   "head": "Female_Adult_03",
+   "height": 1.62,
+   "tris": 8604,
+   "bones": 80,
+   "bytes": 1081000,
+   "textureBytes": 969131,
+   "textures": 7,
+   "gpuBytes": 6247984,
+   "gpuBytesEtc": 4150800,
+   "fallbackBytes": 874096,
+   "fallbackTextureBytes": 762266,
+   "fallbackGpuBytes": 32855380,
+   "maps": [
+    { "name": "body-color", "mode": "etc1s", "size": [1024, 1024], "bytes": 181097, "webp": 112002 },
+    { "name": "body-mask", "mode": "uastc", "size": [256, 256], "bytes": 37178, "webp": 8452 },
+    { "name": "body-normal", "mode": "uastc", "size": [512, 512], "bytes": 177415, "webp": 139956 },
+    { "name": "hair-color", "mode": "etc1s+a", "size": [1024, 1024], "bytes": 163508, "webp": 299416 },
+    { "name": "head-color", "mode": "etc1s", "size": [2048, 1024], "bytes": 286085, "webp": 152282 },
+    { "name": "head-mask", "mode": "uastc", "size": [256, 128], "bytes": 26787, "webp": 9478 },
+    { "name": "head-normal", "mode": "uastc", "size": [512, 256], "bytes": 97061, "webp": 40680 }
+   ]
+  },
+  {
    "id": "office-m",
    "file": "office-m.glb",
    "fallback": "office-m.webp.glb",
@@ -559,9 +619,9 @@
    ]
   }
  ],
- "totalBytes": 5729160,
+ "totalBytes": 7790080,
  "license": "Microsoft Rocketbox Avatar Library — MIT License, Copyright (c) 2020 Microsoft (see CREDITS.md / LICENSE-ROCKETBOX.txt)",
- "fallbackTotalBytes": 4444508,
+ "fallbackTotalBytes": 6008272,
  "textureFormat": "ktx2",
  "transcoder": "basis/"
 }
