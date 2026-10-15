@@ -14,8 +14,8 @@ Source: https://www.taipei-rush.app/tokyo/
   `__vite__mapDeps` chunk-table loader
 - **three.js r186 in the chunk graph** — its own `assets/three-*.js` chunk plus
   eight worker chunks (world/actors/char/people/interiors/audio/body), the
-  Google Basis KTX2 transcoder and a 42-model Rocketbox avatar set (`.glb`,
-  MIT-licensed, listed in `avatars/manifest.json`)
+  Google Basis KTX2 transcoder and a 23-model (46-file) Rocketbox avatar set
+  (`.glb` + `.webp.glb`, MIT-licensed, listed in `avatars/manifest.json`)
 - **PWA shell** — `manifest.webmanifest` + icons, installable; separate Tokyo
   and origin-root manifests/icons
 - **i18n** — zh-Hant / ja / en with a large generated Japanese dictionary chunk
@@ -38,9 +38,12 @@ the Taipei edition of the same platform (its shared files — avatars, root
 icons/key art, base-stripped `assets/` forms — are part of this capture because
 the Tokyo bundle carries literals that resolve to them).
 
-The capture is the full runtime closure of 179 files (~22.9 MB): entry document,
-95 JS chunks, 9 stylesheets, 14 key-art webp, 12 icons, the avatars family, the
-KTX2 transcoder (js + wasm), the Japanese font and the animation bank.
+The capture is the full runtime closure of 190 files (~28.1 MB): entry document,
+100 JS chunks, 11 stylesheets, 14 key-art webp, 12 icons, the 23-model avatar
+family, the KTX2 transcoder (js + wasm), the Japanese font and the animation bank.
+The 2026-10-15 build added a **car garage** (a new `garage-*` chunk + stylesheet
+and root-form twin), four new districts (**Asakusa, Hongō, Roppongi, Suidobashi**)
+and two new hero avatars (**Kai**, **Mei**).
 
 External at runtime (never backfilled — left on their hosts): the account
 backend `auth.taipei-rush.app`, Cloudflare Turnstile
@@ -64,17 +67,20 @@ San-Francisco-only phone key art this Tokyo deploy never serves.
 - `_mirror-report.json` — crawl record (fetched paths, 404 gaps, external and
   live-backend lists)
 - `readable/` — prettified derived layer (pinned prettier 3.9.6) that **mirrors
-  the served paths**: 104 JS + 11 CSS pretties under `readable/tokyo/assets/…`,
-  `readable/assets/…`, `readable/avatars/basis/…`, `readable/_vercel/…`, plus 11
-  inline-block twins (`readable/tokyo/index-inline-*.pretty.*`) and
+  the served paths**: 122 pretties (100 capture-JS + 11 capture-CSS twins + 11
+  inline-block twins) under `readable/tokyo/assets/…`, `readable/assets/…`,
+  `readable/avatars/basis/…`, `readable/_vercel/…`, plus
   `readable/index-inline-map.json`
-- `src/` + `split-spec.json` — 1,187 statement-aligned slices across 92 app
+- `src/` + `split-spec.json` — 1,433 statement-aligned slices across 97 app
   chunks in the same served-path structure (`src/tokyo/assets/<chunk>-NN.js`),
   re-cut through the recorded rename map, with the derivation spec
 - `rename-map.json` + `tools/names.json` — the identifier rename campaign: the
   recovered per-slice map (`files` word-boundary + `scoped` token-index records)
   and the reviewed worklist with per-name evidence
 - `tools/derive.mjs` — rebuild `readable/` + `src/` + `split-spec.json`
+  (`--check` recomputes and compares, writes nothing)
+- `tools/record-manifest.mjs` — re-cut `.upstream/manifest.json` from the tree
+  (canonical SKIP/NOT_CAPTURED set; `--check` compares, writes nothing)
 - `tools/audit.js` — integrity gate for the derived layers and the rename map
   (`AUDIT PASS`)
 - `tools/apply-names.mjs`, `tools/propose-names.mjs`,
@@ -91,19 +97,19 @@ San-Francisco-only phone key art this Tokyo deploy never serves.
 
 ## Assets
 
-- **models** — 42 file(s): `avatars/` (e.g. jie.glb, casual-m.glb,
-  jp-salaryman2.glb and their `.webp.glb` fallbacks; Microsoft Rocketbox
-  Avatar Library, MIT — see `avatars/manifest.json`)
+- **models** — 46 file(s): `avatars/` (23 Rocketbox models, each as `.glb` plus
+  a `.webp.glb` fallback — e.g. jie, kai, mei, casual-m, jp-salaryman2; Microsoft
+  Rocketbox Avatar Library, MIT — see `avatars/manifest.json`)
 - **images** — 26 file(s): `title/` and `tokyo/title/` (loader/menu key art
   webp, 1600/2560/portrait/phone crops), `icons/` and `tokyo/icons/` (PWA
   icons png/svg)
 - **fonts** — 1 file(s): `tokyo/assets/region-tokyo-sans-jp-*.woff2`
 - **data** — 3 file(s): `avatars/manifest.json` (avatar index),
   `avatars/basis/basis_transcoder.wasm` (KTX2 decoder),
-  `tokyo/assets/anim-CQkLTvTS.bin` (animation bank)
+  `tokyo/assets/anim-D2jNF5Wn.bin` (animation bank)
 - **audio** — none — radio/engine audio is synthesized at runtime; no audio
   payload file is referenced by the Tokyo closure
-- **code** — 95 `.js` + 9 `.css` captured chunks; derived `readable/` +
+- **code** — 100 `.js` + 11 `.css` captured chunks; derived `readable/` +
   `src/` (see Layout)
 
 ## Run
@@ -342,16 +348,146 @@ entirely about `readable/`, `src/`, `split-spec.json`, `rename-map.json` and
     `/avatars/basis/basis_transcoder.wasm` (527,333 B) all HTTP 200; the
     listener (PID 7308) killed and the port verified closed (`netstat`, no
     LISTENING on 8791).
-- **Upstream drift observed 2026-10-14 — the next refresh trigger**: the
-  read-only probe reports `DRIFT: 2 changed, 64 live-missing (of 179 captured)`
+- **Upstream drift observed 2026-10-14 — ACTIONED by the 2026-10-15 refresh
+  (below)**: the read-only probe reported `DRIFT: 2 changed, 64 live-missing (of
+  179 captured)`
   — `tokyo/index.html` and `avatars/manifest.json` changed and 64 hashed chunks
   are no longer served (the live deploy was replaced, so the old chunk names
-  rotated away). The mirror is the **2026-10-13 point-in-time snapshot** and
-  stays as captured. A refresh is the PLAN §3 flow: capture → copy every file
-  being replaced into `legacy/2026-10-14/` → re-cut `readable/` + `src/` →
-  re-author the rename batch for the new hashes (`tools/propose-names.mjs`
-  regenerates the evidence rules; `terms/names.json` keys are capture paths) →
-  re-pass the four gates → boot test + cover re-shoot.
+  rotated away). The mirror stayed the **2026-10-13 point-in-time snapshot** until
+  this refresh; the PLAN §3 flow was then run exactly as sketched (capture → copy
+  every replaced file into `legacy/2026-10-15/` → re-cut `readable/` + `src/` →
+  re-author the rename batch for the new hashes → re-pass the gates → boot test).
+
+### 2026-10-15 refresh (PLAN §3 — the post-campaign refresh)
+
+Mission: the origin had shipped a new Tokyo build since the 2026-10-13 snapshot (the whole
+hashed chunk set rotated). Re-capture what is served today, preserve the old bytes first, re-run
+the §4 runtime closure, re-cut the derived layers and re-anchor the identifier campaign onto the
+new build. The capture layer was refreshed (179 → 190 files); `readable/`, `src/`,
+`split-spec.json`, `rename-map.json` and `tools/names.json` were re-cut.
+
+- **Drift (what moved)** — `node tools/update.mjs` triage: **2 changed, 68 live-missing (of 179
+  captured)**. `avatars/manifest.json` (18,452 → 20,886 B) and `tokyo/index.html` (53,065 → 53,044 B)
+  changed; the 68 `live-missing` rows are the **old hashed chunks** (`tokyo/assets/*.js`, `*.css`,
+  `anim-*.bin`) the redeploy removed — probed directly they return **HTTP 404**, i.e. genuinely gone
+  (hashes rotated), **not** SPA-fallback artifacts (a fallback would return `index.html` with 200 and
+  read as `changed`, not `live-missing`). The recorded 2026-10-14 list (64) grew to 68 by refresh
+  time as the deploy kept rotating.
+- **Runtime closure (§4) — fixpoint in 5 rounds (616 requests)** — the entry document's module
+  references, `__vite__mapDeps`/`import()`/`new URL` surfaces, CSS `url()`, and the **programmatic
+  avatar family** (`expandProgrammaticFamilies`: 48 avatar files enumerated from
+  `avatars/manifest.json`, 46 newly fetched) closed at **190 files, 29,474,212 bytes (28.1 MiB)**.
+  Diff vs the old capture: **+81 added, −70 removed, 9 changed, 100 byte-identical**. The 81 added =
+  the 70 rotated chunks (new hashes) **plus 11 genuinely new files**: a **car garage** feature
+  (`tokyo/assets/garage-BvwUBeJB.js` + `garage-DGUjwj6r.css` and its root-form twin
+  `assets/garage-DGUjwj6r.css`), **four new districts** (`region-tokyo-d-asakusa`, `-hongo`,
+  `-roppongi`, `-suidobashi`), and **two new hero avatars** (`kai`, `mei` — `.glb` + `.webp.glb`).
+  The 9 changed = the entry, the avatars manifest and **7 re-rendered key-art webp** (`tokyo/title/*`,
+  e.g. menu-2560 234,300 → 452,370 B). A re-scan of the new bundles' string literals found **no other
+  referenced-but-missing file**. The 70 upstream-gone rotated chunks were pruned from disk (their
+  bytes live in `legacy/2026-10-15/capture/`). Recorded gaps: **3 unresolved 404** (the SF-only phone
+  key art `sf-keyart-phone.webp`, probed at three bases), 0 unreachable, 2 external (Turnstile +
+  Vercel analytics).
+- **Legacy first** — before anything was fetched, every captured file (179) plus the whole
+  pre-refresh derived layer (`readable/`, `src/`, `split-spec.json`, `rename-map.json`,
+  `tools/names.json`) was copied into `legacy/2026-10-15/`, committed and pushed **alone** (commit
+  `f6907ff`). The old snapshot therefore stays reachable three ways: git history,
+  `legacy/2026-10-15/`. (No `legacy/2026-10-14/` exists — the 2026-10-14 pass was derived-only and
+  never touched the capture.)
+- **Manifest re-cut** — `tools/record-manifest.mjs` (added this pass, adapted from
+  `templates/record-manifest.mjs`, canonical SKIP/NOT_CAPTURED set so no
+  `readable/`/`src/`/`legacy/`/`split-spec.json`/`rename-map.json` leak) re-cut `.upstream/manifest.json`
+  from the tree: **190 files, 28.1 MB**. The served bytes carry **0 nonce / CSP-token / UUID
+  occurrences**, so every entry is hash-checkable and **no `dynamic: true` flag is needed**.
+- **Re-derivation** — the prettier fixed-point method was re-proven on the **old** bundle first: 5
+  archived `legacy/2026-10-15/` capture↔pretty pairs re-render byte-exact under pinned prettier 3.9.6
+  (module API, parser babel/css, format-to-fixed-point). `tools/derive.mjs` then re-cut the new build:
+  **123 readable files** (122 pretties — 100 capture-JS + 11 capture-CSS twins + 11 inline twins —
+  plus `index-inline-map.json`), **1,433 statement-aligned slices across 97 app chunks** (was 1,187
+  across 92), **89 skipped** export-table sections, **25 wholeFile** sections, **74 notRendered**
+  binary records. The vendor table and reading order were made **hash-stable**: the entry chunk is now
+  found from the entry document's module `<script src>` and the vendored engines from the `WHOLE_FILE`
+  table, so no per-build hash is hardcoded for classification (the three.js r186 chunk rotated to
+  `tokyo/assets/three-x0mFGRTI.js`, the `VENDOR_GUARDS` updated).
+- **Rename campaign re-anchored** — `tools/names.json` is keyed by capture path, so the rotated
+  hashes invalidated every key. It was rebuilt by **token-shape alignment**: each old chunk was matched
+  to its new twin by a hash-insensitive normalized-content signature (and, where ambiguous, by the
+  chunk's own export-table public names) — **37 old entries → 37 new keys** (7 hash-insensitively
+  identical, 20 basename-unique, 10 same-dir twins). Rules for the **34 chunks whose locals the
+  minifier preserved** transferred verbatim (every evidence-driven rule re-confirmed against the new
+  build's own export tables/imports: **94 confirmed, 0 conflicts**). For the **5 chunks whose
+  minifier reassigned locals** (`animator`, `bag`, `fullmap`, `tokyo`, `ui`) the stale rules were
+  dropped and **re-derived from the new build's fresh evidence** (`tools/propose-names.mjs`, +20
+  proposals — e.g. `Da`→`mountBag` was `ma`, `A`→`FullMap` was `k`, `gt`→`TOKYO` was `lt`,
+  `R`→`mountCloudSettings` was `F`). Curated rules were spot-verified against the new source
+  (`h`→`REFRESH_MARGIN_S` = 120, `c`→`CELL_PX` = 128, `l`→`ATLAS_COLS` = 4, `f`→`MISSING_RECT` — all
+  unchanged). Result: **247 rules across 38 chunks** (was 244/37), **777 identifier splices**,
+  recovered into `rename-map.json` (**466 records — 140 word-boundary + 139 indexed names over 326
+  occurrences — across 47 renamed slices**; was 461/45). `apply-names -> recover-scoped-map ->
+  derive` is the whole regeneration path; the engine still carries the (s) outside-ranged refusal +
+  per-source line cache and the (p) shorthand refusal (1 rule skipped — a shorthand import).
+- **Gates (verbatim tails, 2026-10-15)**:
+
+```
+node tools/verify.mjs
+  190 files checked, 0 problems
+
+node tools/record-manifest.mjs --check
+  record-manifest --check: 190 files match the committed record
+
+node tools/derive.mjs
+  derive: 123 readable file(s), 1433 src slices (1433/1433 parse standalone, 1433/1433 round-trip
+  byte-exact through the recorded map), 89 skipped, 25 wholeFile, 109 pretty js parse clean, 74
+  notRendered, 0 orphan(s) pruned — self-check clean
+
+node tools/derive.mjs --check
+  DERIVE CHECK PASS — readable/ + src/ + split-spec.json are current under pinned prettier 3.9.6 (nothing written)
+
+node tools/audit.js
+  AUDIT PASS — 1547 spec sections (1433/1433 src↔pretty round-trips byte-exact through the recorded
+  rename map, 47 renamed slice(s), 122/122 pretty sources tiled contiguously, 89/89 skipped
+  export-table sections re-verified textually, 1433/1433 src slices + 109/109 readable/*.pretty.js
+  parse standalone (node --input-type=module --check -), 122/122 pretties provably distinct from their
+  capture source, 114 index-only wholeFile/skipped sections carry no src file, 11 inline content
+  block(s) with twins + index-inline-map.json, 397/406 imports resolve inside the capture (9
+  whitelisted machinery, 0 accepted as recorded 404 gaps), rename map: 466 record(s) over 47 slice(s),
+  all indices address the recorded identifiers and no foreign position, 122/122 pretties re-render
+  byte-exact under pinned prettier 3.9.6 (format-to-fixed-point), capture manifest free of derived layers)
+
+node tools/verify-rename.mjs --all
+  verify-rename: 1433/1433 slice(s) reproduce byte-exact, 47 renamed slice(s) (326 indexed
+  occurrence(s)), 97/97 chunk(s) references+bindings YES
+
+node tools/check-chunk.mjs --all
+  check-chunk: 97 chunk(s), 1433 slice body(ies) substituted — all cross-slice calls resolve
+
+node tools/update.mjs
+  up to date: 190 captured files identical upstream
+
+serve probe (loopback 8791): /tokyo/ -> 200 (53,044 B); tokyo/assets/game-CPWU_QWx.js -> 200
+  (69,824 B); tokyo/assets/garage-BvwUBeJB.js -> 200 (21,043 B);
+  tokyo/assets/region-tokyo-d-asakusa-49Uaiff6.js -> 200 (60,019 B); /avatars/manifest.json -> 200
+  (20,886 B); /avatars/kai.glb -> 200 (979,920 B); /tokyo/title/menu-2560.webp -> 200 (452,370 B);
+  /avatars/basis/basis_transcoder.wasm -> 200 (527,333 B); tokyo/assets/tokyo-CsxGFiHR.css -> 200
+  (114,157 B); listener killed (PID 12,196), port 8791 verified closed (netstat: no LISTENING,
+  connection refused)
+```
+
+- **Boot test** (`docs/boot-2026-10-15.png`, gameplay `docs/gameplay-2026-10-15.png`) — the served
+  mirror boots to the TOKYO RUSH title screen (3D Tokyo night cityscape with Tokyo Tower/Shibuya
+  Skye), enters the world as a guest (no login) and plays: the character 阿傑 on a Tokyo street with
+  traffic, pedestrians and station buildings — both shots are the game running from the mirror's
+  files only (opencli browser against the loopback server). `docs/cover.png` is the earlier
+  2026-10-13 gameplay shot and stays.
+- **Honest gaps** — (1) the **55 → 59 chunks with no recorded renames** (the giant `region-tokyo`,
+  `actors`, `world`, the workers/engine/asset chunks, and the newly-added `garage`) still keep the
+  bundle's own minified top-level names; the tooling is in place for further batches and
+  `split-spec.sources[].renameBindings` / `rename-map.json` are the record of exactly what is applied.
+  (2) `locals inside function bodies` are still out of scope (the campaign renames top-level bindings
+  and import aliases only). (3) Vendor identifiers (three.js r186, Basis, Vercel insights) stay
+  wholeFile and unrenamed. (4) Public API names (the aliased side of every `export { local as Public }`)
+  and shorthand positions are refused by design. (5) `docs/cover.png` was not re-shot this pass (it is
+  already a gameplay shot); the new gameplay screenshot is the refresh evidence.
 
 ## Mirror conventions
 
