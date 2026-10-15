@@ -1,0 +1,57 @@
+// tokyo/assets/boot-C6yF8B4X 01 — settleidentity
+// Lines 1-55 of readable/tokyo/assets/boot-C6yF8B4X.pretty.js (statement-aligned).
+import { Dn as e, Sn as t, jn as n, xn as r } from "./engine-BuS5QxN0.js";
+import { f as i } from "./shared-DcD5mkpI.js";
+import "./game-y-FF2uWA.js";
+import { t as a } from "./notice-DnIsya3-.js";
+import { i as o, l as s, o as c } from "./session-CLv8PYlR.js";
+import {
+  a as l,
+  c as u,
+  i as d,
+  r as f,
+  t as p,
+} from "./controllers-mah1C7rD.js";
+function settleIdentity() {
+  e();
+  let n = o(),
+    i = n && !s() && n.anonymous === !1 ? n.user_id : `guest`,
+    a = t();
+  return (a !== i && r(i, a === `guest`), f(t()), t());
+}
+async function hydrateBeforeTravel() {
+  if ((settleIdentity(), !o() || s())) return;
+  let e = p(),
+    t = !1,
+    r = async () => {
+      let r = await c(!1);
+      if (!r) {
+        (!o() && n().expired && a(`expired`), settleIdentity());
+        return;
+      }
+      t ||
+        settleIdentity() !== (r.anonymous === !1 ? r.user_id : `guest`) ||
+        (await l(r), t) ||
+        (await e.connect(r),
+        i(),
+        [`region`, `spawn`, `cam`, `menu`, `autoplay`, `auth`].some((e) =>
+          new URLSearchParams(location.search).has(e),
+        ),
+        d().includes(`kaohsiung`),
+        d().includes(`tokyo`));
+    },
+    f;
+  try {
+    await Promise.race([
+      r(),
+      new Promise((n) => {
+        f = setTimeout(() => {
+          ((t = !0), e.disconnect(), u().disconnect(), n());
+        }, 3e3);
+      }),
+    ]);
+  } catch {
+  } finally {
+    clearTimeout(f);
+  }
+}

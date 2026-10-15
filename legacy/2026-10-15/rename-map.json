@@ -1,0 +1,1839 @@
+{
+  "note": "Semantic rename map for src/, recovered mechanically by anchor alignment from the committed slices (tools/recover-scoped-map.mjs): the token streams of a slice and its readable range must be identical in every non-identifier position, so every differing identifier pair is a proven rename, not a guess. `files` is a word-boundary map, used only where a name means the same thing everywhere in the slice and is never a property or object key; `scoped` addresses the rest by exact token index as { name: [[i, target], …] }. tools/derive.mjs re-applies this map when it re-cuts src/ (index-validated), tools/verify-rename.mjs and tools/audit.js re-prove every slice from it, and tools/check-chunk.mjs proves cross-slice references still resolve. Regenerate with `node tools/recover-scoped-map.mjs` after any rename batch.",
+  "files": {
+    "assets/dom-BCt0vy2n-01.js": {
+      "a": "formatInt",
+      "c": "safeAreaProbeEl",
+      "d": "resetCanvasSize",
+      "f": "capturePointer",
+      "l": "safeAreaInsets",
+      "o": "formatClock",
+      "u": "readSafeAreaInsets"
+    },
+    "assets/notice-DnIsya3--01.js": {
+      "e": "NOTICE_KEY"
+    },
+    "assets/tabs-C1IhIOn4-01.js": {
+      "_": "broadcastFlush",
+      "g": "isReleased",
+      "h": "releasePlayLock",
+      "m": "released",
+      "v": "respondToFlush"
+    },
+    "tokyo/assets/analytics-B76dRwr5-01.js": {
+      "g": "trackEvent"
+    },
+    "tokyo/assets/animator-C4Q6-_Wy-02.js": {
+      "E": "ACTION_DEFAULTS",
+      "T": "makeAnimInput",
+      "fe": "Animator"
+    },
+    "tokyo/assets/api-tBXVzspF-01.js": {
+      "e": "loadAvatarAsset"
+    },
+    "tokyo/assets/art-tokyo-DHp5jBJS-01.js": {
+      "I": "TOKYO_ART"
+    },
+    "tokyo/assets/bag-LX8mo88s-06.js": {
+      "ma": "mountBag"
+    },
+    "tokyo/assets/board-CFkVQWI7-02.js": {
+      "D": "DepartureBoard"
+    },
+    "tokyo/assets/boot-C6yF8B4X-01.js": {
+      "h": "hydrateBeforeTravel",
+      "m": "settleIdentity"
+    },
+    "tokyo/assets/cities-8-O8IWPJ-01.js": {
+      "_": "formatHhMm",
+      "f": "utcOffsetFromTaipei",
+      "g": "upcomingDepartures",
+      "h": "otherCities",
+      "l": "AIRLINE",
+      "m": "counterpartCity",
+      "o": "transportModeOf",
+      "p": "findRoute"
+    },
+    "tokyo/assets/client-NeGl0SRK-01.js": {
+      "_": "notifyMarketTicketChange"
+    },
+    "tokyo/assets/client-NeGl0SRK-02.js": {
+      "L": "createMarketClient"
+    },
+    "tokyo/assets/coordinator-R8919moQ-01.js": {
+      "A": "StartGate",
+      "F": "identityKeyOf",
+      "H": "leaveForGoogle",
+      "I": "installCloud",
+      "M": "game",
+      "N": "switchingIdentity",
+      "P": "delay",
+      "R": "syncNow",
+      "U": "deleteFlow",
+      "W": "flushDeparture",
+      "j": "cloudSave",
+      "z": "signOutFlow"
+    },
+    "tokyo/assets/dom-BCt0vy2n-01.js": {
+      "a": "formatInt",
+      "c": "safeAreaProbeEl",
+      "d": "resetCanvasSize",
+      "f": "capturePointer",
+      "l": "safeAreaInsets",
+      "o": "formatClock",
+      "u": "readSafeAreaInsets"
+    },
+    "tokyo/assets/landing-DfZEUEhC-01.js": {
+      "V": "runLanding",
+      "z": "showMovedNotice"
+    },
+    "tokyo/assets/market-l-6OeMtj-01.js": {
+      "u": "createMarketClient"
+    },
+    "tokyo/assets/material-3lv29trB-02.js": {
+      "E": "landmarkLayers",
+      "M": "lmPrototype",
+      "k": "packMaterial"
+    },
+    "tokyo/assets/notice-DnIsya3--01.js": {
+      "e": "NOTICE_KEY"
+    },
+    "tokyo/assets/profile-BmQKTAov-01.js": {
+      "S": "mountNameRow",
+      "y": "myProfile"
+    },
+    "tokyo/assets/recovery-CHWBNwD3-01.js": {
+      "c": "readPendingTicket"
+    },
+    "tokyo/assets/session-CLv8PYlR-01.js": {
+      "A": "refreshTimer",
+      "B": "parseSession",
+      "C": "bumpAuthGeneration",
+      "D": "emitSession",
+      "E": "notifyAccountChange",
+      "F": "isLocalOnly",
+      "G": "isDeadSessionResponse",
+      "H": "authFetch",
+      "I": "signOutFlow",
+      "K": "withAuthLock",
+      "L": "currentSession",
+      "M": "refreshPromise",
+      "N": "scheduleRefresh",
+      "O": "storageHookInstalled",
+      "P": "suspendRefresh",
+      "R": "completeSignIn",
+      "S": "getAuthGeneration",
+      "T": "subscribeAccount",
+      "U": "sessionFromAuthResponse",
+      "V": "SUPABASE_API_VERSION",
+      "W": "DEAD_SESSION_ERRORS",
+      "Y": "ensureSession",
+      "_": "signedOutFlag",
+      "b": "sessionListeners",
+      "c": "isMenuOpen",
+      "d": "loadTurnstile",
+      "g": "authGeneration",
+      "h": "REFRESH_MARGIN_S",
+      "j": "refreshing",
+      "k": "installStorageSync",
+      "l": "TurnstileDeferredError",
+      "m": "authPromise",
+      "q": "acceptAuthResponse",
+      "v": "lastErrorWasDeferred",
+      "w": "subscribeSession",
+      "x": "accountListeners",
+      "y": "wasDeferred",
+      "z": "isPlainObject"
+    },
+    "tokyo/assets/session-CLv8PYlR-02.js": {
+      "D": "emitSession",
+      "F": "isLocalOnly",
+      "G": "isDeadSessionResponse",
+      "H": "authFetch",
+      "I": "signOutFlow",
+      "J": "refreshOrSignIn",
+      "K": "withAuthLock",
+      "L": "currentSession",
+      "M": "refreshPromise",
+      "Y": "ensureSession",
+      "f": "runTurnstile",
+      "g": "authGeneration",
+      "k": "installStorageSync",
+      "l": "TurnstileDeferredError",
+      "m": "authPromise",
+      "q": "acceptAuthResponse",
+      "v": "lastErrorWasDeferred"
+    },
+    "tokyo/assets/signs-CcdyXn0R-01.js": {
+      "c": "CELL_PX"
+    },
+    "tokyo/assets/tabs-C1IhIOn4-01.js": {
+      "_": "broadcastFlush",
+      "g": "isReleased",
+      "h": "releasePlayLock",
+      "m": "released",
+      "v": "respondToFlush"
+    },
+    "tokyo/assets/tokyo-BZXVhKTn-01.js": {
+      "lt": "TOKYO"
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-01.js": {
+      "F": "mountCloudTitle",
+      "I": "mountCloudPhoneStatus",
+      "P": "mountCloudSettings",
+      "R": "showSaveUndo",
+      "V": "showCloudPanel",
+      "de": "syncNow",
+      "le": "deleteFlow",
+      "ue": "signOutFlow",
+      "z": "showStartupNotices"
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-02.js": {
+      "de": "syncNow",
+      "le": "deleteFlow",
+      "ue": "signOutFlow"
+    }
+  },
+  "scoped": {
+    "assets/dom-BCt0vy2n-01.js": {
+      "e": [
+        [
+          1,
+          "createEl"
+        ]
+      ],
+      "i": [
+        [
+          385,
+          "retriggerAnim"
+        ]
+      ],
+      "n": [
+        [
+          211,
+          "ClassState"
+        ]
+      ],
+      "r": [
+        [
+          304,
+          "StylePropBinding"
+        ]
+      ],
+      "t": [
+        [
+          66,
+          "TextBinding"
+        ]
+      ]
+    },
+    "assets/rig-BjRdQXtM-01.js": {
+      "e": [
+        [
+          4,
+          "CANON_HIP_Y"
+        ],
+        [
+          68,
+          "CANON_HIP_Y"
+        ]
+      ],
+      "n": [
+        [
+          189,
+          "applyPose"
+        ]
+      ],
+      "t": [
+        [
+          9,
+          "bindRig"
+        ]
+      ]
+    },
+    "assets/tabs-C1IhIOn4-01.js": {
+      "a": [
+        [
+          141,
+          "getLockManager"
+        ],
+        [
+          189,
+          "getLockManager"
+        ],
+        [
+          332,
+          "getLockManager"
+        ]
+      ],
+      "c": [
+        [
+          166,
+          "playLockName"
+        ],
+        [
+          227,
+          "playLockName"
+        ],
+        [
+          406,
+          "playLockName"
+        ]
+      ],
+      "d": [
+        [
+          482,
+          "takeoverHandler"
+        ],
+        [
+          499,
+          "takeoverHandler"
+        ],
+        [
+          552,
+          "takeoverHandler"
+        ],
+        [
+          567,
+          "takeoverHandler"
+        ]
+      ],
+      "e": [
+        [
+          1,
+          "CLIENT_ID"
+        ],
+        [
+          684,
+          "CLIENT_ID"
+        ],
+        [
+          1040,
+          "CLIENT_ID"
+        ],
+        [
+          1085,
+          "CLIENT_ID"
+        ]
+      ],
+      "f": [
+        [
+          484,
+          "takeoverInstalled"
+        ],
+        [
+          504,
+          "takeoverInstalled"
+        ],
+        [
+          509,
+          "takeoverInstalled"
+        ]
+      ],
+      "i": [
+        [
+          106,
+          "subscribeChannel"
+        ],
+        [
+          520,
+          "subscribeChannel"
+        ],
+        [
+          829,
+          "subscribeChannel"
+        ],
+        [
+          990,
+          "subscribeChannel"
+        ]
+      ],
+      "l": [
+        [
+          181,
+          "acquirePlayLock"
+        ]
+      ],
+      "n": [
+        [
+          21,
+          "channelListeners"
+        ],
+        [
+          83,
+          "channelListeners"
+        ],
+        [
+          117,
+          "channelListeners"
+        ],
+        [
+          129,
+          "channelListeners"
+        ]
+      ],
+      "o": [
+        [
+          162,
+          "releaseLock"
+        ],
+        [
+          285,
+          "releaseLock"
+        ],
+        [
+          446,
+          "releaseLock"
+        ],
+        [
+          628,
+          "releaseLock"
+        ],
+        [
+          635,
+          "releaseLock"
+        ]
+      ],
+      "p": [
+        [
+          490,
+          "installTakeoverHandler"
+        ]
+      ],
+      "r": [
+        [
+          29,
+          "ensureChannel"
+        ],
+        [
+          113,
+          "ensureChannel"
+        ],
+        [
+          358,
+          "ensureChannel"
+        ],
+        [
+          661,
+          "ensureChannel"
+        ],
+        [
+          1015,
+          "ensureChannel"
+        ]
+      ],
+      "s": [
+        [
+          164,
+          "ownerCity"
+        ],
+        [
+          199,
+          "ownerCity"
+        ],
+        [
+          264,
+          "ownerCity"
+        ],
+        [
+          423,
+          "ownerCity"
+        ],
+        [
+          545,
+          "ownerCity"
+        ],
+        [
+          615,
+          "ownerCity"
+        ]
+      ],
+      "t": [
+        [
+          19,
+          "cloudChannel"
+        ],
+        [
+          34,
+          "cloudChannel"
+        ],
+        [
+          44,
+          "cloudChannel"
+        ],
+        [
+          48,
+          "cloudChannel"
+        ],
+        [
+          59,
+          "cloudChannel"
+        ],
+        [
+          68,
+          "cloudChannel"
+        ],
+        [
+          101,
+          "cloudChannel"
+        ]
+      ],
+      "u": [
+        [
+          324,
+          "requestTakeover"
+        ]
+      ]
+    },
+    "tokyo/assets/airliner-Bx-acqWB-01.js": {
+      "_": [
+        [
+          529,
+          "AIRLINER_SIGNS"
+        ]
+      ],
+      "a": [
+        [
+          31,
+          "BODY_Y"
+        ],
+        [
+          1477,
+          "BODY_Y"
+        ],
+        [
+          1503,
+          "BODY_Y"
+        ],
+        [
+          1895,
+          "BODY_Y"
+        ],
+        [
+          2139,
+          "BODY_Y"
+        ],
+        [
+          2165,
+          "BODY_Y"
+        ],
+        [
+          2191,
+          "BODY_Y"
+        ],
+        [
+          2217,
+          "BODY_Y"
+        ],
+        [
+          2360,
+          "BODY_Y"
+        ],
+        [
+          2388,
+          "BODY_Y"
+        ],
+        [
+          2417,
+          "BODY_Y"
+        ],
+        [
+          2446,
+          "BODY_Y"
+        ]
+      ],
+      "c": [
+        [
+          43,
+          "LENGTH"
+        ]
+      ],
+      "l": [
+        [
+          47,
+          "SPAN"
+        ]
+      ],
+      "s": [
+        [
+          39,
+          "MAIN_GEAR_Z"
+        ],
+        [
+          3325,
+          "MAIN_GEAR_Z"
+        ]
+      ],
+      "x": [
+        [
+          1743,
+          "buildAirliner"
+        ]
+      ]
+    },
+    "tokyo/assets/animator-C4Q6-_Wy-01.js": {
+      "T": [
+        [
+          1408,
+          "makeAnimInput"
+        ]
+      ],
+      "m": [
+        [
+          71,
+          "applyPose"
+        ]
+      ],
+      "o": [
+        [
+          33,
+          "POSE_LEN"
+        ]
+      ]
+    },
+    "tokyo/assets/animator-C4Q6-_Wy-02.js": {
+      "m": [
+        [
+          3940,
+          "applyPose"
+        ]
+      ]
+    },
+    "tokyo/assets/api-tBXVzspF-01.js": {
+      "a": [
+        [
+          22,
+          "setAvatarRenderer"
+        ]
+      ],
+      "c": [
+        [
+          34,
+          "BipedAdapter"
+        ]
+      ],
+      "d": [
+        [
+          46,
+          "RocketboxAvatar"
+        ]
+      ],
+      "f": [
+        [
+          50,
+          "avatarMaterial"
+        ]
+      ],
+      "l": [
+        [
+          38,
+          "avatarTextureMode"
+        ]
+      ],
+      "n": [
+        [
+          12,
+          "setSss"
+        ]
+      ],
+      "o": [
+        [
+          26,
+          "avatarManifest"
+        ]
+      ],
+      "r": [
+        [
+          16,
+          "BIP_MAP"
+        ]
+      ],
+      "s": [
+        [
+          30,
+          "pickLod"
+        ]
+      ],
+      "t": [
+        [
+          8,
+          "releaseAvatarAsset"
+        ]
+      ],
+      "u": [
+        [
+          42,
+          "preloadAvatars"
+        ]
+      ]
+    },
+    "tokyo/assets/batch-CN-kL9Gb-01.js": {
+      "a": [
+        [
+          26,
+          "BatchPlan"
+        ]
+      ],
+      "c": [
+        [
+          560,
+          "EMPTY_BOX_MAX"
+        ],
+        [
+          1396,
+          "EMPTY_BOX_MAX"
+        ]
+      ],
+      "l": [
+        [
+          529,
+          "PackBatch"
+        ],
+        [
+          573,
+          "PackBatch"
+        ]
+      ],
+      "o": [
+        [
+          540,
+          "scratchBox"
+        ],
+        [
+          1328,
+          "scratchBox"
+        ],
+        [
+          1360,
+          "scratchBox"
+        ],
+        [
+          1390,
+          "scratchBox"
+        ],
+        [
+          1440,
+          "scratchBox"
+        ],
+        [
+          1443,
+          "scratchBox"
+        ]
+      ],
+      "s": [
+        [
+          547,
+          "EMPTY_BOX_MIN"
+        ],
+        [
+          1394,
+          "EMPTY_BOX_MIN"
+        ]
+      ]
+    },
+    "tokyo/assets/cities-8-O8IWPJ-01.js": {
+      "a": [
+        [
+          739,
+          "HSR_BRAND"
+        ],
+        [
+          808,
+          "HSR_BRAND"
+        ],
+        [
+          1580,
+          "HSR_BRAND"
+        ]
+      ],
+      "c": [
+        [
+          814,
+          "airportFor"
+        ]
+      ],
+      "d": [
+        [
+          1209,
+          "rateLine"
+        ]
+      ],
+      "e": [
+        [
+          1,
+          "CITY_IDS"
+        ],
+        [
+          1391,
+          "CITY_IDS"
+        ]
+      ],
+      "i": [
+        [
+          205,
+          "CITIES"
+        ],
+        [
+          442,
+          "CITIES"
+        ],
+        [
+          475,
+          "CITIES"
+        ],
+        [
+          619,
+          "CITIES"
+        ],
+        [
+          828,
+          "CITIES"
+        ],
+        [
+          1304,
+          "CITIES"
+        ]
+      ],
+      "n": [
+        [
+          63,
+          "CURRENCIES"
+        ],
+        [
+          134,
+          "CURRENCIES"
+        ],
+        [
+          179,
+          "CURRENCIES"
+        ],
+        [
+          1265,
+          "CURRENCIES"
+        ],
+        [
+          1274,
+          "CURRENCIES"
+        ]
+      ],
+      "r": [
+        [
+          169,
+          "formatMoney"
+        ]
+      ],
+      "s": [
+        [
+          789,
+          "brandFor"
+        ]
+      ],
+      "t": [
+        [
+          21,
+          "isCityId"
+        ]
+      ],
+      "u": [
+        [
+          879,
+          "ROUTES"
+        ],
+        [
+          983,
+          "ROUTES"
+        ],
+        [
+          1099,
+          "ROUTES"
+        ],
+        [
+          1327,
+          "ROUTES"
+        ]
+      ]
+    },
+    "tokyo/assets/clips-B74kfFEX-01.js": {
+      "e": [
+        [
+          4,
+          "Clip"
+        ],
+        [
+          1404,
+          "Clip"
+        ]
+      ],
+      "i": [
+        [
+          1503,
+          "loadAnimLibrary"
+        ]
+      ],
+      "n": [
+        [
+          1477,
+          "packCache"
+        ],
+        [
+          1518,
+          "packCache"
+        ],
+        [
+          1523,
+          "packCache"
+        ],
+        [
+          1583,
+          "packCache"
+        ],
+        [
+          1592,
+          "packCache"
+        ],
+        [
+          1599,
+          "packCache"
+        ]
+      ],
+      "r": [
+        [
+          1481,
+          "DEFAULT_PACK_URL"
+        ],
+        [
+          1507,
+          "DEFAULT_PACK_URL"
+        ],
+        [
+          1515,
+          "DEFAULT_PACK_URL"
+        ]
+      ],
+      "t": [
+        [
+          1175,
+          "AnimLibrary"
+        ],
+        [
+          1576,
+          "AnimLibrary"
+        ],
+        [
+          1629,
+          "AnimLibrary"
+        ]
+      ]
+    },
+    "tokyo/assets/dom-BCt0vy2n-01.js": {
+      "e": [
+        [
+          1,
+          "createEl"
+        ]
+      ],
+      "i": [
+        [
+          385,
+          "retriggerAnim"
+        ]
+      ],
+      "n": [
+        [
+          211,
+          "ClassState"
+        ]
+      ],
+      "r": [
+        [
+          304,
+          "StylePropBinding"
+        ]
+      ],
+      "t": [
+        [
+          66,
+          "TextBinding"
+        ]
+      ]
+    },
+    "tokyo/assets/fullmap-CXrrUiBa-02.js": {
+      "k": [
+        [
+          509,
+          "FullMap"
+        ]
+      ]
+    },
+    "tokyo/assets/lab-CQYp1Cs9-01.js": {
+      "f": [
+        [
+          63,
+          "bindRig"
+        ]
+      ],
+      "m": [
+        [
+          81,
+          "loadAnimLibrary"
+        ]
+      ],
+      "p": [
+        [
+          72,
+          "Animator"
+        ]
+      ]
+    },
+    "tokyo/assets/lab-CQYp1Cs9-02.js": {
+      "N": [
+        [
+          2,
+          "createAnimLab"
+        ]
+      ],
+      "f": [
+        [
+          345,
+          "bindRig"
+        ]
+      ],
+      "m": [
+        [
+          52,
+          "loadAnimLibrary"
+        ]
+      ],
+      "p": [
+        [
+          343,
+          "Animator"
+        ]
+      ]
+    },
+    "tokyo/assets/lab-X7McqYcL-02.js": {
+      "M": [
+        [
+          2,
+          "createAvatarLab"
+        ]
+      ]
+    },
+    "tokyo/assets/market-l-6OeMtj-01.js": {
+      "l": [
+        [
+          60,
+          "hasPendingMarketTicket"
+        ]
+      ]
+    },
+    "tokyo/assets/market-l-6OeMtj-02.js": {
+      "E": [
+        [
+          1,
+          "mountMarket"
+        ]
+      ],
+      "l": [
+        [
+          808,
+          "hasPendingMarketTicket"
+        ]
+      ],
+      "u": [
+        [
+          9830,
+          "createMarketClient"
+        ]
+      ]
+    },
+    "tokyo/assets/panel-D9zvhD2V-01.js": {
+      "a": [
+        [
+          41,
+          "MAX_LENGTH"
+        ],
+        [
+          535,
+          "MAX_LENGTH"
+        ],
+        [
+          543,
+          "MAX_LENGTH"
+        ],
+        [
+          552,
+          "MAX_LENGTH"
+        ],
+        [
+          561,
+          "MAX_LENGTH"
+        ],
+        [
+          708,
+          "MAX_LENGTH"
+        ],
+        [
+          1035,
+          "MAX_LENGTH"
+        ]
+      ],
+      "c": [
+        [
+          385,
+          "TEXT"
+        ],
+        [
+          951,
+          "TEXT"
+        ],
+        [
+          966,
+          "TEXT"
+        ],
+        [
+          981,
+          "TEXT"
+        ],
+        [
+          999,
+          "TEXT"
+        ],
+        [
+          1014,
+          "TEXT"
+        ],
+        [
+          1079,
+          "TEXT"
+        ],
+        [
+          1083,
+          "TEXT"
+        ],
+        [
+          1145,
+          "TEXT"
+        ],
+        [
+          1155,
+          "TEXT"
+        ],
+        [
+          1165,
+          "TEXT"
+        ],
+        [
+          1277,
+          "TEXT"
+        ],
+        [
+          1287,
+          "TEXT"
+        ],
+        [
+          1294,
+          "TEXT"
+        ]
+      ],
+      "l": [
+        [
+          622,
+          "mountFeedbackPanel"
+        ]
+      ],
+      "o": [
+        [
+          46,
+          "collectClientInfo"
+        ],
+        [
+          204,
+          "collectClientInfo"
+        ]
+      ],
+      "s": [
+        [
+          137,
+          "submitFeedback"
+        ],
+        [
+          1400,
+          "submitFeedback"
+        ]
+      ]
+    },
+    "tokyo/assets/phone-BvNRaOR5-01.js": {
+      "c": [
+        [
+          72,
+          "startSummaryPolling"
+        ]
+      ],
+      "n": [
+        [
+          12,
+          "myProfile"
+        ]
+      ],
+      "t": [
+        [
+          8,
+          "mountProfile"
+        ]
+      ]
+    },
+    "tokyo/assets/phone-BvNRaOR5-02.js": {
+      "l": [
+        [
+          1,
+          "mountSocialApp"
+        ]
+      ],
+      "n": [
+        [
+          662,
+          "myProfile"
+        ]
+      ],
+      "t": [
+        [
+          1224,
+          "mountProfile"
+        ]
+      ]
+    },
+    "tokyo/assets/prefs-BioZODFl-01.js": {
+      "a": [
+        [
+          245,
+          "uiScale"
+        ]
+      ],
+      "e": [
+        [
+          1,
+          "STORAGE_KEY"
+        ],
+        [
+          34,
+          "STORAGE_KEY"
+        ],
+        [
+          100,
+          "STORAGE_KEY"
+        ]
+      ],
+      "t": [
+        [
+          7,
+          "pendingWrites"
+        ],
+        [
+          48,
+          "pendingWrites"
+        ],
+        [
+          59,
+          "pendingWrites"
+        ],
+        [
+          74,
+          "pendingWrites"
+        ],
+        [
+          80,
+          "pendingWrites"
+        ],
+        [
+          90,
+          "pendingWrites"
+        ],
+        [
+          137,
+          "pendingWrites"
+        ],
+        [
+          143,
+          "pendingWrites"
+        ],
+        [
+          150,
+          "pendingWrites"
+        ],
+        [
+          178,
+          "pendingWrites"
+        ]
+      ]
+    },
+    "tokyo/assets/profile-BmQKTAov-02.js": {
+      "C": [
+        [
+          1,
+          "mountNameView"
+        ]
+      ],
+      "w": [
+        [
+          1218,
+          "mountProfile"
+        ]
+      ]
+    },
+    "tokyo/assets/recovery-CHWBNwD3-01.js": {
+      "d": [
+        [
+          235,
+          "subscribeTicketChanges"
+        ],
+        [
+          956,
+          "subscribeTicketChanges"
+        ]
+      ],
+      "f": [
+        [
+          381,
+          "BACKOFF_SECONDS"
+        ],
+        [
+          470,
+          "BACKOFF_SECONDS"
+        ],
+        [
+          480,
+          "BACKOFF_SECONDS"
+        ]
+      ],
+      "l": [
+        [
+          197,
+          "hasPendingMarketTicket"
+        ],
+        [
+          256,
+          "hasPendingMarketTicket"
+        ],
+        [
+          975,
+          "hasPendingMarketTicket"
+        ],
+        [
+          1008,
+          "hasPendingMarketTicket"
+        ]
+      ],
+      "o": [
+        [
+          102,
+          "TICKET_KEY_PREFIX"
+        ],
+        [
+          173,
+          "TICKET_KEY_PREFIX"
+        ],
+        [
+          302,
+          "TICKET_KEY_PREFIX"
+        ]
+      ],
+      "p": [
+        [
+          398,
+          "resolveInBackground"
+        ]
+      ],
+      "s": [
+        [
+          108,
+          "changeSubscribers"
+        ],
+        [
+          221,
+          "changeSubscribers"
+        ],
+        [
+          314,
+          "changeSubscribers"
+        ],
+        [
+          353,
+          "changeSubscribers"
+        ]
+      ],
+      "u": [
+        [
+          212,
+          "notifyMarketTicketChange"
+        ]
+      ]
+    },
+    "tokyo/assets/rig-BjRdQXtM-01.js": {
+      "e": [
+        [
+          4,
+          "CANON_HIP_Y"
+        ],
+        [
+          68,
+          "CANON_HIP_Y"
+        ]
+      ],
+      "n": [
+        [
+          189,
+          "applyPose"
+        ]
+      ],
+      "t": [
+        [
+          9,
+          "bindRig"
+        ]
+      ]
+    },
+    "tokyo/assets/scene-MReEd7Ml-01.js": {
+      "i": [
+        [
+          97,
+          "FlightScene"
+        ]
+      ],
+      "n": [
+        [
+          19,
+          "FLIGHT_OVERLAY_CSS"
+        ],
+        [
+          256,
+          "FLIGHT_OVERLAY_CSS"
+        ]
+      ],
+      "r": [
+        [
+          42,
+          "widenFovNearGround"
+        ],
+        [
+          1315,
+          "widenFovNearGround"
+        ]
+      ]
+    },
+    "tokyo/assets/session-CLv8PYlR-01.js": {
+      "f": [
+        [
+          261,
+          "runTurnstile"
+        ]
+      ],
+      "p": [
+        [
+          676,
+          "authState"
+        ],
+        [
+          987,
+          "authState"
+        ],
+        [
+          1022,
+          "authState"
+        ],
+        [
+          1425,
+          "authState"
+        ],
+        [
+          1511,
+          "authState"
+        ]
+      ],
+      "s": [
+        [
+          35,
+          "turnstileScriptPromise"
+        ],
+        [
+          86,
+          "turnstileScriptPromise"
+        ],
+        [
+          256,
+          "turnstileScriptPromise"
+        ]
+      ],
+      "u": [
+        [
+          55,
+          "setMenuOpenCheck"
+        ]
+      ]
+    },
+    "tokyo/assets/session-CLv8PYlR-02.js": {
+      "p": [
+        [
+          70,
+          "authState"
+        ],
+        [
+          104,
+          "authState"
+        ],
+        [
+          371,
+          "authState"
+        ],
+        [
+          537,
+          "authState"
+        ],
+        [
+          578,
+          "authState"
+        ]
+      ]
+    },
+    "tokyo/assets/signs-CcdyXn0R-01.js": {
+      "d": [
+        [
+          87,
+          "allocAtlasRect"
+        ],
+        [
+          560,
+          "allocAtlasRect"
+        ]
+      ],
+      "f": [
+        [
+          298,
+          "MISSING_RECT"
+        ],
+        [
+          387,
+          "MISSING_RECT"
+        ]
+      ],
+      "l": [
+        [
+          51,
+          "ATLAS_COLS"
+        ],
+        [
+          149,
+          "ATLAS_COLS"
+        ],
+        [
+          167,
+          "ATLAS_COLS"
+        ],
+        [
+          221,
+          "ATLAS_COLS"
+        ],
+        [
+          277,
+          "ATLAS_COLS"
+        ],
+        [
+          430,
+          "ATLAS_COLS"
+        ]
+      ],
+      "p": [
+        [
+          326,
+          "PackSigns"
+        ],
+        [
+          329,
+          "PackSigns"
+        ],
+        [
+          415,
+          "PackSigns"
+        ]
+      ],
+      "u": [
+        [
+          56,
+          "cellTexels"
+        ],
+        [
+          421,
+          "cellTexels"
+        ]
+      ]
+    },
+    "tokyo/assets/tabs-C1IhIOn4-01.js": {
+      "a": [
+        [
+          141,
+          "getLockManager"
+        ],
+        [
+          189,
+          "getLockManager"
+        ],
+        [
+          332,
+          "getLockManager"
+        ]
+      ],
+      "c": [
+        [
+          166,
+          "playLockName"
+        ],
+        [
+          227,
+          "playLockName"
+        ],
+        [
+          406,
+          "playLockName"
+        ]
+      ],
+      "d": [
+        [
+          482,
+          "takeoverHandler"
+        ],
+        [
+          499,
+          "takeoverHandler"
+        ],
+        [
+          552,
+          "takeoverHandler"
+        ],
+        [
+          567,
+          "takeoverHandler"
+        ]
+      ],
+      "e": [
+        [
+          1,
+          "CLIENT_ID"
+        ],
+        [
+          684,
+          "CLIENT_ID"
+        ],
+        [
+          1040,
+          "CLIENT_ID"
+        ],
+        [
+          1085,
+          "CLIENT_ID"
+        ]
+      ],
+      "f": [
+        [
+          484,
+          "takeoverInstalled"
+        ],
+        [
+          504,
+          "takeoverInstalled"
+        ],
+        [
+          509,
+          "takeoverInstalled"
+        ]
+      ],
+      "i": [
+        [
+          106,
+          "subscribeChannel"
+        ],
+        [
+          520,
+          "subscribeChannel"
+        ],
+        [
+          829,
+          "subscribeChannel"
+        ],
+        [
+          990,
+          "subscribeChannel"
+        ]
+      ],
+      "l": [
+        [
+          181,
+          "acquirePlayLock"
+        ]
+      ],
+      "n": [
+        [
+          21,
+          "channelListeners"
+        ],
+        [
+          83,
+          "channelListeners"
+        ],
+        [
+          117,
+          "channelListeners"
+        ],
+        [
+          129,
+          "channelListeners"
+        ]
+      ],
+      "o": [
+        [
+          162,
+          "releaseLock"
+        ],
+        [
+          285,
+          "releaseLock"
+        ],
+        [
+          446,
+          "releaseLock"
+        ],
+        [
+          628,
+          "releaseLock"
+        ],
+        [
+          635,
+          "releaseLock"
+        ]
+      ],
+      "p": [
+        [
+          490,
+          "installTakeoverHandler"
+        ]
+      ],
+      "r": [
+        [
+          29,
+          "ensureChannel"
+        ],
+        [
+          113,
+          "ensureChannel"
+        ],
+        [
+          358,
+          "ensureChannel"
+        ],
+        [
+          661,
+          "ensureChannel"
+        ],
+        [
+          1015,
+          "ensureChannel"
+        ]
+      ],
+      "s": [
+        [
+          164,
+          "ownerCity"
+        ],
+        [
+          199,
+          "ownerCity"
+        ],
+        [
+          264,
+          "ownerCity"
+        ],
+        [
+          423,
+          "ownerCity"
+        ],
+        [
+          545,
+          "ownerCity"
+        ],
+        [
+          615,
+          "ownerCity"
+        ]
+      ],
+      "t": [
+        [
+          19,
+          "cloudChannel"
+        ],
+        [
+          34,
+          "cloudChannel"
+        ],
+        [
+          44,
+          "cloudChannel"
+        ],
+        [
+          48,
+          "cloudChannel"
+        ],
+        [
+          59,
+          "cloudChannel"
+        ],
+        [
+          68,
+          "cloudChannel"
+        ],
+        [
+          101,
+          "cloudChannel"
+        ]
+      ],
+      "u": [
+        [
+          324,
+          "requestTakeover"
+        ]
+      ]
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-01.js": {
+      "v": [
+        [
+          141,
+          "installCloud"
+        ]
+      ],
+      "y": [
+        [
+          145,
+          "leaveForGoogle"
+        ]
+      ]
+    },
+    "tokyo/assets/ui-Bz5oqxsZ-02.js": {
+      "V": [
+        [
+          1,
+          "showCloudPanel"
+        ]
+      ],
+      "v": [
+        [
+          43,
+          "installCloud"
+        ]
+      ],
+      "y": [
+        [
+          2089,
+          "leaveForGoogle"
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "/tokyo/",
+  "name": "東京狂飆 — 去東京狂飆",
+  "short_name": "東京狂飆",
+  "description": "《東京狂飆》去東京狂飆：瀏覽器就能玩的開放世界東京。TOKYO RUSH — an open-world Tokyo in your browser.",
+  "lang": "zh-Hant-TW",
+  "dir": "ltr",
+  "start_url": "/tokyo/?source=pwa",
+  "scope": "/tokyo/",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "orientation": "landscape",
+  "background_color": "#07080c",
+  "theme_color": "#07080c",
+  "categories": [
+    "games",
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "/tokyo/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tokyo/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tokyo/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/tokyo/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "任務 Missions",
+      "short_name": "任務",
+      "url": "/tokyo/?source=pwa-shortcut&ui=missions",
+      "icons": [
+        {
+          "src": "/tokyo/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "地圖 Map",
+      "short_name": "地圖",
+      "url": "/tokyo/?source=pwa-shortcut&ui=map",
+      "icons": [
+        {
+          "src": "/tokyo/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
