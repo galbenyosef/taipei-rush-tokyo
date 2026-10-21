@@ -9,7 +9,7 @@
     "css": "parser css, no plugins",
     "json": "parser json, no plugins (inline importmap blocks, if any)"
   },
-  "source": "readable/: 109 JS pretties (97 app chunk(s) sliced, 3 vendor wholeFile) + 13 CSS pretties (incl. 11 inline twin(s)); src/: 1433 statement-aligned slices across 97 app chunk(s) (served-path layout, <chunk>-NN.js); 89 skipped section(s); 25 wholeFile section(s); rename campaign: 38 app chunk(s) with recorded renames (247 name record(s), 326 indexed occurrence(s)) through rename-map.json; capture: 190 files under .upstream/manifest.json; inline scan: tokyo/index.html (11 inline content block(s)).",
+  "source": "readable/: 109 JS pretties (97 app chunk(s) sliced, 3 vendor wholeFile) + 13 CSS pretties (incl. 11 inline twin(s)); src/: 1433 statement-aligned slices across 97 app chunk(s) (served-path layout, <chunk>-NN.js); 89 skipped section(s); 26 wholeFile section(s); rename campaign: 38 app chunk(s) with recorded renames (247 name record(s), 326 indexed occurrence(s)) through rename-map.json; capture: 190 files under .upstream/manifest.json; inline scan: tokyo/index.html (11 inline content block(s)).",
   "rename": {
     "map": "rename-map.json",
     "chunks": 38,
@@ -1777,7 +1777,10 @@
       "tag": "_vercel/insights/script",
       "slices": 0,
       "derived": "readable only (vendor bundle, wholeFile)",
-      "what": "Vercel Web Analytics platform script"
+      "what": "Vercel Web Analytics platform script",
+      "wholeFileSection": {
+        "file": "_vercel/insights/script.js"
+      }
     },
     {
       "sourceFile": "readable/avatars/basis/basis_transcoder.pretty.js",
@@ -1790,7 +1793,10 @@
       "tag": "avatars/basis/basis_transcoder",
       "slices": 0,
       "derived": "readable only (vendor bundle, wholeFile)",
-      "what": "Google Basis KTX2 transcoder wrapper"
+      "what": "Google Basis KTX2 transcoder wrapper",
+      "wholeFileSection": {
+        "file": "avatars/basis/basis_transcoder.js"
+      }
     },
     {
       "sourceFile": "readable/tokyo/assets/three-x0mFGRTI.pretty.js",
@@ -1803,7 +1809,10 @@
       "tag": "tokyo/assets/three-x0mFGRTI",
       "slices": 0,
       "derived": "readable only (vendor bundle, wholeFile)",
-      "what": "bundled three.js r186 engine"
+      "what": "bundled three.js r186 engine",
+      "wholeFileSection": {
+        "file": "tokyo/assets/three-x0mFGRTI.js"
+      }
     },
     {
       "sourceFile": "readable/assets/bag-DRzQCt3x.pretty.css",
@@ -14679,13 +14688,24 @@
       "sourceFile": "readable/avatars/basis/basis_transcoder.pretty.js"
     },
     {
+      "file": "readable/tokyo/assets/three-x0mFGRTI.pretty.js",
+      "wholeFile": true,
+      "source": "tokyo/assets/three-x0mFGRTI.js",
+      "title": "tokyo/assets/three-x0mFGRTI — final export table (whole-file, never sliced)",
+      "desc": "Lines 35370-35539 of readable/tokyo/assets/three-x0mFGRTI.pretty.js: the bundle's final export {…} table — its derived text is the reading copy and its pristine is the served bundle (tokyo/assets/three-x0mFGRTI.js), so the export gate compares the served bundle's own export table with the reading copy's.",
+      "note": "whole-file (vendor rule): indexed in readable/, never sliced",
+      "startLine": 35370,
+      "endLine": 35539,
+      "sourceFile": "readable/tokyo/assets/three-x0mFGRTI.pretty.js"
+    },
+    {
       "file": "tokyo/assets/three-x0mFGRTI-vendor.js",
       "wholeFile": true,
       "title": "tokyo/assets/three-x0mFGRTI.js — bundled three.js r186 engine (vendor, whole-file, never sliced)",
-      "desc": "Lines 1-35539 of readable/tokyo/assets/three-x0mFGRTI.pretty.js: the bundled three.js r186 engine chunk — the vendored `__THREE__` revision registration (r186), WebGLRenderer, the math/geometry/material/texture/renderer machinery — third-party engine code, not app logic. Vendor rule — indexed whole-file in readable/, never sliced or rewritten.",
+      "desc": "Lines 1-35369 of readable/tokyo/assets/three-x0mFGRTI.pretty.js: the bundled three.js r186 engine chunk — the vendored `__THREE__` revision registration (r186), WebGLRenderer, the math/geometry/material/texture/renderer machinery — third-party engine code, not app logic. Vendor rule — indexed whole-file in readable/, never sliced or rewritten.",
       "note": "whole-file (vendor rule): indexed in readable/, never sliced",
       "startLine": 1,
-      "endLine": 35539,
+      "endLine": 35369,
       "sourceFile": "readable/tokyo/assets/three-x0mFGRTI.pretty.js"
     },
     {

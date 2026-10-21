@@ -412,14 +412,42 @@ async function main() {
       const region = pretty;
       if (cls.guard && !cls.guard(region))
         throw new Error(`${rel}: whole-file guard failed — readable changed shape`);
+      // The bundle's final `export { … }` table is not vendor code — it is the
+      // bundle's own public API. It is indexed as its own whole-file section
+      // whose DERIVED text is the reading copy and whose PRISTINE is the
+      // served bundle (`source`), so the export gate compares the served
+      // bundle's export table with the reading copy's — two different files.
+      // It comes FIRST so the gate binds the served bundle to the section
+      // whose file resolves; the vendor region keeps its own section (and its
+      // own name, which the mirror's audit pins).
+      const dbg = await prettier.__debug.parse(pretty, { parser: "babel" });
+      const top = (dbg.ast.program || dbg.ast).body;
+      const last = top[top.length - 1];
+      const tail =
+        last && last.type === "ExportNamedDeclaration" && /^export\s*\{[\s\S]*\}\s*;?$/.test(pretty.slice(last.start, last.end).trim())
+          ? { A: lineOf(pretty, last.start), B: lineOf(pretty, last.end) }
+          : null;
+      if (tail) {
+        sections.push({
+          file: sourceFile,
+          wholeFile: true,
+          source: rel,
+          title: `${tag} — final export table (whole-file, never sliced)`,
+          desc: `Lines ${tail.A}-${tail.B} of ${sourceFile}: the bundle's final export {…} table — its derived text is the reading copy and its pristine is the served bundle (${rel}), so the export gate compares the served bundle's own export table with the reading copy's.`,
+          note: "whole-file (vendor rule): indexed in readable/, never sliced",
+          startLine: tail.A,
+          endLine: tail.B,
+          sourceFile,
+        });
+      }
       sections.push({
         file: `${tag}-vendor.js`,
         wholeFile: true,
         title: cls.title,
-        desc: `Lines 1-${lines.length} of ${sourceFile}: ${cls.desc}`,
+        desc: `Lines 1-${tail ? tail.A - 1 : lines.length} of ${sourceFile}: ${cls.desc}`,
         note: "whole-file (vendor rule): indexed in readable/, never sliced",
         startLine: 1,
-        endLine: lines.length,
+        endLine: tail ? tail.A - 1 : lines.length,
         sourceFile,
       });
       sources.push({
@@ -434,6 +462,10 @@ async function main() {
         slices: 0,
         derived: "readable only (vendor bundle, wholeFile)",
         what: cls.what,
+        // the reading copy's own export table belongs to no src slice either
+        // (the whole bundle is indexed whole), so it is compared with the
+        // served bundle's whole-file rendering
+        wholeFileSection: { file: rel },
       });
       console.log(`derive: ${rel} -> ${sourceFile} (${lines.length} lines, wholeFile vendor)`);
       continue;
