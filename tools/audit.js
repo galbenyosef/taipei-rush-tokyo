@@ -336,8 +336,21 @@ for (const s of sections) {
     continue;
   }
   if (!/\.pretty\.(js|css)$/i.test(s.sourceFile)) {
-    problem(`section ${s.file}: sourceFile is not a readable pretty: ${s.sourceFile}`);
-    continue;
+    // A section keyed under the SERVED CAPTURE (its sourceFile IS its
+    // capture) is an index-only pointer INTO the served file: the frozen
+    // export gate reads that file as the pristine, so the gate compares the
+    // LIVE capture with the layer. Its range points into the capture; it is
+    // not a layer slice, so it does not tile the capture the way a slice
+    // tiles its reading copy.
+    const captureKeyed = s.skipped === true && s.capture === s.sourceFile;
+    if (!captureKeyed) {
+      problem(`section ${s.file}: sourceFile is not a readable pretty: ${s.sourceFile}`);
+      continue;
+    }
+    if (!manifest?.files?.[s.sourceFile]) {
+      problem(`section ${s.file}: capture-keyed sourceFile is not a captured file: ${s.sourceFile}`);
+      continue;
+    }
   }
   const srcLines = getLines(src);
   const A = s.startLine,
@@ -348,6 +361,16 @@ for (const s of sections) {
   }
   if (!bySource.has(s.sourceFile)) bySource.set(s.sourceFile, []);
   bySource.get(s.sourceFile).push({ s, A, B });
+}
+// a section keyed under the SERVED CAPTURE points into the served file: it is
+// not a layer slice, so it does not tile the capture the way a slice tiles
+// its reading copy — it is kept out of the tiling map entirely.
+for (const [sourceFile, list] of bySource) {
+  const keep = list.filter((x) => !(x.s.skipped === true && x.s.capture === x.s.sourceFile));
+  if (keep.length !== list.length) {
+    if (keep.length) bySource.set(sourceFile, keep);
+    else bySource.delete(sourceFile);
+  }
 }
 let tiledOK = 0;
 for (const [sourceFile, list] of bySource) {
@@ -465,7 +488,31 @@ for (const s of sections) {
     problem(`skipped section ${s.file}: no firstLine/lastLine recorded`);
   else if (first !== s.firstLine || last !== s.lastLine)
     problem(`skipped section ${s.file}: range text does not match the recorded first/last lines`);
-  else skippedOK++;
+  else if (s.capture === s.sourceFile) {
+    // The tail is keyed under the SERVED CAPTURE: the frozen export gate
+    // reads the capture as the pristine and compares its public export table
+    // with the LAYER's rendering. The recorded text must therefore be the
+    // reading copy's own lines for the region — and it must NOT be a copy of
+    // the pristine's own lines, or the gate would compare the file with
+    // itself: a tautology that can never fail.
+    const layerFile = typeof s.layerFile === "string" ? s.layerFile : null;
+    const layerA = s.layerStartLine,
+      layerB = s.layerEndLine;
+    if (!layerFile || !Number.isInteger(layerA) || !Number.isInteger(layerB)) {
+      problem(`skipped section ${s.file}: capture-keyed tail records no layer range`);
+    } else {
+      const layerLines = getLines(path.join(proj, layerFile));
+      if (layerA < 1 || layerB > layerLines.length) {
+        problem(`skipped section ${s.file}: bad layer range ${layerA}-${layerB} vs ${layerFile}`);
+      } else if (typeof s.text !== "string") {
+        problem(`skipped section ${s.file}: capture-keyed tail records no text — the export gate cannot reach this table`);
+      } else if (s.text === lines.slice(s.startLine - 1, s.endLine).join("\n")) {
+        problem(`skipped section ${s.file}: recorded text is the pristine's own lines — the export gate would compare the file with itself`);
+      } else if (s.text !== layerLines.slice(layerA - 1, layerB).join("\n")) {
+        problem(`skipped section ${s.file}: recorded text is not the byte-exact text of ${layerFile} lines ${layerA}-${layerB}`);
+      } else skippedOK++;
+    }
+  } else skippedOK++;
 }
 
 // ── every src + pretty parses standalone ────────────────────────────────

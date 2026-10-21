@@ -131,7 +131,7 @@ function captureExportStatement(captureText, tailText) {
     const names = exportListNames(m[0]);
     if (names.size !== want.size) continue;
     if (![...want].every((n) => names.has(n))) continue;
-    found = m[0];
+    found = { text: m[0], start: m.index, end: m.index + m[0].length };
   }
   return found;
 }
@@ -507,12 +507,21 @@ async function main() {
       // compares the reading copy's rendered table against. Without it the
       // gate has no derived text for this table and reports it unchecked.
       const capExport = captureExportStatement(text, lastStmt.text);
+      // The tail is keyed under the SERVED CAPTURE (see the capture-keyed
+      // section emitted below): the frozen export gate then reads the served
+      // FILE as the pristine and compares its public export table with the
+      // LAYER's rendering. Keyed under the reading copy, the gate compared
+      // the reading copy with a RECORDING of the capture's statement, so a
+      // served capture that changed left the gate green.
+      const capA = capExport ? lineOf(text, capExport.start) : null;
+      const capB = capExport ? lineOf(text, capExport.end - 1) : null;
       claim(stmts.length - 1, stmts.length - 1, {
         kind: "skip",
         file: `${tag}-tail-export.js`,
+        captureTail: `${tag}-capture-export.js`,
+        ...(capExport ? { capA, capB } : {}),
         title: `${tag} — final export table (not sliced)`,
-        desc: `Lines ${lastStmt.startLine}-${lastStmt.endLine}. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.${capExport ? ` The tail records the served chunk's own export statement (${rel}) as its text — the statement the reading copy's table must still match.` : ""}`,
-        ...(capExport ? { text: capExport } : {}),
+        desc: `Lines ${lastStmt.startLine}-${lastStmt.endLine}. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.${capExport ? ` The table is compared with the served chunk's own export table by the capture-keyed tail ${tag}-capture-export.js.` : ""}`,
       });
     }
 
@@ -591,22 +600,46 @@ async function main() {
         });
       } else {
         perFileSkipped++;
+        // The reading copy's index-only tile: the table's bindings live in the
+        // EARLIER slices, so no slice can carry the table (it would not parse
+        // standalone) and the region is indexed whole, never sliced. The TABLE
+        // itself is compared with the served chunk by the capture-keyed tail
+        // below, so one table is compared once.
         sections.push({
           file: b.file,
-          skipped: true,
+          wholeFile: true,
           title: b.title,
           desc: b.desc,
+          note: "index-only region (export table rule): indexed whole in readable/, never sliced",
           startLine: b.A,
           endLine: b.B,
           sourceFile,
-          firstLine: lines[b.A - 1],
-          lastLine: lines[b.B - 1],
-          // the served chunk's own export statement, when this tail carries
-          // one — the text the public-export-name gate compares the reading
-          // copy's rendering against. A tail with no export table has nothing
-          // to record and stays a plain index-only record.
-          ...(b.text ? { text: b.text } : {}),
         });
+        if (b.capA) {
+          // The tail, keyed under the SERVED CAPTURE: the frozen export gate
+          // reads the served file as the pristine, so the comparison is
+          // against the LIVE capture. The derived text is the LAYER's
+          // rendering of the table (the reading copy's own table) — a
+          // different file from the capture, so the gate never compares a
+          // file with itself.
+          const capLines = linesOf(text);
+          sections.push({
+            file: b.captureTail,
+            skipped: true,
+            title: `${tag} — the served chunk's final export table (not sliced)`,
+            desc: `Lines ${b.capA}-${b.capB} of ${rel}: the served chunk's own export {…} table — the tail is keyed under the capture, so the frozen export gate reads the SERVED FILE as the pristine and compares its public export table with the layer's rendering (the reading copy's own table, recorded below).`,
+            startLine: b.capA,
+            endLine: b.capB,
+            sourceFile: rel,
+            capture: rel,
+            firstLine: capLines[b.capA - 1],
+            lastLine: capLines[b.capB - 1],
+            layerFile: sourceFile,
+            layerStartLine: b.A,
+            layerEndLine: b.B,
+            text: lines.slice(b.A - 1, b.B).join("\n"),
+          });
+        }
       }
     }
     if (perFileRenamed) renamedFiles++;
@@ -945,6 +978,10 @@ async function main() {
     bySource.get(s.sourceFile).push(s);
   }
   for (const [sourceFile, list] of bySource) {
+    // a section keyed under the SERVED CAPTURE (its sourceFile IS its
+    // capture) points INTO the served file: it is not a layer slice and does
+    // not tile the capture the way a slice tiles its reading copy
+    if (list.every((s) => s.capture && s.capture === s.sourceFile)) continue;
     const lines = linesOf(readOut(sourceFile));
     const sorted = [...list].sort((a, b) => a.startLine - b.startLine);
     if (sorted[0].startLine !== 1) {
