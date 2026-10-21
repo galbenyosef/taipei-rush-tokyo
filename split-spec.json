@@ -2186,12 +2186,13 @@
       "file": "tokyo/assets/game-CPWU_QWx-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/game-CPWU_QWx — final export table (not sliced)",
-      "desc": "Lines 3097-3122. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 3097-3122. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/game-CPWU_QWx.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 3097,
       "endLine": 3122,
       "sourceFile": "readable/tokyo/assets/game-CPWU_QWx.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{Ie as C,P as S,Ue as _,Dt as a,R as b,bt as c,kt as d,Ct as f,Ke as g,Ge as h,vt as i,Nt as l,qe as m,Tt as n,yt as o,jt as p,Et as r,At as s,It as t,xt as u,L as v,Fe as w,ze as x,Le as y};"
     },
     {
       "file": "assets/dom-BCt0vy2n-01.js",
@@ -2205,12 +2206,13 @@
       "file": "assets/dom-BCt0vy2n-tail-export.js",
       "skipped": true,
       "title": "assets/dom-BCt0vy2n — final export table (not sliced)",
-      "desc": "Lines 98-110. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 98-110. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (assets/dom-BCt0vy2n.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 98,
       "endLine": 110,
       "sourceFile": "readable/assets/dom-BCt0vy2n.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{o as a,d as c,u as d,f as i,e as l,r as n,a as o,t as r,s,n as t,i as u};"
     },
     {
       "file": "assets/notice-DnIsya3--01.js",
@@ -2224,12 +2226,13 @@
       "file": "assets/notice-DnIsya3--tail-export.js",
       "skipped": true,
       "title": "assets/notice-DnIsya3- — final export table (not sliced)",
-      "desc": "Lines 22-22. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 22-22. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (assets/notice-DnIsya3-.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 22,
       "endLine": 22,
       "sourceFile": "readable/assets/notice-DnIsya3-.pretty.js",
       "firstLine": "export { n, t };",
-      "lastLine": "export { n, t };"
+      "lastLine": "export { n, t };",
+      "text": "export{n,t};"
     },
     {
       "file": "assets/pose-hAXyTQQR-01.js",
@@ -2243,12 +2246,13 @@
       "file": "assets/pose-hAXyTQQR-tail-export.js",
       "skipped": true,
       "title": "assets/pose-hAXyTQQR — final export table (not sliced)",
-      "desc": "Lines 127-138. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 127-138. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (assets/pose-hAXyTQQR.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 127,
       "endLine": 138,
       "sourceFile": "readable/assets/pose-hAXyTQQR.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{u as a,c,e as i,s as l,i as n,l as o,n as r,d as s,r as t,t as u};"
     },
     {
       "file": "assets/rig-BjRdQXtM-01.js",
@@ -2262,12 +2266,13 @@
       "file": "assets/rig-BjRdQXtM-tail-export.js",
       "skipped": true,
       "title": "assets/rig-BjRdQXtM — final export table (not sliced)",
-      "desc": "Lines 32-32. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 32-32. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (assets/rig-BjRdQXtM.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 32,
       "endLine": 32,
       "sourceFile": "readable/assets/rig-BjRdQXtM.pretty.js",
       "firstLine": "export { e as CANON_HIP_Y, n as applyPose, t as bindRig };",
-      "lastLine": "export { e as CANON_HIP_Y, n as applyPose, t as bindRig };"
+      "lastLine": "export { e as CANON_HIP_Y, n as applyPose, t as bindRig };",
+      "text": "export{e as CANON_HIP_Y,n as applyPose,t as bindRig};"
     },
     {
       "file": "assets/rolldown-runtime-DK3Fl9T5-01.js",
@@ -2281,12 +2286,13 @@
       "file": "assets/rolldown-runtime-DK3Fl9T5-tail-export.js",
       "skipped": true,
       "title": "assets/rolldown-runtime-DK3Fl9T5 — final export table (not sliced)",
-      "desc": "Lines 7-7. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 7-7. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (assets/rolldown-runtime-DK3Fl9T5.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 7,
       "endLine": 7,
       "sourceFile": "readable/assets/rolldown-runtime-DK3Fl9T5.pretty.js",
       "firstLine": "export { t };",
-      "lastLine": "export { t };"
+      "lastLine": "export { t };",
+      "text": "export{t};"
     },
     {
       "file": "assets/tabs-C1IhIOn4-01.js",
@@ -2300,12 +2306,13 @@
       "file": "assets/tabs-C1IhIOn4-tail-export.js",
       "skipped": true,
       "title": "assets/tabs-C1IhIOn4 — final export table (not sliced)",
-      "desc": "Lines 144-144. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 144-144. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (assets/tabs-C1IhIOn4.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 144,
       "endLine": 144,
       "sourceFile": "readable/assets/tabs-C1IhIOn4.pretty.js",
       "firstLine": "export { _ as a, h as i, l as n, g as o, p as r, u as s, v as t };",
-      "lastLine": "export { _ as a, h as i, l as n, g as o, p as r, u as s, v as t };"
+      "lastLine": "export { _ as a, h as i, l as n, g as o, p as r, u as s, v as t };",
+      "text": "export{_ as a,h as i,l as n,g as o,p as r,u as s,v as t};"
     },
     {
       "file": "tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH-01.js",
@@ -2319,12 +2326,13 @@
       "file": "tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH — final export table (not sliced)",
-      "desc": "Lines 6101-6101. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 6101-6101. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 6101,
       "endLine": 6101,
       "sourceFile": "readable/tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH.pretty.js",
       "firstLine": "export { e as default };",
-      "lastLine": "export { e as default };"
+      "lastLine": "export { e as default };",
+      "text": "export{e as default};"
     },
     {
       "file": "tokyo/assets/accounts-BNXdphZj-01.js",
@@ -2354,12 +2362,13 @@
       "file": "tokyo/assets/accounts-BNXdphZj-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/accounts-BNXdphZj — final export table (not sliced)",
-      "desc": "Lines 862-886. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 862-886. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/accounts-BNXdphZj.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 862,
       "endLine": 886,
       "sourceFile": "readable/tokyo/assets/accounts-BNXdphZj.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{O as C,b as S,U as _,fe as a,E as b,k as c,q as d,G as f,W as g,ce as h,de as i,V as l,H as m,oe as n,se as o,J as p,ae as r,ue as s,K as t,A as u,ee as v,y as x,re as y};"
     },
     {
       "file": "tokyo/assets/actors-qKVitB-C-01.js",
@@ -3485,12 +3494,13 @@
       "file": "tokyo/assets/actors-qKVitB-C-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/actors-qKVitB-C — final export table (not sliced)",
-      "desc": "Lines 65300-65402. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 65300-65402. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/actors-qKVitB-C.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 65300,
       "endLine": 65402,
       "sourceFile": "readable/tokyo/assets/actors-qKVitB-C.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{vp as $,Zv as A,Uu as At,i_ as B,is as Bt,hw as C,Vf as Ct,oC as D,Xu as Dt,sC as E,id as Et,T_ as F,es as Ft,Fp as G,Jo as Gt,Yg as H,Zo as Ht,e_ as I,as as It,jp as J,mp as K,jo as Kt,o_ as L,ns as Lt,Hv as M,Eu as Mt,Fv as N,fs as Nt,ay as O,ed as Ot,jv as P,K as Pt,Dp as Q,J as R,rs as Rt,JC as S,Mf as St,qC as T,Rf as Tt,kp as U,Xo as Ut,$g as V,Qo as Vt,Ap as W,Yo as Wt,Ep as X,em as Y,bp as Z,oD as _,Df as _t,cP as a,pp as at,Gw as b,yf as bt,YM as c,mf as ct,PM as d,Cf as dt,Tp as et,IM as f,wf as ft,pD as g,hf as gt,dD as h,Tf as ht,lP as i,yp as it,Wv as j,Wu as jt,iy as k,nd as kt,ZM as l,ff as lt,QE as m,Ef as mt,vP as n,Pp as nt,rP as o,Mp as ot,gO as p,_f as pt,Hp as q,Gi as qt,uP as r,_p as rt,PN as s,Sf as st,yP as t,fp as tt,FM as u,bf as ut,Z as v,xf as vt,sw as w,kf as wt,Rw as x,Af as xt,Yw as y,pf as yt,a_ as z,os as zt};"
     },
     {
       "file": "tokyo/assets/airliner-BUXWdgFt-01.js",
@@ -3504,12 +3514,13 @@
       "file": "tokyo/assets/airliner-BUXWdgFt-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/airliner-BUXWdgFt — final export table (not sliced)",
-      "desc": "Lines 343-350. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 343-350. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/airliner-BUXWdgFt.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 343,
       "endLine": 350,
       "sourceFile": "readable/tokyo/assets/airliner-BUXWdgFt.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{_ as AIRLINER_SIGNS,a as BODY_Y,c as LENGTH,s as MAIN_GEAR_Z,l as SPAN,x as buildAirliner};"
     },
     {
       "file": "tokyo/assets/analytics-B76dRwr5-01.js",
@@ -3523,12 +3534,13 @@
       "file": "tokyo/assets/analytics-B76dRwr5-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/analytics-B76dRwr5 — final export table (not sliced)",
-      "desc": "Lines 140-140. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 140-140. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/analytics-B76dRwr5.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 140,
       "endLine": 140,
       "sourceFile": "readable/tokyo/assets/analytics-B76dRwr5.pretty.js",
       "firstLine": "export { g as trackEvent };",
-      "lastLine": "export { g as trackEvent };"
+      "lastLine": "export { g as trackEvent };",
+      "text": "export{g as trackEvent};"
     },
     {
       "file": "tokyo/assets/animator-B5fCfINc-01.js",
@@ -3558,12 +3570,13 @@
       "file": "tokyo/assets/animator-B5fCfINc-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/animator-B5fCfINc — final export table (not sliced)",
-      "desc": "Lines 1815-1820. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1815-1820. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/animator-B5fCfINc.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1815,
       "endLine": 1820,
       "sourceFile": "readable/tokyo/assets/animator-B5fCfINc.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{E as ACTION_DEFAULTS,ye as Animator,s as POSE_LEN,T as makeAnimInput};"
     },
     {
       "file": "tokyo/assets/api-C4Rqh13K-01.js",
@@ -3577,12 +3590,13 @@
       "file": "tokyo/assets/api-C4Rqh13K-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/api-C4Rqh13K — final export table (not sliced)",
-      "desc": "Lines 16-30. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 16-30. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/api-C4Rqh13K.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 16,
       "endLine": 30,
       "sourceFile": "readable/tokyo/assets/api-C4Rqh13K.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{r as BIP_MAP,c as BipedAdapter,d as RocketboxAvatar,o as avatarManifest,f as avatarMaterial,l as avatarTextureMode,i as createAvatar,e as loadAvatarAsset,s as pickLod,u as preloadAvatars,t as releaseAvatarAsset,a as setAvatarRenderer,n as setSss};"
     },
     {
       "file": "tokyo/assets/art-tokyo-DHp5jBJS-01.js",
@@ -3596,12 +3610,13 @@
       "file": "tokyo/assets/art-tokyo-DHp5jBJS-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/art-tokyo-DHp5jBJS — final export table (not sliced)",
-      "desc": "Lines 400-400. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 400-400. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/art-tokyo-DHp5jBJS.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 400,
       "endLine": 400,
       "sourceFile": "readable/tokyo/assets/art-tokyo-DHp5jBJS.pretty.js",
       "firstLine": "export { I as TOKYO_ART };",
-      "lastLine": "export { I as TOKYO_ART };"
+      "lastLine": "export { I as TOKYO_ART };",
+      "text": "export{I as TOKYO_ART};"
     },
     {
       "file": "tokyo/assets/artWorker-B424lVEq-01.js",
@@ -3831,12 +3846,13 @@
       "file": "tokyo/assets/audio-CgR0uni4-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/audio-CgR0uni4 — final export table (not sliced)",
-      "desc": "Lines 13270-13297. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 13270-13297. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/audio-CgR0uni4.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 13270,
       "endLine": 13297,
       "sourceFile": "readable/tokyo/assets/audio-CgR0uni4.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{vt as C,o as E,_t as S,Me as T,Wt as _,fr as a,Kt as b,qr as c,An as d,Vt as f,W as g,Yt as h,yi as i,tr as l,Xt as m,vi as n,Jr as o,Gt as p,bi as r,Yr as s,Ki as t,Gn as u,Jt as v,ht as w,Ct as x,G as y};"
     },
     {
       "file": "tokyo/assets/avatar-CgSTz8jy-01.js",
@@ -3954,12 +3970,13 @@
       "file": "tokyo/assets/avatar-CgSTz8jy-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/avatar-CgSTz8jy — final export table (not sliced)",
-      "desc": "Lines 4695-4709. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 4695-4709. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/avatar-CgSTz8jy.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 4695,
       "endLine": 4709,
       "sourceFile": "readable/tokyo/assets/avatar-CgSTz8jy.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{Ar as a,jr as c,$n as d,Pn as f,Fr as i,fr as l,ir as n,Ir as o,Gn as p,gr as r,Mr as s,Pr as t,Qn as u};"
     },
     {
       "file": "tokyo/assets/bag-B0X6UNsq-01.js",
@@ -4013,12 +4030,13 @@
       "file": "tokyo/assets/bag-B0X6UNsq-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/bag-B0X6UNsq — final export table (not sliced)",
-      "desc": "Lines 3545-3545. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 3545-3545. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/bag-B0X6UNsq.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 3545,
       "endLine": 3545,
       "sourceFile": "readable/tokyo/assets/bag-B0X6UNsq.pretty.js",
       "firstLine": "export { Da as mountBag };",
-      "lastLine": "export { Da as mountBag };"
+      "lastLine": "export { Da as mountBag };",
+      "text": "export{Da as mountBag};"
     },
     {
       "file": "tokyo/assets/batch-BVai0hEO-01.js",
@@ -4032,12 +4050,13 @@
       "file": "tokyo/assets/batch-BVai0hEO-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/batch-BVai0hEO — final export table (not sliced)",
-      "desc": "Lines 164-164. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 164-164. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/batch-BVai0hEO.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 164,
       "endLine": 164,
       "sourceFile": "readable/tokyo/assets/batch-BVai0hEO.pretty.js",
       "firstLine": "export { a as BatchPlan, l as PackBatch };",
-      "lastLine": "export { a as BatchPlan, l as PackBatch };"
+      "lastLine": "export { a as BatchPlan, l as PackBatch };",
+      "text": "export{a as BatchPlan,l as PackBatch};"
     },
     {
       "file": "tokyo/assets/board-INUeDSQr-01.js",
@@ -4059,12 +4078,13 @@
       "file": "tokyo/assets/board-INUeDSQr-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/board-INUeDSQr — final export table (not sliced)",
-      "desc": "Lines 637-637. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 637-637. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/board-INUeDSQr.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 637,
       "endLine": 637,
       "sourceFile": "readable/tokyo/assets/board-INUeDSQr.pretty.js",
       "firstLine": "export { D as DepartureBoard };",
-      "lastLine": "export { D as DepartureBoard };"
+      "lastLine": "export { D as DepartureBoard };",
+      "text": "export{D as DepartureBoard};"
     },
     {
       "file": "tokyo/assets/bodyWorker-Bk4d3Tu3-01.js",
@@ -4422,12 +4442,13 @@
       "file": "tokyo/assets/boot-DzAWftFx-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/boot-DzAWftFx — final export table (not sliced)",
-      "desc": "Lines 56-56. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 56-56. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/boot-DzAWftFx.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 56,
       "endLine": 56,
       "sourceFile": "readable/tokyo/assets/boot-DzAWftFx.pretty.js",
       "firstLine": "export { h as hydrateBeforeTravel, m as settleIdentity };",
-      "lastLine": "export { h as hydrateBeforeTravel, m as settleIdentity };"
+      "lastLine": "export { h as hydrateBeforeTravel, m as settleIdentity };",
+      "text": "export{h as hydrateBeforeTravel,m as settleIdentity};"
     },
     {
       "file": "tokyo/assets/characters-CbxAZUc_-01.js",
@@ -4729,12 +4750,13 @@
       "file": "tokyo/assets/characters-CbxAZUc_-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/characters-CbxAZUc_ — final export table (not sliced)",
-      "desc": "Lines 11392-11430. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 11392-11430. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/characters-CbxAZUc_.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 11392,
       "endLine": 11430,
       "sourceFile": "readable/tokyo/assets/characters-CbxAZUc_.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{Qt as A,vi as C,Jr as D,si as E,qe as F,Ye as I,Je as L,rt as M,yt as N,Dr as O,R as P,Ii as S,ri as T,oo as _,Qo as a,aa as b,Z as c,Zo as d,Po as f,Fo as g,Ko as h,X as i,zt as j,Yn as k,is as l,jo as m,Ss as n,Y as o,Jo as p,ts as r,$o as s,ws as t,ls as u,La as v,pi as w,zi as x,la as y};"
     },
     {
       "file": "tokyo/assets/charWorker-DPNUr-Eu-01.js",
@@ -5108,12 +5130,13 @@
       "file": "tokyo/assets/cities-8-O8IWPJ-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/cities-8-O8IWPJ — final export table (not sliced)",
-      "desc": "Lines 218-235. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 218-235. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/cities-8-O8IWPJ.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 218,
       "endLine": 235,
       "sourceFile": "readable/tokyo/assets/cities-8-O8IWPJ.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{g as a,t as c,h as d,m as f,f as g,p as h,n as i,o as l,d as m,i as n,r as o,c as p,e as r,_ as s,l as t,s as u};"
     },
     {
       "file": "tokyo/assets/client-ap9WfXdd-01.js",
@@ -5143,12 +5166,13 @@
       "file": "tokyo/assets/client-ap9WfXdd-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/client-ap9WfXdd — final export table (not sliced)",
-      "desc": "Lines 686-686. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 686-686. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/client-ap9WfXdd.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 686,
       "endLine": 686,
       "sourceFile": "readable/tokyo/assets/client-ap9WfXdd.pretty.js",
       "firstLine": "export { L as createMarketClient };",
-      "lastLine": "export { L as createMarketClient };"
+      "lastLine": "export { L as createMarketClient };",
+      "text": "export{L as createMarketClient};"
     },
     {
       "file": "tokyo/assets/clips-GNiXKOuW-01.js",
@@ -5162,12 +5186,13 @@
       "file": "tokyo/assets/clips-GNiXKOuW-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/clips-GNiXKOuW — final export table (not sliced)",
-      "desc": "Lines 162-167. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 162-167. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/clips-GNiXKOuW.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 162,
       "endLine": 167,
       "sourceFile": "readable/tokyo/assets/clips-GNiXKOuW.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{t as AnimLibrary,e as Clip,r as DEFAULT_PACK_URL,i as loadAnimLibrary};"
     },
     {
       "file": "tokyo/assets/controllers-DIi301oL-01.js",
@@ -5197,12 +5222,13 @@
       "file": "tokyo/assets/controllers-DIi301oL-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/controllers-DIi301oL — final export table (not sliced)",
-      "desc": "Lines 1082-1094. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1082-1094. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/controllers-DIi301oL.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1082,
       "endLine": 1094,
       "sourceFile": "readable/tokyo/assets/controllers-DIi301oL.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{Y as a,le as c,j as d,K as i,Q as l,X as n,ce as o,de as r,ue as s,ge as t,z as u};"
     },
     {
       "file": "tokyo/assets/coordinator-idJVRLyI-01.js",
@@ -5216,12 +5242,13 @@
       "file": "tokyo/assets/coordinator-idJVRLyI-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/coordinator-idJVRLyI — final export table (not sliced)",
-      "desc": "Lines 257-264. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 257-264. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/coordinator-idJVRLyI.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 257,
       "endLine": 264,
       "sourceFile": "readable/tokyo/assets/coordinator-idJVRLyI.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{U as deleteFlow,W as flushDeparture,I as installCloud,H as leaveForGoogle,z as signOutFlow,R as syncNow};"
     },
     {
       "file": "tokyo/assets/dom-BCt0vy2n-01.js",
@@ -5235,12 +5262,13 @@
       "file": "tokyo/assets/dom-BCt0vy2n-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/dom-BCt0vy2n — final export table (not sliced)",
-      "desc": "Lines 98-110. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 98-110. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/dom-BCt0vy2n.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 98,
       "endLine": 110,
       "sourceFile": "readable/tokyo/assets/dom-BCt0vy2n.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{o as a,d as c,u as d,f as i,e as l,r as n,a as o,t as r,s,n as t,i as u};"
     },
     {
       "file": "tokyo/assets/dom-COFDPdeV-01.js",
@@ -5254,12 +5282,13 @@
       "file": "tokyo/assets/dom-COFDPdeV-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/dom-COFDPdeV — final export table (not sliced)",
-      "desc": "Lines 250-262. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 250-262. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/dom-COFDPdeV.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 250,
       "endLine": 262,
       "sourceFile": "readable/tokyo/assets/dom-COFDPdeV.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{g as a,s as c,_ as d,l as i,m as l,c as n,d as o,f as r,h as s,u as t,a as u};"
     },
     {
       "file": "tokyo/assets/engine-wUBYs8Z3-01.js",
@@ -5497,12 +5526,13 @@
       "file": "tokyo/assets/engine-wUBYs8Z3-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/engine-wUBYs8Z3 — final export table (not sliced)",
-      "desc": "Lines 10987-11182. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 10987-11182. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/engine-wUBYs8Z3.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 10987,
       "endLine": 11182,
       "sourceFile": "readable/tokyo/assets/engine-wUBYs8Z3.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{is as $,Zt as $n,Oi as $t,As as A,Cn as An,Ge as Ar,la as At,Cs as B,dn as Bn,aa as Bt,Vs as C,In as Cn,Je as Cr,Va as Ct,Ds as D,wn as Dn,$e as Dr,fa as Dt,Es as E,En,Qe as Er,pa as Et,Is as F,j as Fn,qi as Ft,us as G,zt as Gn,Fi as Gt,ls as H,It as Hn,ta as Ht,Ws as I,Bt as In,Ji as It,rs as J,on as Jn,B as Jt,os as K,fn as Kn,Ki as Kt,Us as L,Lt as Ln,Xi as Lt,Ls as M,Mt as Mn,Ie as Mr,vi as Mt,ks as N,kt as Nn,xi as Nt,Ms as O,Dn as On,et as Or,ma as Ot,Ks as P,Pt as Pn,yi as Pt,ts as Q,Jt as Qn,na as Qt,Rs as R,Yt as Rn,ji as Rt,Ns as S,Ln as Sn,pt as Sr,Ha as St,Ps as T,Sn as Tn,tt as Tr,ga as Tt,ss as U,Vt as Un,Yi as Ut,ws as V,Wt as Vn,Ei as Vt,cs as W,un as Wn,Di as Wt,ns as X,Rt as Xn,Pi as Xt,as as Y,Ft as Yn,V as Yt,$o as Z,I as Zn,ki as Zt,Xs as _,Zn as _n,A as _r,Co as _t,nl as a,Er as an,Gt as ar,Jo as at,zs as b,Jn as bn,lt as br,eo as bt,rc as c,rr as cn,pn as cr,Go as ct,_c as d,hr as dn,mn as dr,Lo as dt,_i as en,nn as er,Yo as et,Tc as f,or as fn,rn as fr,bo as ft,Zs as g,tr as gn,Ct as gr,wo as gt,Js as h,ir as hn,St as hr,Eo as ht,tl as i,L as in,Ht as ir,Uo as it,js as j,Tn as jn,Le as jr,sa as jt,Os as k,On as kn,Ke as kr,ca as kt,ic as l,sr as ln,bn as lr,Ho as lt,ec as m,nr as mn,Ot as mr,Oo as mt,il as n,qr as nn,an as nr,Zo as nt,el as o,Lr as on,Ut as or,Ko as ot,Cc as p,cr as pn,cn as pr,yo as pt,Qo as q,yn as qn,Ti as qt,al as r,Kr as rn,qt as rr,Wo as rt,zc as s,Nr as sn,Xt as sr,qo as st,ll as t,Jr as tn,sn as tr,Xo as tt,nc as u,pr as un,ln as ur,Ro as ut,Hs as v,qn as vn,bt as vr,mo as vt,Fs as w,Kn as wn,Ye as wr,va as wt,Gs as x,Gn as xn,xt as xr,Ja as xt,Bs as y,Yn as yn,dt as yr,go as yt,Ts as z,xn as zn,Ai as zt};"
     },
     {
       "file": "tokyo/assets/fullmap-Dd3RmRQQ-01.js",
@@ -5532,12 +5562,13 @@
       "file": "tokyo/assets/fullmap-Dd3RmRQQ-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/fullmap-Dd3RmRQQ — final export table (not sliced)",
-      "desc": "Lines 1308-1308. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1308-1308. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/fullmap-Dd3RmRQQ.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1308,
       "endLine": 1308,
       "sourceFile": "readable/tokyo/assets/fullmap-Dd3RmRQQ.pretty.js",
       "firstLine": "export { A as FullMap };",
-      "lastLine": "export { A as FullMap };"
+      "lastLine": "export { A as FullMap };",
+      "text": "export{A as FullMap};"
     },
     {
       "file": "tokyo/assets/garage-BvwUBeJB-01.js",
@@ -5575,12 +5606,13 @@
       "file": "tokyo/assets/garage-BvwUBeJB-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/garage-BvwUBeJB — final export table (not sliced)",
-      "desc": "Lines 1004-1004. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1004-1004. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/garage-BvwUBeJB.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1004,
       "endLine": 1004,
       "sourceFile": "readable/tokyo/assets/garage-BvwUBeJB.pretty.js",
       "firstLine": "export { xe as mountGarage, Se as resetGarage, be as tempting };",
-      "lastLine": "export { xe as mountGarage, Se as resetGarage, be as tempting };"
+      "lastLine": "export { xe as mountGarage, Se as resetGarage, be as tempting };",
+      "text": "export{xe as mountGarage,Se as resetGarage,be as tempting};"
     },
     {
       "file": "tokyo/assets/icons-DYNV7fxr-01.js",
@@ -5602,12 +5634,13 @@
       "file": "tokyo/assets/icons-DYNV7fxr-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/icons-DYNV7fxr — final export table (not sliced)",
-      "desc": "Lines 407-407. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 407-407. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/icons-DYNV7fxr.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 407,
       "endLine": 407,
       "sourceFile": "readable/tokyo/assets/icons-DYNV7fxr.pretty.js",
       "firstLine": "export { o as a, f as i, s as n, m as o, u as r, h as s, n as t };",
-      "lastLine": "export { o as a, f as i, s as n, m as o, u as r, h as s, n as t };"
+      "lastLine": "export { o as a, f as i, s as n, m as o, u as r, h as s, n as t };",
+      "text": "export{o as a,f as i,s as n,m as o,u as r,h as s,n as t};"
     },
     {
       "file": "tokyo/assets/ja-DY7SMsVw-01.js",
@@ -5621,12 +5654,13 @@
       "file": "tokyo/assets/ja-DY7SMsVw-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/ja-DY7SMsVw — final export table (not sliced)",
-      "desc": "Lines 180-180. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 180-180. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/ja-DY7SMsVw.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 180,
       "endLine": 180,
       "sourceFile": "readable/tokyo/assets/ja-DY7SMsVw.pretty.js",
       "firstLine": "export { n as a, c as i, l as n, b as r, o as t };",
-      "lastLine": "export { n as a, c as i, l as n, b as r, o as t };"
+      "lastLine": "export { n as a, c as i, l as n, b as r, o as t };",
+      "text": "export{n as a,c as i,l as n,b as r,o as t};"
     },
     {
       "file": "tokyo/assets/lab-AJ7ypZPa-01.js",
@@ -5656,12 +5690,13 @@
       "file": "tokyo/assets/lab-AJ7ypZPa-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/lab-AJ7ypZPa — final export table (not sliced)",
-      "desc": "Lines 451-451. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 451-451. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/lab-AJ7ypZPa.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 451,
       "endLine": 451,
       "sourceFile": "readable/tokyo/assets/lab-AJ7ypZPa.pretty.js",
       "firstLine": "export { M as createAvatarLab };",
-      "lastLine": "export { M as createAvatarLab };"
+      "lastLine": "export { M as createAvatarLab };",
+      "text": "export{M as createAvatarLab};"
     },
     {
       "file": "tokyo/assets/lab-DzZxQgDp-01.js",
@@ -5683,12 +5718,13 @@
       "file": "tokyo/assets/lab-DzZxQgDp-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/lab-DzZxQgDp — final export table (not sliced)",
-      "desc": "Lines 627-627. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 627-627. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/lab-DzZxQgDp.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 627,
       "endLine": 627,
       "sourceFile": "readable/tokyo/assets/lab-DzZxQgDp.pretty.js",
       "firstLine": "export { N as createAnimLab };",
-      "lastLine": "export { N as createAnimLab };"
+      "lastLine": "export { N as createAnimLab };",
+      "text": "export{N as createAnimLab};"
     },
     {
       "file": "tokyo/assets/landing-BF9tCPAp-01.js",
@@ -5702,12 +5738,13 @@
       "file": "tokyo/assets/landing-BF9tCPAp-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/landing-BF9tCPAp — final export table (not sliced)",
-      "desc": "Lines 333-333. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 333-333. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/landing-BF9tCPAp.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 333,
       "endLine": 333,
       "sourceFile": "readable/tokyo/assets/landing-BF9tCPAp.pretty.js",
       "firstLine": "export { V as runLanding, z as showMovedNotice };",
-      "lastLine": "export { V as runLanding, z as showMovedNotice };"
+      "lastLine": "export { V as runLanding, z as showMovedNotice };",
+      "text": "export{V as runLanding,z as showMovedNotice};"
     },
     {
       "file": "tokyo/assets/market-CcnhaQYm-01.js",
@@ -5729,12 +5766,13 @@
       "file": "tokyo/assets/market-CcnhaQYm-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/market-CcnhaQYm — final export table (not sliced)",
-      "desc": "Lines 1262-1262. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1262-1262. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/market-CcnhaQYm.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1262,
       "endLine": 1262,
       "sourceFile": "readable/tokyo/assets/market-CcnhaQYm.pretty.js",
       "firstLine": "export { E as mountMarket };",
-      "lastLine": "export { E as mountMarket };"
+      "lastLine": "export { E as mountMarket };",
+      "text": "export{E as mountMarket};"
     },
     {
       "file": "tokyo/assets/material-GV-Cqvqp-01.js",
@@ -5756,12 +5794,13 @@
       "file": "tokyo/assets/material-GV-Cqvqp-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/material-GV-Cqvqp — final export table (not sliced)",
-      "desc": "Lines 439-439. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 439-439. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/material-GV-Cqvqp.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 439,
       "endLine": 439,
       "sourceFile": "readable/tokyo/assets/material-GV-Cqvqp.pretty.js",
       "firstLine": "export { E as landmarkLayers, M as lmPrototype, k as packMaterial };",
-      "lastLine": "export { E as landmarkLayers, M as lmPrototype, k as packMaterial };"
+      "lastLine": "export { E as landmarkLayers, M as lmPrototype, k as packMaterial };",
+      "text": "export{E as landmarkLayers,M as lmPrototype,k as packMaterial};"
     },
     {
       "file": "tokyo/assets/notice-DnIsya3--01.js",
@@ -5775,12 +5814,13 @@
       "file": "tokyo/assets/notice-DnIsya3--tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/notice-DnIsya3- — final export table (not sliced)",
-      "desc": "Lines 22-22. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 22-22. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/notice-DnIsya3-.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 22,
       "endLine": 22,
       "sourceFile": "readable/tokyo/assets/notice-DnIsya3-.pretty.js",
       "firstLine": "export { n, t };",
-      "lastLine": "export { n, t };"
+      "lastLine": "export { n, t };",
+      "text": "export{n,t};"
     },
     {
       "file": "tokyo/assets/panel-8FADH4GH-01.js",
@@ -5794,12 +5834,13 @@
       "file": "tokyo/assets/panel-8FADH4GH-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/panel-8FADH4GH — final export table (not sliced)",
-      "desc": "Lines 180-180. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 180-180. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/panel-8FADH4GH.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 180,
       "endLine": 180,
       "sourceFile": "readable/tokyo/assets/panel-8FADH4GH.pretty.js",
       "firstLine": "export { l as mountFeedbackPanel };",
-      "lastLine": "export { l as mountFeedbackPanel };"
+      "lastLine": "export { l as mountFeedbackPanel };",
+      "text": "export{l as mountFeedbackPanel};"
     },
     {
       "file": "tokyo/assets/peopleWorker-Cn7UVw8F-01.js",
@@ -6285,12 +6326,13 @@
       "file": "tokyo/assets/phone-T88fC2hD-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/phone-T88fC2hD — final export table (not sliced)",
-      "desc": "Lines 412-412. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 412-412. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/phone-T88fC2hD.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 412,
       "endLine": 412,
       "sourceFile": "readable/tokyo/assets/phone-T88fC2hD.pretty.js",
       "firstLine": "export { l as mountSocialApp, c as startSummaryPolling };",
-      "lastLine": "export { l as mountSocialApp, c as startSummaryPolling };"
+      "lastLine": "export { l as mountSocialApp, c as startSummaryPolling };",
+      "text": "export{l as mountSocialApp,c as startSummaryPolling};"
     },
     {
       "file": "tokyo/assets/pose-hAXyTQQR-01.js",
@@ -6304,12 +6346,13 @@
       "file": "tokyo/assets/pose-hAXyTQQR-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/pose-hAXyTQQR — final export table (not sliced)",
-      "desc": "Lines 127-138. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 127-138. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/pose-hAXyTQQR.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 127,
       "endLine": 138,
       "sourceFile": "readable/tokyo/assets/pose-hAXyTQQR.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{u as a,c,e as i,s as l,i as n,l as o,n as r,d as s,r as t,t as u};"
     },
     {
       "file": "tokyo/assets/postfx-BzHvx3aB-01.js",
@@ -6443,12 +6486,13 @@
       "file": "tokyo/assets/postfx-BzHvx3aB-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/postfx-BzHvx3aB — final export table (not sliced)",
-      "desc": "Lines 9528-9528. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 9528-9528. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/postfx-BzHvx3aB.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 9528,
       "endLine": 9528,
       "sourceFile": "readable/tokyo/assets/postfx-BzHvx3aB.pretty.js",
       "firstLine": "export { de as t };",
-      "lastLine": "export { de as t };"
+      "lastLine": "export { de as t };",
+      "text": "export{de as t};"
     },
     {
       "file": "tokyo/assets/prefs-BioZODFl-01.js",
@@ -6462,12 +6506,13 @@
       "file": "tokyo/assets/prefs-BioZODFl-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/prefs-BioZODFl — final export table (not sliced)",
-      "desc": "Lines 34-34. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 34-34. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/prefs-BioZODFl.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 34,
       "endLine": 34,
       "sourceFile": "readable/tokyo/assets/prefs-BioZODFl.pretty.js",
       "firstLine": "export { i, n, r, a as t };",
-      "lastLine": "export { i, n, r, a as t };"
+      "lastLine": "export { i, n, r, a as t };",
+      "text": "export{i,n,r,a as t};"
     },
     {
       "file": "tokyo/assets/profile-DIg-QXlP-01.js",
@@ -6489,12 +6534,13 @@
       "file": "tokyo/assets/profile-DIg-QXlP-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/profile-DIg-QXlP — final export table (not sliced)",
-      "desc": "Lines 518-527. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 518-527. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/profile-DIg-QXlP.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 518,
       "endLine": 527,
       "sourceFile": "readable/tokyo/assets/profile-DIg-QXlP.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{u as i,S as mountNameRow,C as mountNameView,w as mountProfile,y as myProfile,d as n,f as r,h as t};"
     },
     {
       "file": "tokyo/assets/recovery-WpSwz0a9-01.js",
@@ -6508,12 +6554,13 @@
       "file": "tokyo/assets/recovery-WpSwz0a9-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/recovery-WpSwz0a9 — final export table (not sliced)",
-      "desc": "Lines 153-157. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 153-157. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/recovery-WpSwz0a9.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 153,
       "endLine": 157,
       "sourceFile": "readable/tokyo/assets/recovery-WpSwz0a9.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{l as hasPendingMarketTicket,u as notifyMarketTicketChange,p as resolveInBackground};"
     },
     {
       "file": "tokyo/assets/region-tokyo-55J_WESF-01.js",
@@ -10447,12 +10494,13 @@
       "file": "tokyo/assets/region-tokyo-55J_WESF-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-55J_WESF — final export table (not sliced)",
-      "desc": "Lines 177040-177177. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 177040-177177. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-55J_WESF.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 177040,
       "endLine": 177177,
       "sourceFile": "readable/tokyo/assets/region-tokyo-55J_WESF.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{dm as $,Gc as $t,ile as A,Wae as At,qce as B,Fu as Bt,fle as C,yr as Cn,zae as Ct,Rm as D,hr as Dn,Vae as Dt,Hm as E,Cr as En,zu as Et,Zce as F,Au as Ft,Dm as G,wu as Gt,Xce as H,Eu as Ht,Kce as I,ju as It,um as J,Kae as Jt,bm as K,xu as Kt,Hce as L,Mu as Lt,xm as M,Gae as Mt,Cm as N,Iu as Nt,ale as O,ar as On,Uae as Ot,Em as P,ku as Pt,vm as Q,Rl as Qt,wm as R,Nu as Rt,zm as S,vr as Sn,Pu as St,Bm as T,xr as Tn,Hae as Tt,Yce as U,Ou as Ut,Sm as V,Du as Vt,Jce as W,Su as Wt,hm as X,cu as Xt,mm as Y,yu as Yt,pm as Z,ru as Zt,Jg as _,jr as _n,oce as _t,Lue as a,bo as an,Zp as at,lle as b,Dr as bn,Zd as bt,r_ as c,ui as cn,gce as ct,e_ as d,Pr as dn,dce as dt,Zs as en,Xp as et,$g as f,Mr as fn,_ce as ft,Yg as g,zr as gn,uce as gt,Xg as h,Xr as hn,pce as ht,Rue as i,L as in,Qp as it,Im as j,Lu as jt,ule as k,Rae as kt,n_ as l,Yr as ln,hce as lt,Zg as m,Ur as mn,mce as mt,C_ as n,yo as nn,$p as nt,a_ as o,oo as on,tm as ot,Qg as p,Nr as pn,vce as pt,sm as q,Tu as qt,w_ as r,So as rn,Yp as rt,i_ as s,Qa as sn,sp as st,hHe as t,ac as tn,Jp as tt,t_ as u,P as un,fce as ut,ole as v,Er as vn,yf as vt,cle as w,br as wn,Bae as wt,Vm as x,Tr as xn,V as xt,sle as y,Ar as yn,af as yt,Tm as z,Cu as zt};"
     },
     {
       "file": "tokyo/assets/region-tokyo-audioWorker-GAP5c6S0-01.js",
@@ -11018,12 +11066,13 @@
       "file": "tokyo/assets/region-tokyo-d-akihabara-CilcTp8S-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-akihabara-CilcTp8S — final export table (not sliced)",
-      "desc": "Lines 3929-3929. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 3929-3929. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-akihabara-CilcTp8S.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 3929,
       "endLine": 3929,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-akihabara-CilcTp8S.pretty.js",
       "firstLine": "export { ie as i, vt as n, re as r, jt as t };",
-      "lastLine": "export { ie as i, vt as n, re as r, jt as t };"
+      "lastLine": "export { ie as i, vt as n, re as r, jt as t };",
+      "text": "export{ie as i,vt as n,re as r,jt as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-ameyoko-DgncIALb-01.js",
@@ -11101,12 +11150,13 @@
       "file": "tokyo/assets/region-tokyo-d-ameyoko-DgncIALb-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-ameyoko-DgncIALb — final export table (not sliced)",
-      "desc": "Lines 2353-2353. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 2353-2353. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-ameyoko-DgncIALb.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 2353,
       "endLine": 2353,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-ameyoko-DgncIALb.pretty.js",
       "firstLine": "export { M as i, Re as n, ee as r, Ge as t };",
-      "lastLine": "export { M as i, Re as n, ee as r, Ge as t };"
+      "lastLine": "export { M as i, Re as n, ee as r, Ge as t };",
+      "text": "export{M as i,Re as n,ee as r,Ge as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-asakusa-49Uaiff6-01.js",
@@ -11224,12 +11274,13 @@
       "file": "tokyo/assets/region-tokyo-d-asakusa-49Uaiff6-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-asakusa-49Uaiff6 — final export table (not sliced)",
-      "desc": "Lines 3843-3843. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 3843-3843. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-asakusa-49Uaiff6.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 3843,
       "endLine": 3843,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-asakusa-49Uaiff6.pretty.js",
       "firstLine": "export { Wt as t };",
-      "lastLine": "export { Wt as t };"
+      "lastLine": "export { Wt as t };",
+      "text": "export{Wt as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-ginza-BY6oOEWu-01.js",
@@ -11299,12 +11350,13 @@
       "file": "tokyo/assets/region-tokyo-d-ginza-BY6oOEWu-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-ginza-BY6oOEWu — final export table (not sliced)",
-      "desc": "Lines 2516-2516. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 2516-2516. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-ginza-BY6oOEWu.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 2516,
       "endLine": 2516,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-ginza-BY6oOEWu.pretty.js",
       "firstLine": "export { Ft as t };",
-      "lastLine": "export { Ft as t };"
+      "lastLine": "export { Ft as t };",
+      "text": "export{Ft as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-hongo-B0kKsWK8-01.js",
@@ -11358,12 +11410,13 @@
       "file": "tokyo/assets/region-tokyo-d-hongo-B0kKsWK8-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-hongo-B0kKsWK8 — final export table (not sliced)",
-      "desc": "Lines 1900-1900. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1900-1900. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-hongo-B0kKsWK8.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1900,
       "endLine": 1900,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-hongo-B0kKsWK8.pretty.js",
       "firstLine": "export { te as a, re as i, de as n, ne as r, _e as t };",
-      "lastLine": "export { te as a, re as i, de as n, ne as r, _e as t };"
+      "lastLine": "export { te as a, re as i, de as n, ne as r, _e as t };",
+      "text": "export{te as a,re as i,de as n,ne as r,_e as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-kanda-BOuhI6B0-01.js",
@@ -11521,12 +11574,13 @@
       "file": "tokyo/assets/region-tokyo-d-kanda-BOuhI6B0-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-kanda-BOuhI6B0 — final export table (not sliced)",
-      "desc": "Lines 5963-5963. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 5963-5963. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-kanda-BOuhI6B0.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 5963,
       "endLine": 5963,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-kanda-BOuhI6B0.pretty.js",
       "firstLine": "export { ce as i, Kn as n, T as r, or as t };",
-      "lastLine": "export { ce as i, Kn as n, T as r, or as t };"
+      "lastLine": "export { ce as i, Kn as n, T as r, or as t };",
+      "text": "export{ce as i,Kn as n,T as r,or as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD-01.js",
@@ -11644,12 +11698,13 @@
       "file": "tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD — final export table (not sliced)",
-      "desc": "Lines 4264-4264. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 4264-4264. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 4264,
       "endLine": 4264,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD.pretty.js",
       "firstLine": "export { Lt as t };",
-      "lastLine": "export { Lt as t };"
+      "lastLine": "export { Lt as t };",
+      "text": "export{Lt as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ-01.js",
@@ -11743,12 +11798,13 @@
       "file": "tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ — final export table (not sliced)",
-      "desc": "Lines 4324-4324. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 4324-4324. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 4324,
       "endLine": 4324,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ.pretty.js",
       "firstLine": "export { yn as t };",
-      "lastLine": "export { yn as t };"
+      "lastLine": "export { yn as t };",
+      "text": "export{yn as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_-01.js",
@@ -11882,12 +11938,13 @@
       "file": "tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_ — final export table (not sliced)",
-      "desc": "Lines 5063-5063. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 5063-5063. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 5063,
       "endLine": 5063,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_.pretty.js",
       "firstLine": "export { at as i, Pt as n, it as r, Zt as t };",
-      "lastLine": "export { at as i, Pt as n, it as r, Zt as t };"
+      "lastLine": "export { at as i, Pt as n, it as r, Zt as t };",
+      "text": "export{at as i,Pt as n,it as r,Zt as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-shared-C5O1aoRa-01.js",
@@ -11901,12 +11958,13 @@
       "file": "tokyo/assets/region-tokyo-d-shared-C5O1aoRa-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-shared-C5O1aoRa — final export table (not sliced)",
-      "desc": "Lines 331-331. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 331-331. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-shared-C5O1aoRa.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 331,
       "endLine": 331,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-shared-C5O1aoRa.pretty.js",
       "firstLine": "export { i as n, p as r, b as t };",
-      "lastLine": "export { i as n, p as r, b as t };"
+      "lastLine": "export { i as n, p as r, b as t };",
+      "text": "export{i as n,p as r,b as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1-01.js",
@@ -12040,12 +12098,13 @@
       "file": "tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1 — final export table (not sliced)",
-      "desc": "Lines 4839-4839. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 4839-4839. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 4839,
       "endLine": 4839,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1.pretty.js",
       "firstLine": "export { nn as t };",
-      "lastLine": "export { nn as t };"
+      "lastLine": "export { nn as t };",
+      "text": "export{nn as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2-01.js",
@@ -12179,12 +12238,13 @@
       "file": "tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2 — final export table (not sliced)",
-      "desc": "Lines 5566-5592. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 5566-5592. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 5566,
       "endLine": 5592,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{k as C,ie as S,D as T,xe as _,kt as a,E as b,q as c,X as d,St as f,he as g,Ie as h,Ot as i,K as l,et as m,ln as n,Tt as o,G as p,$t as r,wt as s,dn as t,Y as u,me as v,ae as w,O as x,z as y};"
     },
     {
       "file": "tokyo/assets/region-tokyo-d-ueno-CufCWRy0-01.js",
@@ -12310,12 +12370,13 @@
       "file": "tokyo/assets/region-tokyo-d-ueno-CufCWRy0-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-d-ueno-CufCWRy0 — final export table (not sliced)",
-      "desc": "Lines 4510-4536. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 4510-4536. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-d-ueno-CufCWRy0.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 4510,
       "endLine": 4536,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-ueno-CufCWRy0.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{k as C,A as S,D as T,fe as _,K as a,O as b,ke as c,L as d,me as f,P as g,R as h,We as i,N as l,I as m,Cn as n,Ae as o,F as p,dn as r,Oe as s,En as t,pe as u,le as v,M as w,E as x,j as y};"
     },
     {
       "file": "tokyo/assets/region-tokyo-interiorsWorker-CQjw7WYB-01.js",
@@ -12809,12 +12870,13 @@
       "file": "tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb — final export table (not sliced)",
-      "desc": "Lines 166-166. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 166-166. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 166,
       "endLine": 166,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb.pretty.js",
       "firstLine": "export { g as t };",
-      "lastLine": "export { g as t };"
+      "lastLine": "export { g as t };",
+      "text": "export{g as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V-01.js",
@@ -12828,12 +12890,13 @@
       "file": "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V — final export table (not sliced)",
-      "desc": "Lines 317-317. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 317-317. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 317,
       "endLine": 317,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V.pretty.js",
       "firstLine": "export { C as t };",
-      "lastLine": "export { C as t };"
+      "lastLine": "export { C as t };",
+      "text": "export{C as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU-01.js",
@@ -12847,12 +12910,13 @@
       "file": "tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU — final export table (not sliced)",
-      "desc": "Lines 250-250. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 250-250. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 250,
       "endLine": 250,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU.pretty.js",
       "firstLine": "export { x as t };",
-      "lastLine": "export { x as t };"
+      "lastLine": "export { x as t };",
+      "text": "export{x as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF--01.js",
@@ -12866,12 +12930,13 @@
       "file": "tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF--tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF- — final export table (not sliced)",
-      "desc": "Lines 222-222. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 222-222. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF-.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 222,
       "endLine": 222,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF-.pretty.js",
       "firstLine": "export { v as t };",
-      "lastLine": "export { v as t };"
+      "lastLine": "export { v as t };",
+      "text": "export{v as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf-01.js",
@@ -12885,12 +12950,13 @@
       "file": "tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf — final export table (not sliced)",
-      "desc": "Lines 207-207. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 207-207. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 207,
       "endLine": 207,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf.pretty.js",
       "firstLine": "export { g as t };",
-      "lastLine": "export { g as t };"
+      "lastLine": "export { g as t };",
+      "text": "export{g as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_--01.js",
@@ -12904,12 +12970,13 @@
       "file": "tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_--tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_- — final export table (not sliced)",
-      "desc": "Lines 178-178. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 178-178. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_-.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 178,
       "endLine": 178,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_-.pretty.js",
       "firstLine": "export { u as t };",
-      "lastLine": "export { u as t };"
+      "lastLine": "export { u as t };",
+      "text": "export{u as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8-01.js",
@@ -12923,12 +12990,13 @@
       "file": "tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8 — final export table (not sliced)",
-      "desc": "Lines 292-292. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 292-292. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 292,
       "endLine": 292,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8.pretty.js",
       "firstLine": "export { C as t };",
-      "lastLine": "export { C as t };"
+      "lastLine": "export { C as t };",
+      "text": "export{C as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a-01.js",
@@ -12942,12 +13010,13 @@
       "file": "tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a — final export table (not sliced)",
-      "desc": "Lines 250-250. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 250-250. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 250,
       "endLine": 250,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a.pretty.js",
       "firstLine": "export { p as t };",
-      "lastLine": "export { p as t };"
+      "lastLine": "export { p as t };",
+      "text": "export{p as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser-01.js",
@@ -12969,12 +13038,13 @@
       "file": "tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser — final export table (not sliced)",
-      "desc": "Lines 388-388. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 388-388. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 388,
       "endLine": 388,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser.pretty.js",
       "firstLine": "export { T as t };",
-      "lastLine": "export { T as t };"
+      "lastLine": "export { T as t };",
+      "text": "export{T as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC-01.js",
@@ -12988,12 +13058,13 @@
       "file": "tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC — final export table (not sliced)",
-      "desc": "Lines 247-247. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 247-247. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 247,
       "endLine": 247,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC.pretty.js",
       "firstLine": "export { y as t };",
-      "lastLine": "export { y as t };"
+      "lastLine": "export { y as t };",
+      "text": "export{y as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8-01.js",
@@ -13007,12 +13078,13 @@
       "file": "tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8 — final export table (not sliced)",
-      "desc": "Lines 231-231. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 231-231. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 231,
       "endLine": 231,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8.pretty.js",
       "firstLine": "export { w as t };",
-      "lastLine": "export { w as t };"
+      "lastLine": "export { w as t };",
+      "text": "export{w as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu-01.js",
@@ -13026,12 +13098,13 @@
       "file": "tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu — final export table (not sliced)",
-      "desc": "Lines 261-261. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 261-261. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 261,
       "endLine": 261,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu.pretty.js",
       "firstLine": "export { C as t };",
-      "lastLine": "export { C as t };"
+      "lastLine": "export { C as t };",
+      "text": "export{C as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS-01.js",
@@ -13045,12 +13118,13 @@
       "file": "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS — final export table (not sliced)",
-      "desc": "Lines 209-209. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 209-209. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 209,
       "endLine": 209,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS.pretty.js",
       "firstLine": "export { _ as t };",
-      "lastLine": "export { _ as t };"
+      "lastLine": "export { _ as t };",
+      "text": "export{_ as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG-01.js",
@@ -13064,12 +13138,13 @@
       "file": "tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG — final export table (not sliced)",
-      "desc": "Lines 260-260. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 260-260. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 260,
       "endLine": 260,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG.pretty.js",
       "firstLine": "export { C as t };",
-      "lastLine": "export { C as t };"
+      "lastLine": "export { C as t };",
+      "text": "export{C as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR-01.js",
@@ -13083,12 +13158,13 @@
       "file": "tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR — final export table (not sliced)",
-      "desc": "Lines 176-176. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 176-176. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 176,
       "endLine": 176,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR.pretty.js",
       "firstLine": "export { f as t };",
-      "lastLine": "export { f as t };"
+      "lastLine": "export { f as t };",
+      "text": "export{f as t};"
     },
     {
       "file": "tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y-01.js",
@@ -13174,12 +13250,13 @@
       "file": "tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y — final export table (not sliced)",
-      "desc": "Lines 2976-3028. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 2976-3028. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 2976,
       "endLine": 3028,
       "sourceFile": "readable/tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{Y as A,C as B,oe as C,B as D,V as E,K as F,S as G,E as H,re as I,D as J,T as K,ae as L,q as M,W as N,ce as O,se as P,y as R,z as S,X as T,j as U,O as V,w as W,te as X,M as Y,b as Z,L as _,Ce as a,I as b,ye as c,pe as d,de as f,ue as g,fe as h,De as i,ie as j,le as k,_e as l,ge as m,Oe as n,Ee as o,me as p,v as q,we as r,be as s,Te as t,he as u,F as v,R as w,G as x,P as y,k as z};"
     },
     {
       "file": "tokyo/assets/rig-BjRdQXtM-01.js",
@@ -13193,12 +13270,13 @@
       "file": "tokyo/assets/rig-BjRdQXtM-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/rig-BjRdQXtM — final export table (not sliced)",
-      "desc": "Lines 32-32. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 32-32. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/rig-BjRdQXtM.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 32,
       "endLine": 32,
       "sourceFile": "readable/tokyo/assets/rig-BjRdQXtM.pretty.js",
       "firstLine": "export { e as CANON_HIP_Y, n as applyPose, t as bindRig };",
-      "lastLine": "export { e as CANON_HIP_Y, n as applyPose, t as bindRig };"
+      "lastLine": "export { e as CANON_HIP_Y, n as applyPose, t as bindRig };",
+      "text": "export{e as CANON_HIP_Y,n as applyPose,t as bindRig};"
     },
     {
       "file": "tokyo/assets/rolldown-runtime-DK3Fl9T5-01.js",
@@ -13212,12 +13290,13 @@
       "file": "tokyo/assets/rolldown-runtime-DK3Fl9T5-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/rolldown-runtime-DK3Fl9T5 — final export table (not sliced)",
-      "desc": "Lines 7-7. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 7-7. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/rolldown-runtime-DK3Fl9T5.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 7,
       "endLine": 7,
       "sourceFile": "readable/tokyo/assets/rolldown-runtime-DK3Fl9T5.pretty.js",
       "firstLine": "export { t };",
-      "lastLine": "export { t };"
+      "lastLine": "export { t };",
+      "text": "export{t};"
     },
     {
       "file": "tokyo/assets/scene-G8jS_Se3-01.js",
@@ -13231,12 +13310,13 @@
       "file": "tokyo/assets/scene-G8jS_Se3-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/scene-G8jS_Se3 — final export table (not sliced)",
-      "desc": "Lines 226-226. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 226-226. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/scene-G8jS_Se3.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 226,
       "endLine": 226,
       "sourceFile": "readable/tokyo/assets/scene-G8jS_Se3.pretty.js",
       "firstLine": "export { i as FlightScene };",
-      "lastLine": "export { i as FlightScene };"
+      "lastLine": "export { i as FlightScene };",
+      "text": "export{i as FlightScene};"
     },
     {
       "file": "tokyo/assets/session-B5ukzynC-01.js",
@@ -13258,12 +13338,13 @@
       "file": "tokyo/assets/session-B5ukzynC-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/session-B5ukzynC — final export table (not sliced)",
-      "desc": "Lines 401-419. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 401-419. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/session-B5ukzynC.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 401,
       "endLine": 419,
       "sourceFile": "readable/tokyo/assets/session-B5ukzynC.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{f as _,I as a,R as c,T as d,w as f,u as g,P as h,L as i,F as l,U as m,H as n,Y as o,B as p,C as r,y as s,S as t,E as u};"
     },
     {
       "file": "tokyo/assets/shared-DC9fKqx_-01.js",
@@ -13325,12 +13406,13 @@
       "file": "tokyo/assets/shared-DC9fKqx_-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/shared-DC9fKqx_ — final export table (not sliced)",
-      "desc": "Lines 3356-3395. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 3356-3395. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/shared-DC9fKqx_.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 3356,
       "endLine": 3395,
       "sourceFile": "readable/tokyo/assets/shared-DC9fKqx_.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{b as A,M as C,se as D,re as E,fe as F,de as I,ae as L,ue as M,ce as N,pe as O,me as P,oe as R,A as S,ne as T,Oe as _,lt as a,L as b,qe as c,Ue as d,J as f,x as g,Y as h,ct as i,le as j,te as k,Je as l,X as m,Z as n,ut as o,q as p,rt as r,U as s,ft as t,Ke as u,D as v,ie as w,R as x,I as y};"
     },
     {
       "file": "tokyo/assets/signs-Co9BseyY-01.js",
@@ -13344,12 +13426,13 @@
       "file": "tokyo/assets/signs-Co9BseyY-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/signs-Co9BseyY — final export table (not sliced)",
-      "desc": "Lines 127-127. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 127-127. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/signs-Co9BseyY.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 127,
       "endLine": 127,
       "sourceFile": "readable/tokyo/assets/signs-Co9BseyY.pretty.js",
       "firstLine": "export { p as PackSigns, u as cellTexels };",
-      "lastLine": "export { p as PackSigns, u as cellTexels };"
+      "lastLine": "export { p as PackSigns, u as cellTexels };",
+      "text": "export{p as PackSigns,u as cellTexels};"
     },
     {
       "file": "tokyo/assets/sites-kit-BhplXgcu-01.js",
@@ -13371,12 +13454,13 @@
       "file": "tokyo/assets/sites-kit-BhplXgcu-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/sites-kit-BhplXgcu — final export table (not sliced)",
-      "desc": "Lines 425-425. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 425-425. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/sites-kit-BhplXgcu.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 425,
       "endLine": 425,
       "sourceFile": "readable/tokyo/assets/sites-kit-BhplXgcu.pretty.js",
       "firstLine": "export { v as i, u as n, _ as r, h as t };",
-      "lastLine": "export { v as i, u as n, _ as r, h as t };"
+      "lastLine": "export { v as i, u as n, _ as r, h as t };",
+      "text": "export{v as i,u as n,_ as r,h as t};"
     },
     {
       "file": "tokyo/assets/tabs-C1IhIOn4-01.js",
@@ -13390,12 +13474,13 @@
       "file": "tokyo/assets/tabs-C1IhIOn4-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/tabs-C1IhIOn4 — final export table (not sliced)",
-      "desc": "Lines 144-144. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 144-144. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/tabs-C1IhIOn4.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 144,
       "endLine": 144,
       "sourceFile": "readable/tokyo/assets/tabs-C1IhIOn4.pretty.js",
       "firstLine": "export { _ as a, h as i, l as n, g as o, p as r, u as s, v as t };",
-      "lastLine": "export { _ as a, h as i, l as n, g as o, p as r, u as s, v as t };"
+      "lastLine": "export { _ as a, h as i, l as n, g as o, p as r, u as s, v as t };",
+      "text": "export{_ as a,h as i,l as n,g as o,p as r,u as s,v as t};"
     },
     {
       "file": "tokyo/assets/text-BwU1KB-o-01.js",
@@ -13425,12 +13510,13 @@
       "file": "tokyo/assets/text-BwU1KB-o-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/text-BwU1KB-o — final export table (not sliced)",
-      "desc": "Lines 505-505. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 505-505. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/text-BwU1KB-o.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 505,
       "endLine": 505,
       "sourceFile": "readable/tokyo/assets/text-BwU1KB-o.pretty.js",
       "firstLine": "export { r as a, i, o as n, s as o, a as r, t };",
-      "lastLine": "export { r as a, i, o as n, s as o, a as r, t };"
+      "lastLine": "export { r as a, i, o as n, s as o, a as r, t };",
+      "text": "export{r as a,i,o as n,s as o,a as r,t};"
     },
     {
       "file": "tokyo/assets/tokyo-_rNKO_Y7-01.js",
@@ -13716,12 +13802,13 @@
       "file": "tokyo/assets/tokyo-_rNKO_Y7-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/tokyo-_rNKO_Y7 — final export table (not sliced)",
-      "desc": "Lines 14147-14187. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 14147-14187. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/tokyo-_rNKO_Y7.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 14147,
       "endLine": 14187,
       "sourceFile": "readable/tokyo/assets/tokyo-_rNKO_Y7.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{At as A,Gt as C,Vt as D,Ct as E,kt as F,Ht as I,_t as L,Ft as M,Mt as N,jt as O,Nt as P,an as S,xt as T,gt as TOKYO,gt as default,An as _,vo as a,fn as b,Mr as c,Pr as d,kr as f,Nn as g,In as h,xo as i,wt as j,Lt as k,wr as l,J as m,Ao as n,go as o,yr as p,So as r,oo as s,Ro as t,Cr as u,Vn as v,Ut as w,rn as x,mn as y};"
     },
     {
       "file": "tokyo/assets/ui-wGTeK-Dn-01.js",
@@ -13743,12 +13830,13 @@
       "file": "tokyo/assets/ui-wGTeK-Dn-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/ui-wGTeK-Dn — final export table (not sliced)",
-      "desc": "Lines 1024-1032. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 1024-1032. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/ui-wGTeK-Dn.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 1024,
       "endLine": 1032,
       "sourceFile": "readable/tokyo/assets/ui-wGTeK-Dn.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{ye as mountCloudPhoneStatus,R as mountCloudSettings,z as mountCloudTitle,H as showCloudPanel,be as showSaveUndo,Se as showStartupNotices,xe as showWalletGuard};"
     },
     {
       "file": "tokyo/assets/worker-DgMkLY7L-01.js",
@@ -14562,12 +14650,13 @@
       "file": "tokyo/assets/world-CAmHK742-tail-export.js",
       "skipped": true,
       "title": "tokyo/assets/world-CAmHK742 — final export table (not sliced)",
-      "desc": "Lines 29179-29241. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign.",
+      "desc": "Lines 29179-29241. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The tail records the served chunk's own export statement (tokyo/assets/world-CAmHK742.js) as its text — the statement the reading copy's table must still match.",
       "startLine": 29179,
       "endLine": 29241,
       "sourceFile": "readable/tokyo/assets/world-CAmHK742.pretty.js",
       "firstLine": "export {",
-      "lastLine": "};"
+      "lastLine": "};",
+      "text": "export{kt as $,xr as A,Wn as B,Ur as C,Ir as D,Lr as E,Kn as F,Fn as G,Rn as H,Gn as I,An as J,_n as K,qn as L,yr as M,$n as N,Tr as O,Xn as P,un as Q,Hn as R,qr as S,Rr as T,In as U,Ln as V,Nn as W,dn as X,Sn as Y,ln as Z,Gr as _,$g as a,Ze as at,Qr as b,Vp as c,If as d,Ot as et,ri as f,Kr as g,Zr as h,o_ as i,Qe as it,Sr as j,wr as k,Ap as l,Jr as m,i_ as n,vt as nt,Em as o,et as ot,$r as p,vn as q,r_ as r,X as rt,pm as s,Y as st,a_ as t,wt as tt,mp as u,Yr as v,zr as w,Wr as x,Xr as y,Un as z};"
     },
     {
       "file": "_vercel/insights/script-vendor.js",
