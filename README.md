@@ -132,6 +132,7 @@ node tools/verify.mjs                # re-hash the capture against the manifest
 node tools/audit.js                  # derived-layer + rename-map gate (AUDIT PASS)
 node tools/verify-rename.mjs --all   # per-slice reproduction + references/bindings
 node tools/check-chunk.mjs --all     # cross-slice calls resolve after renames
+node tools/check-exports.mjs         # the derived layer still exports every public name
 ```
 
 The rename gates need acorn (authoring-time only): it installs into the
