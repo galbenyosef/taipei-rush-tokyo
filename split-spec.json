@@ -2197,6 +2197,7 @@
       "title": "tokyo/assets/game-CPWU_QWx — final export table (not sliced)",
       "desc": "Lines 3097-3122. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/game-CPWU_QWx-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 3097,
       "endLine": 3122,
       "sourceFile": "readable/tokyo/assets/game-CPWU_QWx.pretty.js"
@@ -2231,6 +2232,7 @@
       "title": "assets/dom-BCt0vy2n — final export table (not sliced)",
       "desc": "Lines 98-110. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail assets/dom-BCt0vy2n-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 98,
       "endLine": 110,
       "sourceFile": "readable/assets/dom-BCt0vy2n.pretty.js"
@@ -2265,6 +2267,7 @@
       "title": "assets/notice-DnIsya3- — final export table (not sliced)",
       "desc": "Lines 22-22. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail assets/notice-DnIsya3--capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 22,
       "endLine": 22,
       "sourceFile": "readable/assets/notice-DnIsya3-.pretty.js"
@@ -2299,6 +2302,7 @@
       "title": "assets/pose-hAXyTQQR — final export table (not sliced)",
       "desc": "Lines 127-138. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail assets/pose-hAXyTQQR-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 127,
       "endLine": 138,
       "sourceFile": "readable/assets/pose-hAXyTQQR.pretty.js"
@@ -2333,6 +2337,7 @@
       "title": "assets/rig-BjRdQXtM — final export table (not sliced)",
       "desc": "Lines 32-32. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail assets/rig-BjRdQXtM-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 32,
       "endLine": 32,
       "sourceFile": "readable/assets/rig-BjRdQXtM.pretty.js"
@@ -2367,6 +2372,7 @@
       "title": "assets/rolldown-runtime-DK3Fl9T5 — final export table (not sliced)",
       "desc": "Lines 7-7. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail assets/rolldown-runtime-DK3Fl9T5-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 7,
       "endLine": 7,
       "sourceFile": "readable/assets/rolldown-runtime-DK3Fl9T5.pretty.js"
@@ -2401,6 +2407,7 @@
       "title": "assets/tabs-C1IhIOn4 — final export table (not sliced)",
       "desc": "Lines 144-144. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail assets/tabs-C1IhIOn4-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 144,
       "endLine": 144,
       "sourceFile": "readable/assets/tabs-C1IhIOn4.pretty.js"
@@ -2435,6 +2442,7 @@
       "title": "tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH — final export table (not sliced)",
       "desc": "Lines 6101-6101. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 6101,
       "endLine": 6101,
       "sourceFile": "readable/tokyo/assets/_virtual_tokyo-ja-dict-BQDtgwmH.pretty.js"
@@ -2485,6 +2493,7 @@
       "title": "tokyo/assets/accounts-BNXdphZj — final export table (not sliced)",
       "desc": "Lines 862-886. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/accounts-BNXdphZj-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 862,
       "endLine": 886,
       "sourceFile": "readable/tokyo/assets/accounts-BNXdphZj.pretty.js"
@@ -3631,6 +3640,7 @@
       "title": "tokyo/assets/actors-qKVitB-C — final export table (not sliced)",
       "desc": "Lines 65300-65402. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/actors-qKVitB-C-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 65300,
       "endLine": 65402,
       "sourceFile": "readable/tokyo/assets/actors-qKVitB-C.pretty.js"
@@ -3665,6 +3675,7 @@
       "title": "tokyo/assets/airliner-BUXWdgFt — final export table (not sliced)",
       "desc": "Lines 343-350. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/airliner-BUXWdgFt-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 343,
       "endLine": 350,
       "sourceFile": "readable/tokyo/assets/airliner-BUXWdgFt.pretty.js"
@@ -3699,6 +3710,7 @@
       "title": "tokyo/assets/analytics-B76dRwr5 — final export table (not sliced)",
       "desc": "Lines 140-140. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/analytics-B76dRwr5-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 140,
       "endLine": 140,
       "sourceFile": "readable/tokyo/assets/analytics-B76dRwr5.pretty.js"
@@ -3749,6 +3761,7 @@
       "title": "tokyo/assets/animator-B5fCfINc — final export table (not sliced)",
       "desc": "Lines 1815-1820. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/animator-B5fCfINc-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1815,
       "endLine": 1820,
       "sourceFile": "readable/tokyo/assets/animator-B5fCfINc.pretty.js"
@@ -3783,6 +3796,7 @@
       "title": "tokyo/assets/api-C4Rqh13K — final export table (not sliced)",
       "desc": "Lines 16-30. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/api-C4Rqh13K-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 16,
       "endLine": 30,
       "sourceFile": "readable/tokyo/assets/api-C4Rqh13K.pretty.js"
@@ -3817,6 +3831,7 @@
       "title": "tokyo/assets/art-tokyo-DHp5jBJS — final export table (not sliced)",
       "desc": "Lines 400-400. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/art-tokyo-DHp5jBJS-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 400,
       "endLine": 400,
       "sourceFile": "readable/tokyo/assets/art-tokyo-DHp5jBJS.pretty.js"
@@ -4067,6 +4082,7 @@
       "title": "tokyo/assets/audio-CgR0uni4 — final export table (not sliced)",
       "desc": "Lines 13270-13297. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/audio-CgR0uni4-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 13270,
       "endLine": 13297,
       "sourceFile": "readable/tokyo/assets/audio-CgR0uni4.pretty.js"
@@ -4205,6 +4221,7 @@
       "title": "tokyo/assets/avatar-CgSTz8jy — final export table (not sliced)",
       "desc": "Lines 4695-4709. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/avatar-CgSTz8jy-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 4695,
       "endLine": 4709,
       "sourceFile": "readable/tokyo/assets/avatar-CgSTz8jy.pretty.js"
@@ -4279,6 +4296,7 @@
       "title": "tokyo/assets/bag-B0X6UNsq — final export table (not sliced)",
       "desc": "Lines 3545-3545. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/bag-B0X6UNsq-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 3545,
       "endLine": 3545,
       "sourceFile": "readable/tokyo/assets/bag-B0X6UNsq.pretty.js"
@@ -4313,6 +4331,7 @@
       "title": "tokyo/assets/batch-BVai0hEO — final export table (not sliced)",
       "desc": "Lines 164-164. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/batch-BVai0hEO-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 164,
       "endLine": 164,
       "sourceFile": "readable/tokyo/assets/batch-BVai0hEO.pretty.js"
@@ -4355,6 +4374,7 @@
       "title": "tokyo/assets/board-INUeDSQr — final export table (not sliced)",
       "desc": "Lines 637-637. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/board-INUeDSQr-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 637,
       "endLine": 637,
       "sourceFile": "readable/tokyo/assets/board-INUeDSQr.pretty.js"
@@ -4733,6 +4753,7 @@
       "title": "tokyo/assets/boot-DzAWftFx — final export table (not sliced)",
       "desc": "Lines 56-56. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/boot-DzAWftFx-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 56,
       "endLine": 56,
       "sourceFile": "readable/tokyo/assets/boot-DzAWftFx.pretty.js"
@@ -5055,6 +5076,7 @@
       "title": "tokyo/assets/characters-CbxAZUc_ — final export table (not sliced)",
       "desc": "Lines 11392-11430. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/characters-CbxAZUc_-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 11392,
       "endLine": 11430,
       "sourceFile": "readable/tokyo/assets/characters-CbxAZUc_.pretty.js"
@@ -5449,6 +5471,7 @@
       "title": "tokyo/assets/cities-8-O8IWPJ — final export table (not sliced)",
       "desc": "Lines 218-235. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/cities-8-O8IWPJ-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 218,
       "endLine": 235,
       "sourceFile": "readable/tokyo/assets/cities-8-O8IWPJ.pretty.js"
@@ -5499,6 +5522,7 @@
       "title": "tokyo/assets/client-ap9WfXdd — final export table (not sliced)",
       "desc": "Lines 686-686. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/client-ap9WfXdd-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 686,
       "endLine": 686,
       "sourceFile": "readable/tokyo/assets/client-ap9WfXdd.pretty.js"
@@ -5533,6 +5557,7 @@
       "title": "tokyo/assets/clips-GNiXKOuW — final export table (not sliced)",
       "desc": "Lines 162-167. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/clips-GNiXKOuW-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 162,
       "endLine": 167,
       "sourceFile": "readable/tokyo/assets/clips-GNiXKOuW.pretty.js"
@@ -5583,6 +5608,7 @@
       "title": "tokyo/assets/controllers-DIi301oL — final export table (not sliced)",
       "desc": "Lines 1082-1094. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/controllers-DIi301oL-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1082,
       "endLine": 1094,
       "sourceFile": "readable/tokyo/assets/controllers-DIi301oL.pretty.js"
@@ -5617,6 +5643,7 @@
       "title": "tokyo/assets/coordinator-idJVRLyI — final export table (not sliced)",
       "desc": "Lines 257-264. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/coordinator-idJVRLyI-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 257,
       "endLine": 264,
       "sourceFile": "readable/tokyo/assets/coordinator-idJVRLyI.pretty.js"
@@ -5651,6 +5678,7 @@
       "title": "tokyo/assets/dom-BCt0vy2n — final export table (not sliced)",
       "desc": "Lines 98-110. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/dom-BCt0vy2n-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 98,
       "endLine": 110,
       "sourceFile": "readable/tokyo/assets/dom-BCt0vy2n.pretty.js"
@@ -5685,6 +5713,7 @@
       "title": "tokyo/assets/dom-COFDPdeV — final export table (not sliced)",
       "desc": "Lines 250-262. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/dom-COFDPdeV-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 250,
       "endLine": 262,
       "sourceFile": "readable/tokyo/assets/dom-COFDPdeV.pretty.js"
@@ -5943,6 +5972,7 @@
       "title": "tokyo/assets/engine-wUBYs8Z3 — final export table (not sliced)",
       "desc": "Lines 10987-11182. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/engine-wUBYs8Z3-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 10987,
       "endLine": 11182,
       "sourceFile": "readable/tokyo/assets/engine-wUBYs8Z3.pretty.js"
@@ -5993,6 +6023,7 @@
       "title": "tokyo/assets/fullmap-Dd3RmRQQ — final export table (not sliced)",
       "desc": "Lines 1308-1308. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/fullmap-Dd3RmRQQ-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1308,
       "endLine": 1308,
       "sourceFile": "readable/tokyo/assets/fullmap-Dd3RmRQQ.pretty.js"
@@ -6051,6 +6082,7 @@
       "title": "tokyo/assets/garage-BvwUBeJB — final export table (not sliced)",
       "desc": "Lines 1004-1004. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/garage-BvwUBeJB-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1004,
       "endLine": 1004,
       "sourceFile": "readable/tokyo/assets/garage-BvwUBeJB.pretty.js"
@@ -6093,6 +6125,7 @@
       "title": "tokyo/assets/icons-DYNV7fxr — final export table (not sliced)",
       "desc": "Lines 407-407. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/icons-DYNV7fxr-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 407,
       "endLine": 407,
       "sourceFile": "readable/tokyo/assets/icons-DYNV7fxr.pretty.js"
@@ -6127,6 +6160,7 @@
       "title": "tokyo/assets/ja-DY7SMsVw — final export table (not sliced)",
       "desc": "Lines 180-180. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/ja-DY7SMsVw-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 180,
       "endLine": 180,
       "sourceFile": "readable/tokyo/assets/ja-DY7SMsVw.pretty.js"
@@ -6177,6 +6211,7 @@
       "title": "tokyo/assets/lab-AJ7ypZPa — final export table (not sliced)",
       "desc": "Lines 451-451. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/lab-AJ7ypZPa-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 451,
       "endLine": 451,
       "sourceFile": "readable/tokyo/assets/lab-AJ7ypZPa.pretty.js"
@@ -6219,6 +6254,7 @@
       "title": "tokyo/assets/lab-DzZxQgDp — final export table (not sliced)",
       "desc": "Lines 627-627. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/lab-DzZxQgDp-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 627,
       "endLine": 627,
       "sourceFile": "readable/tokyo/assets/lab-DzZxQgDp.pretty.js"
@@ -6253,6 +6289,7 @@
       "title": "tokyo/assets/landing-BF9tCPAp — final export table (not sliced)",
       "desc": "Lines 333-333. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/landing-BF9tCPAp-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 333,
       "endLine": 333,
       "sourceFile": "readable/tokyo/assets/landing-BF9tCPAp.pretty.js"
@@ -6295,6 +6332,7 @@
       "title": "tokyo/assets/market-CcnhaQYm — final export table (not sliced)",
       "desc": "Lines 1262-1262. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/market-CcnhaQYm-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1262,
       "endLine": 1262,
       "sourceFile": "readable/tokyo/assets/market-CcnhaQYm.pretty.js"
@@ -6337,6 +6375,7 @@
       "title": "tokyo/assets/material-GV-Cqvqp — final export table (not sliced)",
       "desc": "Lines 439-439. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/material-GV-Cqvqp-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 439,
       "endLine": 439,
       "sourceFile": "readable/tokyo/assets/material-GV-Cqvqp.pretty.js"
@@ -6371,6 +6410,7 @@
       "title": "tokyo/assets/notice-DnIsya3- — final export table (not sliced)",
       "desc": "Lines 22-22. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/notice-DnIsya3--capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 22,
       "endLine": 22,
       "sourceFile": "readable/tokyo/assets/notice-DnIsya3-.pretty.js"
@@ -6405,6 +6445,7 @@
       "title": "tokyo/assets/panel-8FADH4GH — final export table (not sliced)",
       "desc": "Lines 180-180. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/panel-8FADH4GH-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 180,
       "endLine": 180,
       "sourceFile": "readable/tokyo/assets/panel-8FADH4GH.pretty.js"
@@ -6911,6 +6952,7 @@
       "title": "tokyo/assets/phone-T88fC2hD — final export table (not sliced)",
       "desc": "Lines 412-412. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/phone-T88fC2hD-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 412,
       "endLine": 412,
       "sourceFile": "readable/tokyo/assets/phone-T88fC2hD.pretty.js"
@@ -6945,6 +6987,7 @@
       "title": "tokyo/assets/pose-hAXyTQQR — final export table (not sliced)",
       "desc": "Lines 127-138. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/pose-hAXyTQQR-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 127,
       "endLine": 138,
       "sourceFile": "readable/tokyo/assets/pose-hAXyTQQR.pretty.js"
@@ -7099,6 +7142,7 @@
       "title": "tokyo/assets/postfx-BzHvx3aB — final export table (not sliced)",
       "desc": "Lines 9528-9528. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/postfx-BzHvx3aB-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 9528,
       "endLine": 9528,
       "sourceFile": "readable/tokyo/assets/postfx-BzHvx3aB.pretty.js"
@@ -7133,6 +7177,7 @@
       "title": "tokyo/assets/prefs-BioZODFl — final export table (not sliced)",
       "desc": "Lines 34-34. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/prefs-BioZODFl-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 34,
       "endLine": 34,
       "sourceFile": "readable/tokyo/assets/prefs-BioZODFl.pretty.js"
@@ -7175,6 +7220,7 @@
       "title": "tokyo/assets/profile-DIg-QXlP — final export table (not sliced)",
       "desc": "Lines 518-527. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/profile-DIg-QXlP-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 518,
       "endLine": 527,
       "sourceFile": "readable/tokyo/assets/profile-DIg-QXlP.pretty.js"
@@ -7209,6 +7255,7 @@
       "title": "tokyo/assets/recovery-WpSwz0a9 — final export table (not sliced)",
       "desc": "Lines 153-157. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/recovery-WpSwz0a9-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 153,
       "endLine": 157,
       "sourceFile": "readable/tokyo/assets/recovery-WpSwz0a9.pretty.js"
@@ -11163,6 +11210,7 @@
       "title": "tokyo/assets/region-tokyo-55J_WESF — final export table (not sliced)",
       "desc": "Lines 177040-177177. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-55J_WESF-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 177040,
       "endLine": 177177,
       "sourceFile": "readable/tokyo/assets/region-tokyo-55J_WESF.pretty.js"
@@ -11749,6 +11797,7 @@
       "title": "tokyo/assets/region-tokyo-d-akihabara-CilcTp8S — final export table (not sliced)",
       "desc": "Lines 3929-3929. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-akihabara-CilcTp8S-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 3929,
       "endLine": 3929,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-akihabara-CilcTp8S.pretty.js"
@@ -11847,6 +11896,7 @@
       "title": "tokyo/assets/region-tokyo-d-ameyoko-DgncIALb — final export table (not sliced)",
       "desc": "Lines 2353-2353. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-ameyoko-DgncIALb-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 2353,
       "endLine": 2353,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-ameyoko-DgncIALb.pretty.js"
@@ -11985,6 +12035,7 @@
       "title": "tokyo/assets/region-tokyo-d-asakusa-49Uaiff6 — final export table (not sliced)",
       "desc": "Lines 3843-3843. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-asakusa-49Uaiff6-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 3843,
       "endLine": 3843,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-asakusa-49Uaiff6.pretty.js"
@@ -12075,6 +12126,7 @@
       "title": "tokyo/assets/region-tokyo-d-ginza-BY6oOEWu — final export table (not sliced)",
       "desc": "Lines 2516-2516. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-ginza-BY6oOEWu-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 2516,
       "endLine": 2516,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-ginza-BY6oOEWu.pretty.js"
@@ -12149,6 +12201,7 @@
       "title": "tokyo/assets/region-tokyo-d-hongo-B0kKsWK8 — final export table (not sliced)",
       "desc": "Lines 1900-1900. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-hongo-B0kKsWK8-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1900,
       "endLine": 1900,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-hongo-B0kKsWK8.pretty.js"
@@ -12327,6 +12380,7 @@
       "title": "tokyo/assets/region-tokyo-d-kanda-BOuhI6B0 — final export table (not sliced)",
       "desc": "Lines 5963-5963. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-kanda-BOuhI6B0-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 5963,
       "endLine": 5963,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-kanda-BOuhI6B0.pretty.js"
@@ -12465,6 +12519,7 @@
       "title": "tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD — final export table (not sliced)",
       "desc": "Lines 4264-4264. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 4264,
       "endLine": 4264,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-marunouchi-I3NX4HcD.pretty.js"
@@ -12579,6 +12634,7 @@
       "title": "tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ — final export table (not sliced)",
       "desc": "Lines 4324-4324. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 4324,
       "endLine": 4324,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-nihonbashi-D7vTBNTZ.pretty.js"
@@ -12733,6 +12789,7 @@
       "title": "tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_ — final export table (not sliced)",
       "desc": "Lines 5063-5063. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 5063,
       "endLine": 5063,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-roppongi-Cv6Rgbh_.pretty.js"
@@ -12767,6 +12824,7 @@
       "title": "tokyo/assets/region-tokyo-d-shared-C5O1aoRa — final export table (not sliced)",
       "desc": "Lines 331-331. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-shared-C5O1aoRa-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 331,
       "endLine": 331,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-shared-C5O1aoRa.pretty.js"
@@ -12921,6 +12979,7 @@
       "title": "tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1 — final export table (not sliced)",
       "desc": "Lines 4839-4839. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 4839,
       "endLine": 4839,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-shimbashi-DyBSAck1.pretty.js"
@@ -13075,6 +13134,7 @@
       "title": "tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2 — final export table (not sliced)",
       "desc": "Lines 5566-5592. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 5566,
       "endLine": 5592,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-suidobashi-BBv4Djc2.pretty.js"
@@ -13221,6 +13281,7 @@
       "title": "tokyo/assets/region-tokyo-d-ueno-CufCWRy0 — final export table (not sliced)",
       "desc": "Lines 4510-4536. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-d-ueno-CufCWRy0-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 4510,
       "endLine": 4536,
       "sourceFile": "readable/tokyo/assets/region-tokyo-d-ueno-CufCWRy0.pretty.js"
@@ -13735,6 +13796,7 @@
       "title": "tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb — final export table (not sliced)",
       "desc": "Lines 166-166. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 166,
       "endLine": 166,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-akiba-denshi-center-CO6nuQGb.pretty.js"
@@ -13769,6 +13831,7 @@
       "title": "tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V — final export table (not sliced)",
       "desc": "Lines 317-317. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 317,
       "endLine": 317,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-ameyoko-chuo-bldg-B8Zblw6V.pretty.js"
@@ -13803,6 +13866,7 @@
       "title": "tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU — final export table (not sliced)",
       "desc": "Lines 250-250. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 250,
       "endLine": 250,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-denpa-kaikan-BEXsikmU.pretty.js"
@@ -13837,6 +13901,7 @@
       "title": "tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF- — final export table (not sliced)",
       "desc": "Lines 222-222. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF--capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 222,
       "endLine": 222,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-enrai-yu-D7iSxLF-.pretty.js"
@@ -13871,6 +13936,7 @@
       "title": "tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf — final export table (not sliced)",
       "desc": "Lines 207-207. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 207,
       "endLine": 207,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-espark-ueno-Bq-ASOXf.pretty.js"
@@ -13905,6 +13971,7 @@
       "title": "tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_- — final export table (not sliced)",
       "desc": "Lines 178-178. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_--capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 178,
       "endLine": 178,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_-.pretty.js"
@@ -13939,6 +14006,7 @@
       "title": "tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8 — final export table (not sliced)",
       "desc": "Lines 292-292. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 292,
       "endLine": 292,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-karasumori-jinja-WJyy2AM8.pretty.js"
@@ -13973,6 +14041,7 @@
       "title": "tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a — final export table (not sliced)",
       "desc": "Lines 250-250. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 250,
       "endLine": 250,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-namiyoke-jinja-2Ax-sZ-a.pretty.js"
@@ -14015,6 +14084,7 @@
       "title": "tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser — final export table (not sliced)",
       "desc": "Lines 388-388. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 388,
       "endLine": 388,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-new-karasumori-bldg-x2IE4ser.pretty.js"
@@ -14049,6 +14119,7 @@
       "title": "tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC — final export table (not sliced)",
       "desc": "Lines 247-247. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 247,
       "endLine": 247,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-nishiginza-lucky-TaUGHKPC.pretty.js"
@@ -14083,6 +14154,7 @@
       "title": "tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8 — final export table (not sliced)",
       "desc": "Lines 231-231. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 231,
       "endLine": 231,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-okachimachi-hoseki-Q79QXrW8.pretty.js"
@@ -14117,6 +14189,7 @@
       "title": "tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu — final export table (not sliced)",
       "desc": "Lines 261-261. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 261,
       "endLine": 261,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-shimizu-shoten-7pG0ntVu.pretty.js"
@@ -14151,6 +14224,7 @@
       "title": "tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS — final export table (not sliced)",
       "desc": "Lines 209-209. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 209,
       "endLine": 209,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-tsukiji-yamatatsu-C_DaNQrS.pretty.js"
@@ -14185,6 +14259,7 @@
       "title": "tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG — final export table (not sliced)",
       "desc": "Lines 260-260. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 260,
       "endLine": 260,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-yamashitaya-ueno-ES3aaCOG.pretty.js"
@@ -14219,6 +14294,7 @@
       "title": "tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR — final export table (not sliced)",
       "desc": "Lines 176-176. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 176,
       "endLine": 176,
       "sourceFile": "readable/tokyo/assets/region-tokyo-site-yurakucho-gado-Bel6HEeR.pretty.js"
@@ -14325,6 +14401,7 @@
       "title": "tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y — final export table (not sliced)",
       "desc": "Lines 2976-3028. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 2976,
       "endLine": 3028,
       "sourceFile": "readable/tokyo/assets/region-tokyo-sites-kit-CgUCzK9Y.pretty.js"
@@ -14359,6 +14436,7 @@
       "title": "tokyo/assets/rig-BjRdQXtM — final export table (not sliced)",
       "desc": "Lines 32-32. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/rig-BjRdQXtM-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 32,
       "endLine": 32,
       "sourceFile": "readable/tokyo/assets/rig-BjRdQXtM.pretty.js"
@@ -14393,6 +14471,7 @@
       "title": "tokyo/assets/rolldown-runtime-DK3Fl9T5 — final export table (not sliced)",
       "desc": "Lines 7-7. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/rolldown-runtime-DK3Fl9T5-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 7,
       "endLine": 7,
       "sourceFile": "readable/tokyo/assets/rolldown-runtime-DK3Fl9T5.pretty.js"
@@ -14427,6 +14506,7 @@
       "title": "tokyo/assets/scene-G8jS_Se3 — final export table (not sliced)",
       "desc": "Lines 226-226. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/scene-G8jS_Se3-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 226,
       "endLine": 226,
       "sourceFile": "readable/tokyo/assets/scene-G8jS_Se3.pretty.js"
@@ -14469,6 +14549,7 @@
       "title": "tokyo/assets/session-B5ukzynC — final export table (not sliced)",
       "desc": "Lines 401-419. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/session-B5ukzynC-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 401,
       "endLine": 419,
       "sourceFile": "readable/tokyo/assets/session-B5ukzynC.pretty.js"
@@ -14551,6 +14632,7 @@
       "title": "tokyo/assets/shared-DC9fKqx_ — final export table (not sliced)",
       "desc": "Lines 3356-3395. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/shared-DC9fKqx_-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 3356,
       "endLine": 3395,
       "sourceFile": "readable/tokyo/assets/shared-DC9fKqx_.pretty.js"
@@ -14585,6 +14667,7 @@
       "title": "tokyo/assets/signs-Co9BseyY — final export table (not sliced)",
       "desc": "Lines 127-127. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/signs-Co9BseyY-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 127,
       "endLine": 127,
       "sourceFile": "readable/tokyo/assets/signs-Co9BseyY.pretty.js"
@@ -14627,6 +14710,7 @@
       "title": "tokyo/assets/sites-kit-BhplXgcu — final export table (not sliced)",
       "desc": "Lines 425-425. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/sites-kit-BhplXgcu-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 425,
       "endLine": 425,
       "sourceFile": "readable/tokyo/assets/sites-kit-BhplXgcu.pretty.js"
@@ -14661,6 +14745,7 @@
       "title": "tokyo/assets/tabs-C1IhIOn4 — final export table (not sliced)",
       "desc": "Lines 144-144. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/tabs-C1IhIOn4-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 144,
       "endLine": 144,
       "sourceFile": "readable/tokyo/assets/tabs-C1IhIOn4.pretty.js"
@@ -14711,6 +14796,7 @@
       "title": "tokyo/assets/text-BwU1KB-o — final export table (not sliced)",
       "desc": "Lines 505-505. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/text-BwU1KB-o-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 505,
       "endLine": 505,
       "sourceFile": "readable/tokyo/assets/text-BwU1KB-o.pretty.js"
@@ -15017,6 +15103,7 @@
       "title": "tokyo/assets/tokyo-_rNKO_Y7 — final export table (not sliced)",
       "desc": "Lines 14147-14187. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/tokyo-_rNKO_Y7-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 14147,
       "endLine": 14187,
       "sourceFile": "readable/tokyo/assets/tokyo-_rNKO_Y7.pretty.js"
@@ -15059,6 +15146,7 @@
       "title": "tokyo/assets/ui-wGTeK-Dn — final export table (not sliced)",
       "desc": "Lines 1024-1032. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/ui-wGTeK-Dn-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 1024,
       "endLine": 1032,
       "sourceFile": "readable/tokyo/assets/ui-wGTeK-Dn.pretty.js"
@@ -15893,6 +15981,7 @@
       "title": "tokyo/assets/world-CAmHK742 — final export table (not sliced)",
       "desc": "Lines 29179-29241. The chunk's final export {…} table — the exported bindings live in the earlier slices; a standalone tail carries no new statements, so it is indexed only. Public (exported) names in this table are the capture's own public API names and are never renamed by the campaign. The table is compared with the served chunk's own export table by the capture-keyed tail tokyo/assets/world-CAmHK742-capture-export.js.",
       "note": "index-only region (export table rule): indexed whole in readable/, never sliced",
+      "renameMapped": true,
       "startLine": 29179,
       "endLine": 29241,
       "sourceFile": "readable/tokyo/assets/world-CAmHK742.pretty.js"

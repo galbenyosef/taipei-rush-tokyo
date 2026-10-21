@@ -611,6 +611,14 @@ async function main() {
           title: b.title,
           desc: b.desc,
           note: "index-only region (export table rule): indexed whole in readable/, never sliced",
+          // The tile is still APP code: its local-side names reference the
+          // renamed top-level bindings, so the recorded rename map applies to
+          // it exactly as it applies to the slices around it. The two
+          // reconstruction gates (tools/verify-rename.mjs, tools/check-chunk.mjs)
+          // read this flag and apply the map to this region too. Without it
+          // the chunk reconstruction keeps the table's capture-side locals and
+          // stops parsing ("Export 'o' is not defined in module").
+          renameMapped: true,
           startLine: b.A,
           endLine: b.B,
           sourceFile,

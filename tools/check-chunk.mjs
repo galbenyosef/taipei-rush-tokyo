@@ -124,7 +124,15 @@ if (!all && !targets.length) {
 // chunk: skipped export tables reference renamed bindings), grouped by chunk
 const bySource = new Map();
 for (const s of spec.sections) {
-  if (s.wholeFile || typeof s.startLine !== "number") continue;
+  // an index-only region that is APP code (the export-table tile: its
+  // local-side names reference the renamed top-level bindings) carries
+  // `renameMapped: true` — it belongs in the reconstruction and the recorded
+  // map applies to it, exactly as it applies to the slices.
+  if ((s.wholeFile && s.renameMapped !== true) || typeof s.startLine !== "number") continue;
+  // a section keyed under the SERVED CAPTURE is not a layer region of a
+  // reading copy: it points INTO the served file, so it belongs to no chunk
+  // reconstruction here.
+  if (s.capture && s.capture === s.sourceFile) continue;
   if (!bySource.has(s.sourceFile)) bySource.set(s.sourceFile, []);
   bySource.get(s.sourceFile).push(s);
 }
@@ -150,7 +158,7 @@ for (const [sourceFile, sectionsRaw] of [...bySource].sort()) {
     const start = offsetOfLine(sec.startLine);
     const end = start + (prefix[sec.endLine] - prefix[sec.startLine - 1]) - 1;
     let piece = fullText.slice(start, end);
-    if (sec.skipped) {
+    if (sec.skipped || sec.renameMapped === true) {
       // index-only export table: its local-side names reference the renamed
       // top-level bindings, so the chunk's recorded binding map applies here
       piece = applyBindingMap(piece, bindingMap);
@@ -178,7 +186,7 @@ for (const [sourceFile, sectionsRaw] of [...bySource].sort()) {
   const lostExports = [...exportedBefore].filter((n) => !exportedAfter.has(n));
   const gainedExports = [...exportedAfter].filter((n) => !exportedBefore.has(n));
 
-  const ranged = sections.filter((s) => !s.skipped).length;
+  const ranged = sections.filter((s) => !s.skipped && s.renameMapped !== true).length;
   console.log(`${sourceFile}: ${ranged} ranged slice(s) (${sections.length} section(s) in the reconstruction), ${substituted} substituted`);
   console.log(`  cross-slice calls resolve: ${broken.length === 0 ? "YES" : "NO"}`);
   if (broken.length) {

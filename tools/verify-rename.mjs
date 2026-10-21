@@ -18,12 +18,17 @@
 // was bound before and is unbound after is a declaration renamed without its
 // callers — or vice versa.
 //
-// The final `export {…}` table of a chunk is an index-only skipped section (no
-// src file); its local-side names reference the renamed bindings, so the
+// The final `export {…}` table of a chunk is an index-only region (no src
+// file); its local-side names reference the renamed bindings, so the
 // reconstruction applies the chunk's recorded binding map
 // (split-spec sources[].renameBindings, computed by tools/derive.mjs from
 // tools/names.json and the recorded map) to that section — the public side is
 // foreign and stays.
+//
+// The table is indexed under the SERVED CAPTURE (so the frozen export gate
+// compares the LIVE capture with the layer) and the reading copy's own copy
+// of it is an index-only tile (wholeFile) that carries `renameMapped: true`:
+// the tile is still app code, so the recorded map applies to it too.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -53,7 +58,16 @@ const chunkCache = new Map();
 async function verifyChunk(sourceFile) {
   if (chunkCache.has(sourceFile)) return chunkCache.get(sourceFile);
   const sections = spec.sections
-    .filter((s) => s.sourceFile === sourceFile && !s.wholeFile && typeof s.startLine === "number")
+    // an index-only region that is APP code (the export-table tile: its
+    // local-side names reference the renamed top-level bindings) carries
+    // `renameMapped: true` — it belongs in the reconstruction and the
+    // recorded map applies to it, exactly as it applies to the slices.
+    .filter(
+      (s) =>
+        s.sourceFile === sourceFile &&
+        (!s.wholeFile || s.renameMapped === true) &&
+        typeof s.startLine === "number",
+    )
     .sort((a, b) => a.startLine - b.startLine);
   const lines = prettyFor(sections[0]);
   const fullText = lines.join("\n");
@@ -72,7 +86,7 @@ async function verifyChunk(sourceFile) {
     const end = prefix[sec.endLine] - 1;
     const range = fullText.slice(start, end);
     let piece = range;
-    if (sec.skipped) {
+    if (sec.skipped || sec.renameMapped === true) {
       piece = applyBindingMap(range, bindingsOf(sourceFile));
       perFile.set(sec.file, { skipped: true });
     } else {
