@@ -165,13 +165,24 @@ function writeDerived(rel, text) {
 }
 
 // ── pinned prettier (module API, exactly 3.9.6) ─────────────────────────
+// The renderer is VENDORED in this mirror (tools/vendor/prettier/, byte-identical
+// to the published 3.9.6 tarball), so a clean checkout derives without a
+// network and without reaching into a sibling mirror's tree. The old third
+// candidate was `D:/repos/mirrors/metropolygonia/node_modules/prettier/…`:
+// an uncommitted, gitignored directory that exists only on whichever machine
+// happened to install it, so the failure looked like a broken tool rather
+// than a missing dependency.
+const PRETTIER_CANDIDATES = () => [
+  process.env.PRETTIER_MJS,
+  path.join(proj, "tools", "vendor", "prettier", "index.mjs"),
+  path.join(proj, "node_modules", "prettier", "index.mjs"),
+].filter(Boolean);
+
 async function loadPrettier() {
-  const candidates = [
-    process.env.PRETTIER_MJS,
-    path.join(proj, "node_modules", "prettier", "index.mjs"),
-    "D:/repos/mirrors/metropolygonia/node_modules/prettier/index.mjs",
-  ].filter(Boolean);
+  const candidates = PRETTIER_CANDIDATES();
+  const tried = [];
   for (const c of candidates) {
+    tried.push(c);
     if (!fs.existsSync(c)) continue;
     try {
       const pkg = JSON.parse(fs.readFileSync(path.join(path.dirname(c), "package.json"), "utf8"));
@@ -182,7 +193,16 @@ async function loadPrettier() {
       /* try next */
     }
   }
-  throw new Error(`pinned prettier ${PINNED} not found (set PRETTIER_MJS to its index.mjs)`);
+  throw new Error(
+    `pinned prettier ${PINNED} not found.\n` +
+      `Looked for (in order):\n` +
+      tried.map((c) => `  - ${c}`).join("\n") +
+      `\nThis mirror vendors the renderer at tools/vendor/prettier/ (see its VENDOR-README.md); ` +
+      `restore it with:\n` +
+      `  git checkout -- tools/vendor/prettier/\n` +
+      `or point $PRETTIER_MJS at another prettier ${PINNED} index.mjs, or install one here with:\n` +
+      `  npm install --prefix . prettier@${PINNED}`,
+  );
 }
 
 // layout fixed point: prettier 3.9.6's member-chain layout is not idempotent on

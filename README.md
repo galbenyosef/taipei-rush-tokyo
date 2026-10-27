@@ -83,6 +83,11 @@ San-Francisco-only phone key art this Tokyo deploy never serves.
   (canonical SKIP/NOT_CAPTURED set; `--check` compares, writes nothing)
 - `tools/audit.js` — integrity gate for the derived layers and the rename map
   (`AUDIT PASS`)
+- `tools/vendor/prettier/` — the pinned renderer (prettier **3.9.6**, module API)
+  vendored into this mirror, byte-identical to the published npm tarball except
+  for a minimal `package.json` stub (see its `VENDOR-README.md`). `derive.mjs`
+  and `audit.js` resolve it **first** (after `$PRETTIER_MJS`), so a fresh clone
+  derives with no network and no sibling mirror's `node_modules/`
 - `tools/apply-names.mjs`, `tools/propose-names.mjs`,
   `tools/recover-scoped-map.mjs` — write / propose / record rename batches
 - `tools/verify-rename.mjs`, `tools/check-chunk.mjs`, `tools/refcheck.mjs`,
@@ -473,6 +478,67 @@ serve probe (loopback 8791): /tokyo/ -> 200 (53,044 B); tokyo/assets/game-CPWU_Q
   (114,157 B); listener killed (PID 12,196), port 8791 verified closed (netstat: no LISTENING,
   connection refused)
 ```
+
+### 2026-10-27 vendor + export-coverage pass
+
+The 2026-10-15 tails above predate the 2026-10-21 export-tail re-keying (commit
+`618f672`): the spec now carries **1637** sections (was 1547) because every app
+chunk's final export table also has a **capture-keyed tail** (89 extra skipped
+sections), and the reading copy's own copy of that table is an index-only
+**wholeFile** tile (**115** wholeFile sections, was 25; 204 index-only
+wholeFile/skipped sections carry no src file). Re-measured verbatim:
+
+```
+node tools/verify.mjs
+  190 files checked, 0 problems
+
+node tools/record-manifest.mjs --check
+  record-manifest --check: 190 files match the committed record
+
+node tools/derive.mjs --check
+  DERIVE CHECK PASS — readable/ + src/ + split-spec.json are current under pinned prettier 3.9.6 (nothing written)
+
+node tools/audit.js
+  AUDIT PASS — 1637 spec sections (1433/1433 src↔pretty round-trips byte-exact through the recorded
+  rename map, 47 renamed slice(s), 122/122 pretty sources tiled contiguously, 89/89 skipped
+  export-table sections re-verified textually, 1433/1433 src slices + 109/109 readable/*.pretty.js
+  parse standalone (node --input-type=module --check -), 122/122 pretties provably distinct from their
+  capture source, 204 index-only wholeFile/skipped sections carry no src file, 11 inline content
+  block(s) with twins + index-inline-map.json, 397/406 imports resolve inside the capture (9
+  whitelisted machinery, 0 accepted as recorded 404 gaps), rename map: 466 record(s) over 47 slice(s),
+  all indices address the recorded identifiers and no foreign position, 122/122 pretties re-render
+  byte-exact under pinned prettier 3.9.6 (format-to-fixed-point), capture manifest free of derived layers)
+
+node tools/verify-rename.mjs --all
+  verify-rename: 1433/1433 slice(s) reproduce byte-exact, 47 renamed slice(s) (326 indexed
+  occurrence(s)), 97/97 chunk(s) references+bindings YES
+
+node tools/check-chunk.mjs --all
+  check-chunk: 97 chunk(s), 1433 slice body(ies) substituted — all cross-slice calls resolve
+
+node tools/check-exports.mjs
+  check-exports: 91 export table(s) checked
+  check-exports: 89 export table(s) NOT covered (no derived text) — these are unchecked, not proven intact
+  check-exports: no public export name lost
+```
+
+**What the export numbers mean here (measured, not assumed).** The capture has
+**90 JS files with an export table**: 89 app chunks (one final `export {…}` table
+each) plus the three.js vendor bundle. All **90 are checked**: the 89 app tables
+through their **capture-keyed tail** (pristine = the live served chunk, derived =
+the recorded reading-copy table — two different files), the three.js table through
+its whole-file vendor section. Every one of the 89 chunks has an importer in the
+capture (e.g. `dom` ← `game`/`actors`/`garage`/`fullmap`/`bag`/`market`/`region-*`,
+`airliner` ← `game`, `analytics` ← `engine`), so all are load-bearing.
+
+The **89 NOT covered** rows are the *reading copy's own copies* of those same 89
+tables. Their public names are byte-for-byte the same set as the capture-side table
+in **89/89** cases, so comparing the reading copy with a recorded copy of itself
+would be a self-compare — a comparison that can never fail. The spec deliberately
+compares each table **once**, live, through its capture key and reports the
+reading-copy twin honestly as NOT covered. `checked` is therefore the full capture
+surface, not a fraction of it; raising `checked` by re-keying the twin would only
+add a tautology.
 
 - **Origin redeploys with rotated chunk hashes — an external, non-content condition.** The
   `update.mjs` tail above was green at capture time (2026-10-15 ~09:37 UTC). The origin then

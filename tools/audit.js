@@ -708,10 +708,16 @@ if (manifest) {
 }
 
 // ── best-effort: re-render every pretty with the pinned prettier 3.9.6 ─
+// The renderer is VENDORED in this mirror (tools/vendor/prettier/, byte-identical
+// to the published 3.9.6 tarball) — same resolution order as tools/derive.mjs,
+// and the same "not found" message: every path tried, and the exact command
+// to get it. The old third candidate was a SIBLING MIRROR's uncommitted,
+// gitignored node_modules, so a clean checkout silently lost the re-render
+// check instead of failing loudly.
 const prettierCandidates = [
   process.env.PRETTIER_MJS,
+  path.join(proj, "tools", "vendor", "prettier", "index.mjs"),
   path.join(proj, "node_modules", "prettier", "index.mjs"),
-  "D:/repos/mirrors/metropolygonia/node_modules/prettier/index.mjs",
 ].filter(Boolean);
 function loadPinnedPrettier() {
   for (const c of prettierCandidates) {
@@ -727,7 +733,12 @@ function loadPinnedPrettier() {
   return null;
 }
 
-let renderNote = `prettier ${PINNED} not importable — renderOptions recorded, re-render check skipped`;
+let renderNote = `prettier ${PINNED} not importable — renderOptions recorded, re-render check skipped. Looked for (in order):\n` +
+  prettierCandidates.map((c) => `  - ${c}`).join("\n") +
+  `\nThis mirror vendors the renderer at tools/vendor/prettier/ (see its VENDOR-README.md); restore it with:\n` +
+  `  git checkout -- tools/vendor/prettier/\n` +
+  `or point $PRETTIER_MJS at another prettier ${PINNED} index.mjs, or install one here with:\n` +
+  `  npm install --prefix . prettier@${PINNED}`;
 const prettierPath = loadPinnedPrettier();
 if (prettierPath) {
   const prettier = (await import(pathToFileURL(prettierPath).href)).default;
