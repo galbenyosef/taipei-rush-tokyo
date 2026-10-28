@@ -568,6 +568,20 @@ add a tautology.
   and shorthand positions are refused by design. (5) `docs/cover.png` was not re-shot this pass (it is
   already a gameplay shot); the new gameplay screenshot is the refresh evidence.
 
+## Boot test (2026-10-27)
+
+- Entry: `http://127.0.0.1:4978/tokyo/` served by `tools/serve.mjs` with the
+  network blocked (`MAP * 127.0.0.1`), `--no-sandbox`, isolated session.
+- Outcome: **rendered** — the TOKYO RUSH title screen booted, `ゲームスタート` was
+  clicked once, and the guest build loaded the 3D Tokyo night city at Tokyo
+  Station and played (阿傑 at a konbini, phone HUD, ¥2,500, minimap, 18:31 17°).
+- Evidence: body 85 chars; canvas 1262x568 (plus a 148x148 minimap); 0 console
+  errors; 0 failed same-origin requests, 0 blocked cross-origin (105 resources,
+  all `127.0.0.1:4978`); screenshot `docs/boot-2026-10-27.png`.
+- Gaps seen: none (the server log recorded 107 x 200 and 0 x 404).
+- The README's playable-as-guest claim is confirmed; the boot refutes any
+  "gated/absent build" reading — no login or live backend was needed.
+
 ## Mirror conventions
 
 - **Capture layer** — byte-exact copies of what the origin served; nothing in
