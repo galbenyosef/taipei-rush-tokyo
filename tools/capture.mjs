@@ -78,6 +78,7 @@ const KNOWN = [
 const LIVE_BACKEND = [
   "https://auth.taipei-rush.app/auth/v1/*, /rest/v1/rpc/* (Supabase-style account backend)",
   "/api/support/config, /api/support/checkout (same-origin Vercel functions)",
+  "/api/locale (same-origin locale/region API the 2026-10-29 language gate calls; returns 404 offline, the gate falls back to the browser language)",
   "/_vercel/insights/view (Vercel Web Analytics beacon, POST)",
 ];
 
@@ -130,6 +131,18 @@ const EXCLUDE = new Set([
   "menu-phone.webp",
   "tokyo/menu-phone.webp",
   "tokyo/assets/menu-phone.webp",
+  // 2026-10-29 build: the city picker (tokyo-CqLdAwml.js `Ya = e =>
+  // `${F[e].page}title/${…menu-phone.jpg|sf-keyart-phone.webp|menu-phone.webp}``)
+  // composes one bare key-art token per sibling city; the concrete Tokyo form
+  // is menu-phone.webp (captured). The bare jpg token is never this deploy's URL.
+  "menu-phone.jpg",
+  "tokyo/menu-phone.jpg",
+  "tokyo/assets/menu-phone.jpg",
+  // …and its city-card literal names ANOTHER deploy's asset on the same origin
+  // (/jakarta/title/menu-phone.jpg, Jakarta's key art). Cross-deploy files stay
+  // on their own deploy, exactly like the CDN externals — this is the Tokyo
+  // mirror, and pulling them in would be a cross-mirror dependency.
+  "jakarta/title/menu-phone.jpg",
 ]);
 
 const sha256 = (buf) => crypto.createHash("sha256").update(buf).digest("hex");
@@ -147,6 +160,9 @@ const RE_SRCSET = /\b(?:srcset|data-srcset)\s*=\s*["']([^"']+)["']/gi;
 // a captured URL must look like a sane relative path: no spaces, quotes,
 // interpolation, operators or query syntax (kills minifier-expression artifacts)
 const SANE = (s) => s.length > 0 && s.length <= 250 && !/[\s"'`&?!=<>|;(){}$,:\\]/.test(s);
+// a URL whose last path segment carries a file extension (optional query/hash).
+// A bare directory target (/kaohsiung/, /tokyo/, /) is a page link, not a file.
+const HAS_FILE_EXT = /\.[A-Za-z0-9]{1,16}(?:[?#].*)?$/;
 
 const normalize = (p) => {
   const out = [];
@@ -201,12 +217,20 @@ function refsOf(relPath, text, external) {
   const isJson = /\.(json|webmanifest)$/i.test(relPath);
 
   if (isHtml) {
-    for (const m of text.matchAll(RE_SRC_HREF)) add(classifyUrl(m[1], ""));
+    // href can name a navigation target rather than a file: the entry's SEO
+    // block links the sibling city deploys (/kaohsiung/, /taichung/, /london/,
+    // …) and its <link rel=canonical> names this deploy (/tokyo/). Those are
+    // other pages, not part of this deploy's runtime closure, so follow only
+    // file-like targets — the same rule the JS scanner applies via RE_QUOTED.
+    for (const m of text.matchAll(RE_SRC_HREF)) {
+      if (/^href/i.test(m[0]) && !HAS_FILE_EXT.test(m[1])) continue;
+      add(classifyUrl(m[1], ""));
+    }
     for (const m of text.matchAll(RE_SRCSET))
       for (const part of m[1].split(",")) add(classifyUrl(part.trim().split(/\s+/)[0], ""));
     for (const m of text.matchAll(RE_QUOTED)) {
       const v = m[1];
-      if (/\.(js|css|png|jpg|jpeg|mp4|webp|woff2?|json|wasm)$/i.test(v) || v.startsWith("/"))
+      if (/\.(js|css|png|jpg|jpeg|mp4|webp|woff2?|json|wasm)$/i.test(v) || (v.startsWith("/") && HAS_FILE_EXT.test(v)))
         add(classifyUrl(v, ""));
     }
     // HTML comments can carry loader hints

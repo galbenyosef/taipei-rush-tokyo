@@ -1,0 +1,350 @@
+// tokyo/assets/session-DVEw0yxj 01 — user
+// Lines 1-348 of readable/tokyo/assets/session-DVEw0yxj.pretty.js (statement-aligned).
+import { t as e } from "./rolldown-runtime-DK3Fl9T5.js";
+import {
+  $n as t,
+  Kn as n,
+  er as r,
+  fr as i,
+  gr as a,
+  hr as o,
+  kr as s,
+} from "./engine-14d5lda2.js";
+var c,
+  l = () => !1,
+  u = class extends Error {};
+function d(e) {
+  l = e;
+}
+function f() {
+  return window.turnstile
+    ? Promise.resolve(window.turnstile)
+    : ((c ||= new Promise((e, t) => {
+        let n = document.createElement(`script`),
+          r = setTimeout(() => {
+            (n.remove(), t(Error(`Turnstile script timeout`)));
+          }, 3e4);
+        ((n.src = `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`),
+          (n.async = !0),
+          (n.onload = () => {
+            (clearTimeout(r),
+              window.turnstile
+                ? e(window.turnstile)
+                : t(Error(`Turnstile unavailable`)));
+          }),
+          (n.onerror = () => {
+            (clearTimeout(r), n.remove(), t(Error(`Turnstile script failed`)));
+          }),
+          document.head.appendChild(n));
+      })),
+      c);
+}
+function p(e, t, n = !1) {
+  return new Promise((r, i) => {
+    let a,
+      o,
+      s,
+      c = !1,
+      d = (e, t = !1) => {
+        if (!c) {
+          ((c = !0), clearTimeout(p));
+          try {
+            o !== void 0 && s?.remove(o);
+          } catch {}
+          (a?.remove(),
+            typeof e == `string` && e.trim()
+              ? r(e)
+              : i(
+                  t
+                    ? new u(`Interaction deferred until a menu opens`)
+                    : Error(`Turnstile verification failed`),
+                ));
+        }
+      },
+      p = setTimeout(() => d(), 3e4);
+    f()
+      .then((r) => {
+        c ||
+          ((s = r),
+          (a = document.createElement(`div`)),
+          (a.className = `cloud-turnstile`),
+          (a.style.cssText = `position:fixed;bottom:16px;right:16px;z-index:10000;max-width:calc(100vw - 32px)`),
+          n && !l() && (a.style.visibility = `hidden`),
+          (
+            document.querySelector(`dialog.cloud-overlay[open]`) ??
+            document.body
+          ).appendChild(a),
+          (o = s.render(a, {
+            sitekey: e,
+            action: t,
+            appearance: `interaction-only`,
+            "response-field": !1,
+            retry: `never`,
+            "refresh-expired": `never`,
+            callback: (e) => d(e),
+            "before-interactive-callback": () => {
+              n && !l() ? d(void 0, !0) : a && (a.style.visibility = ``);
+            },
+            "error-callback": () => d(),
+            "expired-callback": () => d(),
+            "timeout-callback": () => d(),
+          })),
+          c && s.remove(o));
+      })
+      .catch(() => d());
+  });
+}
+var m = e({
+    EXPIRY_MARGIN_S: () => 60,
+    accountGeneration: () => w,
+    authRequest: () => W,
+    beginAccountChange: () => T,
+    currentSession: () => z,
+    endSession: () => R,
+    ensureSession: () => Z,
+    hasDeferredChallenge: () => x,
+    installSession: () => B,
+    isSignedOut: () => L,
+    notifyAccountChange: () => O,
+    onAccountChange: () => D,
+    onSessionChange: () => E,
+    parseSession: () => H,
+    sessionFromResponse: () => G,
+    settleForNavigation: () => I,
+  }),
+  h = { status: `idle` },
+  g,
+  _ = 120,
+  v = 0,
+  y = !1,
+  b = !1;
+function x() {
+  return b;
+}
+var S = new Set(),
+  C = new Set();
+function w() {
+  return v;
+}
+function T() {
+  return ((g = void 0), ++v);
+}
+function E(e) {
+  return (
+    j(),
+    S.add(e),
+    () => {
+      S.delete(e);
+    }
+  );
+}
+function D(e) {
+  return (
+    j(),
+    C.add(e),
+    () => {
+      C.delete(e);
+    }
+  );
+}
+function O() {
+  for (let e of C)
+    try {
+      e();
+    } catch {}
+}
+function k(e, t) {
+  F(e);
+  for (let n of S)
+    try {
+      n(e, t);
+    } catch {}
+}
+var A = !1;
+function j() {
+  A ||
+    typeof window > `u` ||
+    typeof window.addEventListener != `function` ||
+    ((A = !0),
+    window.addEventListener(`storage`, (e) => {
+      if (e.key === `taipei-rush-cloud-session-v1` || e.key === null) {
+        g = void 0;
+        let e = z();
+        (e
+          ? ((y = !1), (h = { status: `authenticated`, user_id: e.user_id }))
+          : ((y = t().signedOut === !0), (h = { status: `local_only` })),
+          k(e, `remote`));
+      }
+      (e.key === `taipei-rush-cloud-account-v1` || e.key === null) && O();
+    }));
+}
+var M,
+  N = !1,
+  P;
+function F(e) {
+  if (
+    (M !== void 0 && clearTimeout(M),
+    (M = void 0),
+    !e || N || typeof window > `u`)
+  )
+    return;
+  let t = Math.max(5e3, (e.expires_at - _) * 1e3 - Date.now());
+  t > 2 ** 31 - 1 ||
+    ((M = setTimeout(() => {
+      ((M = void 0), Z(!1).catch(() => {}));
+    }, t)),
+    M.unref?.());
+}
+async function I(e = 8e3) {
+  ((N = !0), M !== void 0 && clearTimeout(M), (M = void 0));
+  let t = P;
+  if (!t) return;
+  let n;
+  (await Promise.race([
+    t.catch(() => {}),
+    new Promise((t) => {
+      n = setTimeout(t, e);
+    }),
+  ]),
+    clearTimeout(n));
+}
+function L() {
+  return y || t().signedOut === !0;
+}
+function R(e, t) {
+  ((b = !1),
+    v++,
+    (g = void 0),
+    (y = !0),
+    o({
+      signedOut: !0,
+      pendingPassword: !1,
+      expired: e === `expired` ? (t ? { email: t } : {}) : void 0,
+    }),
+    n(),
+    (h = { status: `local_only` }),
+    k(null, e),
+    O());
+}
+function z() {
+  return H(r());
+}
+function B(e, t = `signin`) {
+  ((b = !1),
+    (y = !1),
+    o({ signedOut: !1, expired: void 0 }),
+    a(e),
+    (h = { status: `authenticated`, user_id: e.user_id }),
+    k(e, t),
+    O());
+}
+function V(e) {
+  return typeof e == `object` && !!e && !Array.isArray(e);
+}
+function H(e) {
+  if (
+    !V(e) ||
+    typeof e.access_token != `string` ||
+    !e.access_token.trim() ||
+    typeof e.refresh_token != `string` ||
+    !e.refresh_token.trim() ||
+    typeof e.expires_at != `number` ||
+    !Number.isSafeInteger(e.expires_at) ||
+    e.expires_at <= 0 ||
+    typeof e.user_id != `string` ||
+    !/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i.test(
+      e.user_id,
+    )
+  )
+    return null;
+  let t = {
+    access_token: e.access_token,
+    refresh_token: e.refresh_token,
+    expires_at: e.expires_at,
+    user_id: e.user_id,
+  };
+  return (
+    typeof e.email == `string` && (t.email = e.email),
+    typeof e.anonymous == `boolean` && (t.anonymous = e.anonymous),
+    typeof e.confirmed == `boolean` && (t.confirmed = e.confirmed),
+    Array.isArray(e.providers) &&
+      (t.providers = e.providers
+        .filter((e) => typeof e == `string`)
+        .slice(0, 8)),
+    t
+  );
+}
+var U = `2024-01-01`;
+async function W(e, t, n = `POST`, r, i = 1e4) {
+  return fetch(`${s.url}/auth/v1/${e}`, {
+    method: n,
+    headers: {
+      apikey: s.publishableKey,
+      "Content-Type": `application/json`,
+      "X-Supabase-Api-Version": U,
+      ...(r ? { Authorization: `Bearer ${r.access_token}` } : {}),
+    },
+    body: t === void 0 ? void 0 : JSON.stringify(t),
+    signal: AbortSignal.timeout(i),
+  });
+}
+function G(e) {
+  if (!V(e) || !V(e.user)) return null;
+  let t = e.expires_at;
+  typeof t != `number` &&
+    typeof e.expires_in == `number` &&
+    (t = Math.floor(Date.now() / 1e3) + e.expires_in);
+  let n = H({ ...e, expires_at: t, user_id: e.user.id });
+  if (!n || n.expires_at <= Date.now() / 1e3 + 60) return null;
+  (typeof e.user.email == `string` && (n.email = e.user.email),
+    typeof e.user.is_anonymous == `boolean` &&
+      (n.anonymous = e.user.is_anonymous),
+    `email_confirmed_at` in e.user &&
+      (n.confirmed =
+        typeof e.user.email_confirmed_at == `string` &&
+        Number.isFinite(Date.parse(e.user.email_confirmed_at))));
+  let r = e.user.app_metadata,
+    i = Array.isArray(e.user.identities)
+      ? e.user.identities.map((e) => e.provider)
+      : [],
+    a = [...(Array.isArray(r?.providers) ? r.providers : []), ...i].filter(
+      (e) => typeof e == `string`,
+    );
+  return (a.length && (n.providers = [...new Set(a)]), n);
+}
+var K = [
+  `refresh_token_not_found`,
+  `refresh_token_already_used`,
+  `session_not_found`,
+  `session_expired`,
+  `user_not_found`,
+  `user_banned`,
+  `invalid_grant`,
+  `bad_jwt`,
+];
+async function q(e) {
+  if (e.status === 401 || e.status === 403) return !0;
+  if (e.status !== 400 && e.status !== 404) return !1;
+  try {
+    let t = await e.clone().json(),
+      n = String(
+        typeof t.error_code == `string`
+          ? t.error_code
+          : typeof t.code == `string`
+            ? t.code
+            : (t.error ?? ``),
+      );
+    return !n || K.includes(n);
+  } catch {
+    return !0;
+  }
+}
+function J(e) {
+  let t = typeof navigator < `u` ? navigator.locks : void 0;
+  return t?.request ? t.request(`taipei-gta-auth-refresh`, e) : e();
+}
+async function Y(e, t, n) {
+  if (!e.ok) return null;
+  let r = G(await e.json());
+  return !r || v !== t || L() ? null : (B(r, n), r);
+}

@@ -1,0 +1,686 @@
+import {
+  Wn as e,
+  Xn as t,
+  kr as n,
+  sr as r,
+  yr as i,
+} from "./engine-14d5lda2.js";
+import { C as a, S as o, f as s, n as c } from "./shared-BaQwRjes.js";
+import { f as l, i as u, o as d } from "./session-DVEw0yxj.js";
+import {
+  c as f,
+  o as p,
+  r as m,
+  t as h,
+  u as g,
+} from "./controllers-DHBZ_k07.js";
+import { notifyMarketTicketChange as _ } from "./recovery-DKVj2RZ5.js";
+var v = class extends Error {
+    code;
+    constructor(e) {
+      (super(e), (this.code = e));
+    }
+  },
+  y = `taipei-rush-market-ticket-v3:`,
+  b = [`requestId`, `snapshotId`, `symbol`, `side`, `quantity`];
+function x(e) {
+  return (
+    !!e &&
+    typeof e.requestId == `string` &&
+    !!e.requestId &&
+    e.requestId.length <= 100 &&
+    typeof e.snapshotId == `string` &&
+    !!e.snapshotId &&
+    e.snapshotId.length <= 100 &&
+    typeof e.symbol == `string` &&
+    /^\d{4}$/.test(e.symbol) &&
+    [`buy`, `sell`].includes(e.side) &&
+    Number.isSafeInteger(e.quantity) &&
+    e.quantity >= 1 &&
+    e.quantity <= 1e6
+  );
+}
+var S = new Set([
+    `invalid_order`,
+    `insufficient_cash`,
+    `insufficient_shares`,
+    `sell_below_fees`,
+    `unknown_symbol`,
+    `sell_only_symbol`,
+    `market_outdated`,
+    `stale_snapshot`,
+    `market_unavailable`,
+    `position_limit`,
+    `account_limit`,
+    `wallet_unavailable`,
+    `wallet_upgrade_required`,
+    `wallet_conflict`,
+    `wallet_rate_limited`,
+    `market_paused`,
+    `corporate_action_required`,
+    `invalid_wallet`,
+    `cloud_not_ready`,
+    `market_closed`,
+    `symbol_suspended`,
+    `trade_rate_limited`,
+    `idempotency_conflict`,
+  ]),
+  C = class {
+    owner;
+    rpc;
+    ports;
+    constructor(e, t, n) {
+      ((this.owner = e), (this.rpc = t), (this.ports = n));
+    }
+    pending() {
+      this.ports.assertIdentity();
+      let e;
+      try {
+        e = r(y + this.owner);
+      } catch {
+        throw new v(`storage_unavailable`);
+      }
+      if (e === null) return null;
+      if (e.v !== 3 || e.owner !== this.owner)
+        throw new v(`wallet_recovery_required`);
+      if (e.ticket === null) return null;
+      let t = e.ticket;
+      if (!x(t)) throw new v(`wallet_recovery_required`);
+      return {
+        requestId: t.requestId,
+        snapshotId: t.snapshotId,
+        symbol: t.symbol,
+        side: t.side,
+        quantity: t.quantity,
+      };
+    }
+    remember(e) {
+      if (
+        (this.ports.assertIdentity(),
+        !i(`taipei-rush-market-ticket-v3:` + this.owner, {
+          v: 3,
+          owner: this.owner,
+          ticket: e,
+        }))
+      )
+        throw new v(`storage_unavailable`);
+      _();
+    }
+    async trade(e) {
+      if (!x(e)) throw new v(`invalid_order`);
+      let t = this.pending();
+      if (t) {
+        if (b.some((n) => t[n] !== e[n])) throw new v(`order_pending`);
+        return this.recover();
+      }
+      return (
+        await this.ports.flush(),
+        this.ports.assertIdentity(),
+        this.remember({ ...e }),
+        this.recover()
+      );
+    }
+    async collect() {
+      if (this.pending()) return 0;
+      (await this.ports.flush(), this.ports.assertIdentity());
+      let e = await this.rpc(`market_collect`, {
+        p_request_id: crypto.randomUUID(),
+      });
+      return (
+        this.ports.assertIdentity(),
+        await this.ports.accept(e.travel),
+        e.receipt ? e.receipt.amount_cents / 100 : 0
+      );
+    }
+    async recover() {
+      let e = this.pending();
+      if (!e) return null;
+      let t;
+      try {
+        t = await this.rpc(`market_trade`, {
+          p_request_id: e.requestId,
+          p_snapshot_id: e.snapshotId,
+          p_symbol: e.symbol,
+          p_side: e.side,
+          p_quantity: e.quantity,
+        });
+      } catch (e) {
+        throw (e instanceof v && S.has(e.code) && this.remember(null), e);
+      }
+      return (
+        this.ports.assertIdentity(),
+        await this.ports.accept(t.travel),
+        this.ports.assertIdentity(),
+        this.remember(null),
+        t.receipt
+      );
+    }
+  };
+function w(e) {
+  if (!e) throw new v(`invalid_response`);
+}
+function T(e) {
+  w(e && typeof e == `object` && !Array.isArray(e));
+}
+function E(e, t = 0) {
+  w(Number.isSafeInteger(e) && e >= t);
+}
+function D(e) {
+  w(typeof e == `string` && e.length > 0 && e.length <= 1e3);
+}
+function O(e) {
+  w(
+    typeof e == `string` &&
+      /^\d{4}-\d{2}-\d{2}$/.test(e) &&
+      Number.isFinite(Date.parse(e)),
+  );
+}
+function k(e) {
+  w(typeof e == `string` && Number.isFinite(Date.parse(e)));
+}
+function A(e) {
+  (T(e),
+    w(/^\d{4}$/.test(e.symbol)),
+    D(e.name_zh),
+    D(e.name_en),
+    E(e.price_cents, 1),
+    E(e.volume),
+    e.tradable !== void 0 && w(typeof e.tradable == `boolean`),
+    e.halt_reason != null && D(e.halt_reason),
+    e.previous_close_cents === null || e.change_cents === null
+      ? w(e.previous_close_cents === null && e.change_cents === null)
+      : (E(e.previous_close_cents, 1),
+        E(e.change_cents, -(2 ** 53 - 1)),
+        w(e.price_cents - e.previous_close_cents === e.change_cents)));
+  for (let t of [`open_cents`, `high_cents`, `low_cents`])
+    e[t] !== null && E(e[t], 1);
+}
+function j(e) {
+  (T(e),
+    D(e.request_id),
+    D(e.snapshot_id),
+    w(/^\d{4}$/.test(e.symbol)),
+    w([`buy`, `sell`].includes(e.side)),
+    E(e.quantity, 1),
+    E(e.price_cents, 1),
+    E(e.gross_cents, 1),
+    E(e.fee_cents),
+    E(e.tax_cents),
+    E(e.cash_delta_cents, -(2 ** 53 - 1)),
+    E(e.cash_after_cents),
+    E(e.realized_pnl_cents, -(2 ** 53 - 1)),
+    w(e.gross_cents === e.quantity * e.price_cents),
+    w(
+      e.cash_delta_cents ===
+        (e.side === `buy`
+          ? -e.gross_cents - e.fee_cents
+          : e.gross_cents - e.fee_cents - e.tax_cents),
+    ),
+    w(e.status === `filled`),
+    k(e.created_at));
+}
+function M(e, t, n) {
+  if (e === `market_state`) {
+    if ((T(t), T(t.account), T(t.rules), t.trading_status !== void 0)) {
+      (T(t.trading_status),
+        w(typeof t.trading_status.paused == `boolean`),
+        t.trading_status.reason != null && D(t.trading_status.reason),
+        t.trading_status.validated_at != null &&
+          k(t.trading_status.validated_at),
+        t.trading_status.next_session != null &&
+          O(t.trading_status.next_session));
+      for (let e of [`reopens_at`, `closes_at`])
+        t.trading_status[e] != null && k(t.trading_status[e]);
+    }
+    if (
+      (t.account.collectible_cents !== void 0 &&
+        (E(t.account.collectible_cents),
+        w(t.account.collectible_cents % 100 == 0)),
+      t.dividends !== void 0)
+    ) {
+      w(Array.isArray(t.dividends) && t.dividends.length <= 20);
+      for (let e of t.dividends)
+        (T(e),
+          w(/^\d{4}$/.test(e.symbol)),
+          O(e.trade_date),
+          E(e.quantity, 1),
+          E(e.cash_cents),
+          E(e.bonus_shares),
+          k(e.created_at));
+    }
+    for (let e of [
+      `cash_cents`,
+      `total_deposited_cents`,
+      `total_withdrawn_cents`,
+      `market_value_cents`,
+      `equity_cents`,
+    ])
+      E(t.account[e]);
+    (E(t.account.realized_pnl_cents, -(2 ** 53 - 1)),
+      w(
+        t.rules.fee_ppm === 1425 &&
+          t.rules.min_fee_cents === 2e3 &&
+          t.rules.sell_tax_ppm === 3e3,
+      ),
+      w(
+        Array.isArray(t.quotes) &&
+          Array.isArray(t.positions) &&
+          Array.isArray(t.orders),
+      ),
+      t.snapshot === null
+        ? w(t.quotes.length === 0)
+        : (T(t.snapshot),
+          D(t.snapshot.id),
+          O(t.snapshot.trade_date),
+          k(t.snapshot.imported_at),
+          D(t.snapshot.source),
+          w(t.quotes.length === 50)),
+      t.quotes.forEach(A),
+      w(new Set(t.quotes.map((e) => e.symbol)).size === t.quotes.length));
+    for (let e of t.positions)
+      (T(e),
+        w(/^\d{4}$/.test(e.symbol)),
+        E(e.quantity, 1),
+        E(e.cost_cents),
+        e.price_cents !== null && E(e.price_cents, 1),
+        w(typeof e.tradable == `boolean` || e.tradable === null),
+        e.quote && A(e.quote),
+        e.tradable &&
+          w(
+            e.quote &&
+              e.quote.symbol === e.symbol &&
+              e.valuation_date === t.snapshot?.trade_date,
+          ));
+    (t.orders.forEach(j), w(t.travel === null || !!g(t.travel)));
+  } else if (e === `market_trade`) {
+    (T(t), M(`market_order`, t.receipt, n), w(!!g(t.travel)));
+    let e = t.travel.data.shared?.wallet;
+    (T(e),
+      T(e.dev),
+      T(e.dev[0]),
+      E(e.ntd),
+      E(e.dev[0].e),
+      E(e.dev[0].s),
+      E(e.dev[0].at));
+  } else if (e === `market_collect`) {
+    (T(t),
+      t.receipt !== null &&
+        (T(t.receipt),
+        w(
+          t.receipt.status === `collected` &&
+            t.receipt.request_id === n.p_request_id,
+        ),
+        E(t.receipt.amount_cents, 100),
+        w(t.receipt.amount_cents % 100 == 0),
+        E(t.receipt.cash_after_cents),
+        k(t.receipt.created_at)),
+      w(!!g(t.travel)));
+    let e = t.travel.data.shared?.wallet;
+    (T(e),
+      T(e.dev),
+      E(e.ntd),
+      t.receipt !== null && (T(e.dev[0]), E(e.dev[0].e), E(e.dev[0].s)));
+  } else if (e === `market_execute`)
+    (T(t),
+      M(`market_order`, t.receipt, n),
+      E(t.deposit_cents),
+      E(t.withdrawal_cents),
+      w(t.deposit_cents === n.p_deposit_cents && t.deposit_cents % 100 == 0),
+      w(t.withdrawal_cents % 100 == 0),
+      w(
+        t.withdrawal_cents ===
+          Math.floor(t.receipt.cash_after_cents / 100) * 100,
+      ));
+  else if (e === `market_order`)
+    (j(t),
+      w(
+        t.request_id === n.p_request_id &&
+          t.snapshot_id === n.p_snapshot_id &&
+          t.symbol === n.p_symbol &&
+          t.side === n.p_side &&
+          t.quantity === n.p_quantity,
+      ));
+  else if (e === `market_transfer`)
+    (T(t),
+      w(
+        t.status === `transferred` &&
+          t.request_id === n.p_request_id &&
+          t.direction === n.p_direction &&
+          t.amount_cents === n.p_amount_cents,
+      ),
+      E(t.amount_cents, 1),
+      E(t.cash_after_cents),
+      k(t.created_at));
+  else if (e === `market_history`) {
+    w(Array.isArray(t) && t.length <= 90);
+    let e = ``;
+    for (let n of t)
+      (T(n),
+        O(n.trade_date),
+        E(n.price_cents, 1),
+        w(n.trade_date > e),
+        (e = n.trade_date));
+  }
+  return t;
+}
+var N, P, F;
+async function I() {
+  if (!navigator.locks) throw new v(`unsupported_browser`);
+  return new Promise((e, t) => {
+    navigator.locks
+      .request(`taipei-rush-market-owner`, { ifAvailable: !0 }, (n) => {
+        if (!n) {
+          t(new v(`market_in_use`));
+          return;
+        }
+        return new Promise((t) => {
+          (window.addEventListener(
+            `pagehide`,
+            () => {
+              ((N = void 0), t());
+            },
+            { once: !0 },
+          ),
+            e(t));
+        });
+      })
+      .catch(t);
+  });
+}
+function L(e) {
+  return (
+    F?.(),
+    (N ??= R(e).catch((e) => {
+      throw ((N = void 0), e);
+    }))
+  );
+}
+async function R(r) {
+  if (!n.url || !n.publishableKey) throw new v(`not_configured`);
+  let i = new URL(n.url);
+  if (
+    i.protocol !== `https:` &&
+    ![`localhost`, `127.0.0.1`].includes(i.hostname)
+  )
+    throw new v(`not_configured`);
+  let g = await d(!1);
+  if (!g) throw new v(`session_expired`);
+  let _ = g.user_id,
+    y = g.anonymous === !1 ? _ : `guest`,
+    b = !0,
+    x = () => {
+      let n = u();
+      if (
+        !b ||
+        r.state.resetting ||
+        !n ||
+        n.user_id !== _ ||
+        (n.anonymous === !1 ? n.user_id : `guest`) !== y ||
+        e() !== y
+      )
+        throw new v(`session_expired`);
+      if (t()) throw new v(`wallet_recovery_required`);
+    },
+    S = () => {
+      if ((x(), !h().isReadyFor(_) || !f().isReadyFor(_)))
+        throw new v(`cloud_not_ready`);
+    };
+  S();
+  let w = await I();
+  try {
+    S();
+  } catch (e) {
+    throw (w(), e);
+  }
+  let T = () => {},
+    E = () => {
+      b &&
+        ((b = !1),
+        (N = void 0),
+        (P = void 0),
+        T(),
+        F === D && (F = void 0),
+        w());
+    },
+    D = () => {
+      try {
+        x();
+      } catch {
+        E();
+      }
+    };
+  ((F = D), (T = l(D)), window.addEventListener(`pagehide`, E, { once: !0 }));
+  async function O(e, t) {
+    S();
+    let r = await d(!1);
+    if ((S(), !r || r.user_id !== _)) throw new v(`session_expired`);
+    let a;
+    try {
+      a = await fetch(new URL(e, i), {
+        method: `POST`,
+        cache: `no-store`,
+        credentials: `omit`,
+        headers: {
+          apikey: n.publishableKey,
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${r.access_token}`,
+          "Content-Profile": `api`,
+        },
+        body: JSON.stringify(t),
+        signal: AbortSignal.timeout(15e3),
+      });
+    } catch {
+      throw (S(), new v(`network_error`));
+    }
+    S();
+    let o = await a.json().catch(() => null);
+    if ((S(), !a.ok))
+      throw a.status === 401
+        ? new v(`session_expired`)
+        : new v(
+            o?.code === `P0001` && /^[a-z_]{1,64}$/.test(o?.message)
+              ? o.message
+              : a.status === 429
+                ? `rate_limited`
+                : `service_unavailable`,
+          );
+    return o;
+  }
+  let k = async (e, t) => M(e, await O(`/rest/v1/rpc/${e}`, t), t);
+  function A() {
+    S();
+    let e = r.state.money,
+      t = s().shared;
+    if (
+      !t ||
+      t.adopted ||
+      r.state.data.marketPending ||
+      t.wallet.market?.conflict ||
+      Object.keys(t.wallet.market?.lanes ?? {}).length
+    )
+      throw new v(`wallet_recovery_required`);
+    if (e !== o(t.wallet.ntd, c) + (c === `tokyo` ? a(r.state.data) : 0))
+      throw new v(`storage_unavailable`);
+    return t.wallet.ntd;
+  }
+  let j = new C(_, k, {
+      assertIdentity: S,
+      flush: async () => {
+        if ((A(), !r.state.saveNow())) throw new v(`storage_unavailable`);
+        try {
+          await p(_);
+        } catch {
+          throw (S(), new v(`cloud_not_ready`));
+        }
+        S();
+      },
+      accept: async (e) => {
+        S();
+        try {
+          await m(_, e);
+        } catch {
+          throw (S(), new v(`storage_unavailable`));
+        }
+        (S(), r.state.refreshSharedWallet());
+      },
+    }),
+    L = Promise.resolve(void 0);
+  function R(e) {
+    let t = L.catch(() => {}).then(
+      () => (
+        S(),
+        navigator.locks.request(`taipei-rush-market`, async () => {
+          S();
+          let t = await e();
+          return (S(), t);
+        })
+      ),
+    );
+    return ((L = t), t);
+  }
+  let V;
+  function H() {
+    return (V ??= k(`market_state`, {})
+      .then(async (e) => {
+        if (e.travel) {
+          try {
+            await m(_, e.travel);
+          } catch {
+            throw (S(), new v(`storage_unavailable`));
+          }
+          (S(), r.state.refreshSharedWallet());
+        }
+        return e;
+      })
+      .finally(() => {
+        V = void 0;
+      }));
+  }
+  async function U() {
+    (A(), j.pending() && (await j.recover()));
+  }
+  function W(e) {
+    if (!e.snapshot || e.quotes?.length !== 50)
+      throw new v(`market_unavailable`);
+    let t = e.snapshot,
+      n = e.trading_status ?? {},
+      r = n.reason ?? null;
+    return (
+      (P = {
+        id: t.id,
+        date: t.trade_date,
+        publishedAt: t.imported_at,
+        source: t.source,
+        sourceUrl: `https://openapi.twse.com.tw/`,
+        status: n.paused
+          ? r === `session_open`
+            ? `closed`
+            : r === `market_outdated`
+              ? `stale`
+              : `paused`
+          : `current`,
+        trading: {
+          open: !n.paused,
+          reason: r,
+          reopensAt: n.reopens_at ?? null,
+          closesAt: n.closes_at ?? null,
+          nextSession: n.next_session ?? null,
+        },
+        fees: {
+          commissionRate: e.rules.fee_ppm / 1e6,
+          minCommission: e.rules.min_fee_cents / 100,
+          sellTaxRate: e.rules.sell_tax_ppm / 1e6,
+        },
+        quotes: e.quotes.map(B),
+      }),
+      P
+    );
+  }
+  function G(e) {
+    return {
+      cash: A() + e.account.cash_cents / 100,
+      initialCapital:
+        (e.account.total_deposited_cents - e.account.total_withdrawn_cents) /
+        100,
+      realizedPnl: e.account.realized_pnl_cents / 100,
+      positions: e.positions.map((e) => ({
+        symbol: e.symbol,
+        quantity: e.quantity,
+        costBasis: e.cost_cents / 100,
+        lastPrice: e.price_cents == null ? void 0 : e.price_cents / 100,
+        quote: e.quote ? B(e.quote) : void 0,
+        tradable: e.tradable,
+        valuationDate: e.valuation_date,
+      })),
+      orders: e.orders.map(z),
+      dividends: (e.dividends ?? []).map((e) => ({
+        symbol: e.symbol,
+        date: e.trade_date,
+        quantity: e.quantity,
+        cash: e.cash_cents / 100,
+        bonusShares: e.bonus_shares,
+        createdAt: e.created_at,
+      })),
+      collectible: (e.account.collectible_cents ?? 0) / 100,
+    };
+  }
+  return {
+    refresh: () =>
+      R(async () => {
+        await U();
+        let e = await H();
+        return { snapshot: W(e), account: G(e) };
+      }),
+    snapshot: () => R(async () => (await U(), W(await H()))),
+    account: () => R(async () => (await U(), G(await H()))),
+    history: async (e) =>
+      (await k(`market_history`, { p_symbol: e })).map((e) => ({
+        date: e.trade_date,
+        close: e.price_cents / 100,
+      })),
+    order: (e) => R(async () => (A(), z(await j.trade(e)))),
+    collect: () =>
+      R(async () => {
+        A();
+        let e = await j.collect();
+        return (e && r.state.refreshSharedWallet(), e);
+      }),
+  };
+}
+function z(e) {
+  return {
+    id: e.request_id,
+    requestId: e.request_id,
+    snapshotId: e.snapshot_id,
+    symbol: e.symbol,
+    side: e.side,
+    quantity: e.quantity,
+    price: e.price_cents / 100,
+    gross: e.gross_cents / 100,
+    fee: e.fee_cents / 100,
+    tax: e.tax_cents / 100,
+    total: Math.abs(e.cash_delta_cents) / 100,
+    realizedPnl: e.realized_pnl_cents / 100,
+    createdAt: e.created_at,
+  };
+}
+function B(e) {
+  return {
+    symbol: e.symbol,
+    name: { zh: e.name_zh, en: e.name_en },
+    close: e.price_cents / 100,
+    tradable: e.tradable,
+    haltReason: e.halt_reason,
+    previousClose:
+      e.previous_close_cents == null ? null : e.previous_close_cents / 100,
+    change: e.change_cents == null ? null : e.change_cents / 100,
+    changePercent: e.previous_close_cents
+      ? (e.change_cents / e.previous_close_cents) * 100
+      : null,
+    open: e.open_cents == null ? null : e.open_cents / 100,
+    high: e.high_cents == null ? null : e.high_cents / 100,
+    low: e.low_cents == null ? null : e.low_cents / 100,
+    volume: e.volume,
+  };
+}
+export { L as createMarketClient };

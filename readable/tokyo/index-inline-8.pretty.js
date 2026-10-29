@@ -1,124 +1,183 @@
+/* Boot watchdog (round 6 stability, RC1). The game is one module graph (the entry + 7 modulepreloaded chunks): if
+         any request of it fails (a network blip, or the HTML of a previous deploy asking for chunks that now 404) or
+         stalls, src/main.ts never runs and the loader used to sit at 「準備中 0%」 forever, with no message. Here:
+           - a module script / modulepreload error before main.ts ran → fail at once;
+           - main.ts has not started 20 s after the page (30 s on phones / tablets) while no request finished for 15 s
+             → fail; after it started: no loading report (main.ts bumps window.__tgtaTick) and no finished request for
+             60 s (75 s on phones / tablets — the player stage alone may wait 30 s for the heroes + 10 s for the mocap
+             pack before its fallbacks) → fail. Paused while the page is hidden or waits for a tap (.failed);
+           - fail → ONE automatic cache-busting reload per 5 min (sessionStorage 'tgta-boot-retry'; main.ts clears it once
+             a load succeeds and strips ?r= from the address bar), else the error box with a Reload button (never a loop).
+             Before either reload the entry chunks are re-requested (fetch, cache: 'no-cache' — a 304 for the good ones):
+             WebKit keeps a FAILED modulepreload in its in-process memory cache and hands it to the next page (a one-off
+             503 on one chunk failed the retry too), and the re-request replaces that entry.
+         window.__tgtaLoaderError(text) shows the error box (the loader script's 「載入失敗」 path uses it too). */
 (function () {
-  try {
-    var L = document.getElementById("loader");
-    if (!L) return;
-    var rec = JSON.parse(localStorage.getItem("gta-travel-v1") || "null"),
-      t = rec && rec.ticket;
-    if (!t || t.to !== "tokyo" || !t.from) return;
-    var C = {
-        taipei: { zh: "臺北", en: "Taipei", code: "TSA", rail: "TPE", utc: 8 },
-        "hong-kong": {
-          zh: "香港",
-          en: "Hong Kong",
-          code: "HKG",
-          rail: "HKG",
-          utc: 8,
-        },
-        kaohsiung: {
-          zh: "高雄",
-          en: "Kaohsiung",
-          code: "KHH",
-          rail: "ZUY",
-          utc: 8,
-        },
-        tokyo: { zh: "東京", en: "Tokyo", code: "HND", rail: "HND", utc: 9 },
-      },
-      a = C[t.from],
-      b = C[t.to];
-    if (!a || !b) return;
-    var en = t.lang === "en",
-      hsr = t.mode === "hsr";
-    function hm(m) {
-      m = ((Math.round(m) % 1440) + 1440) % 1440;
-      return (
-        (m < 600 ? "0" : "") +
-        Math.floor(m / 60) +
-        ":" +
-        (m % 60 < 10 ? "0" : "") +
-        (m % 60)
-      );
+  var L = document.getElementById("loader");
+  if (!L) return;
+  var EN = false,
+    JA = false;
+  // Keep boot errors in the language resolved by main.ts, including a saved Japanese choice.
+  var lg = tkLang();
+  EN = lg === "en";
+  JA = lg === "ja";
+  var compact =
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+  var RETRY = "tgta-boot-retry";
+  var t0 = Date.now(),
+    lastTick = t0,
+    nRes = -1,
+    done = false,
+    iv = 0;
+  function retryUrl() {
+    var q = "";
+    try {
+      var p = new URLSearchParams(location.search);
+      p.set("r", String(Date.now()));
+      q = "?" + p.toString();
+    } catch (e) {
+      q = "?r=" + Date.now();
     }
-    var eta = hm(
-      (t.depMin || 0) +
-        (t.hours || 2) * 60 +
-        ((b.utc || 8) - (a.utc || 8)) * 60,
+    return location.pathname + q + location.hash;
+  }
+  function retry() {
+    var go = function () {
+      location.replace(retryUrl());
+    };
+    try {
+      var urls = [].map.call(
+        document.querySelectorAll(
+          "link[rel=modulepreload], script[type=module][src]",
+        ),
+        function (el) {
+          return el.href || el.src;
+        },
+      );
+      var ps = urls
+        .filter(function (u) {
+          return u && u.indexOf(location.origin + "/") === 0;
+        })
+        .map(function (u) {
+          return fetch(u, {
+            cache: "no-cache",
+            credentials: "same-origin",
+          }).catch(function () {});
+        });
+      Promise.race([
+        Promise.all(ps),
+        new Promise(function (r) {
+          setTimeout(r, 6000);
+        }),
+      ]).then(go, go);
+    } catch (e) {
+      go();
+    }
+  }
+  function showError(text) {
+    EN = document.documentElement.lang === "en";
+    JA = document.documentElement.lang === "ja";
+    L.classList.add("failed");
+    L.setAttribute("role", "group");
+    L.setAttribute(
+      "aria-label",
+      EN ? "Loading interrupted" : JA ? "読み込み中断" : "載入中斷",
     );
-    L.classList.add("flight");
-    var d = document.createElement("div");
-    d.className = "fl";
-    d.setAttribute("aria-hidden", "true");
-    if (hsr) L.classList.add("rail");
-    d.innerHTML =
-      '<div class="fl-top"><b>' +
-      String(t.flight || "").replace(/[<>&]/g, "") +
-      "</b>" +
-      (hsr
-        ? en
-          ? "High Speed Rail"
-          : "高鐵 HIGH SPEED RAIL"
-        : en
-          ? "RUSH AIR"
-          : "狂飆航空 RUSH AIR") +
-      '<span class="fl-st">' +
-      (hsr
-        ? en
-          ? "On the way"
-          : "行駛中 · On the way"
-        : en
-          ? "In flight"
-          : "飛行中 · In flight") +
-      "</span></div>" +
-      '<div class="fl-route"><div class="fl-ap"><b>' +
-      (hsr ? a.rail : a.code) +
-      "</b><small>" +
-      (en ? a.en : a.zh) +
-      '</small></div><div class="fl-line"><i></i><em>' +
-      (hsr ? "▶" : "✈") +
-      '</em></div><div class="fl-ap r"><b>' +
-      (hsr ? b.rail : b.code) +
-      "</b><small>" +
-      (en ? b.en : b.zh) +
-      "</small></div></div>" +
-      '<div class="fl-eta"><span>' +
-      (en ? "Arriving" : "預計抵達") +
-      " <b>" +
-      eta +
-      "</b> " +
-      (en ? "local time" : "當地時間") +
-      "</span><span>" +
-      (en ? "Welcome to " : "歡迎來到") +
-      (en ? b.en : b.zh) +
-      "</span></div>";
-    L.appendChild(d);
-    var pct = document.getElementById("ld-pct"),
-      st = d.querySelector(".fl-st"),
-      last = -1;
-    function upd() {
-      var n = pct ? parseInt(pct.textContent, 10) || 0 : 0;
-      n = Math.max(4, Math.min(100, n));
-      if (n === last) return;
-      last = n;
-      d.style.setProperty("--fp", String(n));
-      if (n >= 96 && st)
-        st.textContent = hsr
-          ? en
-            ? "Arriving"
-            : "即將到站 · Arriving"
-          : en
-            ? "Landing"
-            : "即將降落 · Landing";
+    var box = document.getElementById("ld-err");
+    if (!box) return;
+    box.textContent = "";
+    var msg = document.createElement("div");
+    msg.textContent = text;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = EN ? "Reload" : JA ? "再読み込み" : "重新載入";
+    btn.addEventListener("click", function () {
+      try {
+        sessionStorage.removeItem(RETRY);
+      } catch (e) {}
+      btn.disabled = true;
+      retry();
+    });
+    box.appendChild(msg);
+    box.appendChild(btn);
+  }
+  window.__tgtaLoaderError = showError;
+  function bootFail(kind) {
+    EN = document.documentElement.lang === "en";
+    JA = document.documentElement.lang === "ja";
+    if (done || !L.isConnected) return;
+    done = true;
+    clearInterval(iv);
+    var last = 0,
+      canRetry = false;
+    try {
+      last = Number(sessionStorage.getItem(RETRY)) || 0;
+      sessionStorage.setItem(RETRY, String(Date.now()));
+      canRetry = true;
+    } catch (e) {}
+    console.warn(
+      "[boot] loading " +
+        (kind === "module"
+          ? "failed (a script did not load)"
+          : kind === "start"
+            ? "never started"
+            : "stalled") +
+        (canRetry && !(last && Date.now() - last < 300000)
+          ? " — reloading once"
+          : ""),
+    );
+    if (canRetry && !(last && Date.now() - last < 300000)) {
+      // (a moment for the other elements' errors of this failure, then the refresh + reload)
+      setTimeout(retry, 300);
+      return;
     }
-    upd();
-    if (window.MutationObserver && pct) {
-      var o = new MutationObserver(upd);
-      o.observe(pct, { childList: true, characterData: true, subtree: true });
-      L.addEventListener(
-        "loader:dispose",
-        function () {
-          o.disconnect();
-        },
-        { once: true },
-      );
-    }
+    showError(
+      EN
+        ? "Tokyo Rush could not finish loading (the network or a server file failed). Please reload."
+        : JA
+          ? "東京ラッシュの読み込みを完了できませんでした（ネットワークまたはサーバーのファイルに問題があります）。再読み込みしてください。"
+          : "東京狂飆 無法完成載入（網路或伺服器檔案異常），請重新載入。",
+    );
+  }
+  // a failed module script / modulepreload of the entry graph (after main.ts ran, lazy chunks are core's business)
+  window.addEventListener(
+    "error",
+    function (e) {
+      var t = e && e.target;
+      if (window.__tgtaBoot || !t || t === window || !t.tagName) return;
+      if (
+        (t.tagName === "SCRIPT" && t.type === "module") ||
+        (t.tagName === "LINK" && /modulepreload/.test(t.rel || ""))
+      )
+        bootFail("module");
+    },
+    true,
+  );
+  // finished requests count as progress (a slow network is not a stalled one)
+  try {
+    new PerformanceObserver(function () {
+      lastTick = Date.now();
+    }).observe({ type: "resource", buffered: false });
   } catch (e) {}
+  iv = setInterval(function () {
+    var now = Date.now();
+    if (!L.isConnected || L.style.opacity === "0") return clearInterval(iv);
+    if (document.hidden || L.classList.contains("failed")) {
+      lastTick = now;
+      return;
+    }
+    try {
+      var n = performance.getEntriesByType("resource").length;
+      if (n !== nRes) {
+        nRes = n;
+        lastTick = now;
+      }
+    } catch (e) {}
+    var tick = window.__tgtaTick || 0;
+    if (tick > lastTick) lastTick = tick;
+    if (!window.__tgtaBoot) {
+      if (now - t0 > (compact ? 30000 : 20000) && now - lastTick > 15000)
+        bootFail("start");
+    } else if (now - lastTick > (compact ? 75000 : 60000)) bootFail("stall");
+  }, 5000);
 })();

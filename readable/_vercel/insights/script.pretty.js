@@ -21,11 +21,11 @@
       o = r[i],
       u = a === e ? { ...o, ...n } : n;
     if (a === e && f(o, u)) return !1;
-    let { [i]: d, ...c } = r;
-    return (s({ ...c, [t]: e, ...(Object.keys(u).length && { [i]: u }) }), !0);
+    let { [i]: s, ...c } = r;
+    return (d({ ...c, [t]: e, ...(Object.keys(u).length && { [i]: u }) }), !0);
   }
   function o() {
-    s({});
+    d({});
   }
   function u() {
     let { userId: t, groupId: e, traits: n, groupTraits: r } = l(),
@@ -41,11 +41,11 @@
     if (g) return h;
     try {
       let t = localStorage.getItem(v);
-      h = t ? d(JSON.parse(t)) : {};
+      h = t ? s(JSON.parse(t)) : {};
     } catch (e) {}
     return h;
   }
-  function s(t) {
+  function d(t) {
     h = t;
     try {
       (t.userId || t.groupId
@@ -56,7 +56,7 @@
       g = !0;
     }
   }
-  function d(t) {
+  function s(t) {
     return {
       ...("string" == typeof t.userId && {
         userId: t.userId,
@@ -95,14 +95,14 @@
         let e = "0.1.3",
           i = (t) => t,
           l = document,
-          s = l.currentScript;
+          d = l.currentScript;
         if (r()) return;
-        let d = null != (t = null == s ? void 0 : s.dataset) ? t : {},
-          c = w(d, "view"),
-          p = w(d, "event"),
-          f = w(d, "session"),
-          v = w(d, "identify"),
-          h = w(d, "group"),
+        let s = null != (t = null == d ? void 0 : d.dataset) ? t : {},
+          c = w(s, "view"),
+          p = w(s, "event"),
+          f = w(s, "session"),
+          v = w(s, "identify"),
+          h = w(s, "group"),
           g = null,
           y = null,
           _ = !0;
@@ -111,14 +111,14 @@
             t[`${e}Endpoint`] ||
             ("endpoint" in t
               ? `${t.endpoint}/${e}`
-              : `${null != s && s.src.includes("/va/") ? "/va" : "/_vercel/insights"}/${e}`)
+              : `${null != d && d.src.includes("/va/") ? "/va" : "/_vercel/insights"}/${e}`)
           );
         }
         async function I(t) {
           if (t && !Array.isArray(t)) return { p: t };
           let e = l.querySelectorAll("[data-flag-values]");
-          if (!s || !e.length) return;
-          let n = new URL(s.src),
+          if (!d || !e.length) return;
+          let n = new URL(d.src),
             r = n.pathname.split("/"),
             i = r.pop();
           return (
@@ -139,25 +139,24 @@
         }
         async function k({ type: t, data: r, options: a }) {
           var o;
-          let s = n(y),
+          let d = n(y),
             f = null == a ? void 0 : a.__cdp,
             v = l.referrer,
             h = i({
               type: t,
-              url: s,
+              url: d,
               payload: r,
               ...(void 0 !== f && { __cdp: f }),
             });
           if (!1 === h || null === h) return;
           h &&
-            ((s = h.url), (r = null != (o = h.payload) ? o : r), (f = h.__cdp));
+            ((d = h.url), (r = null != (o = h.payload) ? o : r), (f = h.__cdp));
           let _ = v.includes(location.host),
             w = {
-              o: s,
+              o: d,
               sv: e,
-              sdkn: d.sdkn,
-              sdkv: d.sdkv,
-              ts: Date.now(),
+              sdkn: s.sdkn,
+              sdkv: s.sdkv,
               ...(g && { dp: g }),
               ...(null != a && a.withReferrer && !_ ? { r: v } : {}),
               ...u(),
@@ -184,35 +183,34 @@
             },
           });
         }
-        async function R(t, r, o, l, s) {
+        async function R(t, r, o, l, d) {
           var c, p;
           let f = {
               type: "event",
               url: n(y),
               payload: { name: t, data: { ...l, [r]: o } },
-              ...(void 0 !== s && { __cdp: s }),
+              ...(void 0 !== d && { __cdp: d }),
             },
             _ = i(f);
           if (!1 === _ || null === _) return;
           let w = _ || f;
-          s = w.__cdp;
+          d = w.__cdp;
           let { [r]: I, ...k } =
             null != (p = null == (c = w.payload) ? void 0 : c.data) ? p : {};
-          if ("string" != typeof I || !I || (!a(r, I, k) && void 0 === s))
+          if ("string" != typeof I || !I || (!a(r, I, k) && void 0 === d))
             return;
           let b = {
             ...{
               o: w.url,
               sv: e,
-              sdkn: d.sdkn,
-              sdkv: d.sdkv,
-              ts: Date.now(),
+              sdkn: s.sdkn,
+              sdkv: s.sdkv,
               ...(g && { dp: g }),
             },
             ...u(),
             en: t,
             ...(Object.keys(k).length && { ed: k }),
-            ...(void 0 !== s && { __cdp: s }),
+            ...(void 0 !== d && { __cdp: d }),
           };
           return m("identify" === t ? v : h, b);
         }
@@ -261,7 +259,7 @@
                 }));
           };
         (() => {
-          if (window.vai || ((window.vai = !0), L(), d.disableAutoTrack))
+          if (window.vai || ((window.vai = !0), L(), s.disableAutoTrack))
             return;
           b({ withReferrer: !0 });
           let t = history.pushState.bind(history);

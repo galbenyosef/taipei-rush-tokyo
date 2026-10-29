@@ -38,22 +38,34 @@ the Taipei edition of the same platform (its shared files — avatars, root
 icons/key art, base-stripped `assets/` forms — are part of this capture because
 the Tokyo bundle carries literals that resolve to them).
 
-The capture is the full runtime closure of 190 files (~28.1 MB): entry document,
-100 JS chunks, 11 stylesheets, 14 key-art webp, 12 icons, the 23-model avatar
-family, the KTX2 transcoder (js + wasm), the Japanese font and the animation bank.
+The capture is the full runtime closure of 198 files (~28.7 MB): entry document,
+107 JS files (99 `tokyo/assets/` chunks + 6 origin-root twins + the Vercel
+insights script), 11 stylesheets, 14 key-art webp plus a new `og/tokyo.jpg`
+social card, 12 icons, the 23-model avatar family, the KTX2 transcoder
+(js + wasm), the Japanese font and the animation bank.
 The 2026-10-15 build added a **car garage** (a new `garage-*` chunk + stylesheet
 and root-form twin), four new districts (**Asakusa, Hongō, Roppongi, Suidobashi**)
-and two new hero avatars (**Kai**, **Mei**).
+and two new hero avatars (**Kai**, **Mei**). The **2026-10-29 build** adds an
+SEO block (canonical, OpenGraph/Twitter large-image card, an inline
+`application/ld+json` VideoGame record and an `sr-only` about section linking the
+sibling city deploys), a static `preload-helper-*` chunk, a resolved-language
+loader (English lockup template + live `document.documentElement.lang` sync),
+and new `heli`, `net`, `photoShare`, `stats`, `strings` and `title` chunks.
 
 External at runtime (never backfilled — left on their hosts): the account
 backend `auth.taipei-rush.app`, Cloudflare Turnstile
 (`challenges.cloudflare.com`, the login captcha), the Vercel analytics loader
 `va.vercel-scripts.com`, and the TWSE live-data endpoints. Same-origin but
 backend-served (documented gaps, not static files): `/api/support/config`,
-`/api/support/checkout` (Vercel functions) and `/_vercel/insights/view` (the
-analytics beacon POST; its script `_vercel/insights/script.js` is captured).
+`/api/support/checkout` (Vercel functions), `/api/locale` (the locale/region API
+the 2026-10-29 language gate calls — 404 offline, the gate then uses the browser
+language) and `/_vercel/insights/view` (the analytics beacon POST; its script
+`_vercel/insights/script.js` is captured).
 One genuine upstream 404 is recorded: `sf-keyart-phone.webp` — the
-San-Francisco-only phone key art this Tokyo deploy never serves.
+San-Francisco-only phone key art this Tokyo deploy never serves. Cross-deploy
+city-card art (`/jakarta/title/menu-phone.jpg`, named by the in-game city
+picker) is deliberately **not** captured: it is another deploy's asset, left on
+its own deploy like the CDN externals.
 
 ## Layout
 
@@ -67,12 +79,12 @@ San-Francisco-only phone key art this Tokyo deploy never serves.
 - `_mirror-report.json` — crawl record (fetched paths, 404 gaps, external and
   live-backend lists)
 - `readable/` — prettified derived layer (pinned prettier 3.9.6) that **mirrors
-  the served paths**: 122 pretties (100 capture-JS + 11 capture-CSS twins + 11
+  the served paths**: 130 pretties (107 capture-JS + 11 capture-CSS twins + 12
   inline-block twins) under `readable/tokyo/assets/…`, `readable/assets/…`,
   `readable/avatars/basis/…`, `readable/_vercel/…`, plus
   `readable/index-inline-map.json`
-- `src/` + `split-spec.json` — 1,433 statement-aligned slices across 97 app
-  chunks in the same served-path structure (`src/tokyo/assets/<chunk>-NN.js`),
+- `src/` + `split-spec.json` — 1,485 statement-aligned slices across 104 chunks
+  in the same served-path structure (`src/tokyo/assets/<chunk>-NN.js`),
   re-cut through the recorded rename map, with the derivation spec
 - `rename-map.json` + `tools/names.json` — the identifier rename campaign: the
   recovered per-slice map (`files` word-boundary + `scoped` token-index records)
@@ -567,6 +579,112 @@ add a tautology.
   wholeFile and unrenamed. (4) Public API names (the aliased side of every `export { local as Public }`)
   and shorthand positions are refused by design. (5) `docs/cover.png` was not re-shot this pass (it is
   already a gameplay shot); the new gameplay screenshot is the refresh evidence.
+
+### 2026-10-29 refresh (PLAN §3 — new-build refresh)
+
+Mission: the origin shipped a new Tokyo build since the 2026-10-27 snapshot. Refresh the capture,
+preserve the old bytes first, re-cut the derived layers, re-anchor the identifier campaign and re-run
+every gate, then prove an offline guest boot from the mirror's files only.
+
+- **Probe (`tools/update.mjs`, read-only) — real content drift, not hash churn**:
+  `DRIFT: 2 changed, 79 live-missing (of 190 captured)`. The two changed rows are
+  `tokyo/index.html` (**53,044 → 61,261 B**) and `_vercel/insights/script.js` (the platform beacon
+  rotates). After collapsing hashed filenames the entry is **not** equivalent to the old one: the new
+  build adds a canonical/OpenGraph/Twitter large-image card, an inline
+  `<script type="application/ld+json">` VideoGame record, an `sr-only` "about" section linking the
+  sibling city deploys, a static `preload-helper-*` chunk in the modulepreload set, a resolved-language
+  loader (English SVG lockup template + a `MutationObserver` on `document.documentElement.lang`) and a
+  reworked `tkLang()` gate. This is a genuine new deploy, so the mirror was refreshed.
+- **Legacy first** — before any fetch, all 190 captured files plus the whole pre-refresh derived layer
+  (`readable/`, `src/`, `split-spec.json`, `rename-map.json`, `tools/names.json`) were copied to
+  `legacy/2026-10-29/` and committed **alone** (commit `ee2130e`).
+- **Capture (`tools/capture.mjs`) — 198 files, 30,132,847 B (28.7 MiB), 650 requests, fixpoint in 5
+  rounds.** Diff vs the legacy capture: **+87 / −79 / 2 changed / 109 byte-identical**. The 79 dropped
+  are the rotated hashed chunks (each has a same-basename successor — 0 files genuinely disappeared);
+  the 87 added are those 79 new hashes **plus 8 genuinely new files**: `og/tokyo.jpg` and the new
+  `heli`, `net`, `photoShare`, `preload-helper`, `stats`, `strings` and `title` chunks. The same-basename
+  old-generation chunks the origin still serves (`dom-BCt0vy2n`, `tabs-C1IhIOn4`, `notice-DnIsya3-`) are
+  captured alongside their new twins. Gaps: **3 unresolved 404** — the SF-only
+  `sf-keyart-phone.webp` at three bases (as before) — **0 unreachable, 2 external** (Turnstile +
+  Vercel analytics). `capture.mjs --check`: `818 reference group(s), 1 unresolved (0 new vs
+  _mirror-report.json)`.
+  - **Scanner scope fix (2026-10-29 build)**: the new SEO block's `<a href>` nav links the sibling city
+    deploys (`/kaohsiung/`, `/london/`, …) and its canonical names `/tokyo/`. Those are pages, not
+    files in this deploy's closure, so `refsOf()` now follows only **file-like `href` targets**
+    (a dot-extension on the last path segment) — the same rule the JS scanner already applies. Without
+    it the crawl would have pulled other city deploys into this mirror (and a bare `tokyo` page file).
+  - **Cross-deploy asset excluded**: the in-game city picker
+    (`tokyo-CqLdAwml.js` `Ya = e => \`${F[e].page}title/…\``) names
+    `/jakarta/title/menu-phone.jpg` for the Jakarta card, and `title-DYEg8d_Y.js` emits it literally.
+    That is another deploy's key art on the same origin, so it is EXCLUDEd (like the CDN externals)
+    rather than turned into a cross-mirror dependency; the Jakarta card simply renders without art
+    offline. The bare template token `menu-phone.jpg` is excluded for the same reason as the
+    already-excluded `menu-phone.webp` (the concrete Tokyo form is `menu-phone.webp`, captured).
+  - **Runtime live-backend gap recorded**: the browser boot surfaced one same-origin 404, `/api/locale`
+    (the new language gate's region API). It is added to `LIVE_BACKEND` in `capture.mjs` and to
+    `_mirror-report.json`; the gate falls back to the browser language, so the game boots unaffected.
+  - The 79 rotated-away files were pruned from disk after the capture (their bytes live in
+    `legacy/2026-10-29/capture/`); the served tree now matches `.upstream/manifest.json` exactly
+    (0 extra files on disk).
+- **Tool fixes required by the new build** (each is why a refresh is not a no-op):
+  - `derive.mjs` — vendor table key follows the rotated three.js hash
+    (`tokyo/assets/three-C4coU-vx`, guard re-verified: `WebGLRenderer` + `__THREE__` + `REVISION 186`);
+    and the typed-data inline-block guard had a latent bug (`parser === "script"` instead of
+    `b.kind === "script"`), so the entry's new `application/ld+json` block crashed prettier. It now
+    records that block as an `inline-data` `notRendered` record (range + sha256), correctly.
+  - `audit.js` — same vendor-hash update, plus typed data blocks are verified against
+    `split-spec.notRendered` instead of demanded as inline twins (and `scanBlocks` now retains `tag`).
+- **Derived layers** — `readable/`: **130 pretties** (107 capture-JS + 11 capture-CSS twins + 12 inline
+  twins) and `readable/index-inline-map.json` (12 content blocks: 10 scripts + 2 styles; the ld+json
+  block is data, not a twin). `src/`: **1,485 statement-aligned slices across 104 chunks** (1,704 spec
+  sections: 1,485 ranged + 96 skipped export tables + 123 wholeFile), each parse-checked and
+  round-tripping byte-exact; vendor wholeFile rule now covers `three-C4coU-vx`, Basis and the Vercel
+  insights script. `split-spec.json` re-cut at 4.9 MB.
+- **Rename campaign re-anchored** — `tools/names.json` keeps the reviewed rules for the **11 capture
+  files whose bytes are unchanged** (the surviving old-generation `dom`/`tabs`/`notice`/`rig`/`clips`/
+  `analytics`/`art-tokyo` twins) and re-proposes the rest from evidence
+  (`tools/propose-names.mjs`: own export table + semantic imports). Carrying old rules onto *changed*
+  chunks by basename was tried and **rejected**: this build's minifier reassigned import aliases, so
+  the old rules produced chained/duplicate bindings — the standalone parse gate caught it loudly
+  (`syncNow` declared twice), so those chunks are re-proposed instead. Applied:
+  **164 names / 451 identifiers across 39 chunks**; `rename-map.json` re-recorded at **288 records over
+  49 slices**. The 27 changed-chunk curated rules from the prior build stay reachable in
+  `legacy/2026-10-29/names.json`.
+- **Gates (verbatim tails, 2026-10-29)**:
+  - `node tools/verify.mjs` → `198 files checked, 0 problems`
+  - `node tools/record-manifest.mjs --check` → `record-manifest --check: 198 files match the committed record`
+  - `node tools/derive.mjs --check` → `DERIVE CHECK PASS — readable/ + src/ + split-spec.json are current under pinned prettier 3.9.6 (nothing written)`
+  - `node tools/audit.js` → `AUDIT PASS — 1704 spec sections (1485/1485 src↔pretty round-trips
+    byte-exact through the recorded rename map, 49 renamed slice(s), 130/130 pretty sources tiled
+    contiguously, 96/96 skipped export-table sections re-verified textually, 1485/1485 src slices +
+    117/117 readable/*.pretty.js parse standalone (node --input-type=module --check -), 130/130
+    pretties provably distinct from their capture source, 219 index-only wholeFile/skipped sections
+    carry no src file, 13 inline content block(s) with twins + index-inline-map.json, 450/459 imports
+    resolve inside the capture (9 whitelisted machinery, 0 accepted as recorded 404 gaps), rename map:
+    288 record(s) over 49 slice(s), all indices address the recorded identifiers and no foreign
+    position, 130/130 pretties re-render byte-exact under pinned prettier 3.9.6 (format-to-fixed-point),
+    capture manifest free of derived layers)`
+  - `node tools/verify-rename.mjs --all` → `verify-rename: 1485/1485 slice(s) reproduce byte-exact, 49
+    renamed slice(s) (217 indexed occurrence(s)), 104/104 chunk(s) references+bindings YES`
+  - `node tools/check-chunk.mjs --all` → `check-chunk: 104 chunk(s), 1485 slice body(ies) substituted —
+    all cross-slice calls resolve`
+  - `node tools/check-exports.mjs` → `98 export table(s) checked`, `96 export table(s) NOT covered (no
+    derived text)`, `no public export name lost` (same one-live-compare-per-table rule as before: the
+    96 NOT-covered rows are the reading copy's own copies of the same tables).
+- **Offline boot** (`docs/boot-2026-10-29-refresh.png`) — `tools/serve.mjs` on **4771**, headless
+  Chrome 156 with `--host-resolver-rules="MAP * 127.0.0.1"`, isolated profile `boot-taipei-refresh`.
+  The served mirror rendered the title canvas (**1262×648**, document title "Tokyo Rush · Full throttle
+  through Tokyo", resolved lang `en`) and the guest build entered the world with no login: Nihonbashi /
+  Yaesu & Kyobashi, the 阿傑 character, phone HUD, minimap, **¥2,500, 16:00, 20°**, and the RUSH AIR
+  in-town check-in prompt. Server log: **89 × 200, 1 × 404** (`/api/locale`, the documented backend
+  gap); **0 off-origin requests**, **0 console exceptions** (89 responses, only inline `data:`/`blob:`
+  non-HTTP). The listener (PID 23232) and browser (PID 19356) were killed and both ports verified
+  closed (`Get-NetTCPConnection` → 0 listeners).
+- **Honest gaps** — (1) 65 chunks still carry the bundle's own minified top-level names (the tooling is
+  in place for further batches). (2) Function-body locals remain out of scope. (3) Vendor identifiers
+  (three.js r186, Basis, Vercel insights) stay wholeFile and unrenamed. (4) Public export names and
+  shorthand positions are never renamed. (5) Cross-deploy city-card art is intentionally left on its
+  own deploy, and `/api/locale` cannot be mirrored.
 
 ## Boot test (2026-10-27)
 

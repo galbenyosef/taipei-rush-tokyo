@@ -1,4 +1,4 @@
-/** the page's language before the game boots: ?lang=, else the one the player picked on this page, else 日本語 */
+/** Saved language wins; browser language is provisional until main.ts resolves the country. */
 function tkLang() {
   try {
     var q = new URLSearchParams(location.search).get("lang");
@@ -7,8 +7,24 @@ function tkLang() {
   try {
     var sv = JSON.parse(localStorage.getItem("tokyo-rush-save-v1") || "{}");
     var l = sv && sv.settings && sv.settings.lang;
-    if (sv && sv.langPicked && (l === "zh" || l === "en" || l === "ja"))
-      return sv.langJa ? "ja" : l;
+    if (sv && sv.langJa === true) return "ja";
+    if (l === "zh" || l === "en" || l === "ja") return l;
   } catch (e) {}
-  return "ja";
+  try {
+    var record = JSON.parse(localStorage.getItem("gta-travel-v1") || "{}");
+    var shared =
+      record &&
+      record.shared &&
+      record.shared.settings &&
+      record.shared.settings.lang;
+    if (shared === "zh" || shared === "en") return shared;
+  } catch (e) {}
+  return /^zh(?:[-_](?:tw|hant)(?:[-_]|$)|$)/i.test(
+    (navigator.languages && navigator.languages[0]) || navigator.language || "",
+  )
+    ? "zh"
+    : "en";
 }
+var initialLang = tkLang();
+document.documentElement.lang =
+  initialLang === "zh" ? "zh-Hant-TW" : initialLang;

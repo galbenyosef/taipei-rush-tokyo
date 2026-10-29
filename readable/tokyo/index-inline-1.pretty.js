@@ -8,7 +8,7 @@
           "https://taipei-rush-preview.vercel.app",
       },
       K = new RegExp(
-        "^(taipei-rush-|hong-kong-gta-|kaohsiung-rush-|tokyo-rush-|gta-travel-|tgta-device-)",
+        "^(taipei-rush-|hong-kong-gta-|kaohsiung-rush-|tokyo-rush-|london-rush-|taichung-rush-|mumbai-rush-|tainan-rush-|gta-travel-|tgta-device-)",
       ),
       X = new RegExp("(cloud|auth|pkce|session|probe|handoff|identities)"),
       S = [
@@ -16,6 +16,10 @@
         "hong-kong-gta-save-v1",
         "kaohsiung-rush-save-v1",
         "tokyo-rush-save-v1",
+        "london-rush-save-v1",
+        "taichung-rush-save-v1",
+        "mumbai-rush-save-v1",
+        "tainan-rush-save-v1",
       ];
     var ls = window.localStorage,
       host = location.hostname,

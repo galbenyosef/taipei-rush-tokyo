@@ -1,0 +1,13298 @@
+import { t as e } from "./rolldown-runtime-DK3Fl9T5.js";
+import { t } from "./preload-helper-DZce6yc-.js";
+import { n } from "./ja-anaGONx4.js";
+import { or as r } from "./three-C4coU-vx.js";
+import { yn as i } from "./engine-14d5lda2.js";
+import { o as a } from "./tokyo-CqLdAwml.js";
+var o = class {
+    s;
+    constructor(e) {
+      this.s = e >>> 0 || 2654435769;
+      for (let e = 0; e < 4; e++) this.next();
+    }
+    next() {
+      let e = this.s;
+      return (
+        (e ^= e << 13),
+        (e ^= e >>> 17),
+        (e ^= e << 5),
+        (this.s = e >>> 0),
+        this.s / 4294967296
+      );
+    }
+    range(e, t) {
+      return e + (t - e) * this.next();
+    }
+    bi() {
+      return this.next() * 2 - 1;
+    }
+    int(e) {
+      return Math.floor(this.next() * e);
+    }
+    chance(e) {
+      return this.next() < e;
+    }
+    pick(e) {
+      return e[Math.floor(this.next() * e.length)];
+    }
+    gauss() {
+      let e = Math.max(1e-9, this.next()),
+        t = this.next();
+      return Math.sqrt(-2 * Math.log(e)) * Math.cos(2 * Math.PI * t);
+    }
+  },
+  s = Math.PI * 2,
+  c = (e) => 440 * 2 ** ((e - 69) / 12),
+  l = (e) => 2 ** (e / 1200),
+  u = (e, t) => (typeof e == `number` ? e : e(t));
+function d(e, t) {
+  return new Float32Array(Math.max(1, Math.round(e * t)));
+}
+function f(e, t) {
+  return { sr: t, ch: [e] };
+}
+function p(e, t) {
+  let n = new Float32Array(e);
+  for (let r = 0; r < e; r++) n[r] = t.bi();
+  return n;
+}
+function m(e, t) {
+  let n = new Float32Array(e),
+    r = 0,
+    i = 0,
+    a = 0,
+    o = 0,
+    s = 0,
+    c = 0,
+    l = 0;
+  for (let u = 0; u < e; u++) {
+    let e = t.bi();
+    ((r = 0.99886 * r + e * 0.0555179),
+      (i = 0.99332 * i + e * 0.0750759),
+      (a = 0.969 * a + e * 0.153852),
+      (o = 0.8665 * o + e * 0.3104856),
+      (s = 0.55 * s + e * 0.5329522),
+      (c = -0.7616 * c - e * 0.016898),
+      (n[u] = (r + i + a + o + s + c + l + e * 0.5362) * 0.11),
+      (l = e * 0.115926));
+  }
+  return n;
+}
+function h(e, t) {
+  let n = new Float32Array(e),
+    r = 0;
+  for (let i = 0; i < e; i++)
+    ((r = (r + 0.02 * t.bi()) / 1.02), (n[i] = r * 3.5));
+  return n;
+}
+function g(e, t) {
+  return e < t
+    ? ((e /= t), e + e - e * e - 1)
+    : e > 1 - t
+      ? ((e = (e - 1) / t), e * e + e + e + 1)
+      : 0;
+}
+function _(e, t, n, r = `sine`, i = 0, a = 0.5) {
+  let o = new Float32Array(e),
+    c = i % 1,
+    l = typeof n == `number`,
+    d = l ? n / t : 0,
+    f = 0;
+  for (let i = 0; i < e; i++) {
+    l || (d = u(n, i / t) / t);
+    let e;
+    switch (r) {
+      case `sine`:
+        e = Math.sin(s * c);
+        break;
+      case `saw`:
+        e = 2 * c - 1 - g(c, d);
+        break;
+      case `square`:
+        e = (c < 0.5 ? 1 : -1) + g(c, d) - g((c + 0.5) % 1, d);
+        break;
+      case `pulse`:
+        e = (c < a ? 1 : -1) + g(c, d) - g((c + 1 - a) % 1, d);
+        break;
+      default: {
+        let t = (c < 0.5 ? 1 : -1) + g(c, d) - g((c + 0.5) % 1, d);
+        ((f = f * 0.999 + t * 4 * d), (e = f));
+      }
+    }
+    ((o[i] = e), (c += d), c >= 1 && --c);
+  }
+  return o;
+}
+function v(e, t, n, r, i = 0, a) {
+  let o = new Float32Array(e);
+  for (let [c, u, d] of r) {
+    let r = n * c * l(i ? (a ? a.bi() : 1) * i : 0);
+    if (r >= t * 0.47) continue;
+    let f = (s * r) / t,
+      p = 2 * Math.cos(f),
+      m = a ? a.next() * s : 0,
+      h = Math.sin(m - f),
+      g = Math.sin(m - 2 * f),
+      _ = d > 0 ? Math.exp(-1 / (d * t)) : 1,
+      v = u,
+      y = d > 0 ? Math.min(e, Math.ceil(d * t * 9)) : e;
+    for (let e = 0; e < y; e++) {
+      let t = p * h - g;
+      ((g = h), (h = t), (o[e] += t * v), (v *= _));
+    }
+  }
+  return o;
+}
+function y(e, t, n, r, i, a = 0) {
+  let o = new Float32Array(e),
+    c = 0,
+    l = 0,
+    d = 0;
+  for (let f = 0; f < e; f++) {
+    let e = f / t,
+      p = u(n, e),
+      m = Math.sin(s * l + a * d);
+    ((d = m),
+      (o[f] = Math.sin(s * c + u(i, e) * m)),
+      (c += p / t),
+      (l += (p * r) / t),
+      c > 1 && --c,
+      l > 1 && --l);
+  }
+  return o;
+}
+function b(e, t, n, r, i = 0.707, a = 0) {
+  let o = 0,
+    c = 0,
+    l = 0,
+    d = 0,
+    f = 0,
+    p = (e, r) => {
+      e = Math.min(Math.max(e, 10), t * 0.49);
+      let i = (s * e) / t,
+        u = Math.cos(i),
+        p = Math.sin(i) / (2 * Math.max(0.05, r)),
+        m = 10 ** (a / 40),
+        h = 1;
+      switch (n) {
+        case `lp`:
+          ((o = (1 - u) / 2),
+            (c = 1 - u),
+            (l = o),
+            (h = 1 + p),
+            (d = -2 * u),
+            (f = 1 - p));
+          break;
+        case `hp`:
+          ((o = (1 + u) / 2),
+            (c = -(1 + u)),
+            (l = o),
+            (h = 1 + p),
+            (d = -2 * u),
+            (f = 1 - p));
+          break;
+        case `bp`:
+          ((o = p), (c = 0), (l = -p), (h = 1 + p), (d = -2 * u), (f = 1 - p));
+          break;
+        case `notch`:
+          ((o = 1),
+            (c = -2 * u),
+            (l = 1),
+            (h = 1 + p),
+            (d = -2 * u),
+            (f = 1 - p));
+          break;
+        case `ap`:
+          ((o = 1 - p),
+            (c = -2 * u),
+            (l = 1 + p),
+            (h = 1 + p),
+            (d = -2 * u),
+            (f = 1 - p));
+          break;
+        case `peak`:
+          ((o = 1 + p * m),
+            (c = -2 * u),
+            (l = 1 - p * m),
+            (h = 1 + p / m),
+            (d = -2 * u),
+            (f = 1 - p / m));
+          break;
+        case `ls`: {
+          let e = 2 * Math.sqrt(m) * p;
+          ((o = m * (m + 1 - (m - 1) * u + e)),
+            (c = 2 * m * (m - 1 - (m + 1) * u)),
+            (l = m * (m + 1 - (m - 1) * u - e)),
+            (h = m + 1 + (m - 1) * u + e),
+            (d = -2 * (m - 1 + (m + 1) * u)),
+            (f = m + 1 + (m - 1) * u - e));
+          break;
+        }
+        case `hs`: {
+          let e = 2 * Math.sqrt(m) * p;
+          ((o = m * (m + 1 + (m - 1) * u + e)),
+            (c = -2 * m * (m - 1 + (m + 1) * u)),
+            (l = m * (m + 1 + (m - 1) * u - e)),
+            (h = m + 1 - (m - 1) * u + e),
+            (d = 2 * (m - 1 - (m + 1) * u)),
+            (f = m + 1 - (m - 1) * u - e));
+          break;
+        }
+      }
+      ((o /= h), (c /= h), (l /= h), (d /= h), (f /= h));
+    },
+    m = typeof r != `number` || typeof i != `number`;
+  p(u(r, 0), u(i, 0));
+  let h = 0,
+    g = 0,
+    _ = 0,
+    v = 0,
+    y = e.length;
+  for (let n = 0; n < y; n++) {
+    m && !(n & 15) && p(u(r, n / t), u(i, n / t));
+    let a = e[n],
+      s = o * a + c * h + l * g - d * _ - f * v;
+    ((g = h), (h = a), (v = _), (_ = s), (e[n] = s));
+  }
+  return e;
+}
+var x = (e, t, n, r = 0.707) => b(e, t, `lp`, n, r),
+  S = (e, t, n, r = 0.707) => b(e, t, `hp`, n, r),
+  C = (e, t, n, r = 1) => b(e, t, `bp`, n, r),
+  w = (e, t, n, r, i) => b(e, t, `peak`, n, r, i);
+function T(e, t, n) {
+  let r = new Float32Array(e.length);
+  for (let [i, a, o] of n) {
+    if (i >= t * 0.47) continue;
+    let n = Math.exp(-1 / (o * t)),
+      c = (s * i) / t,
+      l = -2 * n * Math.cos(c),
+      u = n * n,
+      d = a * (1 - n),
+      f = 0,
+      p = 0;
+    for (let t = 0; t < e.length; t++) {
+      let n = d * e[t] - l * f - u * p;
+      ((p = f), (f = n), (r[t] += n));
+    }
+  }
+  return r;
+}
+function E(e, t, n) {
+  let r = 0,
+    i = e.length;
+  for (let a = 0; a < i; a++) {
+    let i = a / t;
+    for (; r + 2 < n.length && i >= n[r + 2];) r += 2;
+    let o;
+    if (i <= n[0]) o = n[1];
+    else if (r + 2 >= n.length) o = n[n.length - 1];
+    else {
+      let e = n[r],
+        t = n[r + 2];
+      o = n[r + 1] + ((n[r + 3] - n[r + 1]) * (i - e)) / Math.max(1e-9, t - e);
+    }
+    e[a] *= o;
+  }
+  return e;
+}
+function D(e, t, n, r, i = 0) {
+  let a = Math.max(1, n * t),
+    o = Math.round(i * t),
+    s = Math.exp(-1 / (r * t)),
+    c = 1;
+  for (let t = 0; t < e.length; t++) {
+    if (t < o) {
+      e[t] = 0;
+      continue;
+    }
+    let n = t - o;
+    n < a ? (e[t] *= n / a) : ((e[t] *= c), (c *= s));
+  }
+  return e;
+}
+function ee(e, t) {
+  for (let n = 0; n < e.length; n++) e[n] *= t;
+  return e;
+}
+function te(e, t, n, r) {
+  let i = Math.round(n * t),
+    a = Math.round(r * t),
+    o = e.length;
+  for (let t = 0; t < i && t < o; t++) e[t] *= t / i;
+  for (let t = 0; t < a && t < o; t++) e[o - 1 - t] *= t / a;
+  return e;
+}
+function O(e, t, n = 1, r = 0) {
+  let i = Math.round(r),
+    a = Math.min(t.length, e.length - i);
+  for (let r = Math.max(0, -i); r < a; r++) e[i + r] += t[r] * n;
+  return e;
+}
+function ne(e) {
+  let t = 0;
+  for (let n = 0; n < e.length; n++) {
+    let r = Math.abs(e[n]);
+    r > t && (t = r);
+  }
+  return t;
+}
+function k(e, t = 0.9) {
+  let n = e instanceof Float32Array ? [e] : e.ch,
+    r = 0;
+  for (let e of n) r = Math.max(r, ne(e));
+  if (r > 1e-9) for (let e of n) ee(e, t / r);
+  return e;
+}
+function A(e, t) {
+  let n = 1 / Math.tanh(t);
+  for (let r = 0; r < e.length; r++) e[r] = Math.tanh(e[r] * t) * n;
+  return e;
+}
+function j(e, t, n, r, i = 1, a = 0) {
+  let o = ((r + 1) * Math.PI) / 4;
+  (O(e, n, Math.cos(o) * i, a), O(t, n, Math.sin(o) * i, a));
+}
+function re(e, t, n, r, i, a = 3e3) {
+  let o = Math.max(1, Math.round(n * t)),
+    c = new Float32Array(o),
+    l = 0,
+    u = 0,
+    d = 1 - Math.exp((-s * a) / t);
+  for (let t = 0; t < e.length; t++) {
+    let n = c[l];
+    ((u += d * (n - u)),
+      (c[l] = e[t] + u * r),
+      (e[t] += n * i),
+      (l = (l + 1) % o));
+  }
+  return e;
+}
+function ie(e, t, n = {}) {
+  let r = n.size ?? 0.7,
+    i = n.damp ?? 0.4,
+    a = n.wet ?? 0.3,
+    o = n.dry ?? 1,
+    s = n.tail ?? 1.5,
+    c = Math.round((n.predelay ?? 0.01) * t),
+    l = n.width ?? 1,
+    u = e.length + Math.round(s * t),
+    d = new Float32Array(u),
+    f = new Float32Array(u),
+    p = t / 44100,
+    m = [1116, 1188, 1277, 1356, 1422, 1491, 1557, 1617],
+    h = [556, 441, 341, 225],
+    g = 0.28 + 0.7 * r,
+    _ = i * 0.4,
+    v = 1 - _,
+    y = (t, n) => {
+      let r = m.map((e) => ({
+          buf: new Float32Array(Math.round((e + t) * p)),
+          i: 0,
+          f: 0,
+        })),
+        i = h.map((e) => ({
+          buf: new Float32Array(Math.round((e + t) * p)),
+          i: 0,
+        }));
+      for (let t = 0; t < u; t++) {
+        let a = t - c,
+          o = a >= 0 && a < e.length ? e[a] * 0.015 : 0,
+          s = 0;
+        for (let e of r) {
+          let t = e.buf[e.i];
+          ((e.f = t * v + e.f * _),
+            (e.buf[e.i] = o + e.f * g),
+            ++e.i >= e.buf.length && (e.i = 0),
+            (s += t));
+        }
+        for (let e of i) {
+          let t = e.buf[e.i],
+            n = -s + t;
+          ((e.buf[e.i] = s + t * 0.5),
+            ++e.i >= e.buf.length && (e.i = 0),
+            (s = n));
+        }
+        n[t] = s;
+      }
+    };
+  (y(0, d), y(23, f));
+  let b = a * (l / 2 + 0.5),
+    x = a * ((1 - l) / 2);
+  for (let t = 0; t < u; t++) {
+    let n = d[t],
+      r = f[t],
+      i = t < e.length ? e[t] * o : 0;
+    ((d[t] = n * b + r * x + i), (f[t] = r * b + n * x + i));
+  }
+  return [d, f];
+}
+function ae(e, t = {}) {
+  let [n, r] = e.ch.length > 1 ? e.ch : [e.ch[0], e.ch[0]],
+    i = new Float32Array(n.length);
+  for (let e = 0; e < i.length; e++) i[e] = (n[e] + r[e]) * 0.5;
+  let [a, o] = ie(i, e.sr, { ...t, dry: 0 }),
+    s = t.dry ?? 1;
+  return (O(a, n, s), O(o, r, s), { sr: e.sr, ch: [a, o] });
+}
+function oe(e, t, n) {
+  let r = Math.round(n * t),
+    i = e.length - r,
+    a = e.slice(0, i);
+  for (let t = 0; t < r; t++) {
+    let n = t / r,
+      o = Math.sin((n * Math.PI) / 2),
+      s = Math.cos((n * Math.PI) / 2);
+    a[t] = e[t] * o + e[i + t] * s;
+  }
+  return a;
+}
+function se(e, t, n, r = []) {
+  let i = Math.max(1, Math.round(t * e)),
+    a = Math.exp(((n / 3) * Math.log(0.001)) / i),
+    o = Math.round(0.004 * e),
+    s = [];
+  for (let t = 0; t < 2; t++) {
+    let n = new Float32Array(i),
+      c = 0,
+      l = 1,
+      u = 0.25,
+      d = 1.2 / e,
+      f = 12345 + t * 777;
+    for (let e = 0; e < i; e++) {
+      f = (f * 1664525 + 1013904223) >>> 0;
+      let t = (f / 4294967296) * 2 - 1;
+      (u < 0.97 && (u += d),
+        (c = c * u + t * (1 - u)),
+        (n[e] = c * l * (e < o ? e / o : 1)),
+        (l *= a));
+    }
+    for (let o of r) {
+      let r = Math.round((o + t * 0.007) * e);
+      r < i && (n[r] += 0.6 * a ** +r);
+    }
+    s.push(n);
+  }
+  return { sr: e, ch: s };
+}
+function ce(e, t, n) {
+  if (n >= t) return e;
+  let r = e.slice();
+  (b(r, t, `lp`, n * 0.45, 0.54), b(r, t, `lp`, n * 0.45, 1.31));
+  let i = Math.max(1, Math.floor((e.length * n) / t)),
+    a = new Float32Array(i),
+    o = t / n;
+  for (let e = 0; e < i; e++) {
+    let t = e * o,
+      n = Math.floor(t),
+      i = t - n;
+    a[e] = r[n] * (1 - i) + (r[n + 1] ?? r[n]) * i;
+  }
+  return a;
+}
+function le(e, t, n) {
+  let r = e.ch;
+  if (n && r.length > 1) {
+    let e = new Float32Array(r[0].length);
+    for (let t = 0; t < e.length; t++) e[t] = (r[0][t] + r[1][t]) * 0.5;
+    r = [e];
+  }
+  return e.sr <= t
+    ? { sr: e.sr, ch: r }
+    : { sr: t, ch: r.map((n) => ce(n, e.sr, t)) };
+}
+function ue(e, t, n, r, i = {}) {
+  let a = new Float32Array(e),
+    o = t / n - 0.5,
+    s = Math.max(2, Math.floor(o)),
+    c = o - s,
+    l = (1 - c) / (1 + c),
+    u = new Float32Array(s + 2),
+    d = i.bright ?? 0.5,
+    f = i.excite ?? p(s, r),
+    m = 0,
+    h = 0.1 + 0.9 * d;
+  for (let e = 0; e < s; e++) ((m += h * (f[e % f.length] - m)), (u[e] = m));
+  let g = Math.max(1, Math.round(s * (i.pick ?? 0.18)));
+  for (let e = s - 1; e >= g; e--) u[e] -= u[e - g] * 0.9;
+  let _ = (i.decay ?? 0.996) ** (440 / n / 2 + 0.5),
+    v = 0,
+    y = 0,
+    b = 0,
+    x = 0.5 * (1 - d * 0.4);
+  for (let t = 0; t < e; t++) {
+    let e = u[v],
+      n = u[(v + 1) % s],
+      r = (e * (1 - x) + n * x) * _,
+      i = l * r + y - l * b;
+    ((y = r), (b = i), (r = i), (u[v] = r), (a[t] = e), (v = (v + 1) % s));
+  }
+  return a;
+}
+var de = {
+  a: [800, 1200, 2600, 3400],
+  e: [480, 1900, 2550, 3500],
+  i: [300, 2300, 3e3, 3700],
+  o: [520, 880, 2500, 3300],
+  u: [330, 800, 2300, 3300],
+  ə: [520, 1450, 2500, 3400],
+  æ: [700, 1650, 2500, 3500],
+};
+function fe(e, t, n, r, i, a = {}) {
+  let o = a.breath ?? 0.08,
+    s = a.jitter ?? 0.01,
+    c = a.scale ?? 1,
+    l = a.rough ?? 0,
+    d = new Float32Array(e),
+    f = 0,
+    p = 0,
+    m = 0;
+  for (let r = 0; r < e; r++) {
+    let e = r / t;
+    r & 63 || (p = p * 0.7 + i.bi() * s * 0.3);
+    let a = u(n, e) * (1 + p);
+    l > 0 && (a *= m ? 1 + l * 0.09 : 1 - l * 0.09);
+    let c = a / t,
+      h = 0.6,
+      g =
+        f < h
+          ? 0.5 * (1 - Math.cos((Math.PI * f) / h))
+          : f < 0.6799999999999999
+            ? Math.cos((Math.PI / 2) * ((f - h) / 0.08))
+            : 0;
+    ((g -= 0.35),
+      (d[r] = g * (1 + (l > 0 ? l * i.bi() * 0.3 : 0)) + i.bi() * o),
+      (f += c),
+      f >= 1 && (--f, (m ^= 1)));
+  }
+  for (let t = e - 1; t > 0; t--) d[t] = d[t] - 0.95 * d[t - 1];
+  let h = new Float32Array(e),
+    g = [90, 110, 150, 200],
+    _ = [1, 0.6, 0.28, 0.12];
+  for (let e = 0; e < 4; e++) {
+    let n = d.slice();
+    (b(
+      n,
+      t,
+      `bp`,
+      (t) => r(t)[e] * c,
+      (t) => (r(t)[e] * c) / g[e],
+    ),
+      O(h, n, _[e] * (e === 0 ? 1 : 1.4)));
+  }
+  if (a.amp) for (let n = 0; n < e; n++) h[n] *= a.amp(n / t);
+  return h;
+}
+function pe(e) {
+  let t = [0, 0, 0, 0];
+  return (n) => {
+    let r = 0;
+    for (; r + 1 < e.length && n >= e[r + 1][0];) r++;
+    let i = de[e[r][1]],
+      a = de[e[Math.min(e.length - 1, r + 1)][1]],
+      o = e[r][0],
+      s = e[Math.min(e.length - 1, r + 1)][0],
+      c = s > o ? Math.min(1, Math.max(0, (n - o) / (s - o))) : 0,
+      l = c * c * (3 - 2 * c);
+    for (let e = 0; e < 4; e++) t[e] = i[e] + (a[e] - i[e]) * l;
+    return t;
+  };
+}
+function me(e, t, n = 1, r) {
+  let i = [205.3, 304.4, 369.6, 522.7, 540, 800],
+    a = new Float32Array(e);
+  for (let o of i)
+    O(
+      a,
+      _(e, t, o * n * (r ? 1 + r.bi() * 0.01 : 1), `square`, r ? r.next() : 0),
+      1 / 6,
+    );
+  return a;
+}
+var he = {
+  room: [0.55, 3.6, [0.011, 0.019]],
+  store: [0.5, 3.8, [0.009, 0.017, 0.026]],
+  hall: [2.1, 2.6, [0.028, 0.05, 0.08]],
+  temple: [2.6, 2.4, [0.035, 0.064]],
+  station: [1.7, 2.8, [0.045, 0.09, 0.14]],
+};
+function ge(e, t) {
+  let n = t === `low`;
+  if (e === `world`) return [n ? 0.9 : 1.6, 3.2, [0.045, 0.09, 0.14]];
+  if (e === `radio`) return [n ? 1.4 : 2.4, 2.6, [0.03, 0.061]];
+  let r = he[e] ?? he.room;
+  return [n ? Math.min(r[0], 1.2) : r[0], r[1], r[2]];
+}
+var _e = [48e3, 44100],
+  M = 44100,
+  N = 32e3,
+  P = 22050;
+function F(e, t, n, r, i, a, o = 0.001) {
+  return D(
+    _(Math.round(t * e), e, (e) => r + (n - r) * Math.exp(-e / i), `sine`),
+    e,
+    o,
+    a,
+  );
+}
+function I(e, t, n, r, i, a, o, s, c = 0) {
+  let l = p(Math.round(t * e), n);
+  return (b(l, e, r, i, a), D(l, e, o, s, c));
+}
+function L(e, t, n, r, i = 1) {
+  return v(Math.round(t * e), e, n, [[1, i, r]]);
+}
+function ve(e, t, n = 0.6, r = 0.25) {
+  let i = v(Math.round(n * e), e, t, [
+      [1, 1, r],
+      [3.93, 0.28, r * 0.25],
+      [9.2, 0.06, r * 0.08],
+    ]),
+    a = Math.round(0.002 * e);
+  for (let e = 0; e < a; e++) i[e] *= e / a;
+  return i;
+}
+function ye(e, t, n = 1.5, r = 1) {
+  let i = v(Math.round(n * e), e, t, [
+      [1, 1, r],
+      [4, 0.22, r * 0.18],
+      [10.1, 0.05, r * 0.05],
+    ]),
+    a = Math.round(0.002 * e);
+  for (let e = 0; e < a; e++) i[e] *= e / a;
+  return i;
+}
+function be(e, t, n = 2, r = 1.2) {
+  return v(Math.round(n * e), e, t, [
+    [1, 1, r],
+    [2, 0.5, r * 0.6],
+    [2.76, 0.35, r * 0.4],
+    [5.4, 0.18, r * 0.2],
+    [8.93, 0.08, r * 0.1],
+  ]);
+}
+function xe(e, t, n, r, i = 1) {
+  let a = Math.round(n * e),
+    o = new Float32Array(a);
+  for (let n = 0; n < 3; n++) {
+    let i = l((n - 1) * 7 + r.bi() * 2);
+    O(
+      o,
+      _(
+        a,
+        e,
+        (e) => t * i * (1 + 0.004 * Math.sin(s * 5.2 * e + n)),
+        `saw`,
+        r.next(),
+      ),
+      0.33,
+    );
+  }
+  return (
+    x(
+      o,
+      e,
+      (e) => 300 + 3200 * i * Math.min(1, e / 0.08) * Math.exp(-e / 1.2) + 500,
+      0.9,
+    ),
+    E(o, e, [0, 0, 0.03, 1, 0.15, 0.8, n - 0.12, 0.7, n, 0]),
+    o
+  );
+}
+function Se(e, t, n, r, i = 1800, a = 0.25) {
+  let o = Math.round(n * e),
+    s = new Float32Array(o),
+    c = new Float32Array(o);
+  for (let n of t)
+    for (let t = 0; t < 4; t++)
+      j(
+        s,
+        c,
+        _(o, e, n * l(r.bi() * 12), `saw`, r.next()),
+        t % 2 ? 0.6 : -0.6,
+        0.18,
+      );
+  (x(s, e, i, 0.6), x(c, e, i, 0.6));
+  let u = [0, 0, a, 1, n - 0.4, 0.8, n, 0];
+  return (E(s, e, u), E(c, e, u), { sr: e, ch: [s, c] });
+}
+function Ce(e, t, n, r) {
+  let i = v(Math.round(n * e), e, t, [
+    [1, 1, 0.9],
+    [1.5, 0.5, 0.6],
+    [1.99, 0.3, 0.4],
+    [2.44, 0.15, 0.3],
+  ]);
+  return (O(i, I(e, n, r, `lp`, 600, 0.7, 0.001, 0.03), 0.5), i);
+}
+function we(e, t, n) {
+  let r = Math.round(t * e),
+    i = me(r, e, 1.9, n);
+  return (
+    O(i, p(r, n), 0.6),
+    S(i, e, 4e3, 0.7),
+    x(i, e, 12e3, 0.7),
+    D(i, e, 0.002, t * 0.35)
+  );
+}
+function Te(e, t) {
+  return [d(t, e), d(t, e)];
+}
+var Ee = {
+    ui_click: (e) => {
+      let t = M,
+        n = L(t, 0.06, 2300, 0.007);
+      return (
+        O(n, L(t, 0.06, 3450, 0.004), 0.4),
+        O(n, I(t, 0.01, e, `hp`, 3500, 0.7, 3e-4, 0.0015), 0.3),
+        f(k(n, 0.8), t)
+      );
+    },
+    ui_hover: (e) => {
+      let t = M,
+        n = L(t, 0.04, 3100, 0.004);
+      return (
+        O(n, I(t, 0.01, e, `hp`, 5e3, 0.7, 3e-4, 0.001), 0.2),
+        f(k(n, 0.5), t)
+      );
+    },
+    ui_back: () => {
+      let e = M,
+        t = d(0.35, e);
+      return (
+        O(t, ve(e, c(79), 0.3, 0.09)),
+        O(t, ve(e, c(74), 0.28, 0.1), 0.9, 0.065 * e),
+        f(k(t, 0.7), e)
+      );
+    },
+    ui_confirm: (e) => {
+      let t = M,
+        n = d(0.6, t);
+      return (
+        O(n, ye(t, c(84), 0.5, 0.25)),
+        O(n, ye(t, c(91), 0.5, 0.3), 0.9, 0.06 * t),
+        O(n, I(t, 0.3, e, `hp`, 7e3, 0.7, 0.01, 0.06, 0.06), 0.05),
+        f(k(n, 0.75), t)
+      );
+    },
+    phone_open: (e) => {
+      let t = M,
+        n = d(0.5, t),
+        r = p(Math.round(0.2 * t), e);
+      return (
+        C(r, t, (e) => 700 + (e / 0.2) * 4e3, 1.2),
+        E(r, t, [0, 0, 0.12, 1, 0.2, 0]),
+        O(n, r, 0.25),
+        [88, 92, 95].forEach((e, r) =>
+          O(n, ve(t, c(e), 0.25, 0.07), 0.7, (0.1 + r * 0.055) * t),
+        ),
+        f(k(n, 0.7), t)
+      );
+    },
+    phone_ring: () => {
+      let e = N,
+        t = d(2.6, e),
+        n = [76, 79, 83, 81, 79, 76, 74, 76];
+      for (let r = 0; r < 2; r++)
+        n.forEach((n, i) =>
+          O(t, ve(e, c(n), 0.45, 0.14), 0.8, (r * 1.25 + i * 0.13) * e),
+        );
+      return f(k(t, 0.75), e);
+    },
+    phone_notify: () => {
+      let e = M,
+        t = d(0.6, e);
+      return (
+        O(t, ye(e, c(88), 0.5, 0.2)),
+        O(t, ye(e, c(95), 0.5, 0.25), 0.8, 0.09 * e),
+        f(k(t, 0.7), e)
+      );
+    },
+    money: (e) => {
+      let t = N,
+        [n, r] = Te(t, 1.1),
+        i = I(t, 0.08, e, `bp`, 1400, 2, 5e-4, 0.012);
+      (O(i, L(t, 0.08, 620, 0.02), 0.5),
+        j(n, r, i, 0, 0.8),
+        j(
+          n,
+          r,
+          v(Math.round(0.9 * t), t, 2637, [
+            [1, 1, 0.45],
+            [2.41, 0.5, 0.25],
+            [3.87, 0.3, 0.12],
+            [5.3, 0.15, 0.06],
+          ]),
+          0.1,
+          0.55,
+          0.05 * t,
+        ));
+      for (let i = 0; i < 9; i++) {
+        let i = e.range(3200, 7200);
+        j(
+          n,
+          r,
+          v(Math.round(0.12 * t), t, i, [
+            [1, 1, 0.03],
+            [1.52, 0.5, 0.02],
+          ]),
+          e.bi() * 0.6,
+          e.range(0.1, 0.25),
+          (0.08 + e.next() * 0.3) * t,
+        );
+      }
+      return k({ sr: t, ch: [n, r] }, 0.85);
+    },
+    coin: (e) => {
+      let t = M,
+        n = d(0.35, t),
+        r = 4200 + e.bi() * 300,
+        i = () =>
+          v(Math.round(0.2 * t), t, r, [
+            [1, 1, 0.06],
+            [1.62, 0.6, 0.04],
+            [2.9, 0.3, 0.02],
+          ]);
+      return (
+        O(n, i()),
+        O(n, i(), 0.35, 0.07 * t),
+        O(n, i(), 0.12, 0.12 * t),
+        f(k(n, 0.7), t)
+      );
+    },
+    pickup: (e) => {
+      let t = M,
+        n = d(0.8, t);
+      return (
+        [72, 76, 79, 84, 88].forEach((e, r) =>
+          O(n, ye(t, c(e), 0.5, 0.18), 0.7, r * 0.045 * t),
+        ),
+        O(n, I(t, 0.5, e, `hp`, 8e3, 0.7, 0.05, 0.12), 0.04),
+        re(n, t, 0.11, 0.3, 0.25),
+        f(k(n, 0.75), t)
+      );
+    },
+    checkpoint: () => {
+      let e = M,
+        t = d(0.9, e);
+      return (
+        O(t, be(e, c(88), 0.8, 0.35), 0.7),
+        O(t, be(e, c(95), 0.8, 0.4), 0.6, 0.07 * e),
+        O(t, ye(e, c(100), 0.6, 0.3), 0.4, 0.14 * e),
+        f(k(t, 0.8), e)
+      );
+    },
+    mission_start: (e) => {
+      let t = N,
+        n = Math.round(2.6 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n),
+        a = F(t, 1.2, 110, 58, 0.05, 0.35);
+      (O(a, I(t, 0.2, e, `lp`, 900, 0.8, 0.001, 0.04), 0.5), j(r, i, a, 0, 1));
+      let o = v(
+        n,
+        t,
+        130,
+        [
+          [1, 1, 1.4],
+          [1.47, 0.6, 1],
+          [2.09, 0.5, 0.8],
+          [2.76, 0.3, 0.6],
+          [3.58, 0.2, 0.4],
+        ],
+        3,
+        e,
+      );
+      (E(o, t, [0, 0, 0.35, 1, 2.6, 1]), j(r, i, o, 0, 0.35));
+      let s = Se(t, [c(57), c(64), c(69), c(71), c(76)], 2.4, e, 1400, 0.5);
+      return (
+        O(r, s.ch[0], 0.5),
+        O(i, s.ch[1], 0.5),
+        [69, 72, 74, 76, 79, 81].forEach((e, n) => {
+          let a = ve(t, c(e), 0.6, 0.2);
+          j(r, i, a, -0.3 + n * 0.12, 0.5, (0.12 + n * 0.07) * t);
+        }),
+        k(ae({ sr: t, ch: [r, i] }, { size: 0.8, wet: 0.35, tail: 1 }), 0.9)
+      );
+    },
+    mission_pass: (e) => {
+      let t = N,
+        n = 4.2,
+        r = Math.round(n * t),
+        i = new Float32Array(r),
+        a = new Float32Array(r);
+      for (let [n, r, o] of [
+        [[53, 57, 60, 65], 0, 0.42],
+        [[55, 59, 62, 67], 0.42, 0.42],
+        [[48, 55, 60, 64, 67, 74], 0.9, 3],
+      ])
+        n.forEach((s, l) =>
+          j(
+            i,
+            a,
+            xe(t, c(s), o, e, r > 0.8 ? 1.2 : 0.8),
+            (l / n.length - 0.5) * 0.8,
+            0.22,
+            r * t,
+          ),
+        );
+      for (let [n, r, o] of [
+        [81, 0, 0.4],
+        [83, 0.42, 0.3],
+        [79, 0.72, 0.06],
+        [81, 0.78, 0.06],
+        [84, 0.84, 0.06],
+        [86, 0.87, 0.05],
+        [88, 0.9, 2.6],
+      ])
+        j(i, a, xe(t, c(n), o, e, 1.3), 0.15, 0.2, r * t);
+      for (let [e, n] of [
+        [91, 0.9],
+        [96, 1.05],
+        [100, 1.2],
+      ])
+        j(i, a, be(t, c(e), 2, 0.8), 0.4, 0.1, n * t);
+      (j(i, a, Ce(t, c(36), 2, e), 0, 0.9, 0.9 * t),
+        j(i, a, Ce(t, c(43), 1, e), 0, 0.5, 0.42 * t),
+        j(i, a, we(t, 2.5, e), -0.3, 0.25, 0.9 * t));
+      let o = [0, 1, 3, 1, n, 0];
+      return (
+        E(i, t, o),
+        E(a, t, o),
+        k(ae({ sr: t, ch: [i, a] }, { size: 0.75, wet: 0.3, tail: 1.2 }), 0.92)
+      );
+    },
+    mission_fail: (e) => {
+      let t = P,
+        n = Math.round(2.8 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      [
+        [63, 0],
+        [62, 0.3],
+        [61, 0.6],
+        [60, 0.9],
+      ].forEach(([n, a], o) => {
+        let s = xe(t, c(n - 12), o === 3 ? 1.8 : 0.34, e, 0.35);
+        j(r, i, s, 0, 0.5, a * t);
+      });
+      let a = Se(t, [c(48), c(49), c(55), c(61)], 1.9, e, 900, 0.1);
+      return (
+        O(r, a.ch[0], 0.35, 0.9 * t),
+        O(i, a.ch[1], 0.35, 0.9 * t),
+        j(r, i, F(t, 1.5, 80, 38, 0.1, 0.5), 0, 0.9, 0.9 * t),
+        k(ae({ sr: t, ch: [r, i] }, { size: 0.8, wet: 0.35, tail: 1 }), 0.88)
+      );
+    },
+    wasted: (e) => {
+      let t = P,
+        n = Math.round(4 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      j(r, i, we(t, 0.6, e).reverse(), 0, 0.35);
+      let a = 0.55,
+        o = F(t, 2.5, 90, 30, 0.2, 0.8);
+      (A(o, 2),
+        j(r, i, o, 0, 1, a * t),
+        j(r, i, I(t, 0.3, e, `lp`, 3e3, 0.7, 0.001, 0.05), 0, 0.5, a * t));
+      for (let n = 0; n < 3; n++) {
+        let o = _(
+          Math.round(3.3 * t),
+          t,
+          (e) => (110 - 55 * Math.min(1, e / 3)) * l((n - 1) * 14),
+          `saw`,
+          e.next(),
+        );
+        (x(o, t, (e) => 1200 * Math.exp(-e / 1.2) + 150, 0.8),
+          E(o, t, [0, 0, 0.2, 1, 3.3, 0]),
+          j(r, i, o, (n - 1) * 0.7, 0.18, a * t));
+      }
+      return (
+        j(r, i, be(t, 220, 3, 1.4), 0.2, 0.12, a * t),
+        k(ae({ sr: t, ch: [r, i] }, { size: 0.9, wet: 0.4, tail: 1.2 }), 0.92)
+      );
+    },
+    busted: (e) => {
+      let t = P,
+        n = Math.round(3.4 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n),
+        a = _(
+          Math.round(0.5 * t),
+          t,
+          (e) => (e < 0.2 ? 960 : 740) * (1 - 0.3 * Math.max(0, e - 0.25)),
+          `square`,
+        );
+      (x(a, t, 3e3),
+        E(a, t, [0, 0, 0.01, 1, 0.45, 0.8, 0.5, 0]),
+        j(r, i, a, 0, 0.25));
+      let o = 0.5,
+        s = F(t, 2.2, 85, 32, 0.15, 0.7);
+      (A(s, 2), j(r, i, s, 0, 1, o * t));
+      let l = Se(t, [c(45), c(51), c(56), c(62)], 2.6, e, 1100, 0.05);
+      return (
+        O(r, l.ch[0], 0.4, o * t),
+        O(i, l.ch[1], 0.4, o * t),
+        j(r, i, we(t, 2, e), 0, 0.2, o * t),
+        k(ae({ sr: t, ch: [r, i] }, { size: 0.85, wet: 0.35, tail: 1 }), 0.9)
+      );
+    },
+    wanted_up: (e) => {
+      let t = N,
+        n = Math.round(1.3 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      [0, 0.14].forEach((n, a) => {
+        let o = xe(t, c(50 + a), 0.18, e, 1.4);
+        (O(o, xe(t, c(56 + a), 0.18, e, 1.4), 0.8),
+          j(r, i, o, 0, 0.5, n * t),
+          j(r, i, F(t, 0.4, 120, 50, 0.03, 0.12), 0, 0.7, n * t));
+      });
+      let a = p(Math.round(0.5 * t), e);
+      (C(a, t, (e) => 800 + 5e3 * e * 2, 2),
+        E(a, t, [0, 0, 0.45, 1, 0.5, 0]),
+        j(r, i, a, 0, 0.15, 0.25 * t));
+      let o = xe(t, c(62), 0.5, e, 1.6);
+      return (
+        O(o, xe(t, c(68), 0.5, e, 1.6), 0.8),
+        j(r, i, o, 0, 0.5, 0.75 * t),
+        k(ae({ sr: t, ch: [r, i] }, { size: 0.6, wet: 0.25, tail: 0.6 }), 0.85)
+      );
+    },
+    wanted_lost: (e) => {
+      let t = N,
+        n = Se(t, [c(60), c(64), c(67), c(71), c(74)], 2, e, 2400, 0.35),
+        [r, i] = n.ch;
+      return (
+        [79, 83, 86].forEach((e, n) =>
+          j(
+            r,
+            i,
+            ye(t, c(e), 1.2, 0.6),
+            n * 0.3 - 0.3,
+            0.2,
+            (0.2 + n * 0.12) * t,
+          ),
+        ),
+        k(ae(n, { size: 0.8, wet: 0.35, tail: 1 }), 0.8)
+      );
+    },
+    punch: (e, t) => {
+      let n = M,
+        r = F(n, 0.25, 160 + t * 25, 55, 0.02, 0.07);
+      return (
+        O(r, I(n, 0.1, e, `lp`, 2500, 0.7, 5e-4, 0.012), 0.7),
+        O(r, I(n, 0.05, e, `bp`, 900, 1.5, 3e-4, 0.006), 0.5),
+        A(r, 2.5),
+        f(k(r, 0.9), n)
+      );
+    },
+    punch_whoosh: (e, t) => {
+      let n = M,
+        r = 0.22 + t * 0.04,
+        i = p(Math.round(r * n), e);
+      return (
+        C(
+          i,
+          n,
+          (e) => 450 + 2200 * Math.sin(Math.PI * Math.min(1, e / r)),
+          1.4,
+        ),
+        E(i, n, [0, 0, r * 0.55, 1, r, 0]),
+        f(k(i, 0.7), n)
+      );
+    },
+    gunshot: (e, t) => {
+      let n = M,
+        r = Math.round(1.1 * n),
+        i = new Float32Array(r);
+      (O(i, I(n, 0.02, e, `hp`, 2500, 0.7, 1e-4, 0.0015), 1.2),
+        O(i, I(n, 0.25, e, `lp`, 5200 - t * 600, 0.7, 3e-4, 0.028), 1),
+        O(i, F(n, 0.3, 140, 48, 0.012, 0.06), 0.9),
+        O(i, L(n, 0.05, 3400 + t * 200, 0.006), 0.15),
+        A(i, 3.5));
+      let a = i.slice(0, Math.round(0.3 * n)),
+        o = new Float32Array(r),
+        s = new Float32Array(r);
+      j(o, s, i, 0, 1);
+      let c = [
+        [0.065 + t * 0.01, 0.34, -0.6],
+        [0.12, 0.26, 0.7],
+        [0.21, 0.2, -0.3],
+        [0.33, 0.13, 0.5],
+        [0.5, 0.08, -0.7],
+      ];
+      for (let [e, t, r] of c) {
+        let i = a.slice();
+        (x(i, n, 3500 - e * 4e3), j(o, s, i, r, t, e * n));
+      }
+      return k({ sr: n, ch: [o, s] }, 0.95);
+    },
+    reload: (e) => {
+      let t = M,
+        n = d(1, t),
+        r = (r, i, a, o = 0.008) => {
+          let s = I(t, 0.06, e, `bp`, r, 2.5, 2e-4, o);
+          (O(s, L(t, 0.06, r * 1.3, o * 1.5), 0.4), O(n, s, i, a * t));
+        };
+      r(2600, 0.6, 0);
+      let i = p(Math.round(0.12 * t), e);
+      return (
+        C(i, t, 2200, 2),
+        E(i, t, [0, 0, 0.02, 1, 0.12, 0]),
+        O(n, i, 0.18, 0.04 * t),
+        r(900, 0.9, 0.42, 0.015),
+        O(n, F(t, 0.1, 300, 180, 0.01, 0.02), 0.5, 0.42 * t),
+        r(3100, 0.7, 0.68),
+        r(2200, 0.9, 0.78, 0.012),
+        f(k(n, 0.8), t)
+      );
+    },
+    empty_click: (e) => {
+      let t = M,
+        n = I(t, 0.06, e, `bp`, 2800, 3, 1e-4, 0.004);
+      return (O(n, L(t, 0.06, 2800, 0.008), 0.5), f(k(n, 0.7), t));
+    },
+    bullet_impact: (e, t) => {
+      let n = M,
+        r = d(0.5, n);
+      (O(r, I(n, 0.15, e, `bp`, 2400, 1.2, 2e-4, 0.012)),
+        O(r, I(n, 0.1, e, `lp`, 900, 0.8, 5e-4, 0.02), 0.6));
+      for (let t = 0; t < 5; t++)
+        O(
+          r,
+          I(n, 0.02, e, `hp`, 3e3, 0.7, 2e-4, 0.002),
+          0.25,
+          e.range(0.02, 0.18) * n,
+        );
+      if (t === 2) {
+        let e = _(
+          Math.round(0.35 * n),
+          n,
+          (e) => 3800 - (e / 0.35) * 2200,
+          `sine`,
+        );
+        (E(e, n, [0, 0, 0.01, 1, 0.35, 0]), O(r, e, 0.25, 0.01 * n));
+      }
+      return f(k(r, 0.85), n);
+    },
+    explosion: (e, t) => {
+      let n = P,
+        r = 4.2,
+        i = Math.round(r * n),
+        a = new Float32Array(i),
+        o = new Float32Array(i);
+      j(a, o, I(n, 0.1, e, `hp`, 1500, 0.7, 2e-4, 0.01), 0, 0.9);
+      let s = F(n, 2.5, 62, 26, 0.25, 0.65, 0.003);
+      (A(s, 2.5), j(a, o, s, 0, 1.2));
+      for (let t of [-1, 1]) {
+        let s = h(i, e);
+        (x(s, n, (e) => 3500 * Math.exp(-e / 0.5) + 180, 0.7),
+          D(s, n, 0.004, 0.9),
+          j(a, o, s, t * 0.6, 1.4));
+        let c = h(i, e);
+        (x(c, n, 160, 0.7),
+          E(c, n, [0, 0, 0.3, 1, r, 0]),
+          j(a, o, c, t * 0.8, 0.9));
+      }
+      for (let r = 0; r < 16 + t * 4; r++) {
+        let t = e.range(0.25, 2.6);
+        j(
+          a,
+          o,
+          T(I(n, 0.4, e, `hp`, 800, 0.7, 3e-4, 0.004), n, [
+            [e.range(500, 2500), 1, e.range(0.05, 0.25)],
+            [e.range(900, 4e3), 0.6, e.range(0.03, 0.1)],
+          ]),
+          e.bi() * 0.9,
+          e.range(0.2, 0.7) * Math.exp(-t / 1.5),
+          t * n,
+        );
+      }
+      for (let t = 0; t < 40; t++) {
+        let t = e.range(0.1, 2);
+        j(
+          a,
+          o,
+          I(n, 0.05, e, `bp`, e.range(1500, 5e3), 1, 2e-4, 0.003),
+          e.bi(),
+          e.range(0.05, 0.25),
+          t * n,
+        );
+      }
+      return k({ sr: n, ch: [a, o] }, 0.97);
+    },
+    car_door: (e, t) => {
+      let n = M,
+        r = d(0.45, n);
+      return (
+        t === 0
+          ? (O(r, I(n, 0.05, e, `bp`, 2200, 2, 2e-4, 0.006), 0.5),
+            O(r, F(n, 0.3, 120, 70, 0.02, 0.07), 1, 0.004 * n),
+            O(r, I(n, 0.2, e, `lp`, 500, 0.7, 0.001, 0.05), 0.8, 0.004 * n),
+            O(r, I(n, 0.1, e, `bp`, 1400, 3, 0.001, 0.02), 0.12, 0.05 * n))
+          : (O(r, I(n, 0.05, e, `bp`, 1800, 2.5, 2e-4, 0.008), 0.7),
+            O(r, I(n, 0.05, e, `bp`, 2600, 2.5, 2e-4, 0.006), 0.5, 0.09 * n),
+            O(r, F(n, 0.2, 180, 110, 0.02, 0.04), 0.4, 0.09 * n)),
+        f(k(r, 0.85), n)
+      );
+    },
+    crash_light: (e, t) => {
+      let n = M,
+        r = d(0.7, n);
+      O(r, F(n, 0.3, 110 + t * 20, 55, 0.03, 0.06), 0.9);
+      let i = I(n, 0.2, e, `bp`, 1200, 0.8, 3e-4, 0.03);
+      return (
+        O(r, i, 0.7),
+        O(
+          r,
+          T(i, n, [
+            [e.range(600, 900), 0.6, 0.12],
+            [e.range(1100, 1500), 0.5, 0.08],
+            [e.range(1800, 2600), 0.4, 0.05],
+          ]),
+          0.9,
+        ),
+        A(r, 1.8),
+        f(k(r, 0.9), n)
+      );
+    },
+    crash_heavy: (e, t) => {
+      let n = N,
+        r = Math.round(1.9 * n),
+        i = new Float32Array(r),
+        a = new Float32Array(r),
+        o = F(n, 0.6, 95, 38, 0.04, 0.15);
+      (A(o, 2.5), j(i, a, o, 0, 1));
+      let s = p(Math.round(0.6 * n), e),
+        c = 0;
+      for (let t = 0; t < s.length; t++)
+        (t & 127 ||
+          (c =
+            Math.max(0, c * 0.6 + (e.next() < 0.35 ? e.next() : 0)) *
+            Math.exp(-t / n / 0.25)),
+          (s[t] *= c));
+      (C(s, n, 1600, 0.6), j(i, a, s, -0.2, 1.2));
+      let l = [];
+      for (let t = 0; t < 9; t++)
+        l.push([e.range(280, 3200), e.range(0.3, 1), e.range(0.15, 0.7)]);
+      j(i, a, T(s, n, l), 0.25, 0.8);
+      for (let r = 0; r < 10 + t * 6; r++) {
+        let t = e.range(0.03, 0.5);
+        j(
+          i,
+          a,
+          L(n, 0.1, e.range(3500, 8500), e.range(0.01, 0.04)),
+          e.bi() * 0.8,
+          e.range(0.05, 0.18),
+          t * n,
+        );
+      }
+      let u = p(Math.round(1.2 * n), e);
+      return (
+        C(u, n, (e) => 1800 - 900 * e, 3),
+        E(u, n, [0, 0, 0.1, 1, 1.2, 0]),
+        j(i, a, u, 0.3, 0.12, 0.25 * n),
+        k({ sr: n, ch: [i, a] }, 0.95)
+      );
+    },
+    glass: (e) => {
+      let t = N,
+        n = Math.round(1.6 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      j(r, i, I(t, 0.1, e, `hp`, 2500, 0.7, 2e-4, 0.012), 0, 0.9);
+      for (let n = 0; n < 70; n++) {
+        let n = e.next() ** 2.2 * 1.2,
+          a = e.range(2600, 9500);
+        j(
+          r,
+          i,
+          v(Math.round(0.15 * t), t, a, [
+            [1, 1, e.range(0.01, 0.05)],
+            [2.3, 0.4, 0.01],
+          ]),
+          e.bi() * 0.9,
+          e.range(0.08, 0.4) * Math.exp(-n / 0.6),
+          n * t,
+        );
+      }
+      return k({ sr: t, ch: [r, i] }, 0.85);
+    },
+    horn_car: (e, t) => {
+      let n = M,
+        [r, i] = [
+          [415, 510],
+          [440, 554],
+          [392, 494],
+        ][t % 3],
+        a = t === 1 ? 0.22 : t === 2 ? 0.75 : 0.48,
+        o = Math.round((a + 0.06) * n),
+        s = new Float32Array(o);
+      for (let t of [r, i])
+        O(
+          s,
+          _(
+            o,
+            n,
+            (e) => t * (1 - 0.035 * Math.exp(-e / 0.02)),
+            `pulse`,
+            e.next(),
+            0.32,
+          ),
+          0.5,
+        );
+      return (
+        A(s, 2.2),
+        S(s, n, 280),
+        w(s, n, 2300, 1.2, 7),
+        x(s, n, 5200),
+        E(s, n, [0, 0, 0.012, 1, a, 0.95, a + 0.05, 0]),
+        f(k(s, 0.9), n)
+      );
+    },
+    horn_scooter: (e, t) => {
+      let n = M,
+        r = [375, 410, 350][t % 3],
+        i =
+          t === 1
+            ? [
+                [0, 0.1],
+                [0.16, 0.3],
+              ]
+            : t === 2
+              ? [[0, 0.42]]
+              : [[0, 0.2]],
+        a = i[i.length - 1][1] + 0.05,
+        o = Math.round(a * n),
+        s = new Float32Array(o);
+      for (let [e, t] of i) {
+        let i = _(Math.round((t - e + 0.03) * n), n, r, `pulse`, 0, 0.22);
+        (O(i, _(i.length, n, r * 2.01, `square`), 0.15),
+          E(i, n, [0, 0, 0.008, 1, t - e, 0.9, t - e + 0.025, 0]),
+          O(s, i, 1, e * n));
+      }
+      return (
+        A(s, 2.5),
+        S(s, n, 400),
+        w(s, n, 1800, 1.5, 6),
+        x(s, n, 4200),
+        f(k(s, 0.85), n)
+      );
+    },
+    horn_bus: (e, t) => {
+      let n = M,
+        r = t ? 0.5 : 0.95,
+        i = Math.round((r + 0.1) * n),
+        a = new Float32Array(i);
+      for (let t of [233, 294, 349])
+        O(
+          a,
+          _(
+            i,
+            n,
+            (e) => t * (0.9 + 0.1 * Math.min(1, e / 0.08)),
+            `saw`,
+            e.next(),
+          ),
+          0.35,
+        );
+      (A(a, 1.8), w(a, n, 850, 1, 6), x(a, n, 3200));
+      let o = p(i, e);
+      return (
+        S(o, n, 1500),
+        O(a, o, 0.04),
+        E(a, n, [0, 0, 0.07, 1, r, 0.9, r + 0.08, 0]),
+        f(k(a, 0.9), n)
+      );
+    },
+    tire_screech: (e, t) => {
+      let n = M,
+        r = 1.3,
+        i = Math.round(r * n),
+        a = 1050 + t * 180,
+        o = 0,
+        c = new Float32Array(i);
+      for (let r = 0; r < i; r++)
+        (r & 255 || (o = o * 0.9 + e.bi() * 0.1),
+          (c[r] = a * (1 + 0.06 * Math.sin((s * 0.8 * r) / n + t) + o * 0.05)));
+      let l = (e) => c[Math.min(57329, Math.floor(e * n))],
+        u = _(i, n, l, `saw`);
+      C(u, n, l, 9);
+      let d = _(i, n, (e) => l(e) * 2.02, `saw`);
+      C(d, n, (e) => l(e) * 2.02, 10);
+      let m = p(i, e);
+      C(m, n, l, 14);
+      let h = new Float32Array(i);
+      (O(h, u, 1), O(h, d, 0.4), O(h, m, 2.2));
+      for (let e = 0; e < i; e++)
+        h[e] *=
+          0.75 +
+          0.25 *
+            Math.sin((s * (34 + t * 7) * e) / n + Math.sin((s * 3 * e) / n));
+      return (E(h, n, [0, 0, 0.04, 1, 1, 0.9, r, 0]), f(k(h, 0.8), n));
+    },
+    scooter_start: (e) => {
+      let t = N,
+        n = 1.4,
+        r = d(n, t),
+        i = _(Math.round(0.45 * t), t, (e) => 38 + 25 * e, `saw`);
+      for (let e = 0; e < i.length; e++)
+        i[e] *= 0.6 + 0.4 * Math.sin((s * 9 * e) / t);
+      (O(i, _(i.length, t, 880, `sine`), 0.15),
+        C(i, t, 700, 0.8),
+        E(i, t, [0, 0, 0.03, 1, 0.42, 1, 0.45, 0]),
+        O(r, i, 0.6));
+      let a = 0.42,
+        o = 0.09;
+      for (; a < 1.3499999999999999;) {
+        let i = I(t, 0.08, e, `bp`, 420, 1.2, 0.001, 0.012);
+        (O(i, F(t, 0.08, 120, 70, 0.01, 0.015), 0.6),
+          O(r, i, 0.9 * Math.min(1, (n - a) * 3), a * t),
+          (a += o),
+          (o = Math.max(0.055, o * (a < 0.7 ? 0.8 : 1.05))));
+      }
+      return (A(r, 1.8), f(k(r, 0.8), t));
+    },
+    car_start: (e) => {
+      let t = N,
+        n = d(1.8, t),
+        r = _(Math.round(0.7 * t), t, 95, `saw`);
+      for (let e = 0; e < r.length; e++)
+        r[e] *= 0.45 + 0.55 * Math.max(0, Math.sin((s * 5.5 * e) / t));
+      (C(r, t, 600, 0.7),
+        E(r, t, [0, 0, 0.03, 1, 0.68, 1, 0.7, 0]),
+        O(n, r, 0.5));
+      let i = 0,
+        a = p(Math.round(1.2 * t), e),
+        o = new Float32Array(a.length);
+      for (let e = 0; e < o.length; e++) {
+        let n = e / t,
+          r =
+            25 + 40 * Math.exp(-(((n - 0.35) / 0.2) ** 2)) + 5 * Math.min(1, n);
+        ((i += r / t), (o[e] = (0.5 + 0.5 * Math.cos(s * i)) ** 6));
+      }
+      for (let e = 0; e < o.length; e++) a[e] *= o[e];
+      return (
+        x(a, t, 700, 1.5),
+        O(
+          a,
+          _(
+            a.length,
+            t,
+            (e) => 2 * (25 + 40 * Math.exp(-(((e - 0.35) / 0.2) ** 2))),
+            `saw`,
+          ),
+          0.05,
+        ),
+        E(a, t, [0, 0, 0.05, 1, 0.9, 0.8, 1.2, 0]),
+        O(n, a, 1, 0.66 * t),
+        A(n, 1.5),
+        f(k(n, 0.8), t)
+      );
+    },
+    air_brake: (e) => {
+      let t = N,
+        n = p(Math.round(1 * t), e);
+      return (
+        S(n, t, 1400),
+        x(n, t, (e) => 9e3 - 4e3 * e, 0.7),
+        D(n, t, 0.008, 0.3),
+        f(k(n, 0.7), t)
+      );
+    },
+    footstep_concrete: (e, t) => {
+      let n = M,
+        r = d(0.2, n),
+        i = I(n, 0.08, e, `bp`, 1600 + t * 120, 0.9, 4e-4, 0.01);
+      return (
+        x(i, n, 6e3),
+        O(r, i, 1),
+        O(r, F(n, 0.08, 120, 75, 0.01, 0.018), 0.55),
+        O(
+          r,
+          I(n, 0.08, e, `bp`, 2400 + e.range(-300, 300), 1, 6e-4, 0.015),
+          0.55,
+          e.range(0.035, 0.06) * n,
+        ),
+        O(r, I(n, 0.1, e, `bp`, 4200, 1.2, 0.01, 0.02), 0.12, 0.03 * n),
+        f(k(r, 0.85), n)
+      );
+    },
+    footstep_grass: (e) => {
+      let t = M,
+        n = d(0.22, t);
+      for (let r = 0; r < 26; r++)
+        O(
+          n,
+          I(t, 0.01, e, `hp`, 2500, 0.7, 2e-4, 0.0015),
+          e.range(0.1, 0.35),
+          e.range(0, 0.12) * t,
+        );
+      return (
+        x(n, t, 7e3),
+        O(n, F(t, 0.1, 90, 60, 0.01, 0.025), 0.45),
+        f(k(n, 0.7), t)
+      );
+    },
+    footstep_wet: (e) => {
+      let t = M,
+        n = d(0.25, t);
+      O(n, I(t, 0.1, e, `bp`, 1200, 0.7, 8e-4, 0.025), 1);
+      for (let r = 0; r < 4; r++) {
+        let r = e.range(0.005, 0.08),
+          i = _(Math.round(0.03 * t), t, (e) => 650 + (e / 0.03) * 900, `sine`);
+        (D(i, t, 0.001, 0.008), O(n, i, e.range(0.15, 0.35), r * t));
+      }
+      return (
+        O(n, I(t, 0.06, e, `bp`, 1900, 1, 5e-4, 0.008), 0.4),
+        f(k(n, 0.8), t)
+      );
+    },
+    footstep_tile: (e, t) => {
+      let n = M,
+        r = d(0.2, n),
+        i = I(n, 0.03, e, `bp`, 3e3 + t * 260, 1.1, 2e-4, 0.004);
+      return (
+        O(
+          r,
+          T(i, n, [
+            [e.range(1800, 2300), 0.35, 0.012],
+            [e.range(4200, 5200), 0.25, 0.008],
+          ]),
+          1,
+        ),
+        O(r, i, 0.6),
+        O(r, F(n, 0.06, 160, 90, 0.006, 0.012), 0.35),
+        O(
+          r,
+          I(n, 0.05, e, `bp`, 1400, 0.9, 0.001, 0.01),
+          0.3,
+          e.range(0.03, 0.05) * n,
+        ),
+        f(k(r, 0.85), n)
+      );
+    },
+    footstep_metal: (e) => {
+      let t = M,
+        n = I(t, 0.3, e, `hp`, 600, 0.7, 3e-4, 0.004),
+        r = T(n, t, [
+          [e.range(380, 460), 0.8, 0.08],
+          [e.range(900, 1100), 0.6, 0.05],
+          [e.range(2100, 2500), 0.4, 0.03],
+        ]);
+      return (O(r, n, 0.3), f(k(r, 0.8), t));
+    },
+    jump: (e) => {
+      let t = M,
+        n = p(Math.round(0.25 * t), e);
+      return (
+        C(n, t, (e) => 600 + 1800 * e * 4, 1),
+        E(n, t, [0, 0, 0.06, 1, 0.25, 0]),
+        O(
+          n,
+          fe(
+            Math.round(0.2 * t),
+            t,
+            (e) => 190 - 60 * e,
+            pe([
+              [0, `ə`],
+              [0.2, `a`],
+            ]),
+            e,
+            {
+              breath: 0.5,
+              amp: (e) => Math.sin(Math.PI * Math.min(1, e / 0.2)),
+            },
+          ),
+          0.25,
+        ),
+        f(k(n, 0.6), t)
+      );
+    },
+    land: (e) => {
+      let t = M,
+        n = F(t, 0.3, 100, 55, 0.02, 0.06);
+      O(n, I(t, 0.2, e, `bp`, 1800, 0.8, 5e-4, 0.03), 0.6);
+      for (let r = 0; r < 8; r++)
+        O(
+          n,
+          I(t, 0.01, e, `hp`, 3e3, 0.7, 2e-4, 0.0015),
+          0.15,
+          e.range(0.01, 0.1) * t,
+        );
+      return f(k(n, 0.85), t);
+    },
+    splash: (e) => {
+      let t = N,
+        n = Math.round(1.4 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      for (let a of [-1, 1]) {
+        let o = p(n, e);
+        (C(o, t, (e) => 900 + 2500 * Math.exp(-e / 0.2), 0.6),
+          D(o, t, 0.004, 0.25),
+          j(r, i, o, a * 0.5, 1));
+      }
+      for (let n = 0; n < 40; n++) {
+        let n = e.range(0.05, 1),
+          a = e.range(350, 900),
+          o = _(
+            Math.round(0.04 * t),
+            t,
+            (e) => a * (1 + (2.5 * e) / 0.04),
+            `sine`,
+          );
+        (D(o, t, 0.001, 0.01),
+          j(
+            r,
+            i,
+            o,
+            e.bi() * 0.7,
+            e.range(0.05, 0.25) * Math.exp(-n / 0.5),
+            n * t,
+          ));
+      }
+      return (
+        j(r, i, F(t, 0.3, 90, 50, 0.03, 0.08), 0, 0.6),
+        k({ sr: t, ch: [r, i] }, 0.85)
+      );
+    },
+    ped_scream: (e, t) => {
+      let n = N,
+        r = t === 2,
+        i = r ? 0.95 : 1.2 + t * 0.15,
+        a = Math.round(i * n),
+        o = r ? 420 : 780 + t * 60,
+        c = fe(
+          a,
+          n,
+          (e) =>
+            o *
+            (0.72 + 0.28 * Math.min(1, e / 0.12)) *
+            (1 - 0.18 * Math.max(0, (e - i * 0.6) / (i * 0.4))) *
+            (1 + 0.025 * Math.sin(s * 7 * e)),
+          pe([
+            [0, `a`],
+            [0.3, `æ`],
+            [i, `a`],
+          ]),
+          e,
+          {
+            breath: 0.18,
+            rough: r ? 0.45 : 0.25,
+            scale: r ? 1 : 1.22,
+            jitter: 0.03,
+            amp: (e) =>
+              Math.min(1, e / 0.04) *
+              (e > i - 0.25 ? Math.max(0, (i - e) / 0.25) : 1),
+          },
+        );
+      return (A(c, 2), S(c, n, 280), f(k(c, 0.9), n));
+    },
+    ped_hey: (e, t) => {
+      let n = N,
+        r = t % 2 == 1,
+        i = t === 2,
+        a = t === 3,
+        o = Math.round((a ? 0.55 : 0.34) * n),
+        s = r ? 390 : 235,
+        c = r ? 250 : 150,
+        l = (e) => (a && e > 0.22 ? e - 0.22 : e),
+        u = fe(
+          o,
+          n,
+          (e) => {
+            let t = l(e);
+            return s - (s - c) * Math.min(1, t / 0.22);
+          },
+          pe(
+            i
+              ? [
+                  [0, `u`],
+                  [0.06, `e`],
+                  [0.24, `e`],
+                  [0.32, `i`],
+                ]
+              : [
+                  [0, `e`],
+                  [0.2, `e`],
+                  [0.3, `i`],
+                  [0.34, `e`],
+                  [0.5, `i`],
+                ],
+          ),
+          e,
+          {
+            breath: 0.1,
+            scale: r ? 1.18 : 1,
+            jitter: 0.015,
+            rough: 0.12,
+            amp: (e) => {
+              let t = l(e);
+              return (a ? e < 0.2 || (e > 0.22 && e < 0.44) : e < 0.3)
+                ? Math.min(1, t / 0.015) *
+                    Math.max(0, 1 - Math.max(0, t - 0.12) / 0.12)
+                : 0;
+            },
+          },
+        );
+      return (S(u, n, 150), f(k(u, 0.85), n));
+    },
+    police_whistle: (e) => {
+      let t = M,
+        n = Math.round(1.2 * t),
+        r = _(n, t, (e) => 2950 + 170 * Math.sin(s * 29 * e), `sine`);
+      O(
+        r,
+        _(n, t, (e) => 2 * (2950 + 170 * Math.sin(s * 29 * e)), `sine`),
+        0.12,
+      );
+      for (let e = 0; e < n; e++)
+        r[e] *= 0.7 + 0.3 * Math.sin((s * 29 * e) / t);
+      let i = p(n, e);
+      return (
+        C(i, t, 3e3, 3),
+        O(r, i, 0.25),
+        E(
+          r,
+          t,
+          [0, 0, 0.02, 1, 0.52, 1, 0.56, 0, 0.68, 0, 0.7, 1, 1.05, 1, 1.1, 0],
+        ),
+        f(k(r, 0.8), t)
+      );
+    },
+    police_megaphone: (e, t) => {
+      let n = P,
+        r = new Float32Array(Math.round(1.9 * n)),
+        i = [`a`, `o`, `e`, `i`, `u`, `ə`, `a`, `e`],
+        a = 0.08,
+        o = 7 + t;
+      for (let t = 0; t < o && a < 1.65; t++) {
+        let s = e.range(0.11, 0.2) * (t === o - 1 ? 1.8 : 1);
+        e.chance(0.5) &&
+          (O(
+            r,
+            I(
+              n,
+              0.05,
+              e,
+              e.chance(0.5) ? `hp` : `bp`,
+              e.chance(0.5) ? 3200 : 1500,
+              1,
+              0.002,
+              0.012,
+            ),
+            0.3,
+            a * n,
+          ),
+          (a += 0.03));
+        let c = e.pick(i),
+          l = e.pick(i),
+          u = 150 * (t === 0 ? 1.25 : 1) * (1 + e.bi() * 0.12);
+        (O(
+          r,
+          fe(
+            Math.round(s * n),
+            n,
+            (e) => u * (1.1 - (e / s) * 0.25),
+            pe([
+              [0, c],
+              [s, l],
+            ]),
+            e,
+            {
+              breath: 0.06,
+              rough: 0.2,
+              amp: (e) => Math.min(1, e / 0.012) * Math.min(1, (s - e) / 0.03),
+            },
+          ),
+          1,
+          a * n,
+        ),
+          (a += s + e.range(0.01, 0.06)));
+      }
+      return (
+        S(r, n, 520),
+        w(r, n, 1150, 1.4, 9),
+        w(r, n, 2500, 2, 6),
+        x(r, n, 3600),
+        k(r, 1),
+        A(r, 1.5),
+        re(r, n, 0.0023, 0.45, 0.4, 5e3),
+        O(r, I(n, 0.02, e, `bp`, 1500, 1, 2e-4, 0.003), 0.5),
+        O(
+          r,
+          I(n, 0.02, e, `bp`, 1500, 1, 2e-4, 0.003),
+          0.4,
+          1.8499999999999999 * n,
+        ),
+        f(k(r, 0.85), n)
+      );
+    },
+    police_squelch: (e, t) => {
+      let n = P,
+        r = Math.round(0.32 * n),
+        i = p(r, e);
+      (C(i, n, t ? 1900 : 1600, 0.6),
+        E(i, n, [0, 0, 0.006, 1, 0.04, 0.45, 0.2, 0.3, 0.26, 0]));
+      let a = e.range(2100, 2500),
+        o = _(r, n, (e) => a * (1 + 0.006 * Math.sin(s * 6 * e)), `sine`);
+      return (
+        E(o, n, [0, 0, 0.03, 0.3, 0.2, 0.18, 0.26, 0]),
+        O(i, o, 0.5),
+        S(i, n, 520),
+        w(i, n, 1150, 1.4, 6),
+        x(i, n, 3600),
+        k(i, 1),
+        A(i, 1.5),
+        O(i, I(n, 0.02, e, `bp`, 1500, 1, 2e-4, 0.003), 0.7),
+        O(i, I(n, 0.02, e, `bp`, 1800, 1, 2e-4, 0.003), 0.5, 0.27 * n),
+        f(k(i, 0.8), n)
+      );
+    },
+    vendor_call: (e, t) => {
+      let n = P,
+        r = t === 1,
+        i = 1.05,
+        a = Math.round(i * n),
+        o = r ? 1.55 : 1,
+        c = fe(
+          a,
+          n,
+          (e) =>
+            o *
+            (e < 0.3
+              ? 150 + (e / 0.3) * 60
+              : 205 - 30 * Math.min(1, (e - 0.3) / 0.7)) *
+            (1 + (e > 0.45 ? 0.03 * Math.sin(s * 5.5 * e) : 0)),
+          pe([
+            [0, `a`],
+            [0.18, `a`],
+            [0.3, `i`],
+            [0.38, `o`],
+            [i, `o`],
+          ]),
+          e,
+          {
+            breath: 0.12,
+            rough: 0.18,
+            scale: r ? 1.18 : 1,
+            amp: (e) =>
+              Math.min(1, e / 0.03) *
+              (e > 0.28 && e < 0.34 ? 0.55 : 1) *
+              Math.min(1, (i - e) / 0.25),
+          },
+        );
+      return (S(c, n, 160), f(k(c, 0.8), n));
+    },
+    mahjong: (e) => {
+      let t = N,
+        n = Math.round(2.6 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n),
+        a = 0.02;
+      for (; a < 2.5;) {
+        let n = e.range(0.25, 0.7),
+          o = Math.min(2.5, a + n);
+        for (; a < o;) {
+          let n = I(t, 0.03, e, `hp`, 1500, 0.7, 1e-4, 8e-4),
+            o = e.range(2400, 4200);
+          (j(
+            r,
+            i,
+            T(n, t, [
+              [o, 1, e.range(0.01, 0.025)],
+              [o * 1.57, 0.5, 0.008],
+              [o * 0.52, 0.3, 0.012],
+            ]),
+            e.bi() * 0.6,
+            e.range(0.3, 1),
+            a * t,
+          ),
+            (a += e.range(0.008, 0.035)));
+        }
+        a += e.range(0.08, 0.3);
+      }
+      return k(
+        ae({ sr: t, ch: [r, i] }, { size: 0.35, wet: 0.18, tail: 0.3 }),
+        0.8,
+      );
+    },
+    loudspeaker_vendor: (e) => {
+      let t = P,
+        n = new Float32Array(Math.round(3.4 * t)),
+        r = [
+          [
+            [`i`, 190, 0.2],
+            [`i`, 205, 0.2],
+            [`a`, 230, 0.24],
+            [`a`, 200, 0.42],
+          ],
+          [
+            [`a`, 215, 0.22],
+            [`o`, 196, 0.22],
+            [`i`, 176, 0.75],
+          ],
+        ],
+        i = 0.1;
+      for (let a of r) {
+        for (let [r, o, c] of a)
+          (O(
+            n,
+            I(
+              t,
+              0.05,
+              e,
+              e.chance(0.5) ? `hp` : `bp`,
+              e.chance(0.5) ? 3e3 : 1600,
+              1,
+              0.002,
+              0.012,
+            ),
+            0.25,
+            i * t,
+          ),
+            (i += 0.03),
+            O(
+              n,
+              fe(
+                Math.round(c * t),
+                t,
+                (e) =>
+                  o * (1 + 0.04 * Math.sin(s * 5 * e) * Math.min(1, e / 0.15)),
+                pe([
+                  [0, r],
+                  [c, r === `i` ? `e` : r],
+                ]),
+                e,
+                {
+                  breath: 0.05,
+                  rough: 0.1,
+                  amp: (e) =>
+                    Math.min(1, e / 0.02) * Math.min(1, (c - e) / 0.05),
+                },
+              ),
+              1,
+              i * t,
+            ),
+            (i += c + 0.02));
+        i += 0.28;
+      }
+      return (
+        S(n, t, 480),
+        w(n, t, 1250, 1.3, 9),
+        w(n, t, 2600, 2, 5),
+        x(n, t, 3500),
+        k(n, 1),
+        A(n, 3.5),
+        re(n, t, 0.19, 0.3, 0.35, 2500),
+        f(k(n, 0.8), t)
+      );
+    },
+    dog_bark: (e, t) => {
+      let n = P,
+        r = d(0.75, n),
+        i = () => {
+          let r = 0.16;
+          return fe(
+            Math.round(r * n),
+            n,
+            (e) => (t ? 520 : 380) * (1.15 - (0.4 * e) / r),
+            pe([
+              [0, `a`],
+              [r, `o`],
+            ]),
+            e,
+            {
+              breath: 0.35,
+              rough: 0.7,
+              scale: t ? 1.4 : 1.1,
+              amp: (e) => Math.min(1, e / 0.008) * Math.exp(-e / 0.06),
+            },
+          );
+        };
+      return (
+        O(r, i(), 1, 0.01 * n),
+        O(r, i(), 0.85, 0.3 * n),
+        A(r, 1.5),
+        f(k(r, 0.8), n)
+      );
+    },
+    mrt_door_chime: (e) => {
+      let t = N,
+        n = Math.round(2.9 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      [88, 84, 79, 84].forEach((e, n) => {
+        let a = ye(t, c(e), 1.4, n === 3 ? 1.1 : 0.6);
+        (O(a, ye(t, c(e - 12), 1.2, 0.5), 0.25),
+          j(r, i, a, 0, 0.55, n * 0.3 * t));
+      });
+      for (let e = 0; e < 6; e++) {
+        let n = _(Math.round(0.13 * t), t, 1480, `square`);
+        (x(n, t, 3500),
+          E(n, t, [0, 0, 0.005, 1, 0.11, 1, 0.12, 0]),
+          j(r, i, n, 0, 0.12, (1.45 + e * 0.22) * t));
+      }
+      return k(
+        ae({ sr: t, ch: [r, i] }, { size: 0.55, wet: 0.2, tail: 0.5 }),
+        0.8,
+      );
+    },
+    mrt_arrival: (e) => {
+      let t = N,
+        n = 4.2,
+        r = Math.round(n * t),
+        i = new Float32Array(r),
+        a = new Float32Array(r);
+      for (let o of [-1, 1]) {
+        let s = h(r, e);
+        (x(s, t, 380),
+          E(s, t, [0, 0, 0.5, 1, 3.4, 0.35, n, 0]),
+          j(i, a, s, o * 0.5, 1.1));
+        let c = p(r, e);
+        (C(c, t, 900, 0.8),
+          E(c, t, [0, 0, 0.6, 1, 3.3, 0.1, n, 0]),
+          j(i, a, c, o * 0.5, 0.2));
+      }
+      let o = (e) => 250 + 1300 * Math.exp(-e / 1.3),
+        c = _(r, t, o, `sine`);
+      (O(
+        c,
+        _(r, t, (e) => o(e) * 3, `sine`),
+        0.25,
+      ),
+        O(
+          c,
+          _(r, t, (e) => o(e) * 1.5, `sine`),
+          0.2,
+        ),
+        E(c, t, [0, 0, 0.4, 1, 3, 0.5, 3.4, 0]),
+        j(i, a, c, 0, 0.09));
+      let l = _(
+        Math.round(1.4 * t),
+        t,
+        (e) => 2400 + 45 * Math.sin(s * 6 * e),
+        `sine`,
+      );
+      (E(l, t, [0, 0, 0.4, 1, 1.1, 0.8, 1.4, 0]),
+        j(i, a, l, 0.2, 0.05, 2.1 * t));
+      for (let n of [0.35, 0.5, 1, 1.18, 1.9, 2.15]) {
+        let r = I(t, 0.1, e, `bp`, 700, 1.2, 5e-4, 0.018);
+        (O(r, F(t, 0.1, 140, 80, 0.01, 0.02), 0.5),
+          j(i, a, r, e.bi() * 0.3, 0.45, n * t));
+      }
+      let u = p(Math.round(0.7 * t), e);
+      return (
+        S(u, t, 2e3),
+        D(u, t, 0.005, 0.2),
+        j(i, a, u, -0.2, 0.3, 3.5 * t),
+        k({ sr: t, ch: [i, a] }, 0.85)
+      );
+    },
+    crosswalk_tick: (e) => {
+      let t = M,
+        n = _(Math.round(0.05 * t), t, 880, `square`);
+      return (
+        x(n, t, 2200),
+        D(n, t, 5e-4, 0.006),
+        O(n, L(t, 0.05, 440, 0.01), 0.5),
+        f(k(n, 0.7), t)
+      );
+    },
+    crosswalk_bird: (e, t) => {
+      let n = M,
+        r = d(0.34, n);
+      if (t === 0)
+        for (let e of [0, 0.13]) {
+          let t = 0.075,
+            i = _(
+              Math.round(t * n),
+              n,
+              (e) => 2400 + 1800 * (e / t) ** 0.7 + 120 * Math.sin(s * 90 * e),
+              `sine`,
+            );
+          (O(
+            i,
+            _(i.length, n, (e) => 2 * (2400 + 1800 * (e / t) ** 0.7), `sine`),
+            0.12,
+          ),
+            E(i, n, [0, 0, 0.006, 1, 0.05499999999999999, 0.8, t, 0]),
+            O(r, i, 1, e * n));
+        }
+      else
+        for (let [e, t] of [
+          [740, 0],
+          [590, 0.17],
+        ]) {
+          let i = _(Math.round(0.15 * n), n, e, `sine`);
+          (O(i, _(i.length, n, e * 2, `sine`), 0.08),
+            E(i, n, [0, 0, 0.02, 1, 0.12, 0.7, 0.15, 0]),
+            O(r, i, 1, t * n));
+        }
+      return f(k(r, 0.75), n);
+    },
+    store_chime: (e, t) => {
+      let n = N,
+        r = d(1.8, n),
+        i =
+          t === 0
+            ? [
+                [76, 0],
+                [72, 0.28],
+              ]
+            : [
+                [72, 0],
+                [76, 0.14],
+                [79, 0.28],
+                [84, 0.42],
+                [79, 0.56],
+                [84, 0.7],
+              ];
+      for (let [e, a] of i)
+        O(r, ye(n, c(e), 1.2, t === 0 ? 0.9 : 0.5), 0.6, a * n);
+      return f(k(r, 0.75), n);
+    },
+    tinnitus: () => {
+      let e = N,
+        t = 3.6,
+        n = Math.round(t * e),
+        r = _(n, e, 3720, `sine`);
+      return (
+        O(r, _(n, e, 3765, `sine`), 0.55),
+        E(r, e, [0, 0, 0.12, 1, 1.2, 0.6, t, 0]),
+        f(k(r, 0.5), e)
+      );
+    },
+    radio_static: (e) => {
+      let t = N,
+        n = 0.9,
+        r = Math.round(n * t),
+        i = p(r, e);
+      C(i, t, 2200, 0.4);
+      let a = 1;
+      for (let t = 0; t < r; t++)
+        (t & 511 || (a = 0.4 + 0.6 * e.next()), (i[t] *= a));
+      for (let a = 0; a < 3; a++) {
+        let a = e.range(400, 3e3),
+          o = e.range(400, 3e3);
+        O(
+          i,
+          _(r, t, (e) => a + (o - a) * (e / n), `sine`),
+          0.12,
+        );
+      }
+      for (let r = 0; r < 30; r++)
+        O(
+          i,
+          I(t, 0.01, e, `hp`, 2e3, 0.7, 1e-4, 0.001),
+          e.range(0.3, 1),
+          e.range(0, n) * t,
+        );
+      return (te(i, t, 0.02, 0.15), f(k(i, 0.6), t));
+    },
+    passby_scooter: (e, t) => {
+      let n = 16e3,
+        r = 51200,
+        i = 3.2 / 2,
+        a = 11 + t * 3,
+        o = 4 + t * 2,
+        c = 72 + t * 8,
+        l = (e) => {
+          let t = (e - i) * a;
+          return 343 / (343 + (a * t) / Math.hypot(t, o));
+        },
+        u = 0,
+        d = new Float32Array(r),
+        f = p(r, e);
+      for (let e = 0; e < r; e++) {
+        let t = e / n;
+        u += (c * l(t)) / n;
+        let r = (0.5 + 0.5 * Math.cos(s * u)) ** 6;
+        d[e] = r * (1 + 0.25 * f[e]) + 0.25 * ((u % 1) * 2 - 1);
+      }
+      A(d, 2);
+      let m = d.slice();
+      C(m, n, 480, 1.4);
+      let h = d.slice();
+      (C(h, n, 1500, 2.2), d.set(m), O(d, h, 0.5));
+      let g = new Float32Array(r),
+        _ = new Float32Array(r);
+      for (let e = 0; e < r; e++) {
+        let t = (e / n - i) * a,
+          r = o / Math.hypot(t, o),
+          s = ((Math.max(-1, Math.min(1, t / 12)) + 1) * Math.PI) / 4;
+        ((g[e] = d[e] * r * Math.cos(s)), (_[e] = d[e] * r * Math.sin(s)));
+      }
+      return (
+        x(g, n, 6e3),
+        x(_, n, 6e3),
+        te(g, n, 0.3, 0.3),
+        te(_, n, 0.3, 0.3),
+        k({ sr: n, ch: [g, _] }, 0.8)
+      );
+    },
+    passby_car: (e, t) => {
+      let n = 16e3,
+        r = 57600,
+        i = 3.6 / 2,
+        a = 13 + t * 4,
+        o = m(r, e);
+      x(o, n, 900);
+      let s = _(
+        r,
+        n,
+        (e) => {
+          let t = (e - i) * a;
+          return 55 * (343 / (343 + (a * t) / Math.hypot(t, 5)));
+        },
+        `saw`,
+      );
+      (x(s, n, 400), O(o, s, 0.35));
+      let c = new Float32Array(r),
+        l = new Float32Array(r);
+      for (let e = 0; e < r; e++) {
+        let t = (e / n - i) * a,
+          r = 5 / Math.hypot(t, 5),
+          s = ((Math.max(-1, Math.min(1, t / 14)) + 1) * Math.PI) / 4;
+        ((c[e] = o[e] * r * Math.cos(s)), (l[e] = o[e] * r * Math.sin(s)));
+      }
+      return (
+        te(c, n, 0.4, 0.4),
+        te(l, n, 0.4, 0.4),
+        k({ sr: n, ch: [c, l] }, 0.8)
+      );
+    },
+    distant_siren: (e) => {
+      let t = 16e3,
+        n = 72e3,
+        r = _(n, t, (e) => 900 + 420 * Math.sin(s * 0.3 * e - 1), `square`);
+      (x(r, t, 1400), S(r, t, 400), E(r, t, [0, 0, 1.2, 1, 3.2, 1, 4.5, 0]));
+      let [i, a] = ie(r, t, { size: 0.9, wet: 0.7, dry: 0.4, tail: 0.1 });
+      return k({ sr: t, ch: [i.slice(0, n), a.slice(0, n)] }, 0.6);
+    },
+    bird_chirp: (e, t) => {
+      let n = N,
+        r = d(0.9, n),
+        i = 0,
+        a = t === 2 ? 6 : 3 + t;
+      for (let o = 0; o < a; o++) {
+        let a = t === 2 ? 0.035 : e.range(0.06, 0.13),
+          o = e.range(1900, 3300),
+          c = o * e.range(0.75, 1.35),
+          l = _(
+            Math.round(a * n),
+            n,
+            (e) => o + (c - o) * (e / a) + 80 * Math.sin(s * 60 * e),
+            `sine`,
+          );
+        (E(l, n, [0, 0, 0.008, 1, a - 0.012, 0.8, a, 0]),
+          O(r, l, e.range(0.6, 1), i * n),
+          (i += a + (t === 2 ? 0.05 : e.range(0.02, 0.09))));
+      }
+      return f(k(r, 0.7), n);
+    },
+    wood_fish: (e) => {
+      let t = M,
+        n = I(t, 0.25, e, `lp`, 3e3, 0.7, 2e-4, 0.002),
+        r = T(n, t, [
+          [485, 1, 0.06],
+          [1330, 0.5, 0.025],
+          [2710, 0.2, 0.012],
+        ]);
+      return (O(r, n, 0.15), f(k(r, 0.8), t));
+    },
+    firecracker: (e, t) => {
+      let n = P,
+        r = Math.round(3.2 * n),
+        i = new Float32Array(r),
+        a = new Float32Array(r),
+        o = 0.01,
+        s = 0.3,
+        c = e.range(0.4, 0.9),
+        l = e.bi() * 0.5;
+      for (; o < 2.75;) {
+        let r = o > s;
+        r && (s = o + e.range(0.3, 0.7));
+        let u = r ? 1 : e.range(0.45, 0.85),
+          d = r ? 0.07 : 0.03,
+          f = I(
+            n,
+            d,
+            e,
+            `bp`,
+            r ? 1400 : e.range(1800, 3600),
+            0.6,
+            2e-4,
+            r ? 0.014 : e.range(0.004, 0.008),
+          );
+        (O(f, I(n, d, e, `hp`, 4e3, 0.7, 1e-4, 0.0015), 0.5),
+          O(
+            f,
+            F(n, d, r ? 190 : 260, 90, 0.004, r ? 0.014 : 0.006),
+            r ? 0.8 : 0.35,
+          ),
+          (l = Math.max(-0.8, Math.min(0.8, l + e.bi() * 0.08))),
+          j(i, a, f, l + e.bi() * 0.15, u, o * n),
+          o > c
+            ? ((o += e.range(0.05, 0.18)), (c = o + e.range(0.35, 0.9)))
+            : (o += e.range(0.018, 0.045) * (t ? 1.15 : 1)));
+      }
+      return k(
+        ae({ sr: n, ch: [i, a] }, { size: 0.55, wet: 0.2, tail: 0.6 }),
+        0.95,
+      );
+    },
+    temple_bell: (e) => {
+      let t = P,
+        n = v(
+          Math.round(6.5 * t),
+          t,
+          98,
+          [
+            [0.5, 0.35, 6],
+            [0.503, 0.25, 6],
+            [1, 1, 5],
+            [1.006, 0.7, 5],
+            [2.02, 0.55, 3.2],
+            [2.03, 0.3, 3.2],
+            [2.76, 0.4, 2.2],
+            [3.9, 0.28, 1.5],
+            [5.3, 0.18, 0.9],
+            [6.8, 0.1, 0.5],
+            [8.4, 0.06, 0.3],
+          ],
+          0,
+          e,
+        );
+      (O(n, I(t, 0.3, e, `lp`, 700, 0.7, 0.002, 0.03), 0.6),
+        O(n, F(t, 0.3, 70, 50, 0.03, 0.06), 0.5));
+      for (let e = 0; e < Math.round(0.006 * t); e++) n[e] *= e / (0.006 * t);
+      let [r, i] = ie(n, t, { size: 0.7, wet: 0.25, tail: 0.5 });
+      return k({ sr: t, ch: [r, i] }, 0.9);
+    },
+    temple_drum: (e, t) => {
+      let n = P,
+        r = t === 2 ? [0, 0.22, 0.4, 0.55] : [0],
+        i = d(1.6, n);
+      (r.forEach((a, o) => {
+        let s = 72 + (t === 1 ? 8 : 0) + o * 2,
+          c = F(n, 1.2, s * 1.35, s, 0.03, 0.34);
+        (O(
+          c,
+          v(Math.round(1 * n), n, s * 1.59, [
+            [1, 0.35, 0.18],
+            [1.33, 0.15, 0.12],
+          ]),
+        ),
+          O(c, I(n, 0.1, e, `lp`, 1100, 0.7, 5e-4, 0.02), 0.45),
+          O(i, c, o === r.length - 1 ? 1 : 0.8, a * n));
+      }),
+        A(i, 1.3));
+      let [a, o] = ie(i, n, { size: 0.6, wet: 0.2, tail: 0.3 });
+      return k({ sr: n, ch: [a, o] }, 0.9);
+    },
+    gong: (e) => {
+      let t = P,
+        n = 3.5,
+        r = v(
+          Math.round(n * t),
+          t,
+          118,
+          [
+            [1, 1, 2.2],
+            [1.52, 0.7, 1.6],
+            [2.03, 0.55, 1.2],
+            [2.59, 0.4, 0.9],
+            [3.21, 0.3, 0.6],
+            [4.4, 0.2, 0.4],
+            [5.9, 0.12, 0.25],
+          ],
+          4,
+          e,
+        );
+      (O(r, I(t, 0.3, e, `lp`, 900, 0.7, 0.002, 0.04), 0.4),
+        E(r, t, [0, 0, 0.01, 1, 0.1, 0.8, 0.35, 1, n, 1]));
+      let [i, a] = ie(r, t, { size: 0.7, wet: 0.25, tail: 0.4 });
+      return k({ sr: t, ch: [i, a] }, 0.85);
+    },
+    thunder: (e, t) => {
+      let n = P,
+        r = 7.5,
+        i = Math.round(r * n),
+        a = new Float32Array(i),
+        o = new Float32Array(i),
+        s = t === 0;
+      if (s) {
+        let t = I(n, 0.5, e, `hp`, 800, 0.7, 0.001, 0.07);
+        (O(t, I(n, 0.5, e, `lp`, 3e3, 0.7, 0.002, 0.12), 0.8),
+          j(a, o, t, e.bi() * 0.4, 1.3));
+      }
+      for (let t of [-1, 1]) {
+        let r = h(i, e);
+        x(r, n, s ? 420 : 240, 0.7);
+        let c = new Float32Array(i),
+          l = 7 + e.int(4);
+        for (let t = 0; t < l; t++) {
+          let t = (s ? 0.1 : 0.4) + e.next() ** 1.3 * 5.5,
+            r = e.range(0.25, 1.1),
+            a = e.range(0.4, 1) * Math.exp(-t / 3.5);
+          for (let e = 0; e < i; e++) {
+            let i = (e / n - t) / r;
+            i > -3 && i < 3 && (c[e] += a * Math.exp(-i * i));
+          }
+        }
+        for (let e = 0; e < i; e++) r[e] *= c[e];
+        j(a, o, r, t * 0.55, 1);
+      }
+      let c = h(i, e);
+      return (
+        x(c, n, 70),
+        E(c, n, [0, 0, 0.3, 1, 4, 0.4, r, 0]),
+        j(a, o, c, 0, 0.8),
+        k({ sr: n, ch: [a, o] }, 0.95)
+      );
+    },
+    firework_launch: (e) => {
+      let t = N,
+        n = 1.6,
+        r = Math.round(n * t),
+        i = _(r, t, (e) => 900 + 1700 * (e / n) ** 0.8, `sine`);
+      (O(
+        i,
+        _(r, t, (e) => 2 * (900 + 1700 * (e / n) ** 0.8), `sine`),
+        0.15,
+      ),
+        E(i, t, [0, 0, 0.1, 0.7, 1.5, 1, n, 0]));
+      let a = p(r, e);
+      return (
+        C(a, t, 3500, 0.8),
+        E(a, t, [0, 1, 0.3, 0.3, n, 0.1]),
+        O(i, a, 0.3),
+        f(k(i, 0.6), t)
+      );
+    },
+    firework_boom: (e) => {
+      let t = P,
+        n = Math.round(3.5 * t),
+        r = new Float32Array(n),
+        i = new Float32Array(n),
+        a = F(t, 1.5, 80, 35, 0.08, 0.35);
+      (O(a, I(t, 0.5, e, `lp`, 1500, 0.7, 0.001, 0.08), 0.8),
+        A(a, 2),
+        j(r, i, a, 0, 1));
+      for (let n = 0; n < 90; n++) {
+        let n = 0.15 + e.next() ** 1.5 * 2.6;
+        j(
+          r,
+          i,
+          I(t, 0.02, e, `hp`, 2500, 0.7, 1e-4, 0.0015),
+          e.bi() * 0.9,
+          e.range(0.1, 0.35) * Math.exp(-n / 1.5),
+          n * t,
+        );
+      }
+      return k(
+        ae({ sr: t, ch: [r, i] }, { size: 0.85, wet: 0.35, tail: 1.2 }),
+        0.9,
+      );
+    },
+    firework_whistle: (e, t) => {
+      let n = N,
+        r = 1.9 + t * 0.3,
+        i = Math.round(r * n),
+        a = 1150 + t * 200,
+        o = 3300 - t * 500,
+        c = (e) => {
+          let n = e / r,
+            i = a + (o - a) * n ** 0.65;
+          return (
+            (t ? i * (1 - (0.18 * Math.max(0, n - 0.7)) / 0.3) : i) *
+            (1 + 0.012 * Math.sin(s * 23 * e))
+          );
+        },
+        l = _(i, n, c, `sine`);
+      O(
+        l,
+        _(i, n, (e) => c(e) * 2, `sine`),
+        0.12,
+      );
+      let u = p(i, e);
+      (C(u, n, c, 18),
+        O(l, u, 1.6),
+        E(l, n, [0, 0, 0.06, 0.75, r * 0.6, 1, r - 0.08, 0.85, r, 0]));
+      let d = p(i, e);
+      return (
+        S(d, n, 2500),
+        E(d, n, [0, 0, 0.02, 1, 0.5, 0.35, r, 0.05]),
+        O(l, d, 0.12),
+        f(k(l, 0.6), n)
+      );
+    },
+    firework_crackle: (e, t) => {
+      let n = N,
+        r = d(2.8, n),
+        i = 170 + t * 60;
+      for (let t = 0; t < i; t++) {
+        let t = 0.05 + e.next() ** 1.7 * 2.4,
+          i = e.chance(0.12);
+        O(
+          r,
+          I(
+            n,
+            i ? 0.03 : 0.012,
+            e,
+            i ? `bp` : `hp`,
+            i ? e.range(1800, 3200) : e.range(3500, 6500),
+            0.8,
+            1e-4,
+            i ? 0.004 : e.range(8e-4, 0.002),
+          ),
+          (i ? 0.9 : e.range(0.25, 0.6)) * Math.exp(-t / 1.6),
+          Math.round(t * n),
+        );
+      }
+      let a = ie(r, n, { size: 0.5, wet: 0.18, tail: 0.4 }),
+        o = new Float32Array(a[0].length);
+      for (let e = 0; e < o.length; e++) o[e] = (a[0][e] + a[1][e]) * 0.5;
+      return f(k(o, 0.85), n);
+    },
+    backfire: (e, t) => {
+      let n = M,
+        r = d(0.7, n);
+      return (
+        (t === 1 ? [0, 0.11] : [0]).forEach((t, i) => {
+          let a = Math.round(t * n),
+            o = i ? 0.7 : 1;
+          (O(r, I(n, 0.08, e, `bp`, 1600, 0.6, 15e-5, 0.007), 1 * o, a),
+            O(r, F(n, 0.35, 170, 55, 0.012, 0.05, 5e-4), 1.1 * o, a),
+            O(
+              r,
+              T(I(n, 0.05, e, `hp`, 1500, 0.7, 2e-4, 0.003), n, [
+                [e.range(520, 700), 0.5, 0.06],
+                [e.range(1300, 1700), 0.3, 0.035],
+              ]),
+              0.35 * o,
+              a,
+            ));
+        }),
+        A(r, 2.2),
+        f(k(r, 0.95), n)
+      );
+    },
+    motorcycle_start: (e) => {
+      let t = N,
+        n = d(1.9, t),
+        r = _(Math.round(0.4 * t), t, (e) => 55 + 30 * e, `saw`);
+      for (let e = 0; e < r.length; e++)
+        r[e] *= 0.55 + 0.45 * Math.sin((s * 11 * e) / t);
+      (C(r, t, 900, 0.9),
+        E(r, t, [0, 0, 0.02, 1, 0.38, 1, 0.4, 0]),
+        O(n, r, 0.5));
+      let i = 0,
+        a = Math.round(1.52 * t),
+        o = (e) =>
+          20 +
+          95 * Math.exp(-(((e - 0.45) / 0.18) ** 2)) +
+          22 * Math.min(1, e / 0.2),
+        c = p(a, e),
+        l = new Float32Array(a);
+      for (let e = 0; e < a; e++) {
+        let n = e / t;
+        i += o(n) / t;
+        let r = (0.5 + 0.5 * Math.cos(s * i)) ** 5;
+        ((c[e] *= r), (l[e] = r));
+      }
+      return (
+        x(c, t, 1400, 1.2),
+        O(c, l, 0.35),
+        x(c, t, 2200, 0.8),
+        E(c, t, [0, 0, 0.03, 1, 1.32, 0.8, 1.52, 0]),
+        O(n, c, 1, Math.round(0.38 * t)),
+        A(n, 2),
+        f(k(n, 0.85), t)
+      );
+    },
+    ev_start: () => {
+      let e = N,
+        t = d(1, e);
+      (O(t, ye(e, c(79), 0.8, 0.35), 0.6),
+        O(t, ye(e, c(86), 0.8, 0.5), 0.7, Math.round(0.14 * e)));
+      let n = _(Math.round(0.35 * e), e, (e) => 600 + 5200 * e, `sine`);
+      return (
+        E(n, e, [0, 0, 0.02, 1, 0.3, 0.5, 0.35, 0]),
+        O(t, n, 0.08, Math.round(0.3 * e)),
+        f(k(t, 0.7), e)
+      );
+    },
+    microwave_beep: () => {
+      let e = N,
+        t = d(1.1, e);
+      for (let n = 0; n < 3; n++) {
+        let r = _(Math.round(0.16 * e), e, 2050, `square`);
+        (x(r, e, 4200),
+          E(r, e, [0, 0, 0.004, 1, 0.15, 1, 0.16, 0]),
+          O(t, r, 0.5, Math.round(n * 0.32 * e)));
+      }
+      return f(k(t, 0.6), e);
+    },
+    fridge_door: (e) => {
+      let t = N,
+        n = d(0.9, t);
+      (O(n, I(t, 0.12, e, `bp`, 700, 0.8, 0.004, 0.03), 0.5),
+        O(n, F(t, 0.3, 95, 60, 0.02, 0.06), 0.9, Math.round(0.42 * t)),
+        O(
+          n,
+          I(t, 0.15, e, `lp`, 450, 0.7, 0.002, 0.04),
+          0.6,
+          Math.round(0.42 * t),
+        ));
+      for (let r of [0.47, 0.5])
+        O(n, L(t, 0.4, e.range(2400, 3300), 0.09), 0.18, Math.round(r * t));
+      return f(k(n, 0.7), t);
+    },
+    camera_shutter: (e) => {
+      let t = M,
+        n = d(0.2, t),
+        r = I(t, 0.03, e, `hp`, 2500, 0.7, 1e-4, 0.0035);
+      (O(
+        n,
+        T(r, t, [
+          [3150, 1, 0.012],
+          [5200, 0.5, 0.006],
+          [1450, 0.4, 0.01],
+        ]),
+        0.9,
+      ),
+        O(n, r, 0.5),
+        O(n, I(t, 0.06, e, `bp`, 900, 1.4, 5e-4, 0.014), 0.45));
+      let i = Math.round(0.072 * t),
+        a = I(t, 0.03, e, `bp`, 2200, 1.2, 1e-4, 0.005);
+      return (
+        O(
+          n,
+          T(a, t, [
+            [2450, 1, 0.01],
+            [4100, 0.45, 0.005],
+            [1100, 0.35, 0.012],
+          ]),
+          0.75,
+          i,
+        ),
+        O(n, a, 0.4, i),
+        O(n, I(t, 0.05, e, `lp`, 600, 0.7, 5e-4, 0.01), 0.3, i),
+        f(k(n, 0.8), t)
+      );
+    },
+    moon_blocks: (e) => {
+      let t = M,
+        n = d(0.85, t);
+      for (let r = 0; r < 2; r++) {
+        let i = e.range(760, 960) * (r ? 1.08 : 1),
+          a = 0.02 + r * e.range(0.012, 0.045),
+          o = 1,
+          s = e.range(0.12, 0.18),
+          c = (r, a, o) => {
+            let s = I(
+                t,
+                0.05,
+                e,
+                `lp`,
+                2200 + 3200 * o,
+                0.7,
+                1e-4,
+                0.0012 + 0.0012 * o,
+              ),
+              c = T(s, t, [
+                [i * e.range(0.98, 1.02), 1, 0.028],
+                [i * 2.31, 0.55, 0.013],
+                [i * 3.93, 0.28, 0.006],
+                [i * 0.52, 0.22, 0.02],
+              ]);
+            (O(c, s, 0.35), O(n, c, a, Math.round(r * t)));
+          };
+        for (let t = 0; t < 5 && a < 0.5; t++)
+          (c(a, o, 1 - t * 0.15),
+            (a += s),
+            (s *= e.range(0.52, 0.66)),
+            (o *= e.range(0.42, 0.58)));
+        let l = e.range(0.026, 0.038),
+          u = 4 + e.int(5);
+        for (let t = 0; t < u && a < 0.73; t++)
+          (c(a, o * 0.9 * (1 - t / (u + 1)), 0.25),
+            (a += l),
+            (l *= e.range(1.04, 1.16)));
+      }
+      return (
+        O(n, F(t, 0.2, 170, 90, 0.015, 0.03), 0.35, Math.round(0.02 * t)),
+        f(k(n, 0.85), t)
+      );
+    },
+    alarm: (e) => {
+      let t = N,
+        n = 2.6,
+        r = Math.round(n * t),
+        i = new Float32Array(r);
+      for (
+        let n = 0.004;
+        n < 2.3000000000000003;
+        n += (1 / 19) * (1 + e.bi() * 0.04)
+      ) {
+        let a = Math.round(n * t),
+          o = 0.75 + e.next() * 0.25;
+        for (let t = 0; t < 28 && a + t < r; t++)
+          i[a + t] += o * e.bi() * Math.exp(-t / 6);
+      }
+      let a = 1210,
+        o = T(i, t, [
+          [a, 1, 0.075],
+          [a * 2.33, 0.62, 0.055],
+          [a * 3.91, 0.34, 0.04],
+          [a * 5.97, 0.18, 0.03],
+          [a * 0.502, 0.22, 0.09],
+        ]),
+        s = _(r, t, 60, `saw`);
+      return (
+        x(s, t, 900),
+        O(o, s, 0.006),
+        O(o, I(t, n, e, `bp`, 3400, 1.2, 0.003, 0.02), 0.05),
+        E(o, t, [
+          0,
+          0,
+          0.006,
+          1,
+          2.2800000000000002,
+          1,
+          2.5500000000000003,
+          0.08,
+          n,
+          0,
+        ]),
+        f(k(o, 0.8), t)
+      );
+    },
+  },
+  De = {
+    punch: 3,
+    punch_whoosh: 2,
+    gunshot: 3,
+    bullet_impact: 3,
+    explosion: 2,
+    car_door: 2,
+    crash_light: 3,
+    crash_heavy: 3,
+    horn_car: 3,
+    horn_scooter: 3,
+    horn_bus: 2,
+    tire_screech: 2,
+    footstep_concrete: 5,
+    footstep_grass: 3,
+    footstep_wet: 3,
+    footstep_tile: 3,
+    footstep_metal: 2,
+    ped_scream: 3,
+    ped_hey: 4,
+    police_megaphone: 2,
+    police_squelch: 2,
+    crosswalk_bird: 2,
+    store_chime: 2,
+    passby_scooter: 3,
+    passby_car: 2,
+    bird_chirp: 3,
+    firecracker: 2,
+    temple_drum: 3,
+    thunder: 2,
+    dog_bark: 2,
+    vendor_call: 2,
+    firework_whistle: 2,
+    firework_crackle: 2,
+    backfire: 2,
+    moon_blocks: 3,
+  };
+function R(e, t, n, r) {
+  let i = new Float32Array(e),
+    a = r.map(() => n.next() * s);
+  for (let n = 0; n < e; n++) {
+    let e = 0;
+    for (let i = 0; i < r.length; i++) e += Math.sin((s * r[i] * n) / t + a[i]);
+    i[n] = 0.5 + (0.5 * e) / r.length;
+  }
+  return i;
+}
+function z(e, t, n, r, i = 0.8) {
+  return k({ sr: n, ch: [oe(e, n, r), oe(t, n, r)] }, i);
+}
+function Oe(e, t, n, r, i, a, o, s, c, l, u) {
+  let d = p(n, i);
+  (S(d, n, c), x(d, n, l));
+  let f = e.length;
+  for (let c = Math.round(r * a); c > 0; c--) {
+    let r = Math.floor(i.next() * (f - 1)),
+      a = i.range(o, s) * n,
+      c = Math.min(Math.round(a * 5), f - r),
+      l = Math.floor(i.next() * (d.length - c - 1)),
+      p = i.next(),
+      m = u * p * p * p,
+      h = ((i.bi() + 1) * Math.PI) / 4,
+      g = Math.cos(h) * m,
+      _ = Math.sin(h) * m,
+      v = Math.exp(-1 / a),
+      y = 1;
+    for (let n = 0; n < c; n++, y *= v) {
+      let i = d[l + n] * y;
+      ((e[r + n] += i * g), (t[r + n] += i * _));
+    }
+  }
+}
+function ke(e, t, n, r, i, a, o) {
+  for (let s = Math.round(r * a); s > 0; s--) {
+    let r = Math.round(0.06 * n),
+      a = p(r, i);
+    (C(a, n, i.range(900, 2600), 0.9),
+      D(a, n, 5e-4, i.range(0.006, 0.02)),
+      j(e, t, a, i.bi() * 0.9, o * i.range(0.3, 1), i.next() * (e.length - r)));
+  }
+}
+var Ae = {
+  amb_city: (e, t) => {
+    let n = 16e3,
+      r = 10 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let [t, r] of [
+      [a, -1],
+      [o, 1],
+    ]) {
+      let r = h(i, e);
+      x(r, n, 230, 0.7);
+      let a = m(i, e);
+      C(a, n, 520, 0.5);
+      let o = p(i, e);
+      S(o, n, 3500);
+      let s = R(i, n, e, [0.05, 0.11, 0.23]);
+      for (let e = 0; e < i; e++)
+        t[e] =
+          r[e] * 0.9 * (0.7 + 0.5 * s[e]) +
+          a[e] * 0.22 * (0.6 + 0.6 * s[e]) +
+          o[e] * 0.012;
+    }
+    for (let t = 0; t < 5; t++) {
+      let t = e.range(55, 140),
+        r = R(i, n, e, [0.07, 0.13]),
+        s = _(
+          i,
+          n,
+          (e) => t * (0.94 + 0.12 * r[Math.min(i - 1, Math.floor(e * n))]),
+          `saw`,
+          e.next(),
+        );
+      x(s, n, 320, 0.7);
+      let c = R(i, n, e, [0.04, 0.09]);
+      for (let e = 0; e < i; e++) s[e] *= c[e] * c[e];
+      j(a, o, s, e.bi() * 0.8, 0.12);
+    }
+    return z(a, o, n, 2, 0.75);
+  },
+  amb_rain_light: (e, t) => {
+    let n = 22050,
+      r = 7 * t + 1.5,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t of [a, o]) {
+      let r = p(i, e);
+      (S(r, n, 1200), x(r, n, 6500));
+      let a = m(i, e);
+      (S(a, n, 300), x(a, n, 2400));
+      let o = R(i, n, e, [0.09, 0.21]);
+      for (let e = 0; e < i; e++)
+        t[e] = (r[e] * 0.16 + a[e] * 0.07) * (0.85 + 0.25 * o[e]);
+    }
+    return (
+      Oe(a, o, n, r, e, 900, 4e-4, 0.0014, 2500, 9e3, 0.35),
+      ke(a, o, n, r, e, 5, 0.3),
+      z(a, o, n, 1.2, 0.7)
+    );
+  },
+  amb_rain_heavy: (e, t) => {
+    let n = 22050,
+      r = 7 * t + 1.5,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t of [a, o]) {
+      let r = m(i, e);
+      (S(r, n, 250), x(r, n, 7e3));
+      let a = p(i, e);
+      (S(a, n, 3e3), x(a, n, 9500));
+      let o = h(i, e);
+      x(o, n, 180);
+      let s = R(i, n, e, [0.13, 0.31, 0.7]);
+      for (let e = 0; e < i; e++)
+        t[e] = (r[e] * 0.5 + a[e] * 0.1) * (0.85 + 0.2 * s[e]) + o[e] * 0.1;
+    }
+    return (
+      Oe(a, o, n, r, e, 3e3, 3e-4, 0.0012, 2e3, 9e3, 0.3),
+      ke(a, o, n, r, e, 22, 0.35),
+      z(a, o, n, 1.2, 0.8)
+    );
+  },
+  amb_rain_roof: (e, t) => {
+    let n = 11025,
+      r = 5 * t + 1.2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t = 0; t < r * 650; t++) {
+      let t = e.next() * (r - 0.02),
+        i = p(165, e);
+      (C(i, n, e.range(500, 1500), 1.4),
+        D(i, n, 3e-4, 0.004),
+        j(a, o, i, e.bi() * 0.9, e.range(0.2, 0.7), t * n));
+    }
+    for (let t of [a, o]) {
+      let r = h(i, e);
+      (x(r, n, 220), O(t, r, 0.35));
+    }
+    return z(a, o, n, 1, 0.75);
+  },
+  amb_wind: (e, t) => {
+    let n = 11025,
+      r = 10 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t of [a, o]) {
+      let r = m(i, e),
+        a = R(i, n, e, [0.05, 0.12, 0.27]),
+        o = R(i, n, e, [0.08, 0.19, 0.41]);
+      C(r, n, (e) => 220 + 700 * a[Math.min(i - 1, Math.floor(e * n))], 0.8);
+      for (let e = 0; e < i; e++) t[e] = r[e] * (0.25 + 0.9 * o[e] * o[e]);
+      for (let r of [690, 1130]) {
+        let s = p(i, e);
+        C(
+          s,
+          n,
+          (e) => r * (0.9 + 0.2 * a[Math.min(i - 1, Math.floor(e * n))]),
+          16,
+        );
+        for (let e = 0; e < i; e++) t[e] += s[e] * 0.5 * o[e] ** 3;
+      }
+    }
+    return z(a, o, n, 2, 0.8);
+  },
+  amb_park_day: (e, t) => {
+    let n = 22050,
+      r = 10 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t of [a, o]) {
+      let r = p(i, e);
+      C(r, n, 5200, 3);
+      let a = R(i, n, e, [0.06, 0.15]);
+      for (let e = 0; e < i; e++)
+        t[e] +=
+          r[e] *
+          (0.6 + 0.4 * Math.sin((s * 96 * e) / n)) *
+          0.25 *
+          (0.5 + 0.5 * a[e]);
+    }
+    for (let t = 0; t < 3; t++) {
+      let t = Math.round(e.range(4, 7) * n),
+        i = e.next() * (r - t / n - 0.5),
+        c = e.range(4300, 6600),
+        l = e.range(110, 190),
+        u = p(t, e);
+      C(u, n, c, 5);
+      for (let e = 0; e < t; e++) {
+        let r = e / n,
+          i = t / n,
+          a = Math.min(1, r / 1.5) * Math.min(1, (i - r) / 0.8),
+          o = (0.5 + 0.5 * Math.sin(s * l * r)) ** 3;
+        u[e] *= o * a * (0.8 + 0.2 * Math.sin(s * 0.8 * r));
+      }
+      j(a, o, u, e.bi() * 0.9, 0.5, i * n);
+    }
+    for (let t = 0; t < 7; t++) {
+      let t = e.next() * (r - 1.2),
+        i = e.bi() * 0.9,
+        c = e.range(0.12, 0.35),
+        l = 2 + e.int(4);
+      for (let r = 0; r < l; r++) {
+        let r = e.range(0.05, 0.14),
+          l = e.range(1700, 3400),
+          u = l * e.range(0.7, 1.4),
+          d = _(
+            Math.round(r * n),
+            n,
+            (e) => l + (u - l) * (e / r) + 60 * Math.sin(s * 55 * e),
+            `sine`,
+          );
+        (E(d, n, [0, 0, 0.01, 1, r - 0.015, 0.8, r, 0]),
+          j(a, o, d, i, c, t * n),
+          (t += r + e.range(0.02, 0.1)));
+      }
+    }
+    for (let t = 0; t < 10; t++) {
+      let t = e.next() * (r - 0.2),
+        i = 0.035,
+        s = _(772, n, (e) => 4200 - (e / i) * 1400, `sine`);
+      (E(s, n, [0, 0, 0.004, 1, i, 0]),
+        j(a, o, s, e.bi(), e.range(0.05, 0.15), t * n));
+    }
+    for (let t of [a, o]) {
+      let r = m(i, e);
+      (S(r, n, 1800), x(r, n, 7e3));
+      let a = R(i, n, e, [0.09, 0.21]);
+      for (let e = 0; e < i; e++) t[e] += r[e] * 0.06 * a[e];
+    }
+    return z(a, o, n, 2, 0.7);
+  },
+  amb_park_night: (e, t) => {
+    let n = 22050,
+      r = 9 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t = 0; t < 4; t++) {
+      let t = e.range(4e3, 5300),
+        i = e.range(0.38, 0.75),
+        s = 3 + e.int(2),
+        c = e.bi() * 0.9,
+        l = e.range(0.25, 0.6);
+      for (let u = e.next() * i; u < r - 0.3; u += i * e.range(0.95, 1.05))
+        for (let e = 0; e < s; e++)
+          j(a, o, L(n, 0.03, t, 0.006), c, l, (u + e * 0.034) * n);
+    }
+    for (let t = 0; t < 3; t++) {
+      let t = e.range(380, 620),
+        i = e.bi() * 0.8,
+        s = e.range(0.25, 0.5);
+      for (let c = e.next() * 2; c < r - 0.6; c += e.range(1.4, 3.2)) {
+        let r = 3 + e.int(6);
+        for (let e = 0; e < r; e++)
+          j(
+            a,
+            o,
+            v(1103, n, t, [
+              [1, 1, 0.012],
+              [2, 0.5, 0.008],
+              [3.1, 0.2, 0.006],
+            ]),
+            i,
+            s,
+            (c + e * 0.045) * n,
+          );
+      }
+    }
+    for (let t of [a, o]) {
+      let r = p(i, e);
+      C(r, n, 7200, 4);
+      let a = h(i, e);
+      x(a, n, 180);
+      for (let e = 0; e < i; e++)
+        t[e] +=
+          r[e] * 0.05 * (0.5 + 0.5 * Math.sin((s * 45 * e) / n)) + a[e] * 0.25;
+    }
+    return z(a, o, n, 2, 0.65);
+  },
+  amb_river: (e, t) => {
+    let n = 11025,
+      r = 9 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t of [a, o]) {
+      let r = h(i, e);
+      x(r, n, 650);
+      let a = R(i, n, e, [0.31, 0.53, 0.87, 1.3]),
+        o = m(i, e);
+      C(o, n, 1500, 0.6);
+      let s = m(i, e);
+      x(s, n, 900);
+      let c = R(i, n, e, [0.07, 0.17]);
+      for (let e = 0; e < i; e++)
+        t[e] = r[e] * a[e] ** 2 * 1.2 + o[e] * 0.08 * a[e] + s[e] * 0.2 * c[e];
+    }
+    for (let t = 0; t < r * 1.4; t++) {
+      let t = e.next() * (r - 0.1),
+        i = e.range(250, 520),
+        s = _(662, n, (e) => i * (1 + (e / 0.06) * 1.8), `sine`);
+      (D(s, n, 0.002, 0.015),
+        j(a, o, s, e.bi() * 0.8, e.range(0.1, 0.25), t * n));
+    }
+    return z(a, o, n, 2, 0.7);
+  },
+  amb_temple: (e, t) => {
+    let n = 22050,
+      r = 0.3,
+      i = Math.max(3, Math.round(4 * t)),
+      a = i * 8 * r + 2,
+      o = Math.round(a * n),
+      c = new Float32Array(o),
+      l = [`a`, `o`, `u`, `e`, `ə`, `i`, `o`, `a`],
+      u = [0, 0, 0, 0, 0, 0, -2, -3],
+      d = [
+        { f: 118, g: 1, det: 0 },
+        { f: 118 * 1.009, g: 0.8, det: 0.012 },
+        { f: 116, g: 0.7, det: -0.01 },
+        { f: 236, g: 0.35, det: 0.005 },
+      ];
+    for (let t = 0; t < i; t++)
+      for (let i = 0; i < 8; i++) {
+        let a = (t * 8 + i) * r,
+          o = l[(t * 3 + i * 5) % l.length],
+          f = l[(t * 7 + i * 3 + 1) % l.length],
+          p = u[i] + (t % 3 == 2 && i > 5 ? 2 : 0);
+        for (let t of d) {
+          let i = e.bi() * 0.015,
+            l = t.f * 2 ** (p / 12);
+          O(
+            c,
+            fe(
+              7056,
+              n,
+              (e) => l * (1 + 0.01 * Math.sin(s * 4 * e)),
+              pe([
+                [0, o],
+                [r * 0.7, f],
+              ]),
+              e,
+              {
+                breath: 0.05,
+                scale: t.f > 200 ? 1.15 : 1,
+                amp: (e) =>
+                  Math.min(1, e / 0.03) * Math.min(1, (0.32 - e) / 0.06),
+              },
+            ),
+            t.g * 0.5,
+            (a + i) * n,
+          );
+        }
+        (O(
+          c,
+          T(I(n, 0.2, e, `lp`, 3e3, 0.7, 2e-4, 0.002), n, [
+            [485, 1, 0.06],
+            [1330, 0.5, 0.025],
+          ]),
+          1.6,
+          a * n,
+        ),
+          i === 0 &&
+            O(
+              c,
+              v(55125, n, 1046, [
+                [1, 1, 1.4],
+                [2.71, 0.4, 0.6],
+                [5.1, 0.15, 0.3],
+              ]),
+              0.12,
+              a * n,
+            ));
+      }
+    let [f, p] = ie(c, n, { size: 0.75, wet: 0.4, dry: 0.8, tail: 0 });
+    return z(f.slice(0, o), p.slice(0, o), n, 1.5, 0.7);
+  },
+  amb_market: (e, t) => {
+    let n = 22050,
+      r = 10 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i),
+      s = Object.keys(de),
+      c = Math.round(10 + 6 * t);
+    for (let t = 0; t < c; t++) {
+      let t = e.chance(0.5) ? e.range(105, 150) : e.range(190, 260),
+        i = t > 170 ? 1.17 : 1,
+        c = e.bi() * 0.95,
+        l = e.range(0.25, 0.7),
+        u = e.next() * 2;
+      for (; u < r - 0.5;) {
+        let d = 3 + e.int(9);
+        for (let f = 0; f < d && u < r - 0.3; f++) {
+          let r = e.range(0.1, 0.22),
+            d = e.pick(s),
+            f = e.pick(s),
+            p = e.range(0.85, 1.2),
+            m = e.range(0.85, 1.2);
+          (j(
+            a,
+            o,
+            fe(
+              Math.round(r * n),
+              n,
+              (e) => t * (p + (m - p) * (e / r)),
+              pe([
+                [0, d],
+                [r, f],
+              ]),
+              e,
+              {
+                breath: 0.1,
+                scale: i,
+                amp: (e) =>
+                  Math.min(1, e / 0.015) * Math.min(1, (r - e) / 0.03),
+              },
+            ),
+            c,
+            l,
+            u * n,
+          ),
+            (u += r + e.range(0, 0.05)));
+        }
+        u += e.range(0.4, 2.2);
+      }
+    }
+    (x(a, n, 3800), x(o, n, 3800));
+    for (let t = 0; t < 7; t++) {
+      let t = e.next() * (r - 0.3);
+      j(
+        a,
+        o,
+        T(I(n, 0.25, e, `hp`, 1500, 0.7, 2e-4, 0.002), n, [
+          [e.range(1800, 3200), 1, 0.08],
+          [e.range(3500, 5200), 0.6, 0.04],
+        ]),
+        e.bi() * 0.8,
+        0.35,
+        t * n,
+      );
+    }
+    {
+      let t = e.range(1, r - 4);
+      [72, 76, 79, 84, 79, 76, 72, 67].forEach((e, r) => {
+        let i = _(2646, n, 440 * 2 ** ((e - 69) / 12), `square`);
+        (E(i, n, [0, 0, 0.005, 1, 0.1, 0.6, 0.12, 0]),
+          x(i, n, 2500),
+          j(a, o, i, 0.7, 0.04, (t + r * 0.13) * n));
+      });
+    }
+    let [l, u] = ie(a, n, { size: 0.45, wet: 0.18, dry: 1, tail: 0 }),
+      [d, f] = ie(o, n, { size: 0.45, wet: 0.18, dry: 1, tail: 0 });
+    for (let e = 0; e < i; e++)
+      ((a[e] = (l[e] + d[e] * 0.3) * 0.8), (o[e] = (f[e] + u[e] * 0.3) * 0.8));
+    return z(a, o, n, 2, 0.4);
+  },
+  mrt_rumble: (e, t) => {
+    let n = 8e3,
+      r = 5 * t + 1.5,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let t of [a, o]) {
+      let r = h(i, e);
+      x(r, n, 320);
+      let a = m(i, e);
+      C(a, n, 850, 0.7);
+      let o = R(i, n, e, [0.4, 0.9, 1.7]);
+      for (let e = 0; e < i; e++)
+        t[e] = r[e] + a[e] * 0.35 * (0.7 + 0.3 * o[e]);
+    }
+    return z(a, o, n, 1, 0.8);
+  },
+  amb_store: (e, t) => {
+    let n = 22050,
+      r = 8 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i);
+    for (let [t, r] of [
+      [a, -1],
+      [o, 1],
+    ]) {
+      let a = m(i, e);
+      (x(a, n, 700, 0.6), S(a, n, 90), O(t, a, 0.35));
+      let o = _(i, n, 60 * (1 + r * 0.0015), `saw`, e.next());
+      x(o, n, 260, 0.9);
+      let s = R(i, n, e, [0.03, 0.07]);
+      for (let e = 0; e < i; e++) t[e] += o[e] * 0.07 * (0.75 + 0.25 * s[e]);
+    }
+    let s = _(i, n, 120, `square`, e.next());
+    (C(s, n, 2600, 2.5), j(a, o, s, 0.3, 0.012));
+    let c = _(i, n, 29.5, `tri`, e.next());
+    (O(c, _(i, n, 59, `sine`, e.next()), 0.6),
+      E(c, n, [0, 0.2, r * 0.25, 1, r * 0.7, 1, r, 0.2]),
+      j(a, o, c, -0.5, 0.12));
+    let l = new Float32Array(i),
+      u = [
+        [60, 64, 67, 71],
+        [57, 60, 64, 67],
+        [62, 65, 69, 72],
+        [55, 59, 62, 65],
+      ],
+      d = r / u.length;
+    (u.forEach((t, r) => {
+      for (let i of t) {
+        let t = 440 * 2 ** ((i - 69) / 12),
+          a = _(Math.round((d + 0.3) * n), n, t, `tri`, e.next());
+        (E(a, n, [0, 0, 0.3, 1, d - 0.1, 0.9, d + 0.3, 0]),
+          O(l, a, 0.12, Math.round(r * d * n)));
+      }
+      for (let e = 0; e < 4; e++) {
+        let i = t[(e * 3 + r) % 4] + 12,
+          a = L(n, 0.6, 440 * 2 ** ((i - 69) / 12), 0.25, 0.25);
+        O(l, a, 1, Math.round((r * d + (e * d) / 4 + 0.05) * n));
+      }
+    }),
+      S(l, n, 380, 0.7),
+      x(l, n, 2600, 0.7));
+    let [f, p] = ie(l, n, { size: 0.5, wet: 0.35, dry: 0.7, tail: 0 });
+    return (
+      O(a, f.subarray(0, i), 0.5),
+      O(o, p.subarray(0, i), 0.45),
+      z(a, o, n, 1.5, 0.6)
+    );
+  },
+  amb_hall: (e, t) => {
+    let n = 22050,
+      r = 9 * t + 2,
+      i = Math.round(r * n),
+      a = new Float32Array(i),
+      o = new Float32Array(i),
+      s = new Float32Array(i);
+    for (let t of [o, s]) {
+      let r = m(i, e);
+      (x(r, n, 420, 0.6), O(t, r, 0.45));
+      let a = p(i, e);
+      (C(a, n, 1800, 0.5), O(t, a, 0.012));
+    }
+    let c = Object.keys(de);
+    for (let t = 0; t < 7; t++) {
+      let t = e.chance(0.5) ? e.range(105, 150) : e.range(190, 250),
+        i = e.next() * 2;
+      for (; i < r - 0.5;) {
+        let o = 2 + e.int(6);
+        for (let s = 0; s < o && i < r - 0.3; s++) {
+          let r = e.range(0.12, 0.24),
+            o = e.pick(c),
+            s = e.pick(c);
+          (O(
+            a,
+            fe(
+              Math.round(r * n),
+              n,
+              (e) => t * (1 + 0.1 * Math.sin(e * 9)),
+              pe([
+                [0, o],
+                [r, s],
+              ]),
+              e,
+              {
+                breath: 0.12,
+                scale: t > 170 ? 1.17 : 1,
+                amp: (e) => Math.min(1, e / 0.02) * Math.min(1, (r - e) / 0.03),
+              },
+            ),
+            e.range(0.1, 0.25),
+            i * n,
+          ),
+            (i += r + e.range(0, 0.06)));
+        }
+        i += e.range(0.8, 3);
+      }
+    }
+    for (let t = 0; t < r * 1.3; t++) {
+      let t = e.next() * (r - 0.3);
+      O(
+        a,
+        I(n, 0.08, e, `bp`, e.range(900, 1600), 1, 0.001, 0.012),
+        e.range(0.05, 0.12),
+        t * n,
+      );
+    }
+    x(a, n, 2400);
+    let [l, u] = ie(a, n, { size: 0.92, wet: 0.8, dry: 0.15, tail: 0 });
+    return (
+      O(o, l.subarray(0, i), 0.6),
+      O(s, u.subarray(0, i), 0.6),
+      z(o, s, n, 2, 0.6)
+    );
+  },
+  vinyl: (e) => {
+    let t = 22050,
+      n = 165375,
+      r = new Float32Array(n),
+      i = new Float32Array(n);
+    for (let a of [r, i]) {
+      let r = m(n, e);
+      (S(r, t, 900), x(r, t, 6500), O(a, r, 0.05));
+      let i = h(n, e);
+      (x(i, t, 60), O(a, i, 0.08));
+    }
+    for (let n = 0; n < 105; n++) {
+      let n = e.next() * 7.49,
+        a = p(66, e);
+      (S(a, t, 1200),
+        D(a, t, 1e-4, 6e-4),
+        j(r, i, a, e.bi() * 0.5, e.range(0.2, 1), n * t));
+    }
+    return z(r, i, t, 0.5, 0.5);
+  },
+};
+function je(e, t) {
+  let n = 44100,
+    r = 70560;
+  return { sr: n, ch: [k(oe(e === `white` ? p(r, t) : m(r, t), n, 0.1), 0.8)] };
+}
+var Me = {
+    piano: {
+      roots: [36, 48, 60, 72, 84],
+      dur: 2.6,
+      sr: 32e3,
+      release: 0.12,
+      sustain: !1,
+    },
+    epiano: {
+      roots: [42, 54, 66, 78],
+      dur: 2.2,
+      sr: 32e3,
+      release: 0.15,
+      sustain: !1,
+    },
+    nylon: {
+      roots: [45, 57, 69, 81],
+      dur: 1.8,
+      sr: 32e3,
+      release: 0.1,
+      sustain: !1,
+    },
+    bass: {
+      roots: [28, 40, 52],
+      dur: 1.5,
+      sr: 22050,
+      release: 0.05,
+      sustain: !1,
+    },
+    synthbass: {
+      roots: [28, 40, 52],
+      dur: 1.2,
+      sr: 22050,
+      release: 0.04,
+      sustain: !0,
+    },
+    pad: {
+      roots: [48, 60, 72],
+      dur: 3.8,
+      sr: 22050,
+      release: 0.5,
+      sustain: !0,
+    },
+    strings: {
+      roots: [43, 55, 67, 79],
+      dur: 3.6,
+      sr: 22050,
+      release: 0.35,
+      sustain: !0,
+    },
+    supersaw: {
+      roots: [54, 66, 78],
+      dur: 1.3,
+      sr: 32e3,
+      release: 0.12,
+      sustain: !0,
+    },
+    lead: {
+      roots: [60, 72, 84],
+      dur: 1.3,
+      sr: 32e3,
+      release: 0.08,
+      sustain: !0,
+    },
+    suona: {
+      roots: [66, 72, 78, 84],
+      dur: 1.7,
+      sr: 22050,
+      release: 0.08,
+      sustain: !0,
+    },
+    erhu: {
+      roots: [60, 66, 72, 78],
+      dur: 2.2,
+      sr: 22050,
+      release: 0.15,
+      sustain: !0,
+    },
+    vox: {
+      roots: [60, 66, 72, 78],
+      dur: 2.2,
+      sr: 22050,
+      release: 0.15,
+      sustain: !0,
+    },
+    power: {
+      roots: [40, 46, 52],
+      dur: 1.7,
+      sr: 32e3,
+      release: 0.06,
+      sustain: !0,
+    },
+    chug: {
+      roots: [40, 46, 52],
+      dur: 0.4,
+      sr: 32e3,
+      release: 0.03,
+      sustain: !1,
+    },
+    distlead: {
+      roots: [60, 66, 72, 78],
+      dur: 1.8,
+      sr: 32e3,
+      release: 0.1,
+      sustain: !0,
+    },
+    organ: {
+      roots: [48, 60, 72],
+      dur: 2.2,
+      sr: 22050,
+      release: 0.06,
+      sustain: !0,
+    },
+    harpsi: {
+      roots: [48, 60, 72, 84],
+      dur: 1.6,
+      sr: 32e3,
+      release: 0.1,
+      sustain: !1,
+    },
+    musicbox: { roots: [72, 84], dur: 2, sr: 32e3, release: 0.2, sustain: !1 },
+    marimba: {
+      roots: [60, 72, 84],
+      dur: 1.2,
+      sr: 32e3,
+      release: 0.1,
+      sustain: !1,
+    },
+    flute: {
+      roots: [72, 78, 84],
+      dur: 2,
+      sr: 22050,
+      release: 0.1,
+      sustain: !0,
+    },
+  },
+  B = (e, t) => ({ sr: t, ch: [e] }),
+  V = (e, t) => Math.round(e * t);
+function Ne(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = 32e-5 * (t > 60 ? 1 + (t - 60) * 0.06 : 1),
+    s = 3.2 * (t < 48 ? 1.35 : t > 72 ? 0.55 : 1),
+    l = t < 48 ? 0.09 : t > 72 ? 0.2 : 0.13,
+    u = [];
+  for (let e = 1; e <= 22; e++) {
+    let t = e * Math.sqrt(1 + o * e * e);
+    if (i * t > 11e3) break;
+    let n = e ** -1.05 * Math.exp(-(e - 1) * l),
+      r = s / (1 + 0.28 * (e - 1));
+    u.push([t, n * 0.6, r * 0.22], [t, n * 0.4, r]);
+  }
+  let d = v(a, n, i, u, 0.7, e);
+  (O(d, v(a, n, i, u, 0.7, e), 0.7),
+    O(d, I(n, 0.05, e, `lp`, 2200, 0.7, 5e-4, 0.005), 0.08));
+  let f = V(0.002, n);
+  for (let e = 0; e < f; e++) d[e] *= e / f;
+  return (t > 76 && x(d, n, 9e3), B(k(d, 0.9), n));
+}
+function Pe(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = y(a, n, i, 1, (e) => 2 * Math.exp(-e / 0.22) + 0.3);
+  return (
+    O(
+      o,
+      y(a, n, i * 1, 13.9, (e) => 1.2 * Math.exp(-e / 0.015)),
+      0.12,
+    ),
+    O(o, _(a, n, i * 0.5, `sine`), 0.12),
+    D(o, n, 0.002, t < 55 ? 1.6 : t > 75 ? 0.8 : 1.2),
+    A(o, 1.4),
+    B(k(o, 0.85), n)
+  );
+}
+function Fe(e, t, n, r) {
+  let i = c(t),
+    a = ue(V(r, n), n, i, e, { decay: 0.9975, bright: 0.45, pick: 0.2 });
+  return (
+    w(a, n, 105, 2, 4),
+    w(a, n, 230, 2, 3),
+    x(a, n, 5200),
+    D(a, n, 0.001, 1.2),
+    B(k(a, 0.85), n)
+  );
+}
+function Ie(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = _(a, n, i, `sine`),
+    s = _(a, n, i, `saw`, 0.25);
+  return (
+    x(s, n, (e) => 350 + 700 * Math.exp(-e / 0.08), 0.9),
+    O(o, s, 0.55),
+    O(o, I(n, 0.03, e, `bp`, 900, 1, 5e-4, 0.004), 0.12),
+    D(o, n, 0.004, 1),
+    A(o, 1.6),
+    B(k(o, 0.9), n)
+  );
+}
+function Le(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = _(a, n, i * l(-6), `saw`, e.next());
+  return (
+    O(o, _(a, n, i * l(6), `saw`, e.next()), 0.9),
+    O(o, _(a, n, i * 0.5, `square`), 0.5),
+    x(o, n, (e) => 380 + 900 * Math.exp(-e / 0.12), 1.2),
+    A(o, 2),
+    E(o, n, [0, 0, 0.004, 1, 0.15, 0.85, r, 0.6]),
+    B(k(o, 0.9), n)
+  );
+}
+function Re(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = new Float32Array(a),
+    s = new Float32Array(a);
+  for (let t = 0; t < 6; t++)
+    j(
+      o,
+      s,
+      _(a, n, i * l((t - 2.5) * 5 + e.bi() * 2), `saw`, e.next()),
+      t % 2 ? 0.7 : -0.7,
+      0.2,
+    );
+  j(o, s, _(a, n, i * 0.5, `sine`), 0, 0.15);
+  for (let e of [o, s])
+    (x(e, n, (e) => 900 + 700 * Math.min(1, e / 0.8), 0.5),
+      E(e, n, [0, 0, 0.4, 1, r - 0.5, 0.8, r, 0]));
+  return k({ sr: n, ch: [o, s] }, 0.8);
+}
+function ze(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = new Float32Array(a),
+    u = new Float32Array(a);
+  for (let t = 0; t < 5; t++) {
+    let r = e.next() * s,
+      c = 5 + e.next(),
+      d = l(e.bi() * 7);
+    j(
+      o,
+      u,
+      _(
+        a,
+        n,
+        (e) =>
+          i * d * (1 + 0.006 * Math.min(1, e / 0.4) * Math.sin(s * c * e + r)),
+        `saw`,
+        e.next(),
+      ),
+      (t / 4) * 1.6 - 0.8,
+      0.22,
+    );
+  }
+  for (let e of [o, u])
+    (x(e, n, 3300, 0.6),
+      w(e, n, 1150, 1.2, 3),
+      S(e, n, 90),
+      E(e, n, [0, 0, 0.28, 1, r - 0.5, 0.85, r, 0]));
+  return k({ sr: n, ch: [o, u] }, 0.8);
+}
+function Be(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = new Float32Array(a),
+    s = new Float32Array(a);
+  for (let t = 0; t < 7; t++)
+    j(
+      o,
+      s,
+      _(a, n, i * l((t - 3) * 7.5), `saw`, e.next()),
+      ((t - 3) / 3) * 0.9,
+      0.16,
+    );
+  for (let e of [o, s])
+    (S(e, n, 170),
+      x(e, n, 7e3, 0.6),
+      E(e, n, [0, 0, 0.004, 1, 0.25, 0.6, r, 0.35]));
+  return k({ sr: n, ch: [o, s] }, 0.8);
+}
+function Ve(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = _(a, n, i, `saw`, e.next());
+  return (
+    O(o, _(a, n, i * l(8), `saw`, e.next()), 0.8),
+    O(o, _(a, n, i * 2, `square`), 0.18),
+    x(o, n, (e) => 2200 + 3e3 * Math.exp(-e / 0.2), 1.1),
+    E(o, n, [0, 0, 0.004, 1, 0.3, 0.75, r, 0.55]),
+    B(k(o, 0.85), n)
+  );
+}
+function He(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = (e) =>
+      i *
+      l(-85 * Math.exp(-e / 0.035)) *
+      (1 +
+        (e > 0.16
+          ? 0.017 * Math.min(1, (e - 0.16) / 0.2) * Math.sin(s * 5.9 * e)
+          : 0)),
+    u = _(a, n, o, `pulse`, 0, 0.17);
+  (O(
+    u,
+    _(a, n, (e) => o(e) * 2, `saw`),
+    0.2,
+  ),
+    S(u, n, 420),
+    w(u, n, 1250, 2, 9),
+    w(u, n, 2950, 2.5, 7),
+    x(u, n, 7500));
+  let d = p(a, e);
+  return (
+    C(d, n, 2600, 1.5),
+    O(u, d, 0.04),
+    A(u, 2.2),
+    E(u, n, [0, 0, 0.02, 1, r - 0.1, 0.85, r, 0.6]),
+    B(k(u, 0.85), n)
+  );
+}
+function Ue(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = _(
+      a,
+      n,
+      (e) =>
+        i *
+        l(-140 * Math.exp(-e / 0.06)) *
+        (1 +
+          (e > 0.2
+            ? 0.019 * Math.min(1, (e - 0.2) / 0.3) * Math.sin(s * 5.3 * e)
+            : 0)),
+      `saw`,
+      e.next(),
+    );
+  (w(o, n, 520, 2, 6),
+    w(o, n, 1600, 2, 4),
+    w(o, n, 3200, 3, 5),
+    x(o, n, 6500),
+    S(o, n, 180));
+  let u = p(a, e);
+  S(u, n, 2500);
+  for (let e = 0; e < a; e++) u[e] *= 0.5 + 0.5 * Math.sin((s * 11 * e) / n);
+  return (
+    O(o, u, 0.035),
+    E(o, n, [0, 0, 0.08, 1, r - 0.15, 0.8, r, 0.5]),
+    B(k(o, 0.85), n)
+  );
+}
+function We(e, t, n, r) {
+  let i = c(t),
+    a = fe(
+      V(r, n),
+      n,
+      (e) =>
+        i *
+        l(-45 * Math.exp(-e / 0.05)) *
+        (1 +
+          (e > 0.25
+            ? 0.014 * Math.min(1, (e - 0.25) / 0.3) * Math.sin(s * 5.2 * e)
+            : 0)),
+      pe([
+        [0, `a`],
+        [r * 0.7, `a`],
+        [r, `o`],
+      ]),
+      e,
+      { breath: 0.06, scale: t > 64 ? 1.15 : 1.05, jitter: 0.004 },
+    );
+  return (
+    S(a, n, 150),
+    E(a, n, [0, 0, 0.05, 1, r - 0.2, 0.85, r, 0.5]),
+    B(k(a, 0.8), n)
+  );
+}
+function Ge(e, t) {
+  (S(e, t, 90),
+    w(e, t, 1700, 1.2, 5),
+    w(e, t, 400, 1, -3),
+    x(e, t, 4800, 0.8),
+    x(e, t, 6e3, 0.7));
+}
+function Ke(e, t, n, r) {
+  let i = V(r, n),
+    a = new Float32Array(i);
+  return (
+    [0, 7, 12].forEach((r, o) =>
+      O(
+        a,
+        ue(i, n, c(t + r), e, { decay: 0.999, bright: 0.7, pick: 0.13 }),
+        1,
+        o * 0.006 * n,
+      ),
+    ),
+    S(a, n, 80),
+    k(a, 1),
+    A(a, 9),
+    Ge(a, n),
+    E(a, n, [0, 1, r - 0.3, 0.8, r, 0]),
+    B(k(a, 0.85), n)
+  );
+}
+function qe(e, t, n, r) {
+  let i = V(r, n),
+    a = new Float32Array(i);
+  return (
+    [0, 7].forEach((r, o) =>
+      O(
+        a,
+        ue(i, n, c(t + r), e, { decay: 0.99, bright: 0.5, pick: 0.13 }),
+        1,
+        o * 0.004 * n,
+      ),
+    ),
+    D(a, n, 0.001, 0.09),
+    k(a, 1),
+    A(a, 7),
+    Ge(a, n),
+    x(a, n, 2600),
+    B(k(a, 0.85), n)
+  );
+}
+function Je(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = ue(a, n, i, e, { decay: 0.9995, bright: 0.7, pick: 0.15 }),
+    l = _(
+      a,
+      n,
+      (e) => i * (1 + (e > 0.35 ? 0.012 * Math.sin(s * 5.5 * e) : 0)),
+      `saw`,
+    );
+  return (
+    E(l, n, [0, 0, 0.3, 0.5, r, 0.6]),
+    O(o, l, 0.4),
+    k(o, 1),
+    A(o, 6),
+    Ge(o, n),
+    E(o, n, [0, 1, r - 0.2, 0.85, r, 0.6]),
+    B(k(o, 0.85), n)
+  );
+}
+function Ye(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = new Float32Array(a);
+  for (let [t, r] of [
+    [0.5, 0.55],
+    [1, 1],
+    [1.5, 0.45],
+    [2, 0.6],
+    [3, 0.3],
+    [4, 0.25],
+  ])
+    i * t < n * 0.45 && O(o, _(a, n, i * t, `sine`, e.next()), r);
+  for (let e = 0; e < a; e++) o[e] *= 1 + 0.12 * Math.sin((s * 6.2 * e) / n);
+  return (
+    O(o, I(n, 0.02, e, `hp`, 2e3, 0.7, 2e-4, 0.002), 0.3),
+    E(o, n, [0, 0, 0.006, 1, r, 0.9]),
+    B(k(o, 0.8), n)
+  );
+}
+function Xe(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = ue(a, n, i, e, { decay: 0.997, bright: 0.9, pick: 0.08 });
+  return (
+    O(o, ue(a, n, i * 2, e, { decay: 0.996, bright: 0.9, pick: 0.1 }), 0.35),
+    S(o, n, 120),
+    D(o, n, 5e-4, 1),
+    B(k(o, 0.85), n)
+  );
+}
+function Ze(e, t, n, r) {
+  let i = c(t),
+    a = v(V(r, n), n, i, [
+      [1, 1, 1.3],
+      [3, 0.07, 0.35],
+      [6.27, 0.14, 0.12],
+    ]);
+  return (
+    O(a, I(n, 0.01, e, `hp`, 4e3, 0.7, 1e-4, 8e-4), 0.2),
+    B(k(a, 0.8), n)
+  );
+}
+function Qe(e, t, n, r) {
+  let i = c(t),
+    a = v(V(r, n), n, i, [
+      [1, 1, 0.42],
+      [3.93, 0.25, 0.09],
+      [9.2, 0.05, 0.03],
+    ]);
+  return (
+    O(a, I(n, 0.01, e, `lp`, 3e3, 0.7, 2e-4, 0.002), 0.15),
+    B(k(a, 0.85), n)
+  );
+}
+function $e(e, t, n, r) {
+  let i = c(t),
+    a = V(r, n),
+    o = (e) => i * (1 + (e > 0.25 ? 0.008 * Math.sin(s * 5 * e) : 0)),
+    l = _(a, n, o, `sine`);
+  (O(
+    l,
+    _(a, n, (e) => o(e) * 2, `sine`),
+    0.2,
+  ),
+    O(
+      l,
+      _(a, n, (e) => o(e) * 3, `sine`),
+      0.06,
+    ));
+  let u = p(a, e);
+  return (
+    C(u, n, i * 2, 3),
+    O(l, u, 0.25),
+    E(l, n, [0, 0, 0.06, 1, r - 0.2, 0.85, r, 0.5]),
+    B(k(l, 0.8), n)
+  );
+}
+var et = {
+    piano: Ne,
+    epiano: Pe,
+    nylon: Fe,
+    bass: Ie,
+    synthbass: Le,
+    pad: Re,
+    strings: ze,
+    supersaw: Be,
+    lead: Ve,
+    suona: He,
+    erhu: Ue,
+    vox: We,
+    power: Ke,
+    chug: qe,
+    distlead: Je,
+    organ: Ye,
+    harpsi: Xe,
+    musicbox: Ze,
+    marimba: Qe,
+    flute: $e,
+  },
+  tt = Object.fromEntries(
+    Object.entries(Me).map(([e, t]) => [e, { ...t, render: et[e] }]),
+  ),
+  nt = 44100,
+  H = 32e3,
+  rt = {
+    kick808: (e) => {
+      let t = H,
+        n = F(t, 0.9, 150, 47, 0.035, 0.45, 0.001);
+      return (
+        O(n, I(t, 0.01, e, `hp`, 3e3, 0.7, 1e-4, 0.0015), 0.3),
+        A(n, 1.8),
+        B(k(n, 0.95), t)
+      );
+    },
+    kick: (e) => {
+      let t = H,
+        n = F(t, 0.45, 165, 50, 0.022, 0.16, 5e-4);
+      return (
+        O(n, I(t, 0.02, e, `bp`, 3500, 1, 1e-4, 0.002), 0.35),
+        A(n, 2.5),
+        B(k(n, 0.95), t)
+      );
+    },
+    kick_lofi: (e) => {
+      let t = H,
+        n = F(t, 0.5, 110, 50, 0.03, 0.22, 0.002);
+      return (
+        O(n, I(t, 0.03, e, `lp`, 1200, 0.7, 0.001, 0.006), 0.3),
+        x(n, t, 2e3),
+        A(n, 1.6),
+        B(k(n, 0.9), t)
+      );
+    },
+    snare: (e) => {
+      let t = nt,
+        n = V(0.4, t),
+        r = v(n, t, 185, [
+          [1, 1, 0.07],
+          [1.78, 0.6, 0.05],
+        ]),
+        i = p(n, e);
+      return (
+        C(i, t, 3800, 0.45),
+        D(i, t, 0.001, 0.12),
+        O(r, i, 1.3),
+        O(r, I(t, 0.01, e, `hp`, 2e3, 0.7, 1e-4, 0.001), 0.4),
+        A(r, 1.6),
+        B(k(r, 0.9), t)
+      );
+    },
+    snare_lofi: (e) => {
+      let t = H,
+        n = V(0.35, t),
+        r = v(n, t, 200, [
+          [1, 1, 0.05],
+          [1.7, 0.5, 0.04],
+        ]),
+        i = p(n, e);
+      return (
+        C(i, t, 2500, 0.6),
+        x(i, t, 4500),
+        D(i, t, 0.002, 0.09),
+        O(r, i, 1.1),
+        A(r, 1.4),
+        B(k(r, 0.85), t)
+      );
+    },
+    rim: (e) => {
+      let t = nt,
+        n = I(t, 0.08, e, `bp`, 1800, 3, 1e-4, 0.006);
+      return (O(n, it(t, 0.08, 820, 0.012), 0.7), B(k(n, 0.85), t));
+    },
+    clap: (e) => {
+      let t = nt,
+        n = d(0.4, t);
+      for (let r = 0; r < 4; r++)
+        O(n, I(t, 0.03, e, `bp`, 1250, 1.5, 2e-4, 0.004), 0.8, r * 0.011 * t);
+      return (
+        O(n, I(t, 0.35, e, `bp`, 1250, 1.2, 0.001, 0.11), 0.7, 0.033 * t),
+        B(k(n, 0.85), t)
+      );
+    },
+    hat_c: (e) => {
+      let t = nt,
+        n = V(0.12, t),
+        r = me(n, t, 1, e);
+      return (
+        O(r, p(n, e), 0.3),
+        C(r, t, 1e4, 1),
+        S(r, t, 7e3),
+        D(r, t, 5e-4, 0.035),
+        B(k(r, 0.8), t)
+      );
+    },
+    hat_o: (e) => {
+      let t = nt,
+        n = V(0.6, t),
+        r = me(n, t, 1, e);
+      return (
+        O(r, p(n, e), 0.3),
+        C(r, t, 9500, 1),
+        S(r, t, 6500),
+        D(r, t, 0.001, 0.22),
+        B(k(r, 0.8), t)
+      );
+    },
+    crash: (e) => {
+      let t = H,
+        n = V(2.2, t),
+        r = new Float32Array(n),
+        i = new Float32Array(n);
+      for (let a of [r, i]) {
+        let r = me(n, t, 1.8, e);
+        (O(r, p(n, e), 0.8),
+          S(r, t, 3500),
+          x(r, t, 13e3),
+          D(r, t, 0.002, 0.7),
+          O(a, r));
+      }
+      return k({ sr: t, ch: [r, i] }, 0.8);
+    },
+    ride: (e) => {
+      let t = H,
+        n = V(1.2, t),
+        r = me(n, t, 2.4, e);
+      return (
+        O(r, p(n, e), 0.15),
+        S(r, t, 3e3),
+        D(r, t, 0.001, 0.45),
+        O(r, it(t, 1.2, 3150, 0.35), 0.15),
+        B(k(r, 0.75), t)
+      );
+    },
+    tom_h: (e) => {
+      let t = H,
+        n = F(t, 0.5, 240, 175, 0.05, 0.18);
+      return (
+        O(n, I(t, 0.05, e, `bp`, 1500, 1, 5e-4, 0.01), 0.3),
+        B(k(n, 0.9), t)
+      );
+    },
+    tom_l: (e) => {
+      let t = H,
+        n = F(t, 0.6, 150, 100, 0.05, 0.22);
+      return (
+        O(n, I(t, 0.05, e, `bp`, 1e3, 1, 5e-4, 0.012), 0.3),
+        B(k(n, 0.9), t)
+      );
+    },
+    shaker: (e) => {
+      let t = nt,
+        n = p(V(0.12, t), e);
+      return (S(n, t, 5500), E(n, t, [0, 0, 0.03, 1, 0.1, 0]), B(k(n, 0.7), t));
+    },
+    snap: (e) => {
+      let t = nt,
+        n = I(t, 0.12, e, `bp`, 2600, 1.4, 2e-4, 0.018);
+      return (
+        O(n, I(t, 0.01, e, `hp`, 3e3, 0.7, 1e-4, 0.001), 0.5),
+        B(k(n, 0.8), t)
+      );
+    },
+    bigdrum: (e) => {
+      let t = H,
+        n = F(t, 0.9, 98, 68, 0.03, 0.3);
+      return (
+        O(
+          n,
+          v(V(0.8, t), t, 108, [
+            [1, 0.35, 0.16],
+            [1.33, 0.15, 0.1],
+          ]),
+        ),
+        O(n, I(t, 0.08, e, `lp`, 1100, 0.7, 5e-4, 0.018), 0.45),
+        A(n, 1.4),
+        B(k(n, 0.9), t)
+      );
+    },
+    gong: (e) => {
+      let t = H,
+        n = v(
+          V(3, t),
+          t,
+          128,
+          [
+            [1, 1, 1.8],
+            [1.52, 0.7, 1.3],
+            [2.03, 0.5, 1],
+            [2.59, 0.4, 0.8],
+            [3.21, 0.3, 0.5],
+            [4.4, 0.2, 0.35],
+          ],
+          4,
+          e,
+        );
+      return (
+        O(n, I(t, 0.2, e, `lp`, 900, 0.7, 0.002, 0.04), 0.4),
+        E(n, t, [0, 0, 0.01, 1, 0.1, 0.8, 0.3, 1, 3, 1]),
+        B(k(n, 0.85), t)
+      );
+    },
+    opera_gong: (e) => {
+      let t = H,
+        n = V(1.1, t),
+        r = _(n, t, (e) => 620 * (1 + 0.2 * (1 - Math.exp(-e / 0.12))), `sine`);
+      return (
+        O(
+          r,
+          _(n, t, (e) => 923.8 * (1 + 0.2 * (1 - Math.exp(-e / 0.12))), `sine`),
+          0.4,
+        ),
+        O(
+          r,
+          _(
+            n,
+            t,
+            (e) => 1432.2 * (1 + 0.15 * (1 - Math.exp(-e / 0.1))),
+            `sine`,
+          ),
+          0.2,
+        ),
+        D(r, t, 0.001, 0.3),
+        O(r, I(t, 0.03, e, `hp`, 2e3, 0.7, 1e-4, 0.003), 0.2),
+        B(k(r, 0.85), t)
+      );
+    },
+    cymbal_bo: (e) => {
+      let t = H,
+        n = V(1.2, t),
+        r = me(n, t, 1.45, e);
+      return (
+        O(r, p(n, e), 1),
+        S(r, t, 1800),
+        w(r, t, 4200, 1.5, 5),
+        D(r, t, 0.001, 0.32),
+        B(k(r, 0.8), t)
+      );
+    },
+    woodblock: (e) => {
+      let t = nt;
+      return B(
+        k(
+          T(I(t, 0.2, e, `lp`, 3500, 0.7, 1e-4, 0.0015), t, [
+            [900, 1, 0.04],
+            [2400, 0.4, 0.015],
+          ]),
+          0.8,
+        ),
+        t,
+      );
+    },
+    riser: (e) => {
+      let t = 22050,
+        n = V(4, t),
+        r = p(n, e);
+      C(r, t, (e) => 400 * 20 ** (e / 4), 1.5);
+      let i = _(n, t, (e) => 110 * 8 ** (e / 4), `saw`);
+      return (
+        x(i, t, 5e3),
+        O(r, i, 0.12),
+        E(r, t, [0, 0, 3.8, 1, 4, 0]),
+        B(k(r, 0.7), t)
+      );
+    },
+    impact: (e) => {
+      let t = H,
+        n = F(t, 2, 70, 30, 0.12, 0.5),
+        r = m(V(2, t), e);
+      return (
+        x(r, t, (e) => 5e3 * Math.exp(-e / 0.3) + 200),
+        D(r, t, 0.002, 0.4),
+        O(n, r, 0.6),
+        A(n, 1.8),
+        B(k(n, 0.9), t)
+      );
+    },
+    vox_hey: (e) => {
+      let t = H,
+        n = 0.32,
+        r = fe(
+          V(n, t),
+          t,
+          (e) => 260 - (e / n) * 60,
+          pe([
+            [0, `e`],
+            [n, `i`],
+          ]),
+          e,
+          {
+            breath: 0.2,
+            rough: 0.35,
+            amp: (e) =>
+              Math.min(1, e / 0.01) *
+              Math.max(0, 1 - Math.max(0, e - 0.15) / 0.17),
+          },
+        );
+      return (A(r, 2), S(r, t, 200), B(k(r, 0.85), t));
+    },
+  };
+function it(e, t, n, r) {
+  return v(V(t, e), e, n, [[1, 1, r]]);
+}
+var at = [],
+  ot = [
+    { rh: `76 75 76 71 74 72` },
+    { rh: `69:2 r 60 64 69`, lh: `Am` },
+    { rh: `71:2 r 64 68 71`, lh: `E` },
+    { rh: `72:2 r 64 76 75`, lh: `Am` },
+    { rh: `76 75 76 71 74 72` },
+    { rh: `69:2 r 60 64 69`, lh: `Am` },
+    { rh: `71:2 r 64 72 71`, lh: `E` },
+  ];
+(at.push(...ot, { rh: `69:2 r:2 76 75`, lh: `Am` }),
+  at.push(...ot, { rh: `69:2 r 71 72 74`, lh: `Am` }),
+  at.push(
+    { rh: `76:3 67 77 76`, lh: `C` },
+    { rh: `74:3 65 76 74`, lh: `G` },
+    { rh: `72:3 64 74 72`, lh: `Am` },
+    { rh: `71:2 64 64 76 64`, lh: `E` },
+    { rh: `76 76 88 75 76 75` },
+    { rh: `76 75 76 75 76 75` },
+  ),
+  at.push(...ot, { rh: `69:6`, lh: `Am` }));
+var st = {
+  Am: [45, 52, 57],
+  E: [40, 52, 56],
+  C: [48, 55, 60],
+  G: [43, 55, 59],
+};
+function ct() {
+  let e = [];
+  e.push(
+    { t: 0, m: 76, d: 0.25, v: 0.9 },
+    { t: 0.25, m: 75, d: 0.25, v: 0.85 },
+  );
+  let t = 0.5;
+  for (let n of at) {
+    let r = 0;
+    for (let i of n.rh.split(` `)) {
+      let [n, a] = i.split(`:`),
+        o = a ? Number(a) : 1;
+      (n !== `r` &&
+        e.push({
+          t: t + r * 0.25,
+          m: Number(n),
+          d: o * 0.25,
+          v: r === 0 ? 1 : 0.85,
+        }),
+        (r += o));
+    }
+    (n.lh &&
+      st[n.lh].forEach((n, r) =>
+        e.push({ t: t + r * 0.25, m: n, d: 0.5, v: 0.55 }),
+      ),
+      (t += 1.5));
+  }
+  return { notes: e, beats: t + 1.5, bpm: 76 };
+}
+var lt = [
+    [0.33, 70, 0.33],
+    [0.67, 75, 0.33],
+    [1, 79, 0.33],
+    [1.33, 82, 0.33],
+    [1.67, 87, 0.33],
+    [2, 91, 1.5],
+    [3.5, 89, 0.5],
+    [4, 89, 0.75],
+    [4.75, 87, 0.25],
+    [5, 87, 0.33],
+    [5.33, 86, 0.33],
+    [5.67, 84, 0.33],
+    [6, 84, 1],
+    [8.33, 62, 0.33],
+    [8.67, 65, 0.33],
+    [9, 70, 0.33],
+    [9.33, 74, 0.33],
+    [9.67, 77, 0.33],
+    [10, 86, 1.5],
+    [11.5, 84, 0.5],
+    [12, 84, 0.75],
+    [12.75, 82, 0.25],
+    [13, 82, 0.33],
+    [13.33, 80, 0.33],
+    [13.67, 79, 0.33],
+    [14, 79, 1],
+    [16.33, 70, 0.33],
+    [16.67, 75, 0.33],
+    [17, 79, 0.33],
+    [17.33, 82, 0.33],
+    [17.67, 87, 0.33],
+    [18, 91, 1.5],
+    [19.5, 89, 0.5],
+    [20, 89, 0.75],
+    [20.75, 87, 0.25],
+    [21, 87, 0.33],
+    [21.33, 86, 0.33],
+    [21.67, 84, 0.33],
+    [22, 84, 1],
+    [24.33, 62, 0.33],
+    [24.67, 65, 0.33],
+    [25, 68, 0.33],
+    [25.33, 74, 0.33],
+    [25.67, 77, 0.33],
+    [26.33, 67, 0.33],
+    [26.67, 70, 0.33],
+    [27, 75, 0.33],
+    [27.33, 79, 0.33],
+    [27.67, 82, 0.33],
+    [29, 69, 0.25],
+    [29.25, 70, 0.25],
+    [29.5, 79, 0.375],
+    [29.875, 77, 0.125],
+    [30, 75, 1.5],
+  ],
+  ut = [
+    [0.25, 70, 0.25],
+    [0.5, 67, 0.25],
+    [0.75, 70, 0.25],
+    [1, 75, 0.25],
+    [1.25, 79, 0.25],
+    [1.5, 82, 0.25],
+    [1.75, 87, 0.25],
+    [2, 91, 1.5],
+    [3.5, 89, 0.5],
+    [5.76, 86, 0.24],
+    [6, 84, 1],
+    [8.25, 65, 0.25],
+    [8.5, 62, 0.25],
+    [8.75, 65, 0.25],
+    [9, 68, 0.17],
+    [9.17, 70, 0.17],
+    [9.33, 74, 0.17],
+    [9.5, 77, 0.17],
+    [9.67, 80, 0.17],
+    [9.83, 82, 0.17],
+    [10, 86, 1.5],
+    [11.5, 84, 0.5],
+    [13.76, 80, 0.24],
+    [14, 79, 1],
+    [16.25, 70, 0.25],
+    [16.5, 67, 0.25],
+    [16.75, 70, 0.25],
+    [17, 75, 0.25],
+    [17.25, 79, 0.25],
+    [17.5, 82, 0.25],
+    [17.75, 87, 0.25],
+    [18, 91, 1.5],
+    [19.5, 89, 0.5],
+    [21.76, 86, 0.24],
+    [22, 84, 1],
+    [24.25, 62, 0.25],
+    [24.5, 65, 0.25],
+    [24.75, 68, 0.25],
+    [25, 70, 0.17],
+    [25.17, 74, 0.17],
+    [25.33, 77, 0.17],
+    [25.5, 80, 0.17],
+    [25.67, 82, 0.17],
+    [25.83, 86, 0.17],
+    [26.25, 67, 0.25],
+    [26.5, 70, 0.25],
+    [26.75, 75, 0.25],
+    [27, 79, 0.25],
+    [27.25, 82, 0.25],
+    [27.5, 87, 0.25],
+    [27.75, 91, 0.25],
+    [28.25, 62, 0.25],
+    [28.5, 65, 0.25],
+    [28.75, 68, 0.25],
+    [29, 70, 0.17],
+    [29.17, 74, 0.17],
+    [29.33, 77, 0.17],
+    [29.5, 80, 0.17],
+    [29.67, 82, 0.17],
+    [29.83, 86, 0.17],
+    [30, 87, 2],
+  ],
+  dt = [
+    [0, 39, [58, 63, 67], [1, 2, 3]],
+    [4, 44, [56, 60, 65], [1, 2, 3]],
+    [8, 46, [53, 56, 58, 62], [1, 2, 3]],
+    [12, 39, [58, 63, 67], [1, 2, 3]],
+    [16, 39, [58, 63, 67], [1, 2, 3]],
+    [20, 44, [56, 60, 65], [1, 2, 3]],
+    [24, 46, [53, 58, 62], [1]],
+    [26, 39, [58, 63, 67], [1]],
+    [28, 46, [53, 56, 58, 62], [1]],
+    [30, 39, [51, 58, 67], [0]],
+  ];
+function ft(e, t, n, r, i, a) {
+  for (let o = 0; o < i; o++) e.push([t + o * a, o % 2 ? r : n, a]);
+}
+function pt() {
+  let e = [],
+    t = lt.slice();
+  ft(t, 28, 70, 72, 9, 0.111);
+  let n = ut.slice();
+  (ft(n, 4, 87, 89, 15, 0.1175),
+    ft(n, 12, 82, 84, 15, 0.1175),
+    ft(n, 20, 87, 89, 15, 0.1175));
+  let r = (t, n) => {
+    for (let [r, i, a] of t) e.push({ t: r + n, m: i, d: a, v: 0.95 });
+    for (let [t, r, i, a] of dt) {
+      e.push({ t: t + n, m: r, d: 0.9, v: 0.6 });
+      for (let r of a)
+        for (let a of i) e.push({ t: t + r + n, m: a, d: 0.4, v: 0.3 });
+    }
+  };
+  return (r(t, 0), r(n, 32), { notes: e, beats: 64, bpm: 92 });
+}
+function mt(e, t, n = 11025) {
+  let r = n * 2,
+    i = e === `elise` ? ct() : pt(),
+    a = 60 / i.bpm,
+    o = i.beats * a + 0.6,
+    c = Math.round(o * r),
+    l = new Float32Array(c),
+    u = e === `elise` ? -0.012 : 0.009;
+  for (let e of i.notes) {
+    let n = 440 * 2 ** ((e.m - 69) / 12) * (1 + u) * (1 + t.bi() * 0.004),
+      i = Math.min(1.6, e.d * a + 0.35),
+      o = e.m < 60 ? 0.25 : 0.42,
+      s = [];
+    for (let e = 1; e <= 40 && n * e < r * 0.45; e++) {
+      let t =
+        (0.45 * Math.abs(Math.sin(e * Math.PI * 0.3)) * 2) / (e * Math.PI);
+      (e % 2 == 1 && (t += 4 / (Math.PI * Math.PI * e * e)),
+        e === 2 && (t += 0.18),
+        s.push([e, t, o / (1 + 0.12 * (e - 1))]));
+    }
+    let c = Math.round(i * r),
+      d = v(c, r, n, s),
+      f = Math.round(0.003 * r);
+    for (let e = 0; e < f && e < c; e++) d[e] *= e / f;
+    for (let e = Math.max(0, c - 200); e < c; e++) d[e] *= (c - e) / 200;
+    O(l, d, e.v * 0.4, Math.round(e.t * a * r));
+  }
+  let d = new Float32Array(c),
+    f = 0.0035 / (s * 4.7),
+    p = 0.002 / (s * 0.9);
+  for (let e = 0; e < c; e++) {
+    let t = e / r,
+      n =
+        (0.004 + f * Math.sin(s * 4.7 * t) + p * Math.sin(s * 0.9 * t + 1)) * r,
+      i = e - n,
+      a = Math.floor(i),
+      o = i - a;
+    d[e] = a >= 0 && a + 1 < c ? l[a] * (1 - o) + l[a + 1] * o : 0;
+  }
+  (S(d, r, 380, 0.8),
+    w(d, r, 1650, 1.3, 7),
+    w(d, r, 3100, 3, 4),
+    x(d, r, 4200, 0.9),
+    k(d, 1),
+    A(d, 2.2));
+  let m = Math.round(0.018 * r);
+  for (let e = c - 1; e >= m; e--) d[e] += d[e - m] * 0.18;
+  return (
+    b(d, r, `lp`, 5e3),
+    E(d, r, [0, 1, o - 0.3, 1, o, 0]),
+    { sr: n, ch: [k(ce(d, r, n), 0.9)] }
+  );
+}
+var U = (e) => ({
+    bus: `sfx`,
+    gain: 0.8,
+    ref: 5,
+    max: 120,
+    pri: 5,
+    send: 0.12,
+    jitter: 0.03,
+    dedupe: 0.03,
+    ...e,
+  }),
+  ht = {
+    ui_click: U({
+      bus: `ui`,
+      gain: 0.45,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0.02,
+      dedupe: 0.03,
+    }),
+    ui_hover: U({
+      bus: `ui`,
+      gain: 0.25,
+      flat: !0,
+      pri: 8,
+      send: 0,
+      jitter: 0.02,
+      dedupe: 0.04,
+    }),
+    ui_back: U({ bus: `ui`, gain: 0.45, flat: !0, pri: 9, send: 0, jitter: 0 }),
+    ui_confirm: U({
+      bus: `ui`,
+      gain: 0.5,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+    }),
+    phone_open: U({
+      bus: `ui`,
+      gain: 0.5,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+    }),
+    phone_ring: U({
+      bus: `ui`,
+      gain: 0.55,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+      dedupe: 1,
+    }),
+    phone_notify: U({
+      bus: `ui`,
+      gain: 0.5,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.2,
+    }),
+    money: U({
+      bus: `ui`,
+      gain: 0.55,
+      flat: !0,
+      pri: 8,
+      send: 0,
+      jitter: 0.02,
+      dedupe: 0.08,
+    }),
+    coin: U({
+      bus: `ui`,
+      gain: 0.45,
+      flat: !0,
+      pri: 7,
+      send: 0,
+      jitter: 0.06,
+      dedupe: 0.04,
+    }),
+    pickup: U({
+      bus: `ui`,
+      gain: 0.55,
+      flat: !0,
+      pri: 8,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.1,
+    }),
+    checkpoint: U({
+      bus: `ui`,
+      gain: 0.6,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.2,
+    }),
+    mission_start: U({
+      bus: `ui`,
+      gain: 0.8,
+      flat: !0,
+      pri: 10,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.6,
+      duck: [0.6, 2.5],
+    }),
+    mission_pass: U({
+      bus: `ui`,
+      gain: 0.85,
+      flat: !0,
+      pri: 10,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.6,
+      duck: [0.75, 4],
+    }),
+    mission_fail: U({
+      bus: `ui`,
+      gain: 0.8,
+      flat: !0,
+      pri: 10,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.6,
+      duck: [0.7, 3],
+    }),
+    wasted: U({
+      bus: `ui`,
+      gain: 0.9,
+      flat: !0,
+      pri: 10,
+      send: 0,
+      jitter: 0,
+      dedupe: 1,
+      duck: [0.85, 4],
+    }),
+    busted: U({
+      bus: `ui`,
+      gain: 0.9,
+      flat: !0,
+      pri: 10,
+      send: 0,
+      jitter: 0,
+      dedupe: 1,
+      duck: [0.85, 3.5],
+    }),
+    wanted_up: U({
+      bus: `ui`,
+      gain: 0.6,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.25,
+    }),
+    wanted_lost: U({
+      bus: `ui`,
+      gain: 0.6,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0,
+      dedupe: 0.5,
+    }),
+    punch: U({
+      gain: 0.9,
+      ref: 3,
+      max: 45,
+      pri: 7,
+      send: 0.08,
+      jitter: 0.08,
+      maxVoices: 4,
+    }),
+    punch_whoosh: U({
+      gain: 0.55,
+      ref: 2.5,
+      max: 25,
+      pri: 4,
+      send: 0.03,
+      jitter: 0.1,
+    }),
+    gunshot: U({
+      gain: 1,
+      ref: 9,
+      max: 320,
+      pri: 8,
+      send: 0.35,
+      jitter: 0.04,
+      dedupe: 0.025,
+      maxVoices: 8,
+    }),
+    reload: U({
+      gain: 0.6,
+      ref: 2.5,
+      max: 25,
+      pri: 6,
+      send: 0.03,
+      jitter: 0.02,
+    }),
+    empty_click: U({
+      gain: 0.5,
+      ref: 2,
+      max: 18,
+      pri: 6,
+      send: 0,
+      jitter: 0.04,
+    }),
+    bullet_impact: U({
+      gain: 0.55,
+      ref: 3,
+      max: 60,
+      pri: 4,
+      send: 0.1,
+      jitter: 0.12,
+      dedupe: 0.01,
+      maxVoices: 5,
+    }),
+    explosion: U({
+      gain: 1,
+      ref: 16,
+      max: 700,
+      pri: 10,
+      send: 0.45,
+      jitter: 0.06,
+      dedupe: 0.08,
+      maxVoices: 4,
+    }),
+    car_door: U({
+      gain: 0.7,
+      ref: 3,
+      max: 35,
+      pri: 5,
+      send: 0.05,
+      jitter: 0.04,
+      dedupe: 0.15,
+    }),
+    crash_light: U({
+      gain: 0.75,
+      ref: 5,
+      max: 90,
+      pri: 6,
+      send: 0.12,
+      jitter: 0.08,
+      dedupe: 0.08,
+      maxVoices: 4,
+    }),
+    crash_heavy: U({
+      gain: 1,
+      ref: 8,
+      max: 180,
+      pri: 8,
+      send: 0.25,
+      jitter: 0.06,
+      dedupe: 0.12,
+      maxVoices: 3,
+    }),
+    glass: U({
+      gain: 0.7,
+      ref: 5,
+      max: 90,
+      pri: 6,
+      send: 0.15,
+      jitter: 0.08,
+      dedupe: 0.1,
+      maxVoices: 2,
+    }),
+    horn_car: U({
+      gain: 0.7,
+      ref: 7,
+      max: 170,
+      pri: 5,
+      send: 0.18,
+      jitter: 0.03,
+      dedupe: 0.12,
+      maxVoices: 4,
+    }),
+    horn_scooter: U({
+      gain: 0.6,
+      ref: 5,
+      max: 130,
+      pri: 5,
+      send: 0.15,
+      jitter: 0.04,
+      dedupe: 0.12,
+      maxVoices: 4,
+    }),
+    horn_bus: U({
+      gain: 0.85,
+      ref: 10,
+      max: 220,
+      pri: 6,
+      send: 0.2,
+      jitter: 0.02,
+      dedupe: 0.2,
+      maxVoices: 2,
+    }),
+    tire_screech: U({
+      gain: 0.6,
+      ref: 6,
+      max: 110,
+      pri: 5,
+      send: 0.12,
+      jitter: 0.06,
+      dedupe: 0.25,
+      maxVoices: 3,
+      sustain: { radius: 30, gap: 1.05, min: 0.3, loop: `tire_screech` },
+    }),
+    backfire: U({
+      gain: 0.9,
+      ref: 5,
+      max: 140,
+      pri: 6,
+      send: 0.22,
+      jitter: 0.07,
+      dedupe: 0.06,
+      maxVoices: 3,
+    }),
+    motorcycle_start: U({
+      gain: 0.7,
+      ref: 3.5,
+      max: 50,
+      pri: 5,
+      send: 0.05,
+      jitter: 0.04,
+      dedupe: 0.5,
+    }),
+    ev_start: U({
+      gain: 0.45,
+      ref: 2,
+      max: 20,
+      pri: 4,
+      send: 0.03,
+      jitter: 0,
+      dedupe: 0.5,
+    }),
+    scooter_start: U({
+      gain: 0.6,
+      ref: 3,
+      max: 40,
+      pri: 5,
+      send: 0.05,
+      jitter: 0.05,
+      dedupe: 0.5,
+    }),
+    car_start: U({
+      gain: 0.6,
+      ref: 3.5,
+      max: 45,
+      pri: 5,
+      send: 0.05,
+      jitter: 0.04,
+      dedupe: 0.5,
+    }),
+    air_brake: U({
+      gain: 0.5,
+      ref: 6,
+      max: 90,
+      pri: 3,
+      send: 0.12,
+      jitter: 0.06,
+      dedupe: 1,
+    }),
+    footstep: U({
+      gain: 0.32,
+      ref: 1.8,
+      max: 22,
+      pri: 2,
+      send: 0.03,
+      jitter: 0.07,
+      dedupe: 0.05,
+      recipe: `footstep_concrete`,
+      maxVoices: 4,
+    }),
+    jump: U({
+      gain: 0.4,
+      ref: 2,
+      max: 20,
+      pri: 3,
+      send: 0.02,
+      jitter: 0.05,
+      dedupe: 0.2,
+    }),
+    land: U({
+      gain: 0.55,
+      ref: 2,
+      max: 25,
+      pri: 4,
+      send: 0.03,
+      jitter: 0.06,
+      dedupe: 0.15,
+    }),
+    splash: U({
+      gain: 0.8,
+      ref: 5,
+      max: 70,
+      pri: 6,
+      send: 0.1,
+      jitter: 0.05,
+      dedupe: 0.3,
+    }),
+    ped_scream: U({
+      gain: 0.6,
+      ref: 5,
+      max: 90,
+      pri: 4,
+      send: 0.15,
+      jitter: 0.06,
+      dedupe: 0.2,
+      maxVoices: 3,
+    }),
+    ped_hey: U({
+      gain: 0.6,
+      ref: 3,
+      max: 35,
+      pri: 4,
+      send: 0.06,
+      jitter: 0.05,
+      dedupe: 0.3,
+      maxVoices: 3,
+    }),
+    police_whistle: U({
+      gain: 0.7,
+      ref: 6,
+      max: 140,
+      pri: 6,
+      send: 0.15,
+      jitter: 0.02,
+      dedupe: 0.6,
+    }),
+    police_megaphone: U({
+      gain: 0.85,
+      ref: 8,
+      max: 160,
+      pri: 7,
+      send: 0.25,
+      jitter: 0.02,
+      dedupe: 1,
+    }),
+    police_squelch: U({
+      gain: 0.6,
+      ref: 8,
+      max: 120,
+      pri: 6,
+      send: 0.2,
+      jitter: 0.03,
+      dedupe: 0.5,
+    }),
+    vendor_call: U({
+      bus: `amb`,
+      gain: 0.45,
+      ref: 5,
+      max: 70,
+      pri: 2,
+      send: 0.12,
+      jitter: 0.04,
+      dedupe: 1,
+    }),
+    mahjong: U({
+      bus: `amb`,
+      gain: 0.45,
+      ref: 4,
+      max: 45,
+      pri: 2,
+      send: 0.15,
+      jitter: 0.05,
+      dedupe: 3,
+    }),
+    loudspeaker_vendor: U({
+      bus: `amb`,
+      gain: 0.55,
+      ref: 12,
+      max: 220,
+      pri: 2,
+      send: 0.3,
+      jitter: 0.03,
+      dedupe: 5,
+    }),
+    dog_bark: U({
+      bus: `amb`,
+      gain: 0.4,
+      ref: 6,
+      max: 120,
+      pri: 2,
+      send: 0.2,
+      jitter: 0.06,
+      dedupe: 0.8,
+    }),
+    mrt_door_chime: U({
+      gain: 0.7,
+      ref: 8,
+      max: 110,
+      pri: 6,
+      send: 0.2,
+      jitter: 0,
+      dedupe: 1.5,
+    }),
+    mrt_arrival: U({
+      gain: 0.85,
+      ref: 12,
+      max: 200,
+      pri: 6,
+      send: 0.2,
+      jitter: 0.03,
+      dedupe: 1.5,
+    }),
+    crosswalk_tick: U({
+      bus: `amb`,
+      gain: 0.35,
+      ref: 2.5,
+      max: 32,
+      pri: 2,
+      send: 0.05,
+      jitter: 0,
+      dedupe: 0.05,
+    }),
+    crosswalk_bird: U({
+      bus: `amb`,
+      gain: 0.4,
+      ref: 3,
+      max: 40,
+      pri: 2,
+      send: 0.08,
+      jitter: 0,
+      dedupe: 0.1,
+    }),
+    store_chime: U({
+      bus: `amb`,
+      gain: 0.4,
+      ref: 3,
+      max: 30,
+      pri: 3,
+      send: 0.05,
+      jitter: 0,
+      dedupe: 2,
+    }),
+    microwave_beep: U({
+      bus: `amb`,
+      gain: 0.35,
+      ref: 2.5,
+      max: 20,
+      pri: 2,
+      send: 0.04,
+      jitter: 0,
+      dedupe: 3,
+    }),
+    fridge_door: U({
+      bus: `amb`,
+      gain: 0.45,
+      ref: 2.5,
+      max: 20,
+      pri: 2,
+      send: 0.04,
+      jitter: 0.04,
+      dedupe: 1,
+    }),
+    passby_scooter: U({
+      bus: `amb`,
+      gain: 0.5,
+      ref: 12,
+      max: 90,
+      pri: 1,
+      send: 0.05,
+      jitter: 0.08,
+      dedupe: 0.5,
+      flat: !0,
+    }),
+    passby_car: U({
+      bus: `amb`,
+      gain: 0.45,
+      ref: 12,
+      max: 90,
+      pri: 1,
+      send: 0.05,
+      jitter: 0.08,
+      dedupe: 0.5,
+      flat: !0,
+    }),
+    distant_siren: U({
+      bus: `amb`,
+      gain: 0.25,
+      flat: !0,
+      pri: 1,
+      send: 0,
+      jitter: 0.05,
+      dedupe: 5,
+    }),
+    bird_chirp: U({
+      bus: `amb`,
+      gain: 0.3,
+      ref: 5,
+      max: 60,
+      pri: 1,
+      send: 0.05,
+      jitter: 0.08,
+      dedupe: 0.3,
+    }),
+    tinnitus: U({
+      bus: `ui`,
+      gain: 0.22,
+      flat: !0,
+      pri: 9,
+      send: 0,
+      jitter: 0.03,
+      dedupe: 1.5,
+    }),
+    radio_static: U({
+      bus: `ui`,
+      gain: 0.35,
+      flat: !0,
+      pri: 8,
+      send: 0,
+      jitter: 0.05,
+      dedupe: 0.05,
+    }),
+    firecracker: U({
+      gain: 0.9,
+      ref: 9,
+      max: 260,
+      pri: 6,
+      send: 0.3,
+      jitter: 0.05,
+      dedupe: 0.15,
+      maxVoices: 4,
+      sustain: { radius: 10, gap: 0.4, min: 0.9 },
+    }),
+    temple_bell: U({
+      bus: `amb`,
+      gain: 0.75,
+      ref: 14,
+      max: 420,
+      pri: 5,
+      send: 0.25,
+      jitter: 0.01,
+      dedupe: 2,
+    }),
+    temple_drum: U({
+      bus: `amb`,
+      gain: 0.8,
+      ref: 10,
+      max: 300,
+      pri: 5,
+      send: 0.25,
+      jitter: 0.03,
+      dedupe: 0.2,
+      maxVoices: 3,
+    }),
+    wood_fish: U({
+      bus: `amb`,
+      gain: 0.4,
+      ref: 3,
+      max: 45,
+      pri: 2,
+      send: 0.1,
+      jitter: 0.02,
+      dedupe: 0.1,
+    }),
+    moon_blocks: U({
+      gain: 0.75,
+      ref: 3,
+      max: 40,
+      pri: 6,
+      send: 0.18,
+      jitter: 0.04,
+      dedupe: 0.4,
+    }),
+    camera_shutter: U({
+      bus: `ui`,
+      gain: 0.55,
+      flat: !0,
+      pri: 8,
+      send: 0,
+      jitter: 0.02,
+      dedupe: 0.08,
+    }),
+    alarm: U({
+      gain: 0.8,
+      ref: 7,
+      max: 160,
+      pri: 7,
+      send: 0.22,
+      jitter: 0.01,
+      dedupe: 1.2,
+      maxVoices: 2,
+    }),
+    gong: U({
+      gain: 0.7,
+      ref: 10,
+      max: 300,
+      pri: 5,
+      send: 0.25,
+      jitter: 0.02,
+      dedupe: 0.5,
+    }),
+    thunder: U({
+      bus: `amb`,
+      gain: 0.95,
+      flat: !0,
+      pri: 8,
+      send: 0,
+      jitter: 0.08,
+      dedupe: 1.2,
+    }),
+    firework_launch: U({
+      gain: 0.5,
+      ref: 25,
+      max: 1500,
+      pri: 4,
+      send: 0.2,
+      jitter: 0.08,
+      dedupe: 0.05,
+      maxVoices: 4,
+    }),
+    firework_boom: U({
+      gain: 1,
+      ref: 60,
+      max: 3e3,
+      pri: 6,
+      send: 0.4,
+      jitter: 0.08,
+      dedupe: 0.05,
+      maxVoices: 6,
+    }),
+    firework_whistle: U({
+      gain: 0.55,
+      ref: 25,
+      max: 1500,
+      pri: 4,
+      send: 0.2,
+      jitter: 0.1,
+      dedupe: 0.05,
+      maxVoices: 3,
+    }),
+    firework_crackle: U({
+      gain: 0.7,
+      ref: 40,
+      max: 2200,
+      pri: 4,
+      send: 0.3,
+      jitter: 0.08,
+      dedupe: 0.1,
+      maxVoices: 4,
+    }),
+  },
+  gt = new Set([`rim`]),
+  _t = new Set([
+    `amb_store`,
+    `amb_hall`,
+    `amb_park_day`,
+    `amb_park_night`,
+    `amb_river`,
+    `amb_temple`,
+    `amb_market`,
+    `amb_rain_light`,
+    `amb_rain_heavy`,
+    `amb_rain_roof`,
+    `mrt_rumble`,
+  ]),
+  vt = new Set([
+    `thunder`,
+    `firework_launch`,
+    `firework_boom`,
+    `firework_whistle`,
+    `firework_crackle`,
+    `tinnitus`,
+    `mahjong`,
+    `loudspeaker_vendor`,
+    `distant_siren`,
+    `microwave_beep`,
+    `fridge_door`,
+    `gong`,
+    `police_megaphone`,
+    `police_squelch`,
+    `wanted_lost`,
+    `busted`,
+    `temple_bell`,
+    `temple_drum`,
+    `moon_blocks`,
+    `alarm`,
+  ]);
+function yt(e) {
+  return e.startsWith(`inst/`)
+    ? !0
+    : e.startsWith(`drum/`)
+      ? !gt.has(e.slice(5))
+      : e === `amb/vinyl` || e.startsWith(`tune/`)
+        ? !0
+        : e.startsWith(`sfx/`)
+          ? vt.has(St(e))
+          : e.startsWith(`amb/`) && _t.has(e.slice(4));
+}
+function bt(e) {
+  return (
+    e.startsWith(`inst/`) ||
+    e === `amb/vinyl` ||
+    (e.startsWith(`drum/`) && !gt.has(e.slice(5)))
+  );
+}
+function xt(e) {
+  return yt(e) && !bt(e);
+}
+function St(e) {
+  if (!e.startsWith(`sfx/`)) return ``;
+  let t = e.indexOf(`/`, 4);
+  return t < 0 ? e.slice(4) : e.slice(4, t);
+}
+var Ct = e({
+    CORE_DRUMS: () => gt,
+    LAZY_AMB: () => _t,
+    LAZY_SFX: () => vt,
+    allLazyWorldIds: () => Mt,
+    allRadioIds: () => Nt,
+    buildJobs: () => At,
+    expandIds: () => jt,
+    hashId: () => Ot,
+    isOnDemand: () => yt,
+    renderJob: () => Pt,
+    variantCount: () => kt,
+  }),
+  wt = new Set([`suona`, `power`, `chug`, `distlead`, `epiano`]),
+  Tt =
+    `ui_click.ui_hover.ui_back.ui_confirm.phone_open.footstep_concrete.footstep_grass.footstep_wet.horn_car.horn_scooter.horn_bus.punch.punch_whoosh.gunshot.reload.empty_click.bullet_impact.car_door.crash_light.crash_heavy.tire_screech.jump.land.money.coin.pickup.checkpoint.wanted_up.wanted_lost.ped_hey.ped_scream.crosswalk_tick.crosswalk_bird.radio_static.scooter_start.car_start.passby_scooter.passby_car`.split(
+      `.`,
+    ),
+  Et = new Set([`amb_temple`, `amb_river`, `mrt_rumble`]),
+  Dt = new Set(
+    Object.entries(ht)
+      .filter(([, e]) => e.flat)
+      .map(([e, t]) => t.recipe ?? e),
+  );
+function Ot(e) {
+  let t = 2166136261;
+  for (let n = 0; n < e.length; n++)
+    ((t ^= e.charCodeAt(n)), (t = Math.imul(t, 16777619)));
+  return t >>> 0;
+}
+function kt(e, t) {
+  let n = De[e] ?? 1;
+  return t === `low` ? Math.min(n, 2) : n;
+}
+function At(e) {
+  let t = [],
+    n = (e, n) => t.push({ id: e, pri: n });
+  (n(`noise/white`, 0), n(`noise/pink`, 0));
+  for (let e of _e) n(`ir/world/${e}`, 0);
+  n(`amb/amb_city`, 0);
+  for (let t of Tt) for (let r = 0; r < kt(t, e); r++) n(`sfx/${t}/${r}`, 0);
+  n(`amb/amb_wind`, 1);
+  for (let e of gt) n(`drum/${e}`, 1);
+  for (let t of Object.keys(Ee))
+    if (!(Tt.includes(t) || vt.has(t)))
+      for (let r = 0; r < kt(t, e); r++) n(`sfx/${t}/${r}`, 1);
+  return t;
+}
+function jt(e, t) {
+  let n = [];
+  for (let r of e)
+    if (r.startsWith(`sfx/`) && r.endsWith(`/*`)) {
+      let e = r.slice(4, -2);
+      if (!Ee[e]) continue;
+      for (let r = 0; r < kt(e, t); r++) n.push(`sfx/${e}/${r}`);
+    } else n.push(r);
+  return n;
+}
+function Mt(e) {
+  return jt(
+    [
+      ...[..._t].map((e) => `amb/${e}`),
+      `tune/elise`,
+      `tune/maiden`,
+      ...[...vt].map((e) => `sfx/${e}/*`),
+    ],
+    e,
+  );
+}
+function Nt() {
+  let e = [];
+  for (let t of Object.keys(rt)) gt.has(t) || e.push(`drum/${t}`);
+  e.push(`amb/vinyl`);
+  for (let [t, n] of Object.entries(tt))
+    for (let r of n.roots) e.push(`inst/${t}/${r}`);
+  return e;
+}
+function Pt(e, t, n = !1) {
+  let r = e.slice(0, e.indexOf(`/`)),
+    i = Bt(e, t);
+  if (r === `ir`) return i;
+  i = zt(e, r, i);
+  let a = i.ch[0].length / i.sr > 1.5;
+  return (
+    r === `sfx` && (i = Rt(i)),
+    t === `low`
+      ? le(i, 22050, (r === `sfx` || r === `inst`) && a)
+      : n
+        ? le(i, 22050, !1)
+        : i
+  );
+}
+var Ft = -24,
+  It = -60,
+  Lt = 0.02;
+function Rt(e) {
+  let t = e.ch,
+    n = t[0].length,
+    r = 0;
+  for (let e of t)
+    for (let t = 0; t < n; t++) {
+      let n = e[t] < 0 ? -e[t] : e[t];
+      n > r && (r = n);
+    }
+  if (r <= 0) return e;
+  let i = r * 10 ** (It / 20),
+    a = 0;
+  for (let e of t)
+    for (let t = n - 1; t > a; t--)
+      if ((e[t] < 0 ? -e[t] : e[t]) > i) {
+        a = t;
+        break;
+      }
+  let o = Math.max(1, Math.round(Lt * e.sr)),
+    s = a + 1 + o;
+  return n - s < 0.05 * e.sr
+    ? e
+    : {
+        sr: e.sr,
+        ch: t.map((e) => {
+          let t = e.slice(0, s);
+          for (let e = 0; e < o; e++) t[s - o + e] *= 1 - (e + 1) / o;
+          return t;
+        }),
+      };
+}
+function zt(e, t, n) {
+  if (n.ch.length !== 2) return n;
+  let [r, i] = n.ch,
+    a = e.split(`/`)[1],
+    o = (t === `sfx` && !Dt.has(a)) || (t === `amb` && Et.has(a)),
+    s = !0;
+  for (let e = 0; e < r.length; e += 7)
+    if (Math.abs(r[e] - i[e]) > 1e-5) {
+      s = !1;
+      break;
+    }
+  if (!s && !o && t === `sfx`) {
+    let e = 0,
+      t = 0;
+    for (let n = 0; n < r.length; n++) {
+      let a = r[n],
+        o = i[n];
+      ((e += (a + o) * (a + o)), (t += (a - o) * (a - o)));
+    }
+    s = t <= e * 10 ** (Ft / 10);
+  }
+  if (!s && !o) return n;
+  let c = o ? Math.SQRT1_2 : 0.5,
+    l = new Float32Array(r.length);
+  for (let e = 0; e < l.length; e++) l[e] = (r[e] + i[e]) * c;
+  return { sr: n.sr, ch: [l] };
+}
+function Bt(e, t) {
+  let n = new o(Ot(e) ^ 8002364),
+    [r, i, a] = e.split(`/`),
+    s = t === `low` ? 0.6 : t === `medium` ? 0.8 : 1;
+  switch (r) {
+    case `sfx`: {
+      let e = Ee[i];
+      if (!e) throw Error(`no sfx ` + i);
+      return e(n, Number(a ?? 0));
+    }
+    case `amb`: {
+      let e = Ae[i];
+      if (!e) throw Error(`no amb ` + i);
+      return e(n, s);
+    }
+    case `noise`:
+      return je(i, n);
+    case `ir`: {
+      let [e, n, r] = ge(i, t);
+      return se(Number(a), e, n, r);
+    }
+    case `tune`:
+      return mt(i, n);
+    case `drum`: {
+      let e = rt[i];
+      if (!e) throw Error(`no drum ` + i);
+      return e(n);
+    }
+    case `inst`: {
+      let e = tt[i];
+      if (!e) throw Error(`no inst ` + i);
+      let t = wt.has(i) ? 2 : 1,
+        r = e.render(n, Number(a), e.sr * t, e.dur);
+      return t > 1
+        ? { sr: e.sr, ch: r.ch.map((n) => ce(n, e.sr * t, e.sr)) }
+        : r;
+    }
+  }
+  throw Error(`bad job ` + e);
+}
+var Vt = {
+    major: [0, 2, 4, 5, 7, 9, 11],
+    minor: [0, 2, 3, 5, 7, 8, 10],
+    dorian: [0, 2, 3, 5, 7, 9, 10],
+    mixo: [0, 2, 4, 5, 7, 9, 10],
+    pentaMaj: [0, 2, 4, 7, 9],
+    pentaMin: [0, 3, 5, 7, 10],
+    blues: [0, 3, 5, 6, 7, 10],
+  },
+  Ht = { I: 0, II: 2, III: 4, IV: 5, V: 7, VI: 9, VII: 11 };
+function Ut(e, t) {
+  let n = e,
+    r = 0;
+  for (; n[0] === `b`;) (r--, (n = n.slice(1)));
+  n[0] === `#` && (r++, (n = n.slice(1)));
+  let i = /^(VII|VI|IV|V|III|II|I|vii|vi|iv|v|iii|ii|i)(.*)$/.exec(n);
+  if (!i) return { sym: e, root: t, iv: [0, 4, 7], bass: t };
+  let a = i[1],
+    o = i[2],
+    s = ``,
+    c = o.indexOf(`/`);
+  c >= 0 && ((s = o.slice(c + 1)), (o = o.slice(0, c)));
+  let l = a === a.toLowerCase(),
+    u = (t + Ht[a.toUpperCase()] + r + 120) % 12,
+    d = l ? [0, 3, 7] : [0, 4, 7];
+  ((o.includes(`°`) || o.includes(`dim`)) && (d = [0, 3, 6]),
+    o.includes(`sus4`) && (d = [0, 5, 7]),
+    o.includes(`sus2`) && (d = [0, 2, 7]),
+    o.includes(`maj7`) || o.includes(`maj9`)
+      ? (d = [...d, 11])
+      : (o.includes(`7`) || o.includes(`9`) || o.includes(`11`)) &&
+        (d = [...d, o.includes(`°`) ? 9 : 10]),
+    (o.includes(`9`) || o.includes(`add9`)) && (d = [...d, 14]),
+    o.includes(`11`) && (d = [...d, 17]),
+    o.includes(`6`) && !o.includes(`/6`) && (d = [...d, 9]));
+  let f = u;
+  return (
+    s === `3` ? (f = (u + d[1]) % 12) : s === `5` && (f = (u + 7) % 12),
+    { sym: e, root: u, iv: d, bass: f }
+  );
+}
+function Wt(e, t) {
+  return e.map((e) => Ut(e, t));
+}
+function W(e, t, n = 0, r = 127) {
+  let i = e,
+    a = 1e9;
+  for (let o = Math.max(n, e - 12); o <= Math.min(r, e + 12); o++) {
+    let n = ((o % 12) + 12) % 12;
+    if (!t.includes(n)) continue;
+    let r = Math.abs(o - e);
+    r < a && ((a = r), (i = o));
+  }
+  return i;
+}
+function Gt(e) {
+  return e.iv.map((t) => (e.root + t) % 12);
+}
+function Kt(e, t, n, r) {
+  let i = e.iv.map((e) => e % 12);
+  (i.length >= 4 && n <= i.length && (i = i.filter((e) => e !== 0)),
+    (i = [...new Set(i)].sort((e, t) => e - t)));
+  let a = i.map((t) => (e.root + t) % 12),
+    o = [];
+  for (let e = 0; e < a.length; e++) {
+    let r = [],
+      i = W(t - 5, [a[e]]);
+    r.push(i);
+    let s = e;
+    for (; r.length < n;) {
+      s = (s + 1) % a.length;
+      let e = i + 1;
+      for (; ((e % 12) + 12) % 12 !== a[s];) e++;
+      (r.push(e), (i = e));
+    }
+    o.push(r);
+  }
+  let s = o[0],
+    c = 1e9;
+  for (let e of o) {
+    let n = 0;
+    if (r && r.length)
+      for (let t = 0; t < e.length; t++)
+        n += Math.abs(e[t] - (r[t] ?? r[r.length - 1]));
+    else n = Math.abs(e[0] + e[e.length - 1] - 2 * t);
+    ((n += Math.abs((e[0] + e[e.length - 1]) / 2 - t) * 0.6),
+      n < c && ((c = n), (s = e)));
+  }
+  return s;
+}
+function qt(e, t, n, r) {
+  let i = [];
+  for (let a = n; a <= r; a++)
+    t.includes((((a - e) % 12) + 12) % 12) && i.push(a);
+  return i;
+}
+function Jt(e) {
+  let t = [];
+  for (let n = 0; n < e.length; n++) {
+    if (e[n] !== `x`) continue;
+    let r = 1;
+    for (; n + r < e.length && e[n + r] === `-`;) r++;
+    t.push([n, r]);
+  }
+  return t;
+}
+function G(e, t, n, r = `drums`, i = 0.25, a = 1) {
+  for (let o = 0; o < e.length; o++) {
+    let s = e[o];
+    if (s === `.` || s === ` `) continue;
+    let c = s === `x` ? 1 : s === `o` ? 0.65 : s === `g` ? 0.32 : 0.8;
+    n.push({ t: o * i, m: 60, d: i, v: c * a, inst: `drum:` + t, ch: r });
+  }
+}
+function Yt(e, t) {
+  let n = t.chords.length,
+    r = t.beatsPerBar ?? 4,
+    i = qt(t.key, t.scale, t.lo, t.hi),
+    a = (e) => {
+      let t = 0,
+        n = 1e9;
+      for (let r = 0; r < i.length; r++) {
+        let a = Math.abs(i[r] - e);
+        a < n && ((n = a), (t = r));
+      }
+      return t;
+    },
+    o = [],
+    s = t.start ?? Math.round((t.lo + t.hi) / 2),
+    c = e.pick(t.rhythms),
+    l = e.pick(t.rhythms),
+    u = null,
+    d = e.chance(0.5) ? 1 : -1;
+  for (let f = 0; f < n; f++) {
+    let p = f % 4,
+      m = p === 3 || f === n - 1,
+      h = m ? e.pick(t.cadence) : p === 1 ? l : c,
+      g = t.chords[f],
+      _ = [],
+      v = (e) => Gt(t.halfChords ? t.halfChords[f * 2 + +(e >= 8)] : g),
+      y = p === 2 && u && u.length === h.length,
+      b = [],
+      x = a(s);
+    for (let n = 0; n < h.length; n++) {
+      let [o, c] = h[n],
+        l,
+        f = o % 8 == 0 || (o % 4 == 0 && c >= 3);
+      if (y && n > 0)
+        ((x = Math.max(0, Math.min(i.length - 1, x + u[n]))),
+          (l = i[x]),
+          f && (l = W(l, v(o), t.lo, t.hi)));
+      else if (f || n === 0) {
+        p >= 2 && e.chance(0.5) && (d = -1);
+        let r = n === 0 && p === 0 ? e.pick([2, 3, 4]) : e.pick([1, 2, 3]);
+        l = W(
+          s + d * r,
+          v(o).filter((t) => t !== ((s % 12) + 12) % 12 || e.chance(0.3)),
+          t.lo,
+          t.hi,
+        );
+      } else {
+        let t = e.chance(0.1) ? 0 : d * (e.chance(0.72) ? 1 : 2);
+        ((x = Math.max(0, Math.min(i.length - 1, a(s) + t))), (l = i[x]));
+      }
+      (l >= t.hi - 1
+        ? (d = -1)
+        : l <= t.lo + 1
+          ? (d = 1)
+          : e.chance(0.22) && (d = -d),
+        m &&
+          n === h.length - 1 &&
+          (l = W(l, [g.root, (g.root + g.iv[1]) % 12], t.lo, t.hi)),
+        b.push(a(l) - a(s)),
+        (x = a(l)),
+        (s = l));
+      let S = (o / 16) * r;
+      _.push({
+        t: S,
+        m: l,
+        d: (c / 16) * r,
+        v: (t.vel ?? 0.85) * (f ? 1 : 0.85),
+        inst: t.inst,
+        ch: `lead`,
+      });
+    }
+    (p === 0 && (u = b), o.push(_));
+  }
+  return o;
+}
+function Xt(e) {
+  let t = 2166136261;
+  for (let n = 0; n < e.length; n++)
+    ((t ^= e.charCodeAt(n)), (t = Math.imul(t, 16777619)));
+  return t >>> 0;
+}
+function Zt(e, t) {
+  let n = 0;
+  return e.map(([e, r, i, a]) => {
+    let o = Wt(i, t),
+      s = [];
+    for (let e = 0; e < r; e++) s.push(o[e % o.length]);
+    let c = { kind: e, bars: r, start: n, prog: s, tr: a ?? 0 };
+    return ((n += r), c);
+  });
+}
+function Qt(e, t) {
+  for (let n = 0; n < e.length; n++) {
+    let r = e[n];
+    if (t < r.start + r.bars) return [r, t - r.start, e[n + 1]];
+  }
+  let n = e[e.length - 1];
+  return [n, n.bars - 1, void 0];
+}
+var $t = (e) => e.reduce((e, t) => e + t.bars, 0);
+function en(e, t) {
+  if (t) for (let n of e) n.inst.startsWith(`drum:`) || (n.m += t);
+  return e;
+}
+var tn = (e) => (e <= 6 ? e : e - 12);
+function nn(e, t, n, r, i, a = `bass`, o = 33) {
+  let s = W(o + 6, [e.bass], o, o + 11),
+    c = s + 7,
+    l = W(s, [t.bass], s - 7, s + 7),
+    u = l === s ? s + 7 : l + (l > s ? -1 : i.chance(0.5) ? 2 : 1),
+    d = (e, t, n, i = 0.85) =>
+      r.push({ t: e, m: t, d: n, v: i, inst: a, ch: `bass` });
+  switch (n) {
+    case `ballad`:
+      (d(0, s, 1.9),
+        d(2, i.chance(0.5) ? c : s, 1.4, 0.7),
+        d(3.5, u, 0.45, 0.6));
+      break;
+    case `pop`:
+      (d(0, s, 1.4),
+        d(1.5, s, 0.45, 0.6),
+        d(2, s + 12, 0.9, 0.7),
+        d(3, c, 0.45, 0.65),
+        d(3.5, u, 0.45, 0.6));
+      break;
+    case `eighths`:
+      for (let e = 0; e < 8; e++)
+        d(e * 0.5, e === 7 ? u : s, 0.42, e % 2 ? 0.7 : 0.9);
+      break;
+    case `lofi`:
+      (d(0, s, 1.4),
+        d(2.5, i.chance(0.6) ? s : c, 0.9, 0.7),
+        d(3.5, u, 0.45, 0.55));
+      break;
+    case `edm`:
+      for (let e = 0; e < 4; e++) d(e + 0.5, e % 2 ? s + 12 : s, 0.45, 0.9);
+      break;
+    default:
+      d(0, s, 3.8);
+  }
+}
+function K(e, t, n, r, i, a, o = 64, s = 0.7, c = `keys`) {
+  let l = Kt(e, o, n === `lofi` ? 5 : 4, t.v);
+  t.v = l;
+  let u = W(o - 18, [e.bass], o - 24, o - 13),
+    d = (e, t, n, i) => r.push({ t: e, m: t, d: n, v: i * s, inst: a, ch: c });
+  switch (n) {
+    case `arp`:
+      [u, u + 7, l[0], l[1], l[2], l[1], l[0], u + 7].forEach((e, t) =>
+        d(t * 0.5, e, 0.9, t === 0 ? 0.9 : 0.62),
+      );
+      break;
+    case `arp16`: {
+      let e = [l[0], l[1], l[2], l[3] ?? l[0] + 12];
+      for (let t = 0; t < 16; t++)
+        d(
+          t * 0.25,
+          e[t % 4] + (t >= 8 && t % 4, 0),
+          0.3,
+          t % 4 == 0 ? 0.8 : 0.55,
+        );
+      break;
+    }
+    case `block`:
+      for (let [e, t, n] of [
+        [0, 1, 0.85],
+        [1.5, 0.45, 0.55],
+        [2, 0.9, 0.7],
+        [3, 0.45, 0.5],
+        [3.5, 0.45, 0.6],
+      ])
+        for (let r of l) d(e, r, t, n);
+      d(0, u, 1.9, 0.8);
+      break;
+    case `whole`:
+      for (let e of l) d(0, e, 3.9, 0.7);
+      break;
+    case `lofi`: {
+      let e = i.chance(0.5) ? 1.75 : 2.5;
+      (l.forEach((t, n) => d(n * 0.025, t, e - 0.1, 0.62 + i.bi() * 0.05)),
+        l.slice(1).forEach((t, n) => d(e + n * 0.02, t, 4 - e - 0.1, 0.45)));
+      break;
+    }
+    case `stab`: {
+      let e = i.chance(0.5) ? [0, 0.75, 1.5, 2.5, 3.25] : [0.5, 1.5, 2.5, 3.5];
+      for (let t of e) for (let e of l) d(t, e, 0.35, 0.8);
+      break;
+    }
+    case `offbeat`:
+      for (let e = 0; e < 4; e++) for (let t of l) d(e + 0.5, t, 0.4, 0.75);
+  }
+}
+function rn(e, t, n) {
+  if (e === `tom`)
+    [`tom_h`, `tom_h`, `tom_l`, `tom_l`].forEach((e, n) =>
+      t.push({
+        t: 3 + n * 0.25,
+        m: 60,
+        d: 0.25,
+        v: 0.9,
+        inst: `drum:` + e,
+        ch: `drums`,
+      }),
+    );
+  else if (e === `snare`)
+    for (let e = 0; e < 8; e++)
+      t.push({
+        t: 2 + e * 0.25,
+        m: 60,
+        d: 0.25,
+        v: 0.5 + e * 0.06,
+        inst: `drum:snare`,
+        ch: `drums`,
+      });
+  else
+    for (let e = 0; e < 16; e++)
+      t.push({
+        t: e * 0.25,
+        m: 60,
+        d: 0.25,
+        v: 0.35 + e * 0.04,
+        inst: `drum:snare`,
+        ch: `drums`,
+      });
+}
+var an = [
+    [`台北的雨`, `Taipei Rain`],
+    [`最後一班捷運`, `Last MRT Home`],
+    [`珍奶與你`, `Boba & You`],
+    [`101 的煙火`, `Fireworks at 101`],
+    [`西門町之戀`, `Ximending Love`],
+    [`象山夕陽`, `Sunset on Elephant Mountain`],
+    [`騎樓下`, `Under the Arcade`],
+    [`悠悠卡的心`, `YOYO Card Heart`],
+    [`淡水河邊`, `By the Tamsui`],
+    [`便利商店的夜`, `Convenience Store Night`],
+  ],
+  on = [
+    `晴天娃娃 Sunny Doll`,
+    `阿翔 A-Xiang`,
+    `藍色公路 Blue Highway`,
+    `小雨 Drizzle`,
+    `捷運人 MRT People`,
+    `夏天樂團 Summer Band`,
+  ],
+  sn = {
+    canon: [`I`, `V`, `vi`, `iii`, `IV`, `I`, `IV`, `V`],
+    royal: [`IVmaj7`, `V7`, `iii7`, `vi`],
+    pop: [`I`, `V`, `vi`, `IV`],
+    fifties: [`I`, `vi`, `IV`, `V`],
+    sad: [`vi`, `IV`, `I`, `V`],
+  },
+  q = (...e) => e.map(Jt);
+function cn(e) {
+  let t = new o(Xt(`pop/` + e)),
+    n = t.pick([72, 76, 80, 84, 88, 96]),
+    r = t.pick([0, 2, 3, 4, 5, 7, 9]),
+    i = tn(r),
+    a = t.pick([sn.canon, sn.pop, sn.fifties]),
+    s = t.pick([sn.royal, sn.sad, sn.canon, sn.pop].filter((e) => e !== a)),
+    c = t.pick([
+      [`ii7`, `iii7`, `IVmaj7`, `V7sus4`],
+      [`IV`, `V`, `iii`, `vi`],
+      [`IV`, `V/3`, `vi`, `V`],
+    ]),
+    l = [`vi`, `iii`, `IV`, `V`],
+    u = t.chance(0.7) ? t.pick([1, 2]) : 0,
+    d = Zt(
+      [
+        [`intro`, 4, s],
+        [`verse`, 8, a],
+        [`pre`, 4, c],
+        [`chorus`, 8, s],
+        [`inter`, 4, a],
+        [`verse`, 8, a],
+        [`pre`, 4, c],
+        [`chorus`, 8, s],
+        [`bridge`, 4, l],
+        [`chorus2`, 8, s, u],
+        [`outro`, 4, s],
+      ],
+      r,
+    ),
+    f = d[1].prog,
+    p = d[3].prog,
+    m = Yt(t, {
+      chords: f,
+      key: r,
+      scale: Vt.major,
+      lo: 60 + i,
+      hi: 74 + i,
+      inst: `vox`,
+      vel: 0.75,
+      rhythms: q(
+        `x-x-x---x-x-x---`,
+        `..x-x-x-x---x---`,
+        `x---x-x-x-x-x---`,
+        `x-x-x-x---..x-x-`,
+      ),
+      cadence: q(`x---x---x-------`, `x-x-x-----------`, `x-------x-------`),
+    }),
+    h = Yt(t, {
+      chords: p,
+      key: r,
+      scale: Vt.pentaMaj,
+      lo: 65 + i,
+      hi: 81 + i,
+      inst: `vox`,
+      vel: 0.9,
+      rhythms: q(
+        `x---x---x-x-x---`,
+        `x-x---x-x---x---`,
+        `x-----x-x---x---`,
+        `x-x-x---x---x-x-`,
+      ),
+      cadence: q(`x---x-----------`, `x-x-x-----------`),
+    }),
+    g = Yt(t, {
+      chords: p,
+      key: r,
+      scale: Vt.pentaMaj,
+      lo: 69 + i,
+      hi: 86 + i,
+      inst: `erhu`,
+      vel: 0.55,
+      rhythms: q(`x-------x-------`, `........x---x---`, `x-----------x---`),
+      cadence: q(`x---------------`),
+    }),
+    _ = { v: null },
+    v = { v: null },
+    y = { v: null },
+    [b, x] = t.pick(an);
+  return {
+    title: { zh: b, en: x },
+    artist: t.pick(on),
+    bpm: n,
+    swing: 0.5,
+    beatsPerBar: 4,
+    bars: $t(d),
+    bar(t) {
+      let [n, r, a] = Qt(d, t),
+        s = n.prog[r],
+        c = r + 1 < n.bars ? n.prog[r + 1] : (a?.prog[0] ?? s),
+        l = new o(Xt(`pop/${e}/${t}`)),
+        u = [],
+        f = r === n.bars - 1,
+        p = n.kind;
+      if (
+        (p === `verse` || p === `inter`
+          ? (G(`x.......x.x.....`, `kick`, u),
+            G(`....x.......x...`, `rim`, u, `drums`, 0.25, 0.8),
+            G(`x.g.x.g.x.g.x.g.`, `hat_c`, u, `drums`, 0.25, 0.6))
+          : p === `pre`
+            ? (G(`x.......x.x.....`, `kick`, u),
+              G(f ? `....o...x.o.xxxx` : `....o.......o...`, `snare`, u),
+              G(`x.x.x.x.x.x.x.x.`, `hat_c`, u, `drums`, 0.25, 0.6))
+            : (p.startsWith(`chorus`) || p === `bridge`) &&
+              (G(
+                p === `bridge` ? `x.......x.......` : `x.....x.x.x.....`,
+                `kick`,
+                u,
+              ),
+              G(`....x.......x...`, `snare`, u),
+              G(`x.x.x.x.x.x.x.o.`, `hat_c`, u, `drums`, 0.25, 0.7),
+              r % 4 == 0 && G(`x`, `crash`, u, `drums`, 0.25, 0.6),
+              G(`g.g.g.g.g.g.g.g.`, `shaker`, u, `perc`, 0.25, 0.5)),
+        f &&
+          a &&
+          (a.kind.startsWith(`chorus`) || a.kind === `verse`) &&
+          p !== `intro` &&
+          rn(`tom`, u, l),
+        p !== `intro` &&
+          p !== `outro` &&
+          nn(
+            s,
+            c,
+            p.startsWith(`chorus`) ? `pop` : `ballad`,
+            u,
+            l,
+            `bass`,
+            33 + i,
+          ),
+        p === `intro` || p === `outro`)
+      ) {
+        if ((K(s, _, `arp`, u, l, `piano`, 64 + i, 0.55), p === `intro`))
+          for (let e of h[r % h.length])
+            u.push({
+              ...e,
+              inst: `piano`,
+              m: e.m + 12,
+              v: e.v * 0.6,
+              ch: `keys`,
+            });
+      } else
+        p.startsWith(`chorus`)
+          ? K(s, _, `block`, u, l, `piano`, 66 + i, 0.55)
+          : p === `bridge`
+            ? K(s, _, `whole`, u, l, `piano`, 64 + i, 0.6)
+            : K(s, _, `arp`, u, l, `piano`, 64 + i, 0.6);
+      if (
+        ((p === `pre` || p.startsWith(`chorus`) || p === `bridge`) &&
+          K(s, v, `whole`, u, l, `pad`, 60 + i, 0.5, `pad`),
+        (p === `chorus2` ||
+          p === `bridge` ||
+          (p === `chorus` && n.start > 30)) &&
+          K(s, y, `whole`, u, l, `strings`, 72 + i, 0.45, `pad`),
+        p === `verse` && u.push(...m[r % m.length].map((e) => ({ ...e }))),
+        p.startsWith(`chorus`) &&
+          (u.push(...h[r % h.length].map((e) => ({ ...e }))),
+          p === `chorus2` || n.start > 30))
+      )
+        for (let e of g[r % g.length]) u.push({ ...e });
+      if (p === `inter` || p === `bridge`)
+        for (let e of g[r % g.length]) u.push({ ...e, v: e.v * 1.2 });
+      if (p === `outro` && f)
+        for (let e of Kt(s, 64 + i, 4, null))
+          u.push({ t: 0, m: e, d: 4, v: 0.5, inst: `pad`, ch: `pad` });
+      return en(u, n.tr);
+    },
+    sidechain: () => 0.15,
+  };
+}
+var ln = [
+    [`凌晨兩點的滷肉飯`, `2AM Braised Pork Rice`],
+    [`騎樓雨聲`, `Arcade Rain`],
+    [`臭豆腐夢`, `Stinky Tofu Dreams`],
+    [`夜市打烊`, `Market Closing Time`],
+    [`頂樓加蓋`, `Rooftop Addition`],
+    [`鐵窗貓`, `Window-Cage Cat`],
+    [`便利商店的光`, `Convenience Store Glow`],
+    [`公館書店`, `Gongguan Bookshop`],
+    [`豆花時間`, `Douhua Hour`],
+  ],
+  un = [
+    `夜貓子 Night Owl`,
+    `Beats by 阿嬤 Ama`,
+    `lofi.tpe`,
+    `溫州街 Wenzhou St.`,
+    `雨天 Rainy Day`,
+  ],
+  dn = [
+    [`ii9`, `V9`, `Imaj9`, `vi9`],
+    [`IVmaj7`, `iii7`, `vi9`, `V7sus4`],
+    [`Imaj7`, `vi7`, `ii9`, `V9`],
+    [`IVmaj7`, `III7`, `vi9`, `I7`],
+    [`vi9`, `ii9`, `Vsus4`, `Imaj7`],
+  ];
+function fn(e) {
+  let t = new o(Xt(`lofi/` + e)),
+    n = t.pick([70, 74, 78, 82, 86]),
+    r = t.pick([0, 2, 3, 5, 7, 8, 10]),
+    i = tn(r),
+    a = t.pick(dn),
+    s = Zt(
+      [
+        [`intro`, 4, a],
+        [`a`, 8, a],
+        [`b`, 8, a],
+        [`a2`, 8, a],
+        [`b`, 8, a],
+        [`outro`, 4, a],
+      ],
+      r,
+    ),
+    c = t.pick([`flute`, `musicbox`, `erhu`, `epiano`]),
+    l = Yt(t, {
+      chords: s[2].prog,
+      key: r,
+      scale: Vt.pentaMaj,
+      lo: 67 + i,
+      hi: 84 + i,
+      inst: c,
+      vel: 0.6,
+      rhythms: q(
+        `x---x-----x-----`,
+        `..x-x---x-------`,
+        `x-------x-x-----`,
+        `....x-x-x---x---`,
+      ),
+      cadence: q(`x---------------`, `x-----x---------`),
+    }),
+    u = t.pick([`x.....x...x.x...`, `x.......x.x.....`, `x..x......x.....`]),
+    d = { v: null },
+    [f, p] = t.pick(ln);
+  return {
+    title: { zh: f, en: p },
+    artist: t.pick(un),
+    bpm: n,
+    swing: t.range(0.57, 0.63),
+    beatsPerBar: 4,
+    bars: $t(s),
+    bar(t) {
+      let [n, r, a] = Qt(s, t),
+        c = n.prog[r],
+        f = r + 1 < n.bars ? n.prog[r + 1] : (a?.prog[0] ?? c),
+        p = new o(Xt(`lofi/${e}/${t}`)),
+        m = [],
+        h = n.kind;
+      return (
+        h !== `intro` &&
+          h !== `outro` &&
+          ((h === `a2` && r < 2) || G(u, `kick_lofi`, m),
+          G(
+            `....x.......x..` + (p.chance(0.3) ? `g` : `.`),
+            p.chance(0.2) ? `rim` : `snare_lofi`,
+            m,
+          ),
+          G(`x.xgx.x.x.xgx.xg`, `hat_c`, m, `drums`, 0.25, 0.45),
+          h === `b` && G(`..g...g...g...g.`, `shaker`, m, `perc`, 0.25, 0.5)),
+        h !== `intro` && nn(c, f, `lofi`, m, p, `bass`, 33 + i),
+        K(
+          c,
+          d,
+          `lofi`,
+          m,
+          p,
+          `epiano`,
+          62 + i,
+          h === `intro` || h === `outro` ? 0.55 : 0.68,
+        ),
+        h === `b` && m.push(...l[r % l.length].map((e) => ({ ...e }))),
+        h === `intro` &&
+          r === 0 &&
+          m.push({
+            t: 0.5,
+            m: 60,
+            d: 2,
+            v: 0.35,
+            inst: `sfx:vendor_call`,
+            ch: `fx`,
+          }),
+        m
+      );
+    },
+    filter(e) {
+      let [t, n] = Qt(s, e);
+      return t.kind === `intro`
+        ? n < 3
+          ? [900, 900]
+          : [900, 6500]
+        : t.kind === `outro`
+          ? [6500 - n * 1400, 5e3 - n * 1200]
+          : [6500, 6500];
+    },
+    sidechain: () => 0.2,
+  };
+}
+var pn = [
+    [`三太子降臨`, `Third Prince Descends`],
+    [`神明 Drop`, `Deity Drop`],
+    [`遶境 Rave`, `Pilgrimage Rave`],
+    [`鞭炮 Bass`, `Firecracker Bass`],
+    [`八家將`, `Eight Generals`],
+    [`霓虹廟埕`, `Neon Temple Square`],
+    [`香爐 Trap`, `Incense Burner Trap`],
+  ],
+  mn = [
+    `DJ 哪吒 Nezha`,
+    `霓虹神明 Neon Gods Crew`,
+    `廟口 Soundsystem`,
+    `MC 三太子`,
+  ],
+  hn = [
+    [`i`, `bVI`, `bIII`, `bVII`],
+    [`i`, `bVII`, `bVI`, `bVII`],
+    [`bVI`, `bVII`, `i`, `i`],
+    [`i`, `bVI`, `bVII`, `v`],
+  ];
+function gn(e) {
+  let t = new o(Xt(`edm/` + e)),
+    n = t.pick([126, 128, 128, 130]),
+    r = t.pick([9, 5, 7, 2, 0]),
+    i = tn(r),
+    a = t.pick(hn),
+    s = Zt(
+      [
+        [`intro`, 8, a],
+        [`build`, 8, a],
+        [`drop`, 16, a],
+        [`break`, 8, a],
+        [`build`, 8, a],
+        [`drop2`, 16, a],
+        [`outro`, 8, a],
+      ],
+      r,
+    ),
+    c = Yt(t, {
+      chords: s[2].prog.slice(0, 8),
+      key: r,
+      scale: Vt.pentaMin,
+      lo: 69 + i,
+      hi: 86 + i,
+      inst: `suona`,
+      vel: 0.85,
+      rhythms: q(
+        `x-x-x-x-x---x-x-`,
+        `x--x--x-x-x-x---`,
+        `x-x-x---x-x-x-x-`,
+        `x-xxx-x-x---x---`,
+      ),
+      cadence: q(`x-x-x-----------`, `x---x---x-------`),
+    }),
+    l = Yt(t, {
+      chords: s[3].prog,
+      key: r,
+      scale: Vt.pentaMin,
+      lo: 67 + i,
+      hi: 84 + i,
+      inst: `suona`,
+      vel: 0.7,
+      rhythms: q(`x-------x-------`, `x-----------x---`, `x---x-------x---`),
+      cadence: q(`x---------------`),
+    }),
+    u = { v: null },
+    d = { v: null },
+    [f, p] = t.pick(pn);
+  return {
+    title: { zh: f, en: p },
+    artist: t.pick(mn),
+    bpm: n,
+    swing: 0.5,
+    beatsPerBar: 4,
+    bars: $t(s),
+    bar(t) {
+      let [n, r, a] = Qt(s, t),
+        f = n.prog[r],
+        p = r + 1 < n.bars ? n.prog[r + 1] : (a?.prog[0] ?? f),
+        m = new o(Xt(`edm/${e}/${t}`)),
+        h = [],
+        g = n.kind,
+        _ = g.startsWith(`drop`);
+      if (g === `intro`)
+        (G(`x...x...x...x...`, `kick`, h),
+          G(`..x...x...x...x.`, `hat_c`, h, `drums`, 0.25, 0.7),
+          r >= 4 && G(`....x.......x...`, `clap`, h, `drums`, 0.25, 0.8),
+          r === 0 &&
+            h.push({
+              t: 0,
+              m: 60,
+              d: 3,
+              v: 0.9,
+              inst: `drum:gong`,
+              ch: `perc`,
+            }),
+          K(f, d, `whole`, h, m, `pad`, 60 + i, 0.55, `pad`),
+          nn(f, p, `root`, h, m, `synthbass`, 33 + i));
+      else if (g === `build`) {
+        r < 6 && G(`x...x...x...x...`, `kick`, h);
+        let e =
+          r < 2
+            ? `x...x...x...x...`
+            : r < 4
+              ? `x.x.x.x.x.x.x.x.`
+              : `xxxxxxxxxxxxxxxx`;
+        if (r < 7) G(e, `snare`, h, `drums`, 0.25, 0.35 + r * 0.08);
+        else
+          for (let e = 0; e < 32; e++)
+            h.push({
+              t: e * 0.125,
+              m: 60,
+              d: 0.125,
+              v: 0.5 + e * 0.015,
+              inst: `drum:snare`,
+              ch: `drums`,
+            });
+        (r === 6 &&
+          h.push({ t: 0, m: 60, d: 8, v: 0.7, inst: `drum:riser`, ch: `fx` }),
+          r === 7 &&
+            h.push({
+              t: 3.5,
+              m: 60,
+              d: 0.5,
+              v: 1,
+              inst: `drum:vox_hey`,
+              ch: `fx`,
+            }),
+          K(f, u, `offbeat`, h, m, `supersaw`, 64 + i, 0.35 + r * 0.05));
+        for (let e = 0; e < 8; e++)
+          h.push({
+            t: e * 0.5,
+            m: W(39 + i, [f.bass], 33, 50),
+            d: 0.4,
+            v: 0.8,
+            inst: `synthbass`,
+            ch: `bass`,
+          });
+      } else if (_) {
+        (G(`x...x...x...x...`, `kick`, h),
+          G(`....x.......x...`, `clap`, h),
+          G(`..o...o...o...o.`, `hat_o`, h, `drums`, 0.25, 0.6),
+          G(`gggggggggggggggg`, `hat_c`, h, `drums`, 0.25, 0.5),
+          G(`..x...x...x...x.`, `cymbal_bo`, h, `perc`, 0.25, 0.28),
+          G(
+            r % 2 ? `x..x..x...x.x...` : `x..x..x.x.x.x..x`,
+            `bigdrum`,
+            h,
+            `perc`,
+            0.25,
+            0.7,
+          ),
+          r === 0 &&
+            (h.push(
+              { t: 0, m: 60, d: 2, v: 1, inst: `drum:impact`, ch: `fx` },
+              { t: 0, m: 60, d: 2, v: 0.8, inst: `drum:crash`, ch: `drums` },
+            ),
+            h.push({
+              t: 0,
+              m: 60,
+              d: 3,
+              v: 0.8,
+              inst: `drum:gong`,
+              ch: `perc`,
+            })),
+          r % 4 == 3 &&
+            h.push({
+              t: 3,
+              m: 60,
+              d: 1,
+              v: 0.8,
+              inst: `drum:opera_gong`,
+              ch: `perc`,
+            }),
+          r % 8 == 4 &&
+            m.chance(0.6) &&
+            h.push({
+              t: 2.5,
+              m: 60,
+              d: 0.5,
+              v: 0.8,
+              inst: `drum:vox_hey`,
+              ch: `fx`,
+            }),
+          nn(f, p, `edm`, h, m, `synthbass`, 33 + i),
+          K(f, u, `stab`, h, m, `supersaw`, 66 + i, 0.62));
+        let e = c[r % c.length];
+        for (let t of e)
+          h.push({ ...t, m: t.m + (g === `drop2` && r >= 8 ? 12 : 0) });
+        if (g === `drop2`)
+          for (let t of e)
+            h.push({ ...t, inst: `erhu`, v: t.v * 0.45, m: t.m - 12 });
+      } else
+        g === `break`
+          ? (G(
+              r % 2 ? `x.......x..x....` : `x.......x.......`,
+              `bigdrum`,
+              h,
+              `perc`,
+              0.25,
+              0.75,
+            ),
+            K(f, d, `whole`, h, m, `pad`, 62 + i, 0.6, `pad`),
+            K(f, u, `arp16`, h, m, `marimba`, 72 + i, 0.35),
+            h.push(...l[r % l.length].map((e) => ({ ...e }))),
+            nn(f, p, `root`, h, m, `synthbass`, 33 + i))
+          : (r < 6 && G(`x...x...x...x...`, `kick`, h),
+            G(`..x...x...x...x.`, `hat_c`, h, `drums`, 0.25, 0.6 - r * 0.05),
+            K(f, d, `whole`, h, m, `pad`, 60 + i, 0.5 - r * 0.05, `pad`),
+            r === 7 &&
+              h.push({
+                t: 0,
+                m: 60,
+                d: 4,
+                v: 0.9,
+                inst: `drum:gong`,
+                ch: `perc`,
+              }));
+      return h;
+    },
+    filter(e) {
+      let [t, n] = Qt(s, e);
+      return t.kind === `intro`
+        ? [400 + n * 500, 900 + n * 500]
+        : t.kind === `build`
+          ? [700 * 1.45 ** n, 700 * 1.45 ** (n + 1)]
+          : t.kind === `outro`
+            ? [16e3 / (1 + n), 16e3 / (2 + n)]
+            : [18e3, 18e3];
+    },
+    sidechain(e) {
+      let [t] = Qt(s, e);
+      return t.kind.startsWith(`drop`)
+        ? 0.75
+        : t.kind === `intro` || t.kind === `build`
+          ? 0.45
+          : 0;
+    },
+  };
+}
+var _n = [
+    [`台客萬歲`, `Long Live Taike`],
+    [`機車騎士`, `Scooter Rider`],
+    [`夜市搖滾`, `Night Market Rock`],
+    [`中山高`, `Freeway No. 1`],
+    [`拼了啦`, `Go All In`],
+    [`紅燈右轉`, `Right on Red`],
+    [`颱風天`, `Typhoon Day`],
+    [`古早味`, `Old-School Flavor`],
+  ],
+  vn = [
+    `台客大樂隊 Taike Big Band`,
+    `鐵窗樂團 Iron Window`,
+    `阿嘉與機車 A-Jia & the Scooters`,
+    `八點檔 Prime Time`,
+  ],
+  yn = [
+    [`I`, `bVII`, `IV`, `I`],
+    [`I`, `IV`, `V`, `IV`],
+    [`vi`, `IV`, `I`, `V`],
+    [`i`, `bVI`, `bVII`, `i`],
+    [`I`, `V`, `bVII`, `IV`],
+  ];
+function bn(e) {
+  let t = new o(Xt(`rock/` + e)),
+    n = t.pick([132, 140, 148, 156]),
+    r = t.pick([4, 9, 2, 7]),
+    i = 40 + ((r - 4 + 12) % 12),
+    a = tn(r),
+    s = t.pick(yn),
+    c = t.pick(yn.filter((e) => e !== s)),
+    l = Zt(
+      [
+        [`intro`, 4, c],
+        [`verse`, 8, s],
+        [`pre`, 4, [`IV`, `V`, `IV`, `V`]],
+        [`chorus`, 8, c],
+        [`verse`, 8, s],
+        [`chorus`, 8, c],
+        [`solo`, 8, s],
+        [`chorus`, 8, c],
+        [`outro`, 4, c],
+      ],
+      r,
+    ),
+    u = t.chance(0.55),
+    d = Yt(t, {
+      chords: l[3].prog,
+      key: r,
+      scale: Vt.pentaMaj,
+      lo: 64 + a,
+      hi: 81 + a,
+      inst: u ? `organ` : `distlead`,
+      vel: 0.8,
+      rhythms: q(`x-x-x---x-x-x---`, `x---x-x-x---x-x-`, `x-x-x-x-x-------`),
+      cadence: q(`x---x---x-------`, `x-x-x-----------`),
+    }),
+    f = Yt(t, {
+      chords: l[6].prog,
+      key: r,
+      scale: Vt.blues,
+      lo: 62 + a,
+      hi: 84 + a,
+      inst: `distlead`,
+      vel: 0.85,
+      rhythms: q(
+        `x-x-x-x-xxxxx---`,
+        `x.xxx.x-x-x-x---`,
+        `xxxxx---x-x-x---`,
+        `x---x-xxx-x-x---`,
+      ),
+      cadence: q(`x-x-x-----------`),
+    }),
+    [p, m] = t.pick(_n);
+  return {
+    title: { zh: p, en: m },
+    artist: t.pick(vn),
+    bpm: n,
+    swing: 0.5,
+    beatsPerBar: 4,
+    bars: $t(l),
+    bar(t) {
+      let [n, r, a] = Qt(l, t),
+        s = n.prog[r],
+        c = r + 1 < n.bars ? n.prog[r + 1] : (a?.prog[0] ?? s),
+        u = new o(Xt(`rock/${e}/${t}`)),
+        p = [],
+        m = n.kind,
+        h = r === n.bars - 1,
+        g = W(i + 5, [s.root], i, i + 11),
+        _ = (e, t, n, r) =>
+          p.push({ t: e, m: g, d: n, v: r, inst: t, ch: `keys` });
+      if (m === `intro` && r < 2)
+        for (let e = 0; e < 8; e++)
+          _(e * 0.5, e % 4 == 0 ? `power` : `chug`, 0.45, 0.8);
+      else if (m === `verse`) {
+        for (let e = 0; e < 8; e++) _(e * 0.5, `chug`, 0.45, e % 2 ? 0.7 : 0.9);
+        (G(`x.....x.x.......`, `kick`, p),
+          G(`....x.......x...`, `snare`, p),
+          G(`x.x.x.x.x.x.x.x.`, `hat_c`, p, `drums`, 0.25, 0.6),
+          nn(s, c, `eighths`, p, u, `bass`, i - 12));
+      } else if (m === `pre`)
+        (_(0, `power`, 1.9, 0.9),
+          _(2, `power`, 1.9, 0.8),
+          G(`x.x.x.x.x.x.x.x.`, `kick`, p, `drums`, 0.25, 0.8),
+          G(`....x.......x...`, `snare`, p),
+          G(r === 0 ? `x` : `.`, `crash`, p),
+          h && rn(`snare`, p, u),
+          nn(s, c, `eighths`, p, u, `bass`, i - 12));
+      else {
+        let e = m === `chorus` || m === `solo` || (m === `intro` && r >= 2);
+        for (let e = 0; e < 8; e++)
+          _(e * 0.5, `power`, 0.48, e % 2 ? 0.75 : 0.95);
+        (G(`x.x...x.x.x.....`, `kick`, p),
+          G(`....x.......x...`, `snare`, p),
+          G(
+            e ? `x.x.x.x.x.x.x.x.` : `x...x...x...x...`,
+            `ride`,
+            p,
+            `drums`,
+            0.25,
+            0.5,
+          ),
+          r % 4 == 0 && G(`x`, `crash`, p, `drums`, 0.25, 0.8),
+          nn(s, c, `eighths`, p, u, `bass`, i - 12),
+          m === `chorus` && p.push(...d[r % d.length].map((e) => ({ ...e }))),
+          m === `solo` && p.push(...f[r % f.length].map((e) => ({ ...e }))),
+          m === `outro` &&
+            h &&
+            ((p.length = 0),
+            _(0, `power`, 3.9, 1),
+            G(`x`, `crash`, p),
+            G(`x`, `kick`, p)));
+      }
+      return (
+        h &&
+          a &&
+          a.kind !== m &&
+          m !== `pre` &&
+          m !== `outro` &&
+          rn(`tom`, p, u),
+        p
+      );
+    },
+    sidechain: () => 0,
+  };
+}
+function xn(e, t, n, r, i) {
+  let a = i.reduce((e, t) => Math.max(e, t.t + t.d), 0),
+    o = Math.ceil(a / r) + 1,
+    s = [];
+  for (let e = 0; e < o; e++) s.push([]);
+  for (let e of i) {
+    let t = Math.floor(e.t / r + 1e-6);
+    s[Math.min(o - 1, t)].push({
+      t: e.t - t * r,
+      m: e.m,
+      d: e.d,
+      v: e.v,
+      inst: e.inst,
+      ch: e.ch,
+    });
+  }
+  return {
+    title: { zh: e[0], en: e[1] },
+    artist: t,
+    bpm: n,
+    swing: 0.5,
+    beatsPerBar: r,
+    bars: o,
+    bar: (e) => (s[e] ?? []).map((e) => ({ ...e })),
+  };
+}
+function Sn() {
+  let e = [50, 45, 47, 42, 43, 38, 43, 45],
+    t = Wt([`I`, `V`, `vi`, `iii`, `IV`, `I`, `IV`, `V`], 2),
+    n = [78, 76, 74, 73, 71, 69, 71, 73],
+    r = [74, 73, 71, 69, 67, 66, 67, 64],
+    i = [],
+    a = (e, t) =>
+      e.map((e, n) => ({
+        t: n * t,
+        m: e,
+        d: t * 0.95,
+        v: 0.7,
+        inst: ``,
+        ch: `lead`,
+      }));
+  i.push(a(n, 1), a(r, 1));
+  let o = [];
+  (t.forEach((e, t) => {
+    let r = W(n[t] + 2, Gt(e), 66, 86);
+    o.push(r, W(r - 4, Gt(e), 62, 84));
+  }),
+    i.push(a(o, 0.5)));
+  let s = [];
+  (t.forEach((e) => {
+    let t = W(74, [e.root], 69, 80),
+      n = Gt(e);
+    s.push(t, W(t + 3, n, t + 1, t + 6), W(t + 7, n, t + 5, t + 9), t + 12);
+  }),
+    i.push(a(s, 0.25)));
+  let c = [];
+  (n.forEach((e, t) =>
+    c.push(e, t < 7 ? Math.round((e + n[t + 1]) / 2) : e - 2),
+  ),
+    i.push(
+      a(c, 0.5),
+      a(
+        n.map((e) => e + 12),
+        1,
+      ),
+    ));
+  let l = [];
+  for (let n = 0; n < 11; n++) {
+    let r = n * 8;
+    (e.forEach((e, t) =>
+      l.push({ t: r + t, m: e, d: 0.95, v: 0.75, inst: `strings`, ch: `bass` }),
+    ),
+      t.forEach((e, t) => {
+        for (let n of Kt(e, 62, 3, null))
+          l.push({
+            t: r + t,
+            m: n,
+            d: 0.5,
+            v: 0.28,
+            inst: `harpsi`,
+            ch: `keys`,
+          });
+      }));
+    for (let e = 0; e < 3; e++) {
+      let t = n - 1 - e * 1;
+      if (t < 0 || t >= i.length) continue;
+      let a = e === 0 || e === 1 ? `strings` : `harpsi`;
+      for (let n of i[t])
+        l.push({
+          ...n,
+          t: r + n.t,
+          inst: a,
+          v: e === 0 ? 0.62 : e === 1 ? 0.5 : 0.45,
+          m: n.m - (e === 1 ? 12 : 0),
+        });
+    }
+  }
+  l.push({ t: 88, m: 38, d: 4, v: 0.7, inst: `strings`, ch: `bass` });
+  for (let e of [62, 66, 69, 74])
+    l.push({ t: 88, m: e, d: 4, v: 0.5, inst: `strings`, ch: `pad` });
+  return xn([`卡農`, `Canon in D`], `J. Pachelbel`, 66, 4, l);
+}
+function Cn() {
+  let e = [
+      [
+        [74, 1],
+        [67, 0.5],
+        [69, 0.5],
+        [71, 0.5],
+        [72, 0.5],
+      ],
+      [
+        [74, 1],
+        [67, 1],
+        [67, 1],
+      ],
+      [
+        [76, 1],
+        [72, 0.5],
+        [74, 0.5],
+        [76, 0.5],
+        [78, 0.5],
+      ],
+      [
+        [79, 1],
+        [67, 1],
+        [67, 1],
+      ],
+      [
+        [72, 1],
+        [74, 0.5],
+        [72, 0.5],
+        [71, 0.5],
+        [69, 0.5],
+      ],
+      [
+        [71, 1],
+        [72, 0.5],
+        [71, 0.5],
+        [69, 0.5],
+        [67, 0.5],
+      ],
+      [
+        [66, 1],
+        [67, 0.5],
+        [69, 0.5],
+        [71, 0.5],
+        [67, 0.5],
+      ],
+      [[69, 3]],
+    ],
+    t = [
+      ...e.slice(0, 6),
+      [
+        [69, 1],
+        [71, 0.5],
+        [69, 0.5],
+        [67, 0.5],
+        [66, 0.5],
+      ],
+      [[67, 3]],
+    ],
+    n = [43, 47, 48, 47, 45, 43, 50, 50],
+    r = [43, 47, 48, 47, 45, 43, 50, 43],
+    i = [],
+    a = 0,
+    o = (e, t, n, r) => {
+      e.forEach((e, o) => {
+        let s = 0;
+        for (let [t, o] of e)
+          (i.push({
+            t: a + s,
+            m: t + n,
+            d: o * 0.92,
+            v: 0.7,
+            inst: r,
+            ch: `lead`,
+          }),
+            (s += o));
+        (i.push({
+          t: a,
+          m: t[o] - 12 + 12,
+          d: 1.9,
+          v: 0.55,
+          inst: r,
+          ch: `bass`,
+        }),
+          (a += 3));
+      });
+    };
+  return (
+    o(e, n, 0, `harpsi`),
+    o(t, r, 0, `harpsi`),
+    o(e, n, 0, `piano`),
+    o(t, r, 0, `piano`),
+    xn([`小步舞曲 G 大調`, `Minuet in G`], `C. Petzold`, 126, 3, i)
+  );
+}
+function wn() {
+  let e = [
+      [66, 1],
+      [66, 1],
+      [67, 1],
+      [69, 1],
+      [69, 1],
+      [67, 1],
+      [66, 1],
+      [64, 1],
+      [62, 1],
+      [62, 1],
+      [64, 1],
+      [66, 1],
+      [66, 1.5],
+      [64, 0.5],
+      [64, 2],
+      [66, 1],
+      [66, 1],
+      [67, 1],
+      [69, 1],
+      [69, 1],
+      [67, 1],
+      [66, 1],
+      [64, 1],
+      [62, 1],
+      [62, 1],
+      [64, 1],
+      [66, 1],
+      [64, 1.5],
+      [62, 0.5],
+      [62, 2],
+      [64, 1],
+      [64, 1],
+      [66, 1],
+      [62, 1],
+      [64, 1],
+      [66, 0.5],
+      [67, 0.5],
+      [66, 1],
+      [62, 1],
+      [64, 1],
+      [66, 0.5],
+      [67, 0.5],
+      [66, 1],
+      [64, 1],
+      [62, 1],
+      [64, 1],
+      [57, 2],
+      [66, 1],
+      [66, 1],
+      [67, 1],
+      [69, 1],
+      [69, 1],
+      [67, 1],
+      [66, 1],
+      [64, 1],
+      [62, 1],
+      [62, 1],
+      [64, 1],
+      [66, 1],
+      [64, 1.5],
+      [62, 0.5],
+      [62, 2],
+    ],
+    t = [
+      `I`,
+      `V`,
+      `I`,
+      `V`,
+      `I`,
+      `V`,
+      `I`,
+      `I`,
+      `V`,
+      `V`,
+      `V`,
+      `V`,
+      `I`,
+      `V`,
+      `I`,
+      `I`,
+    ],
+    n = [];
+  for (let r = 0; r < 2; r++) {
+    let i = r * 64,
+      a = 0;
+    for (let [t, o] of e)
+      (n.push({
+        t: i + a,
+        m: t + 12,
+        d: o * 0.92,
+        v: 0.72,
+        inst: r ? `strings` : `piano`,
+        ch: `lead`,
+      }),
+        r &&
+          n.push({
+            t: i + a,
+            m: t,
+            d: o * 0.92,
+            v: 0.4,
+            inst: `flute`,
+            ch: `lead`,
+          }),
+        (a += o));
+    t.forEach((e, t) => {
+      let a = Ut(e, 2),
+        o = i + t * 4;
+      (n.push({
+        t: o,
+        m: W(43, [a.root], 38, 49),
+        d: 1.9,
+        v: 0.6,
+        inst: r ? `strings` : `piano`,
+        ch: `bass`,
+      }),
+        n.push({
+          t: o + 2,
+          m: W(43, [a.root], 38, 49) + 7,
+          d: 1.9,
+          v: 0.5,
+          inst: r ? `strings` : `piano`,
+          ch: `bass`,
+        }));
+      for (let e of Kt(a, 62, 3, null))
+        n.push({
+          t: o,
+          m: e,
+          d: 3.9,
+          v: r ? 0.35 : 0.3,
+          inst: r ? `pad` : `piano`,
+          ch: `pad`,
+        });
+    });
+  }
+  return xn([`快樂頌`, `Ode to Joy`], `L. v. Beethoven`, 104, 4, n);
+}
+function Tn() {
+  let e = [];
+  for (let t = 0; t < 30; t++) {
+    let n = t % 2 == 0,
+      r = t * 3;
+    e.push({
+      t: r,
+      m: n ? 43 : 38,
+      d: 2.9,
+      v: 0.55,
+      inst: `piano`,
+      ch: `bass`,
+    });
+    for (let t of n ? [59, 62, 66] : [57, 61, 66])
+      e.push({ t: r + 1, m: t, d: 1.9, v: 0.36, inst: `piano`, ch: `keys` });
+  }
+  for (let [t, n, r, i] of [
+    [4, 1, 78, 1],
+    [4, 2, 81, 1],
+    [5, 0, 79, 1],
+    [5, 1, 78, 1],
+    [5, 2, 73, 1],
+    [6, 0, 71, 1],
+    [6, 1, 73, 1],
+    [6, 2, 74, 1],
+    [7, 0, 69, 3],
+    [8, 0, 66, 6],
+    [12, 1, 78, 1],
+    [12, 2, 81, 1],
+    [13, 0, 79, 1],
+    [13, 1, 78, 1],
+    [13, 2, 73, 1],
+    [14, 0, 71, 1],
+    [14, 1, 73, 1],
+    [14, 2, 74, 1],
+    [15, 0, 69, 3],
+    [16, 0, 73, 3],
+    [17, 0, 78, 3],
+    [18, 0, 76, 5],
+    [20, 1, 69, 1],
+    [20, 2, 71, 1],
+    [21, 0, 72, 1],
+    [21, 1, 74, 1],
+    [21, 2, 76, 1],
+    [22, 0, 74, 3],
+    [23, 0, 71, 1],
+    [23, 1, 74, 1],
+    [23, 2, 71, 1],
+    [24, 0, 69, 3],
+    [25, 0, 66, 3],
+    [26, 0, 64, 6],
+  ])
+    e.push({ t: t * 3 + n, m: r, d: i, v: 0.62, inst: `piano`, ch: `lead` });
+  return xn([`吉諾佩第一號`, `Gymnopédie No. 1`], `E. Satie`, 72, 3, e);
+}
+function En(e, t, n, r) {
+  return xn(
+    t,
+    n,
+    r,
+    3,
+    e.notes.map((e) => ({
+      t: e.t,
+      m: e.m,
+      d: e.d,
+      v: e.v * 0.8,
+      inst: `piano`,
+      ch: e.m < 60 ? `bass` : `lead`,
+    })),
+  );
+}
+var Dn = [
+    Sn,
+    Cn,
+    () => En(ct(), [`給愛麗絲`, `Für Elise`], `L. v. Beethoven`, 66),
+    wn,
+    Tn,
+    () => En(pt(), [`少女的祈禱`, `A Maiden's Prayer`], `T. Bądarzewska`, 80),
+  ],
+  On = new Map();
+function kn(e, t, n) {
+  let r = new o(Xt(`jingle/${e}/${t}`)),
+    i = [[], []],
+    a =
+      e === `edm`
+        ? `suona`
+        : e === `rock`
+          ? `distlead`
+          : e === `lofi`
+            ? `musicbox`
+            : e === `classical`
+              ? `harpsi`
+              : `vox`,
+    s = e === `edm` ? 9 : e === `rock` ? 4 : 0,
+    c = e === `edm` ? Vt.pentaMin : Vt.pentaMaj,
+    l = 67 + tn(s);
+  [0, 1, 2, 4, 3]
+    .map((e) => l + c[e % c.length] - c[0])
+    .forEach((e, t) =>
+      i[0].push({
+        t: t * 0.5,
+        m: e,
+        d: t === 4 ? 2 : 0.45,
+        v: 0.8,
+        inst: a,
+        ch: `lead`,
+      }),
+    );
+  let u = Ut(e === `edm` ? `i` : `I`, s),
+    d =
+      e === `rock`
+        ? `power`
+        : e === `lofi`
+          ? `epiano`
+          : e === `classical`
+            ? `strings`
+            : `pad`;
+  for (let t of e === `rock` ? [40 + s] : Kt(u, 60, 4, null))
+    i[0].push({ t: 0, m: t, d: 3.5, v: 0.6, inst: d, ch: `pad` });
+  return (
+    e !== `classical` &&
+      e !== `lofi` &&
+      (i[0].push(
+        { t: 0, m: 60, d: 1, v: 0.8, inst: `drum:crash`, ch: `drums` },
+        { t: 0, m: 60, d: 1, v: 0.9, inst: `drum:kick`, ch: `drums` },
+      ),
+      rn(`tom`, i[1], r)),
+    e === `edm` &&
+      i[0].push({ t: 0, m: 60, d: 2, v: 0.8, inst: `drum:gong`, ch: `perc` }),
+    {
+      title: { zh: `電台台呼`, en: `Station ID` },
+      artist: ``,
+      bpm: e === `rock` ? 140 : e === `edm` ? 128 : 96,
+      swing: 0.5,
+      beatsPerBar: 4,
+      bars: 2,
+      bar: (e) => (i[e] ?? []).map((e) => ({ ...e })),
+      jingle: !0,
+      dj: n,
+    }
+  );
+}
+function An(e) {
+  let t = (e, t, n, r, i, a = `lead`) => ({
+      t: e,
+      m: t,
+      d: n,
+      v: r,
+      inst: i,
+      ch: a,
+    }),
+    n = (e, n, r = 0.9) => t(e, 60, 1, r, `drum:` + n, `drums`);
+  switch (e) {
+    case `pop`:
+      return [
+        t(0, 79, 0.25, 0.8, `vox`),
+        t(0.25, 81, 0.25, 0.8, `vox`),
+        t(0.5, 84, 1.6, 0.9, `vox`),
+        t(0, 84, 0.3, 0.5, `marimba`),
+        t(0.25, 88, 0.3, 0.5, `marimba`),
+        t(0.5, 91, 1, 0.55, `marimba`),
+        t(0.5, 60, 2, 0.45, `pad`, `pad`),
+        t(0.5, 64, 2, 0.45, `pad`, `pad`),
+        t(0.5, 67, 2, 0.45, `pad`, `pad`),
+        n(0.5, `crash`, 0.6),
+        n(0.5, `kick`),
+      ];
+    case `lofi`:
+      return [
+        t(0, 64, 2, 0.6, `epiano`, `keys`),
+        t(0.04, 67, 2, 0.55, `epiano`, `keys`),
+        t(0.08, 71, 2, 0.55, `epiano`, `keys`),
+        t(0.12, 74, 2, 0.55, `epiano`, `keys`),
+        t(0.5, 79, 0.5, 0.55, `musicbox`),
+        t(0.75, 81, 0.5, 0.55, `musicbox`),
+        t(1, 76, 1, 0.55, `musicbox`),
+        n(0, `kick_lofi`, 0.7),
+      ];
+    case `edm`:
+      return [
+        t(0, 81, 0.25, 0.9, `suona`),
+        t(0.25, 84, 0.25, 0.9, `suona`),
+        t(0.5, 86, 0.25, 0.9, `suona`),
+        t(0.75, 88, 1.2, 0.95, `suona`),
+        n(0, `impact`, 0.8),
+        n(0, `gong`, 0.8),
+        n(0, `kick`),
+        n(0.75, `cymbal_bo`, 0.6),
+        n(1.25, `vox_hey`, 0.9),
+      ];
+    case `rock`:
+      return [
+        t(0, 40, 0.45, 0.9, `power`, `keys`),
+        t(0.5, 43, 0.45, 0.9, `power`, `keys`),
+        t(1, 45, 1.8, 1, `power`, `keys`),
+        t(1, 76, 1.5, 0.7, `distlead`),
+        n(0, `kick`),
+        n(0.5, `snare`, 0.7),
+        n(0.75, `snare`, 0.8),
+        n(1, `crash`, 0.8),
+        n(1, `kick`),
+      ];
+    default:
+      return [
+        t(0, 62, 1.5, 0.55, `harpsi`, `keys`),
+        t(0.125, 66, 1.5, 0.55, `harpsi`, `keys`),
+        t(0.25, 69, 1.5, 0.55, `harpsi`, `keys`),
+        t(0.375, 74, 1.5, 0.55, `harpsi`, `keys`),
+        t(0.5, 78, 1.5, 0.6, `harpsi`, `keys`),
+        t(0.5, 62, 2.2, 0.5, `strings`, `pad`),
+        t(0.5, 66, 2.2, 0.5, `strings`, `pad`),
+        t(0.5, 69, 2.2, 0.5, `strings`, `pad`),
+      ];
+  }
+}
+function jn(e, t, n, r, i, a, o, s, c, l) {
+  let u = new Map();
+  return {
+    id: e,
+    name: { zh: t, en: n },
+    genre: r,
+    freq: i,
+    fx: a,
+    trim: o,
+    mix: s,
+    ids: l,
+    item(t) {
+      let n = u.get(t);
+      return (
+        n ||
+          ((n =
+            t % 3 == 1
+              ? kn(e, t, l[t % l.length])
+              : c(Math.floor((t * 2) / 3))),
+          u.set(t, n),
+          u.size > 12 && u.delete(u.keys().next().value)),
+        n
+      );
+    },
+  };
+}
+var Mn = [
+  jn(
+    `pop`,
+    `臺北流行 T-POP`,
+    `Taipei Pop T-POP`,
+    `mandopop`,
+    `FM 90.6`,
+    `none`,
+    0.55,
+    { lead: 4, bass: 0.6, keys: 1.1 },
+    cn,
+    [
+      { zh: `臺北流行，九十點六！`, en: `T-POP 90.6 — Taipei Pop!` },
+      { zh: `下雨天也要聽好歌，臺北流行。`, en: `Rain or shine, Taipei Pop.` },
+      {
+        zh: `提醒您，騎車要戴安全帽喔。`,
+        en: `Friendly reminder: helmets on, scooter riders.`,
+      },
+    ],
+  ),
+  jn(
+    `lofi`,
+    `夜市 Lo-Fi`,
+    `Night Market Lo-Fi`,
+    `lofi hip-hop`,
+    `FM 88.4`,
+    `lofi`,
+    0.62,
+    { keys: 1.45, bass: 0.65, lead: 1.1 },
+    fn,
+    [
+      {
+        zh: `夜市 Lo-Fi，陪你慢慢逛。`,
+        en: `Night Market Lo-Fi. Take it slow.`,
+      },
+      {
+        zh: `來一碗豆花，聽一首慢歌。`,
+        en: `Grab a douhua, stay for a slow one.`,
+      },
+    ],
+  ),
+  jn(
+    `edm`,
+    `電音三太子`,
+    `Neon Gods EDM`,
+    `temple EDM`,
+    `FM 101.6`,
+    `none`,
+    0.5,
+    { keys: 2.8, perc: 0.7, lead: 1.3, pad: 1.3 },
+    gn,
+    [
+      { zh: `電音三太子，跳起來！`, en: `Neon Gods EDM — jump!` },
+      { zh: `廟口今晚最嗨！`, en: `The temple square is lit tonight!` },
+    ],
+  ),
+  jn(
+    `rock`,
+    `台客搖滾`,
+    `Taike Rock`,
+    `taike rock`,
+    `FM 95.8`,
+    `none`,
+    0.36,
+    { keys: 3.4, bass: 0.6, lead: 2.8 },
+    bn,
+    [
+      { zh: `台客搖滾，催落去！`, en: `Taike Rock — full throttle!` },
+      { zh: `油門催下去，音量開到底！`, en: `Throttle open, volume up!` },
+      {
+        zh: `去臺北狂飆！台客搖滾陪你一路催！`,
+        en: `Tear up Taipei — Taike Rock rides with you!`,
+      },
+    ],
+  ),
+  jn(
+    `classical`,
+    `古典音樂台`,
+    `Classical`,
+    `classical`,
+    `FM 106.2`,
+    `hall`,
+    1.35,
+    { keys: 2.5, pad: 1.2 },
+    (e) => {
+      let t = e % Dn.length,
+        n = On.get(t);
+      return (n || On.set(t, (n = Dn[t]())), n);
+    },
+    [
+      { zh: `古典音樂台，一零六點二。`, en: `Classical 106.2.` },
+      {
+        zh: `聽到給愛麗絲，記得倒垃圾。`,
+        en: `When you hear Für Elise — take out the trash.`,
+      },
+    ],
+  ),
+];
+function Nn(e) {
+  if (e.inst.startsWith(`drum:`)) return `drum/` + e.inst.slice(5);
+  if (e.inst.startsWith(`sfx:`)) return ``;
+  let t = Me[e.inst];
+  if (!t) return ``;
+  let n = t.roots[0];
+  for (let r of t.roots) Math.abs(r - e.m) < Math.abs(n - e.m) && (n = r);
+  return `inst/${e.inst}/${n}`;
+}
+function Pn(e, t) {
+  let n = Mn[e];
+  if (!n) return [];
+  let r = new Set(),
+    i = [],
+    a = [],
+    o = (e) => {
+      let t = Nn(e);
+      t && !r.has(t) && (r.add(t), (t.startsWith(`drum/`) ? i : a).push(t));
+    };
+  for (let e of An(n.id)) o(e);
+  for (let e of t) {
+    let t = n.item(e);
+    for (let e = 0; e < t.bars; e++) for (let n of t.bar(e)) o(n);
+  }
+  return (n.fx === `lofi` && a.unshift(`amb/vinyl`), [...i, ...a]);
+}
+var Fn = [2e4, 8e3],
+  In = [15e4, 6e4],
+  Ln = [75e3, 45e3],
+  Rn = [16 << 20, 5 << 20],
+  zn = 5e3,
+  Bn = class {
+    quality;
+    mobile;
+    bufs = new Map();
+    raw = new Map();
+    vars = new Map();
+    bytesOf = new Map();
+    pending = new Set();
+    worker = null;
+    workerFailed = !1;
+    outstanding = 0;
+    idleTimer = null;
+    fallbackQueue = null;
+    fallbackRender = null;
+    fallbackExpand = null;
+    dropIR = !1;
+    get irsReleased() {
+      return this.dropIR;
+    }
+    used = new Map();
+    reqIds = new Map();
+    reqSeq = 0;
+    pinned = !1;
+    stats = {
+      count: 0,
+      bytes: 0,
+      workerMs: 0,
+      startedAt: 0,
+      doneAt: 0,
+      errors: 0,
+      mode: `worker`,
+      released: 0,
+      spawns: 0,
+      lazyLoads: 0,
+      lazyReleased: 0,
+    };
+    onBuffer = null;
+    onNeeds = null;
+    m;
+    constructor(e, t = !1) {
+      ((this.quality = e), (this.mobile = t), (this.m = +!!t));
+    }
+    start() {
+      ((this.stats.startedAt = performance.now()),
+        this.send({
+          type: `render`,
+          quality: this.quality,
+          mobile: this.mobile,
+          tag: `core`,
+        }));
+    }
+    ensureWorker() {
+      if (this.worker) return this.worker;
+      if (this.workerFailed) return null;
+      try {
+        let e = new Worker(
+          new URL(`/tokyo/assets/worker-DgMkLY7L.js`, `` + import.meta.url),
+          { type: `module`, name: `audio-synth` },
+        );
+        return (
+          (e.onmessage = (e) => this.onMsg(e.data)),
+          (e.onerror = (e) => {
+            (e.preventDefault?.(),
+              console.warn(
+                `[audio] synth worker failed, rendering on main thread`,
+              ),
+              this.worker?.terminate(),
+              (this.worker = null),
+              (this.workerFailed = !0),
+              this.startFallback());
+          }),
+          (this.worker = e),
+          this.stats.spawns++,
+          e
+        );
+      } catch {
+        return ((this.workerFailed = !0), this.startFallback(), null);
+      }
+    }
+    send(e) {
+      let t = this.ensureWorker();
+      if (!t) {
+        if (e.type === `render` && !e.ids) return;
+        let t =
+          e.type === `render` ? e.ids : this.fallbackNeeds(e.station, e.ks);
+        (this.fallbackQueue ??= []).push(...t.filter((e) => !this.bufs.has(e)));
+        return;
+      }
+      (this.idleTimer && clearTimeout(this.idleTimer),
+        (this.idleTimer = null),
+        this.outstanding++,
+        t.postMessage(e));
+    }
+    fallbackNeeds(e, t) {
+      try {
+        let n = Pn(e, t);
+        return (this.onNeeds?.(e, t, n), n);
+      } catch {
+        return [];
+      }
+    }
+    async startFallback() {
+      this.stats.mode = `main`;
+      try {
+        let e = await t(() => Promise.resolve().then(() => Ct), void 0),
+          n = e
+            .buildJobs(this.quality)
+            .map((e) => e.id)
+            .filter((e) => !this.bufs.has(e) && !this.raw.has(e)),
+          r = this.mobile;
+        ((this.fallbackQueue = [
+          ...n,
+          ...[...this.pending].filter((e) => !n.includes(e)),
+        ]),
+          (this.fallbackRender = (t, n) => e.renderJob(t, n, r)),
+          (this.fallbackExpand = e.expandIds));
+      } catch (e) {
+        console.warn(`[audio] synthesis unavailable`, e);
+      }
+    }
+    pump(e) {
+      let t = this.fallbackQueue;
+      if (!t || !t.length || !this.fallbackRender) return;
+      let n = performance.now();
+      for (; t.length && performance.now() - n < e;) {
+        let e = t.shift();
+        if (e.endsWith(`/*`)) {
+          (this.pending.delete(e),
+            this.fallbackExpand &&
+              t.unshift(...this.fallbackExpand([e], this.quality)));
+          continue;
+        }
+        if (!this.bufs.has(e))
+          try {
+            let t = this.fallbackRender(e, this.quality);
+            this.store(e, t.sr, t.ch);
+          } catch {
+            this.stats.errors++;
+          }
+      }
+      !t.length &&
+        !this.stats.doneAt &&
+        (this.stats.doneAt = performance.now());
+    }
+    onMsg(e) {
+      if (e.type === `buf` && e.id && e.ch && e.sr)
+        ((this.stats.workerMs += e.ms ?? 0), this.store(e.id, e.sr, e.ch));
+      else if (e.type === `needs` && e.ids && e.station !== void 0) {
+        for (let t of e.ids) this.bufs.has(t) || this.pending.add(t);
+        this.onNeeds?.(e.station, e.ks ?? [], e.ids);
+      } else if (e.type === `err`)
+        (this.stats.errors++,
+          e.id && this.pending.delete(e.id),
+          console.warn(`[audio] synth error`, e.id, e.msg));
+      else if (e.type === `done`) {
+        e.tag === `core` &&
+          !this.stats.doneAt &&
+          (this.stats.doneAt = performance.now());
+        let t = e.tag ? this.reqIds.get(e.tag) : void 0;
+        if (t) {
+          for (let e of t) this.pending.delete(e);
+          this.reqIds.delete(e.tag);
+        }
+        ((this.outstanding = Math.max(0, this.outstanding - 1)),
+          this.outstanding === 0 &&
+            (this.idleTimer && clearTimeout(this.idleTimer),
+            (this.idleTimer = setTimeout(() => {
+              ((this.idleTimer = null),
+                !(this.outstanding > 0 || !this.worker) &&
+                  (this.worker.terminate(), (this.worker = null)));
+            }, Fn[this.m]))));
+      }
+    }
+    store(e, t, n) {
+      if (
+        (this.pending.delete(e),
+        (e.startsWith(`ir/`) &&
+          !this.waiters.has(e) &&
+          (this.dropIR ||
+            (this.ac && !e.endsWith(`/${this.ac.sampleRate}`)))) ||
+          this.bufs.has(e))
+      )
+        return;
+      xt(e) &&
+        (this.used.set(St(e) || e, performance.now()), this.stats.lazyLoads++);
+      let r = null;
+      try {
+        r = new AudioBuffer({
+          length: n[0].length,
+          numberOfChannels: n.length,
+          sampleRate: t,
+        });
+        for (let e = 0; e < n.length; e++) r.copyToChannel(n[e], e);
+      } catch {
+        r = null;
+      }
+      if (!r && this.ac)
+        try {
+          let e = this.ac.createBuffer(n.length, n[0].length, t);
+          for (let t = 0; t < n.length; t++) e.getChannelData(t).set(n[t]);
+          r = e;
+        } catch {}
+      if (r && !this.addBuf(e, r)) {
+        this.onBuffer?.(e);
+        return;
+      }
+      let i = n.length * n[0].length * 4;
+      (this.stats.count++,
+        (this.stats.bytes += i),
+        this.bytesOf.set(e, i),
+        r || this.raw.set(e, { sr: t, ch: n }),
+        this.onBuffer?.(e));
+    }
+    waiters = new Map();
+    whenReady(e, t, n = !1) {
+      let r = this.bufs.get(e);
+      if (r) {
+        t(r);
+        return;
+      }
+      let i = this.waiters.get(e);
+      (i || this.waiters.set(e, (i = [])),
+        i.push(t),
+        n && !this.pending.has(e) && this.request([e]));
+    }
+    addBuf(e, t) {
+      let n = this.waiters.get(e);
+      n && this.waiters.delete(e);
+      let r = e.startsWith(`ir/`);
+      if ((!r || !n) && (this.bufs.set(e, t), e.startsWith(`sfx/`))) {
+        let n = e.slice(4, e.lastIndexOf(`/`)),
+          r = this.vars.get(n);
+        (r || this.vars.set(n, (r = [])), r.push(t));
+      }
+      if (n)
+        for (let e of n)
+          try {
+            e(t);
+          } catch {}
+      return !r || !n;
+    }
+    ac = null;
+    adopt(e) {
+      if (
+        ((this.ac = e),
+        this.release(
+          [...this.bufs.keys()].filter(
+            (t) => t.startsWith(`ir/`) && !t.endsWith(`/${e.sampleRate}`),
+          ),
+        ),
+        this.raw.size)
+      ) {
+        for (let [t, n] of this.raw) {
+          let r = e.createBuffer(n.ch.length, n.ch[0].length, n.sr);
+          (n.ch.forEach((e, t) => r.getChannelData(t).set(e)),
+            this.addBuf(t, r));
+        }
+        this.raw.clear();
+      }
+    }
+    ext = null;
+    put(e, t, n) {
+      n ? this.store(e, t, n) : this.pending.delete(e);
+    }
+    request(e) {
+      let t = e.filter((e) => !this.bufs.has(e) && !this.pending.has(e));
+      if (!t.length) return;
+      for (let e of t) this.pending.add(e);
+      if (this.ext && !(t = this.ext(t)).length) return;
+      let n = `lazy:${++this.reqSeq}`;
+      (this.reqIds.set(n, t),
+        this.send({
+          type: `render`,
+          quality: this.quality,
+          mobile: this.mobile,
+          ids: t,
+          tag: n,
+        }));
+    }
+    want(e) {
+      (xt(e) && this.used.set(e, performance.now()),
+        !(this.bufs.has(e) || this.pending.has(e) || !yt(e)) &&
+          this.request([e]));
+    }
+    wantSfx(e) {
+      if (!vt.has(e) || (this.used.set(e, performance.now()), this.vars.has(e)))
+        return;
+      let t = `sfx/${e}/*`;
+      this.pending.has(t) || this.request([t]);
+    }
+    touch(e, t) {
+      this.used.set(e, t);
+    }
+    gc(e = performance.now()) {
+      if (this.pinned) return 0;
+      let t = null,
+        n = 0,
+        r = In[this.m],
+        i = Ln[this.m];
+      for (let a of this.bufs.keys()) {
+        if (!xt(a)) continue;
+        let o = St(a);
+        e - (this.used.get(o || a) ?? 0) > (o ? r : i)
+          ? (t ??= []).push(a)
+          : (n += this.bytesOf.get(a) ?? 0);
+      }
+      t && this.release(t);
+      let a = t ? t.length : 0;
+      return (
+        n > Rn[this.m] && (a += this.evictLru(n - Rn[this.m], e)),
+        (this.stats.lazyReleased += a),
+        a
+      );
+    }
+    evictLru(e, t) {
+      let n = new Map();
+      for (let e of this.bufs.keys()) {
+        if (!xt(e)) continue;
+        let r = St(e) || e,
+          i = this.used.get(r) ?? 0;
+        if (t - i < zn) continue;
+        let a = n.get(r);
+        (a || n.set(r, (a = { last: i, ids: [], bytes: 0 })),
+          a.ids.push(e),
+          (a.bytes += this.bytesOf.get(e) ?? 0));
+      }
+      let r = [...n.values()].sort((e, t) => e.last - t.last),
+        i = 0;
+      for (let t of r) {
+        if (e <= 0) break;
+        (this.release(t.ids), (e -= t.bytes), (i += t.ids.length));
+      }
+      return i;
+    }
+    requestRadio(e, t) {
+      let n = [];
+      for (let e of this.bufs.keys()) yt(e) && n.push(e);
+      this.send({
+        type: `radio`,
+        quality: this.quality,
+        mobile: this.mobile,
+        station: e,
+        ks: t,
+        have: n,
+      });
+    }
+    isPending(e) {
+      return this.pending.has(e);
+    }
+    release(e) {
+      for (let t of e) {
+        if (!this.bufs.delete(t)) continue;
+        let e = St(t);
+        e && this.vars.delete(e);
+        let n = this.bytesOf.get(t) ?? 0;
+        (this.bytesOf.delete(t),
+          (this.stats.bytes -= n),
+          this.stats.released++);
+      }
+    }
+    releaseIRs() {
+      ((this.dropIR = !0),
+        this.release([...this.bufs.keys()].filter((e) => e.startsWith(`ir/`))));
+    }
+    memStats() {
+      let e = 0,
+        t = 0,
+        n = 0,
+        r = 0,
+        i = 0;
+      for (let [a, o] of this.bytesOf)
+        this.bufs.has(a) &&
+          (yt(a) ? ((t += o), n++, bt(a) ? (r += o) : (i += o)) : (e += o));
+      let a = (e) => +(e / 1048576).toFixed(1);
+      return {
+        coreMB: a(e),
+        onDemandMB: a(t),
+        radioMB: a(r),
+        worldLazyMB: a(i),
+        onDemand: n,
+        pending: this.pending.size,
+        released: this.stats.released,
+        lazyLoads: this.stats.lazyLoads,
+        lazyReleased: this.stats.lazyReleased,
+        worker: !!this.worker,
+        spawns: this.stats.spawns,
+      };
+    }
+    get(e) {
+      return this.bufs.get(e);
+    }
+    has(e) {
+      return this.bufs.has(e);
+    }
+    variants(e) {
+      return this.vars.get(e);
+    }
+    get ready() {
+      return this.stats.doneAt > 0;
+    }
+    get size() {
+      return this.bufs.size;
+    }
+    ids() {
+      return [...this.bufs.keys()];
+    }
+  };
+function Vn(e, t = 0) {
+  let n = e.params.speed;
+  return n === void 0 ? (e.vel !== void 0 && e.vel >= 0 ? e.vel : t) : n;
+}
+var J = (e, t, n) => (e < t ? t : e > n ? n : e),
+  Hn = 0.035,
+  Un = 17,
+  Wn = 0.01;
+function Y(e, t) {
+  let n = e.cancelAndHoldAtTime;
+  if (n) n.call(e, t);
+  else {
+    let n = e.value;
+    (e.cancelScheduledValues(t), e.setValueAtTime(n, t));
+  }
+}
+var Gn = class {
+  host;
+  out;
+  started = !1;
+  nodes = [];
+  deadAt = 0;
+  nodeCount = 1;
+  nyq;
+  bufIds = null;
+  routing = null;
+  poolable = !1;
+  loopName = ``;
+  poolKey = ``;
+  keepPooled = !1;
+  parkedAt = 0;
+  detachAt = 0;
+  detached = !1;
+  constructor(e) {
+    ((this.host = e),
+      (this.out = e.ac.createGain()),
+      (this.out.gain.value = 0),
+      (this.nyq = Math.min(2e4, e.ac.sampleRate * 0.45)));
+  }
+  hz(e) {
+    return e < this.nyq ? e : this.nyq;
+  }
+  need(e) {
+    let t = this.host.bank.get(e);
+    return (t || this.host.bank.want(e), t);
+  }
+  touch(e) {
+    let t = this.bufIds;
+    if (t) for (let n = 0; n < t.length; n++) this.host.bank.touch(t[n], e);
+  }
+  get isStarted() {
+    return this.started;
+  }
+  fadeTo(e, t = 0.06) {
+    this.out.gain.setTargetAtTime(e, this.host.ac.currentTime, t);
+  }
+  park(e = 0.2) {
+    let t = this.host.ac.currentTime;
+    (Y(this.out.gain, t),
+      this.out.gain.setTargetAtTime(0, t, Math.max(0.01, e / 3)),
+      (this.parkedAt = t),
+      (this.detachAt = t + e + 0.05),
+      (this.detached = !1));
+  }
+  unpark(e) {
+    let t = this.host.ac.currentTime;
+    Y(this.out.gain, t);
+    let n = this.l;
+    if (n) for (let e in n) n[e].v = NaN;
+    (this.onUnpark(t), this.apply(e, 0));
+  }
+  onUnpark(e) {}
+  stop(e = 0.12) {
+    let t = this.host.ac.currentTime;
+    (Y(this.out.gain, t), this.out.gain.setTargetAtTime(0, t, e / 3));
+    let n = t + e + 0.05;
+    for (let e of this.nodes)
+      try {
+        e.stop(n);
+      } catch {}
+    this.deadAt = n + 0.05;
+  }
+  dispose() {
+    try {
+      this.out.disconnect();
+    } catch {}
+    for (let e of this.nodes)
+      try {
+        e.disconnect();
+      } catch {}
+    this.nodes.length = 0;
+  }
+  src(e, t, n = 0) {
+    let r = this.host.ac.createBufferSource();
+    return (
+      (r.buffer = e),
+      (r.loop = t),
+      this.nodes.push(r),
+      r.start(this.host.ac.currentTime, n % e.duration),
+      this.nodeCount++,
+      r
+    );
+  }
+  gain(e, t) {
+    let n = this.host.ac.createGain();
+    return ((n.gain.value = e), n.connect(t), this.nodeCount++, n);
+  }
+  filt(e, t, n, r, i = 0) {
+    let a = this.host.ac.createBiquadFilter();
+    return (
+      (a.type = e),
+      (a.frequency.value = this.hz(t)),
+      (a.Q.value = n),
+      (a.gain.value = i),
+      a.connect(r),
+      this.nodeCount++,
+      a
+    );
+  }
+  osc(e, t, n) {
+    let r = this.host.ac.createOscillator();
+    return (
+      typeof e == `string` ? (r.type = e) : r.setPeriodicWave(e),
+      (r.frequency.value = this.hz(t)),
+      r.connect(n),
+      r.start(this.host.ac.currentTime),
+      this.nodes.push(r),
+      this.nodeCount++,
+      r
+    );
+  }
+};
+function X(e, t, n, r, i = Hn, a = Wn, o = 1e-4) {
+  let s = t - n.v;
+  (s < 0 ? -s : s) <= (n.v < 0 ? -n.v : n.v) * a + o ||
+    ((n.v = t), e.setTargetAtTime(t, r, i));
+}
+var Z = (e = NaN) => ({ v: e }),
+  Kn = {
+    scooter: {
+      idle: 1700,
+      max: 8800,
+      cyl: 1,
+      duty: 0.1,
+      res: [
+        [430, 1.3, 9],
+        [1500, 2, 6],
+      ],
+      lp0: 1300,
+      lpT: 4200,
+      noise: 0.5,
+      noiseF: 1800,
+      sub: 0.55,
+      drive: 3,
+      vol: 0.62,
+      lope: 18,
+      whine: 0.025,
+    },
+    car: {
+      idle: 850,
+      max: 6400,
+      cyl: 4,
+      duty: 0.28,
+      res: [
+        [150, 1, 6],
+        [540, 1.4, 4],
+      ],
+      lp0: 650,
+      lpT: 2600,
+      noise: 0.22,
+      noiseF: 900,
+      sub: 0.2,
+      drive: 1.7,
+      vol: 0.62,
+      lope: 6,
+    },
+    sports: {
+      idle: 950,
+      max: 7800,
+      cyl: 8,
+      duty: 0.18,
+      res: [
+        [210, 1.1, 7],
+        [880, 1.6, 5],
+      ],
+      lp0: 1e3,
+      lpT: 5200,
+      noise: 0.3,
+      noiseF: 1200,
+      sub: 0.42,
+      drive: 3.4,
+      vol: 0.72,
+      lope: 22,
+    },
+    moto: {
+      idle: 1300,
+      max: 12500,
+      cyl: 4,
+      duty: 0.14,
+      res: [
+        [320, 1.2, 7],
+        [1350, 1.8, 6],
+      ],
+      lp0: 1200,
+      lpT: 6800,
+      noise: 0.38,
+      noiseF: 1700,
+      sub: 0.28,
+      drive: 3.3,
+      vol: 0.72,
+      lope: 9,
+    },
+    bus: {
+      idle: 620,
+      max: 2300,
+      cyl: 6,
+      duty: 0.07,
+      res: [
+        [105, 1, 6],
+        [390, 1.2, 5],
+      ],
+      lp0: 520,
+      lpT: 1900,
+      noise: 0.55,
+      noiseF: 1400,
+      sub: 0.3,
+      drive: 2.2,
+      vol: 0.8,
+      lope: 8,
+      turbo: 0.035,
+    },
+  },
+  qn = new WeakMap();
+function Jn(e, t, n) {
+  let r = qn.get(e);
+  r || qn.set(e, (r = new Map()));
+  let i = r.get(n);
+  if (!i) {
+    let a = new Float32Array(48),
+      o = new Float32Array(48);
+    for (let e = 1; e < 48; e++)
+      ((a[e] = ((2 / (e * Math.PI)) * Math.sin(e * Math.PI * t)) / e ** 0.25),
+        (o[e] = 0.25 * a[e] * Math.cos(e * 1.3)));
+    ((i = e.createPeriodicWave(a, o, { disableNormalization: !1 })),
+      r.set(n, i));
+  }
+  return i;
+}
+var Yn = new Map();
+function Xn(e) {
+  let t = Yn.get(e);
+  if (t) return t;
+  let n = Zn(e);
+  return (Yn.set(e, n), n);
+}
+function Zn(e) {
+  let t = 1024,
+    n = new Float32Array(t),
+    r = 1 / Math.tanh(e);
+  for (let i = 0; i < t; i++) {
+    let t = (i / 1023) * 2 - 1;
+    n[i] = Math.tanh(t * e) * r;
+  }
+  return n;
+}
+function Qn(e) {
+  for (let t of Object.keys(Kn)) (Jn(e, Kn[t].duty, t), Xn(Kn[t].drive));
+  (Jn(e, 0.12, `heli`), Xn(2.2), Xn(2.5));
+}
+var $n = class extends Gn {
+    kind;
+    cfg;
+    main;
+    am;
+    sub;
+    lope;
+    lopeG;
+    amDepth;
+    noiseG;
+    pre;
+    lp;
+    road;
+    roadLp;
+    turbo = null;
+    turboG = null;
+    whine = null;
+    l = {
+      f: Z(),
+      det: Z(),
+      pre: Z(),
+      lp: Z(),
+      noise: Z(),
+      road: Z(),
+      roadF: Z(),
+      vol: Z(),
+      lope: Z(),
+      turbo: Z(),
+      turboG: Z(),
+      whine: Z(),
+    };
+    lastThr = 0;
+    lastRpm = 0;
+    extra = [];
+    popCool = 0;
+    popG = null;
+    fParam = null;
+    dParam = null;
+    constructor(e, t) {
+      (super(e), (this.kind = t), (this.cfg = Kn[t]));
+    }
+    onUnpark() {
+      ((this.lastThr = 0), (this.popCool = 0.5));
+    }
+    start(e) {
+      let t = this.host.bank.get(`noise/white`),
+        n = this.host.bank.get(`noise/pink`);
+      if (!t || !n) return !1;
+      let r = this.host.ac,
+        i = this.cfg;
+      this.poolable = !0;
+      let a = this.gain(0.3, this.out),
+        o = this.filt(`highpass`, 28, 0.7, a);
+      this.lp = this.filt(`lowpass`, i.lp0, 0.9, o);
+      let s = this.filt(
+          `peaking`,
+          i.res[1][0],
+          i.res[1][1],
+          this.lp,
+          i.res[1][2],
+        ),
+        c = this.filt(`peaking`, i.res[0][0], i.res[0][1], s, i.res[0][2]),
+        l = r.createWaveShaper();
+      ((l.curve = Xn(i.drive)),
+        (l.oversample = this.host.quality === `low` ? `none` : `2x`),
+        l.connect(c),
+        this.nodeCount++,
+        (this.pre = this.gain(0.7, l)));
+      let u = this.firing(e.params.rpm ?? 0);
+      if (
+        ((this.main = this.osc(
+          Jn(r, i.duty, this.kind),
+          u,
+          this.gain(0.9, this.pre),
+        )),
+        (this.sub = this.osc(`triangle`, u * 0.5, this.gain(i.sub, this.pre))),
+        e.params.swarm)
+      )
+        for (let [e, t, n] of [
+          [-38, 1.7, 30],
+          [27, 3.9, 22],
+          [61, 2.3, 35],
+          [-70, 0.9, 40],
+        ]) {
+          let a = this.osc(
+            Jn(r, i.duty, this.kind),
+            u * (1 + e / 1731),
+            this.gain(0.55, this.pre),
+          );
+          (this.osc(`sine`, t + Math.random(), this.gain(n, a.detune)),
+            this.extra.push({ o: a, ratio: 1 + e / 1731 }));
+        }
+      this.noiseG = this.gain(0, this.pre);
+      let d = this.gain(0.25, this.noiseG),
+        f = this.filt(`bandpass`, i.noiseF, 0.8, d),
+        p = this.src(t, !0, Math.random() * 1.5);
+      if (
+        (p.connect(f),
+        (this.kind === `sports` ||
+          this.kind === `scooter` ||
+          this.kind === `moto`) &&
+          ((this.popG = this.gain(0, this.out)),
+          p.connect(
+            this.filt(
+              `bandpass`,
+              this.kind === `sports` ? 700 : this.kind === `moto` ? 900 : 1100,
+              1.2,
+              this.popG,
+            ),
+          )),
+        (this.am = this.osc(
+          `sawtooth`,
+          u,
+          (this.amDepth = this.gain(0.3, d.gain)),
+        )),
+        (this.lope = this.osc(
+          `sine`,
+          2.7 + Math.random(),
+          (this.lopeG = this.gain(i.lope, this.main.detune)),
+        )),
+        this.lopeG.connect(this.am.detune),
+        this.lopeG.connect(this.sub.detune),
+        typeof r.createConstantSource == `function`)
+      ) {
+        let e = r.createConstantSource();
+        ((e.offset.value = u),
+          e.connect(this.main.frequency),
+          e.connect(this.am.frequency),
+          e.connect(this.gain(0.5, this.sub.frequency)),
+          (this.main.frequency.value = 0),
+          (this.am.frequency.value = 0),
+          (this.sub.frequency.value = 0));
+        for (let t of this.extra)
+          (e.connect(this.gain(t.ratio, t.o.frequency)),
+            (t.o.frequency.value = 0));
+        let t = r.createConstantSource();
+        ((t.offset.value = 0),
+          t.connect(this.main.detune),
+          t.connect(this.am.detune),
+          t.connect(this.sub.detune),
+          e.start(),
+          t.start(),
+          this.nodes.push(e, t),
+          (this.nodeCount += 2),
+          (this.fParam = e.offset),
+          (this.dParam = t.offset));
+      }
+      return (
+        (this.road = this.gain(0, this.out)),
+        (this.roadLp = this.filt(`lowpass`, 300, 0.7, this.road)),
+        this.src(n, !0, Math.random() * 1.5).connect(this.roadLp),
+        i.turbo &&
+          ((this.turboG = this.gain(0, this.out)),
+          (this.turbo = this.osc(`sine`, 2400, this.turboG))),
+        i.whine &&
+          (this.whine = this.osc(`sine`, 900, this.gain(i.whine, this.out))),
+        (this.started = !0),
+        this.apply(e, 0),
+        this.fadeTo(e.vol * i.vol, 0.05),
+        !0
+      );
+    }
+    firing(e) {
+      let t = this.cfg;
+      return (((t.idle + (t.max - t.idle) * J(e, 0, 1.15)) / 60) * t.cyl) / 2;
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = this.cfg,
+        i = this.l,
+        a = J(e.params.rpm ?? (e.rate - 1) * 0.8, 0, 1.15),
+        o = J(e.params.load ?? 0, 0, 1),
+        s = J((e.params.throttle ?? 0.3) + o * 0.3, 0, 1),
+        c = this.firing(a);
+      if (this.fParam) X(this.fParam, c, i.f, n, 0.045);
+      else {
+        let e = i.f.v;
+        if ((X(this.main.frequency, c, i.f, n, 0.045), i.f.v !== e)) {
+          (this.am.frequency.setTargetAtTime(c, n, 0.045),
+            this.sub.frequency.setTargetAtTime(c * 0.5, n, 0.045));
+          for (let e of this.extra)
+            e.o.frequency.setTargetAtTime(
+              c * e.ratio,
+              n,
+              0.06 + e.ratio * 0.02,
+            );
+        }
+      }
+      let l = 1200 * Math.log2(J(e.doppler, 0.5, 2));
+      ((Math.abs(l - i.det.v) > Un || Number.isNaN(i.det.v)) &&
+        ((i.det.v = l),
+        this.dParam
+          ? this.dParam.setTargetAtTime(l, n, 0.05)
+          : (this.main.detune.setTargetAtTime(l, n, 0.05),
+            this.am.detune.setTargetAtTime(l, n, 0.05),
+            this.sub.detune.setTargetAtTime(l, n, 0.05))),
+        X(this.pre.gain, 0.45 + 1.3 * s, i.pre, n, 0.05, 0.03),
+        X(
+          this.lp.frequency,
+          this.hz(r.lp0 + r.lpT * (0.35 * a + 0.65 * s)),
+          i.lp,
+          n,
+          0.05,
+          0.04,
+        ),
+        X(
+          this.noiseG.gain,
+          r.noise * (0.25 + 0.75 * s),
+          i.noise,
+          n,
+          0.05,
+          0.03,
+        ),
+        X(this.lopeG.gain, r.lope * (1 - 0.8 * a), i.lope, n, 0.2, 0.05));
+      let u = Vn(e),
+        d = J(this.host.wet ?? 0, 0, 1);
+      (X(
+        this.road.gain,
+        J(u / 30, 0, 1) * (0.35 + 0.45 * d),
+        i.road,
+        n,
+        0.1,
+        0.04,
+      ),
+        X(
+          this.roadLp.frequency,
+          this.hz((180 + u * 28) * (1 + 5 * d)),
+          i.roadF,
+          n,
+          0.1,
+          0.05,
+        ),
+        this.turbo &&
+          this.turboG &&
+          (X(
+            this.turbo.frequency,
+            this.hz(1800 + 3800 * a),
+            i.turbo,
+            n,
+            0.1,
+            0.02,
+          ),
+          X(this.turboG.gain, (r.turbo ?? 0) * s * a, i.turboG, n, 0.15, 0.03)),
+        this.whine &&
+          X(this.whine.frequency, this.hz(500 + 55 * u), i.whine, n, 0.1, 0.02),
+        X(
+          this.out.gain,
+          e.vol * r.vol * (0.75 + 0.25 * s),
+          i.vol,
+          n,
+          0.05,
+          0.02,
+        ),
+        (this.popCool -= t),
+        this.popG &&
+          this.lastThr > 0.7 &&
+          s < 0.15 &&
+          a > 0.5 &&
+          this.popCool <= 0 &&
+          (this.pops(3 + Math.floor(Math.random() * 4)), (this.popCool = 1.5)),
+        (this.lastThr = s),
+        (this.lastRpm = a));
+    }
+    pops(e) {
+      let t = this.popG;
+      if (!t) return;
+      let n = this.host.ac.currentTime;
+      Y(t.gain, n);
+      let r = n + 0.05;
+      for (let n = 0; n < e; n++)
+        (t.gain.setValueAtTime(0, r),
+          t.gain.linearRampToValueAtTime(
+            1.6 * (0.5 + Math.random() * 0.5),
+            r + 0.002,
+          ),
+          t.gain.setTargetAtTime(0, r + 0.003, 0.012),
+          (r += 0.06 + Math.random() * 0.09));
+    }
+  },
+  er = class extends Gn {
+    ambulance;
+    a;
+    b;
+    nextT = 0;
+    phase = 0;
+    mode = -1;
+    l = { det: Z(), vol: Z() };
+    constructor(e, t) {
+      (super(e), (this.ambulance = t), (this.poolable = !0));
+    }
+    onUnpark() {
+      this.mode = -1;
+    }
+    start(e) {
+      let t = this.host.ac,
+        n = this.filt(`highpass`, 380, 0.7, this.gain(0.34, this.out)),
+        r = this.filt(`peaking`, 1350, 0.9, n, 6),
+        i = this.filt(`lowpass`, 4200, 0.7, r),
+        a = t.createWaveShaper();
+      ((a.curve = Xn(2.2)), a.connect(i), this.nodeCount++);
+      let o = this.gain(0.5, a);
+      return (
+        (this.a = this.osc(`square`, 800, o)),
+        (this.b = this.osc(`sawtooth`, 800, this.gain(0.35, o))),
+        (this.b.detune.value = 9),
+        (this.started = !0),
+        (this.nextT = t.currentTime),
+        this.apply(e, 0),
+        this.fadeTo(e.vol * 0.55, 0.08),
+        !0
+      );
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = Math.round(e.params.mode ?? (this.ambulance ? 2 : 0));
+      for (
+        r !== this.mode &&
+        ((this.mode = r),
+        Y(this.a.frequency, n),
+        Y(this.b.frequency, n),
+        (this.nextT = n),
+        (this.phase = 0));
+        this.nextT < n + 0.35;
+      )
+        this.segment();
+      let i = 1200 * Math.log2(J(e.doppler, 0.5, 2));
+      ((Math.abs(i - this.l.det.v) > Un || Number.isNaN(this.l.det.v)) &&
+        ((this.l.det.v = i),
+        this.a.detune.setTargetAtTime(i, n, 0.05),
+        this.b.detune.setTargetAtTime(i + 9, n, 0.05)),
+        X(this.out.gain, e.vol * 0.55, this.l.vol, n, 0.05));
+    }
+    set(e, t, n) {
+      ((e = this.hz(e)),
+        n === `exp`
+          ? (this.a.frequency.exponentialRampToValueAtTime(e, t),
+            this.b.frequency.exponentialRampToValueAtTime(e, t))
+          : (this.a.frequency.setValueAtTime(e, t),
+            this.b.frequency.setValueAtTime(e, t)));
+    }
+    segment() {
+      let e = this.nextT;
+      switch (this.mode) {
+        case 1:
+          (this.set(this.phase ? 720 : 1520, e + 0.16, `exp`),
+            (this.nextT = e + 0.16));
+          break;
+        case 2:
+          (this.set(this.phase ? 770 : 960, e, `set`), (this.nextT = e + 0.48));
+          break;
+        default: {
+          let t = !this.phase;
+          (this.set(t ? 1560 : 640, e + (t ? 2.3 : 1.7), `exp`),
+            (this.nextT = e + (t ? 2.3 : 1.7)));
+        }
+      }
+      this.phase ^= 1;
+    }
+  },
+  tr = class extends Gn {
+    ids;
+    gainK;
+    randomOffset;
+    paramKey;
+    s = null;
+    g;
+    curId = ``;
+    l = { rate: Z(), vol: Z() };
+    constructor(e, t, n, r, i = `tune`) {
+      (super(e),
+        (this.ids = t),
+        (this.gainK = n),
+        (this.randomOffset = r),
+        (this.paramKey = i),
+        (this.poolable = !0));
+    }
+    pickId(e) {
+      return this.ids[
+        Math.min(
+          this.ids.length - 1,
+          Math.max(0, Math.round(e.params[this.paramKey] ?? 0)),
+        )
+      ];
+    }
+    start(e) {
+      let t = this.pickId(e),
+        n = this.need(t);
+      return n
+        ? ((this.bufIds = [t]),
+          (this.g = this.gain(1, this.out)),
+          (this.s = this.src(
+            n,
+            !0,
+            this.randomOffset ? Math.random() * n.duration : 0,
+          )),
+          this.s.connect(this.g),
+          (this.curId = t),
+          (this.started = !0),
+          this.apply(e, 0),
+          this.fadeTo(e.vol * this.gainK, this.randomOffset ? 0.4 : 0.05),
+          !0)
+        : !1;
+    }
+    apply(e, t) {
+      if (!this.started || !this.s) return;
+      let n = this.host.ac.currentTime,
+        r = this.pickId(e);
+      if (r !== this.curId) {
+        let e = this.need(r);
+        if (e) {
+          this.bufIds = [r];
+          let t = this.s;
+          (this.g.gain.setTargetAtTime(0, n, 0.08),
+            t.stop(n + 0.4),
+            (this.g = this.gain(0, this.out)),
+            this.g.gain.setTargetAtTime(1, n, 0.08),
+            (this.s = this.src(e, !0, 0)),
+            this.s.connect(this.g),
+            (this.curId = r));
+        }
+      }
+      (X(
+        this.s.playbackRate,
+        J(e.rate * e.doppler, 0.25, 4),
+        this.l.rate,
+        n,
+        0.08,
+      ),
+        X(this.out.gain, e.vol * this.gainK, this.l.vol, n, 0.12));
+    }
+  },
+  nr = class extends Gn {
+    gl;
+    gh;
+    gr;
+    l = { l: Z(), h: Z(), r: Z() };
+    start(e) {
+      let t = this.need(`amb/amb_rain_light`),
+        n = this.need(`amb/amb_rain_heavy`),
+        r = this.need(`amb/amb_rain_roof`);
+      return !t || !n || !r
+        ? !1
+        : ((this.bufIds = [
+            `amb/amb_rain_light`,
+            `amb/amb_rain_heavy`,
+            `amb/amb_rain_roof`,
+          ]),
+          (this.gl = this.gain(0, this.out)),
+          (this.gh = this.gain(0, this.out)),
+          (this.gr = this.gain(0, this.out)),
+          this.src(t, !0, Math.random() * t.duration).connect(this.gl),
+          this.src(n, !0, Math.random() * n.duration).connect(this.gh),
+          this.src(r, !0, Math.random() * r.duration).connect(this.gr),
+          (this.out.gain.value = 1),
+          (this.started = !0),
+          this.apply(e, 0),
+          !0);
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = J(e.vol, 0, 1.5),
+        i = J((r - 0.35) / 0.55, 0, 1),
+        a = this.host.cabin,
+        o = 0.55;
+      (X(
+        this.gl.gain,
+        o * Math.min(1, r * 2.2) * (1 - 0.6 * i) * 0.8 * (1 - 0.4 * a),
+        this.l.l,
+        n,
+        0.3,
+        0.02,
+      ),
+        X(this.gh.gain, o * i * 0.85 * (1 - 0.4 * a), this.l.h, n, 0.3, 0.02),
+        X(
+          this.gr.gain,
+          a * Math.min(1, r * 1.6) * 1.1,
+          this.l.r,
+          n,
+          0.25,
+          0.02,
+        ));
+    }
+  },
+  rr = class extends Gn {
+    gd;
+    gn;
+    l = { d: Z(), n: Z(), vol: Z() };
+    start(e) {
+      let t = this.need(`amb/amb_park_day`),
+        n = this.need(`amb/amb_park_night`);
+      return !t || !n
+        ? !1
+        : ((this.bufIds = [`amb/amb_park_day`, `amb/amb_park_night`]),
+          (this.gd = this.gain(0, this.out)),
+          (this.gn = this.gain(0, this.out)),
+          this.src(t, !0, Math.random() * t.duration).connect(this.gd),
+          this.src(n, !0, Math.random() * n.duration).connect(this.gn),
+          (this.started = !0),
+          this.apply(e, 0),
+          this.fadeTo(e.vol, 0.5),
+          !0);
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = J(e.params.night ?? this.host.night, 0, 1);
+      (X(this.gd.gain, Math.sqrt(1 - r), this.l.d, n, 0.5, 0.02),
+        X(this.gn.gain, Math.sqrt(r), this.l.n, n, 0.5, 0.02),
+        X(this.out.gain, e.vol, this.l.vol, n, 0.2));
+    }
+  },
+  ir = class extends Gn {
+    rum;
+    wh;
+    wh2;
+    whG;
+    clackG;
+    nextClack = 0;
+    lastSpeed = 0;
+    accel = 0;
+    l = { rum: Z(), wf: Z(), wf2: Z(), wg: Z(), vol: Z() };
+    poolable = !0;
+    onUnpark(e) {
+      ((this.lastSpeed = NaN), (this.accel = 0), (this.nextClack = e + 0.2));
+    }
+    start(e) {
+      let t = this.need(`amb/mrt_rumble`);
+      if (!t) return !1;
+      ((this.bufIds = [`amb/mrt_rumble`]), (this.rum = this.gain(0, this.out)));
+      let n = this.filt(`lowpass`, 900, 0.7, this.rum);
+      return (
+        this.src(t, !0, Math.random() * t.duration).connect(n),
+        (this.whG = this.gain(0, this.out)),
+        (this.wh = this.osc(`sine`, 300, this.whG)),
+        (this.wh2 = this.osc(`triangle`, 450, this.gain(0.3, this.whG))),
+        (this.clackG = this.gain(0.7, this.out)),
+        (this.started = !0),
+        (this.nextClack = this.host.ac.currentTime + 0.2),
+        this.apply(e, 0),
+        (this.out.gain.value = e.vol),
+        !0
+      );
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = J(Vn(e, e.rate * 12), 0, 30);
+      (t > 0 &&
+        this.lastSpeed === this.lastSpeed &&
+        (this.accel +=
+          ((r - this.lastSpeed) / t - this.accel) * Math.min(1, t * 3)),
+        (this.lastSpeed = r));
+      let i = r / 25;
+      X(
+        this.rum.gain,
+        0.15 + 0.85 * Math.min(1, i * 1.2),
+        this.l.rum,
+        n,
+        0.2,
+        0.02,
+      );
+      let a = (180 + r * 52) * e.doppler;
+      (X(this.wh.frequency, this.hz(a), this.l.wf, n, 0.08),
+        X(this.wh2.frequency, this.hz(a * 1.5), this.l.wf2, n, 0.08),
+        X(
+          this.whG.gain,
+          J(Math.abs(this.accel) / 1.2, 0, 1) * 0.12 * (r > 0.5),
+          this.l.wg,
+          n,
+          0.15,
+          0.02,
+        ),
+        X(this.out.gain, e.vol, this.l.vol, n, 0.1));
+      let o = this.host.bank.get(`drum/rim`);
+      if (o && r > 2)
+        for (; this.nextClack < n + 0.2;) {
+          let e = Math.max(n, this.nextClack);
+          (this.clack(o, e),
+            this.clack(o, e + 2.5 / r),
+            (this.nextClack = e + 18 / r));
+        }
+      else this.nextClack = n + 0.2;
+    }
+    clack(e, t) {
+      let n = this.host.ac.createBufferSource();
+      ((n.buffer = e),
+        (n.playbackRate.value = 0.42 + Math.random() * 0.05),
+        n.connect(this.clackG),
+        n.start(t));
+    }
+  },
+  ar = [`sfx/crosswalk_bird/0`, `sfx/crosswalk_bird/1`],
+  or = class extends Gn {
+    next = 0;
+    g3 = null;
+    g9 = null;
+    lastState = -1;
+    stateT = 0;
+    l = { vol: Z() };
+    poolable = !0;
+    onUnpark(e) {
+      ((this.lastState = -1), (this.next = e + 0.05));
+    }
+    start(e) {
+      return this.host.bank.get(`sfx/crosswalk_tick/0`)
+        ? ((this.g3 = this.gain(0.3, this.out)),
+          (this.g9 = this.gain(0.9, this.out)),
+          (this.started = !0),
+          (this.next = this.host.ac.currentTime + 0.05),
+          (this.out.gain.value = e.vol),
+          !0)
+        : !1;
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac,
+        r = n.currentTime;
+      X(this.out.gain, e.vol, this.l.vol, r, 0.05);
+      let i = e.params.state !== void 0,
+        a = J(Math.round(i ? e.params.state : (e.params.rate ?? 0)), 0, 2);
+      a === this.lastState
+        ? (this.stateT += t)
+        : (this.lastState >= 0 && (this.next = Math.min(this.next, r + 0.08)),
+          (this.lastState = a),
+          (this.stateT = 0));
+      let o = i ? e.params.rate : void 0,
+        s = e.params.remaining,
+        c = +(Math.round(e.params.variant ?? 0) === 1);
+      for (; this.next < r + 0.15;) {
+        let e = Math.max(this.next, r),
+          t,
+          i,
+          l;
+        a === 1
+          ? ((t = ar[c]), (i = 1), (l = c ? 1.2 : 1.05))
+          : a === 2
+            ? ((t = `sfx/crosswalk_tick/0`),
+              (i = 0.9),
+              (l =
+                1 /
+                (o !== void 0 && o > 0
+                  ? o
+                  : s === void 0
+                    ? J(3 + this.stateT * 0.6, 3, 8)
+                    : J(10 / Math.max(1, s), 2.5, 8))))
+            : ((t = `sfx/crosswalk_tick/0`), (i = 0.3), (l = 1.4));
+        let u =
+          this.host.bank.get(t) ?? this.host.bank.get(`sfx/crosswalk_bird/0`);
+        if (u) {
+          let t = n.createBufferSource();
+          ((t.buffer = u),
+            t.connect(i === 1 ? this.out : i > 0.5 ? this.g9 : this.g3),
+            t.start(e));
+        }
+        this.next = e + Math.max(0.1, l);
+      }
+    }
+  },
+  sr = class extends Gn {
+    m1;
+    m2;
+    pwm;
+    m1G;
+    pwmG;
+    belt;
+    beltG;
+    road;
+    roadLp;
+    l = {
+      f: Z(),
+      f2: Z(),
+      m1: Z(),
+      pwm: Z(),
+      pwmF: Z(),
+      belt: Z(),
+      beltG: Z(),
+      road: Z(),
+      roadF: Z(),
+      vol: Z(),
+      det: Z(),
+    };
+    poolable = !0;
+    start(e) {
+      let t = this.host.bank.get(`noise/pink`);
+      if (!t) return !1;
+      let n = this.gain(0.55, this.out);
+      this.m1G = this.gain(0, n);
+      let r = this.filt(`lowpass`, 2600, 0.8, this.m1G);
+      ((this.m1 = this.osc(`sine`, 180, r)),
+        (this.m2 = this.osc(`triangle`, 534.6, this.gain(0.28, r))),
+        (this.pwmG = this.gain(0, n)));
+      let i = this.filt(`bandpass`, 3200, 6, this.pwmG);
+      return (
+        (this.pwm = this.osc(`sawtooth`, 1600, i)),
+        (this.beltG = this.gain(0, n)),
+        (this.belt = this.filt(`bandpass`, 260, 5, this.beltG)),
+        this.src(t, !0, Math.random() * 1.5).connect(this.belt),
+        (this.road = this.gain(0, this.out)),
+        (this.roadLp = this.filt(`lowpass`, 300, 0.7, this.road)),
+        this.src(t, !0, Math.random() * 1.5).connect(this.roadLp),
+        (this.started = !0),
+        this.apply(e, 0),
+        this.fadeTo(e.vol * 0.9, 0.08),
+        !0
+      );
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = this.l,
+        i = J(
+          e.params.speed ??
+            (e.params.rpm === void 0 ? Vn(e) : e.params.rpm * 22),
+          0,
+          30,
+        ),
+        a = J(e.params.throttle ?? 0.3, 0, 1),
+        o = 140 + i * 34;
+      (X(this.m1.frequency, this.hz(o), r.f, n, 0.05),
+        X(this.m2.frequency, this.hz(o * 2.97), r.f2, n, 0.05));
+      let s = 1200 * Math.log2(J(e.doppler, 0.5, 2));
+      (Math.abs(s - r.det.v) > Un || Number.isNaN(r.det.v)) &&
+        ((r.det.v = s),
+        this.m1.detune.setTargetAtTime(s, n, 0.05),
+        this.m2.detune.setTargetAtTime(s, n, 0.05),
+        this.pwm.detune.setTargetAtTime(s, n, 0.05));
+      let c = J(i / 3, 0, 1);
+      (X(this.m1G.gain, 0.02 + (0.12 + 0.22 * a) * c, r.m1, n, 0.06, 0.03),
+        X(this.pwm.frequency, this.hz(1500 + i * 60), r.pwmF, n, 0.08, 0.02),
+        X(this.pwmG.gain, 0.012 + 0.05 * a * c, r.pwm, n, 0.06, 0.03),
+        X(this.belt.frequency, this.hz(160 + i * 16), r.belt, n, 0.08, 0.02),
+        X(this.beltG.gain, 0.35 * c, r.beltG, n, 0.1, 0.03));
+      let l = J(this.host.wet ?? 0, 0, 1);
+      (X(
+        this.road.gain,
+        J(i / 25, 0, 1) * (0.3 + 0.45 * l),
+        r.road,
+        n,
+        0.1,
+        0.04,
+      ),
+        X(
+          this.roadLp.frequency,
+          this.hz((200 + i * 30) * (1 + 4 * l)),
+          r.roadF,
+          n,
+          0.1,
+          0.05,
+        ),
+        X(this.out.gain, e.vol * 0.9, r.vol, n, 0.05, 0.02));
+    }
+  },
+  cr = class extends Gn {
+    chop;
+    chopDepth;
+    slapBp;
+    tail;
+    turb;
+    turb2;
+    l = {
+      f: Z(),
+      tail: Z(),
+      depth: Z(),
+      turb: Z(),
+      turb2: Z(),
+      vol: Z(),
+      det: Z(),
+      slap: Z(),
+    };
+    poolable = !0;
+    start(e) {
+      let t = this.host.bank.get(`noise/white`),
+        n = this.host.bank.get(`noise/pink`);
+      if (!t || !n) return !1;
+      let r = this.host.ac,
+        i = this.filt(`highpass`, 30, 0.7, this.gain(0.8, this.out)),
+        a = this.gain(0.04, i),
+        o = this.filt(`lowpass`, 1800, 0.7, a);
+      ((this.slapBp = this.filt(`bandpass`, 520, 0.9, o)),
+        this.src(t, !0, Math.random() * 1.5).connect(this.slapBp),
+        (this.chopDepth = this.gain(0.9, a.gain)),
+        (this.chop = this.osc(Jn(r, 0.12, `heli`), 21, this.chopDepth)));
+      let s = this.filt(`lowpass`, 140, 1.2, this.gain(0.5, i)),
+        c = r.createWaveShaper();
+      ((c.curve = Xn(2.5)),
+        c.connect(s),
+        this.nodeCount++,
+        this.chop.connect(c),
+        this.src(n, !0, Math.random() * 1.5).connect(
+          this.filt(`lowpass`, 260, 0.7, this.gain(0.35, i)),
+        ),
+        (this.tail = this.osc(
+          `sawtooth`,
+          104,
+          this.filt(`bandpass`, 420, 1.6, this.gain(0.05, i)),
+        )));
+      let l = this.gain(0.018, i);
+      return (
+        (this.turb = this.osc(`sine`, 5200, l)),
+        (this.turb2 = this.osc(`sine`, 1310, this.gain(0.6, l))),
+        (this.started = !0),
+        this.apply(e, 0),
+        this.fadeTo(e.vol, 0.3),
+        !0
+      );
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = this.l,
+        i = J(e.params.rpm ?? 1, 0, 1.1),
+        a = J(e.params.thrust ?? e.params.throttle ?? 0.6, 0, 1),
+        o = 21 * (0.35 + 0.65 * i);
+      (X(this.chop.frequency, o, r.f, n, 0.2),
+        X(this.tail.frequency, 104 * (0.35 + 0.65 * i), r.tail, n, 0.2),
+        X(this.chopDepth.gain, (0.45 + 0.9 * a) * i, r.depth, n, 0.15, 0.02),
+        X(this.slapBp.frequency, this.hz(380 + 380 * a), r.slap, n, 0.2, 0.02),
+        X(this.turb.frequency, this.hz(5200 * (0.6 + 0.4 * i)), r.turb, n, 0.3),
+        X(
+          this.turb2.frequency,
+          this.hz(1310 * (0.6 + 0.4 * i)),
+          r.turb2,
+          n,
+          0.3,
+        ));
+      let s = 1200 * Math.log2(J(e.doppler, 0.5, 2));
+      ((Math.abs(s - r.det.v) > Un || Number.isNaN(r.det.v)) &&
+        ((r.det.v = s),
+        this.chop.detune.setTargetAtTime(s, n, 0.08),
+        this.tail.detune.setTargetAtTime(s, n, 0.08),
+        this.turb.detune.setTargetAtTime(s, n, 0.08),
+        this.turb2.detune.setTargetAtTime(s, n, 0.08)),
+        X(this.out.gain, e.vol * (0.4 + 0.6 * i), r.vol, n, 0.1));
+    }
+  },
+  lr = class extends Gn {
+    roar;
+    roarLp;
+    fan;
+    fanG;
+    whine;
+    l = { roar: Z(), lp: Z(), fan: Z(), fg: Z(), vol: Z(), det: Z() };
+    poolable = !0;
+    start(e) {
+      let t = this.host.bank.get(`noise/white`),
+        n = this.host.bank.get(`noise/pink`);
+      if (!t || !n) return !1;
+      let r = this.filt(`highpass`, 28, 0.7, this.gain(0.9, this.out));
+      ((this.roar = this.gain(0.6, r)),
+        (this.roarLp = this.filt(`lowpass`, 900, 0.6, this.roar)),
+        this.src(n, !0, Math.random() * 1.5).connect(this.roarLp));
+      let i = this.filt(`bandpass`, 2600, 0.8, this.gain(0.12, r));
+      return (
+        this.src(t, !0, Math.random() * 1.5).connect(i),
+        (this.fanG = this.gain(0.05, r)),
+        (this.fan = this.osc(
+          `sawtooth`,
+          92,
+          this.filt(`bandpass`, 700, 0.9, this.fanG),
+        )),
+        (this.whine = this.osc(`sine`, 3400, this.gain(0.012, r))),
+        (this.started = !0),
+        this.apply(e, 0),
+        this.fadeTo(e.vol, 0.5),
+        !0
+      );
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = this.l,
+        i = J(e.params.thrust ?? e.params.throttle ?? 0.55, 0, 1);
+      (X(this.roar.gain, 0.35 + 0.5 * i, r.roar, n, 0.4, 0.02),
+        X(this.roarLp.frequency, this.hz(600 + 900 * i), r.lp, n, 0.4, 0.02),
+        X(this.fan.frequency, 70 + 50 * i, r.fan, n, 0.5),
+        X(this.fanG.gain, 0.03 + 0.05 * i, r.fg, n, 0.4, 0.02));
+      let a = 1200 * Math.log2(J(e.doppler, 0.5, 2));
+      ((Math.abs(a - r.det.v) > Un || Number.isNaN(r.det.v)) &&
+        ((r.det.v = a),
+        this.fan.detune.setTargetAtTime(a, n, 0.1),
+        this.whine.detune.setTargetAtTime(a, n, 0.1)),
+        X(this.out.gain, e.vol, r.vol, n, 0.15));
+    }
+  },
+  ur = class extends Gn {
+    b1;
+    b2;
+    tone;
+    toneG;
+    body;
+    l = { b1: Z(), b2: Z(), tone: Z(), tg: Z(), body: Z(), vol: Z() };
+    poolable = !0;
+    start(e) {
+      let t = this.host.bank.get(`noise/white`);
+      if (!t) return !1;
+      let n = this.gain(2.4, this.out);
+      this.body = this.gain(0.5, n);
+      let r = this.filt(`lowpass`, 5200, 0.7, this.body);
+      ((this.b1 = this.filt(`bandpass`, 1050, 12, r)),
+        (this.b2 = this.filt(`bandpass`, 2150, 9, this.gain(0.55, r))));
+      let i = this.src(t, !0, Math.random() * 1.5);
+      return (
+        i.connect(this.b1),
+        i.connect(this.b2),
+        (this.toneG = this.gain(0.06, n)),
+        (this.tone = this.osc(
+          `triangle`,
+          1150,
+          this.filt(`lowpass`, 3500, 0.7, this.toneG),
+        )),
+        this.osc(`sine`, 7.3, this.gain(35, this.tone.detune)),
+        this.osc(
+          `sine`,
+          12.9 + Math.random() * 2,
+          this.gain(22, this.tone.detune),
+        ),
+        this.osc(`sine`, 5.1, this.gain(120, this.b1.frequency)),
+        (this.started = !0),
+        this.apply(e, 0),
+        !0
+      );
+    }
+    apply(e, t) {
+      if (!this.started) return;
+      let n = this.host.ac.currentTime,
+        r = this.l,
+        i = J(e.params.slip ?? 1, 0, 1),
+        a = (0.85 + J(Vn(e, 12), 0, 50) / 90) * J(e.doppler, 0.7, 1.4);
+      (X(this.b1.frequency, this.hz(1e3 * a), r.b1, n, 0.08),
+        X(this.b2.frequency, this.hz(2100 * a), r.b2, n, 0.08),
+        X(this.tone.frequency, this.hz((1080 + 260 * i) * a), r.tone, n, 0.06),
+        X(this.toneG.gain, 0.03 + 0.07 * i, r.tg, n, 0.05, 0.02),
+        X(this.body.gain, 0.3 + 0.5 * i, r.body, n, 0.05, 0.02),
+        X(this.out.gain, e.vol * (0.25 + 0.75 * i), r.vol, n, 0.03));
+    }
+  },
+  dr = 2500,
+  Q = (e) => ({
+    bus: `sfx`,
+    ref: 6,
+    max: 120,
+    pri: 5,
+    send: 0.08,
+    doppler: 0,
+    ...e,
+  }),
+  fr = {
+    engine_car: Q({ ref: 5, max: 95, pri: 6, send: 0.05, doppler: 1 }),
+    engine_scooter: Q({ ref: 4, max: 80, pri: 6, send: 0.05, doppler: 1 }),
+    engine_bus: Q({ ref: 8, max: 130, pri: 6, send: 0.06, doppler: 1 }),
+    engine_sports: Q({ ref: 6, max: 140, pri: 7, send: 0.06, doppler: 1 }),
+    siren_police: Q({ ref: 14, max: 420, pri: 9, send: 0.25, doppler: 1 }),
+    siren_ambulance: Q({ ref: 14, max: 420, pri: 8, send: 0.25, doppler: 1 }),
+    garbage_truck: Q({ ref: 11, max: 200, pri: 8, send: 0.25, doppler: 0.8 }),
+    rain: Q({ bus: `amb`, ref: 30, max: 400, pri: 9, send: 0 }),
+    wind: Q({ bus: `amb`, ref: 20, max: 300, pri: 4, send: 0 }),
+    ambient_city: Q({ bus: `amb`, ref: 40, max: 400, pri: 9, send: 0 }),
+    ambient_market: Q({ bus: `amb`, ref: 28, max: 170, pri: 6, send: 0.05 }),
+    ambient_temple: Q({ bus: `amb`, ref: 22, max: 150, pri: 6, send: 0.08 }),
+    ambient_park: Q({ bus: `amb`, ref: 45, max: 230, pri: 6, send: 0 }),
+    ambient_river: Q({ bus: `amb`, ref: 45, max: 260, pri: 6, send: 0 }),
+    mrt_train: Q({ ref: 14, max: 280, pri: 6, send: 0.2, doppler: 1 }),
+    crosswalk_signal: Q({ bus: `amb`, ref: 3, max: 24, pri: 4, send: 0.06 }),
+    engine_motorcycle: Q({ ref: 5, max: 150, pri: 7, send: 0.06, doppler: 1 }),
+    engine_ev: Q({ ref: 3, max: 45, pri: 5, send: 0.04, doppler: 1 }),
+    helicopter: Q({ ref: 30, max: 900, pri: 8, send: 0.2, doppler: 1 }),
+    jet: Q({ ref: 140, max: 4e3, pri: 6, send: 0.08, doppler: 1 }),
+    tire_screech: Q({ ref: 7, max: 130, pri: 6, send: 0.12, doppler: 1 }),
+    ambient_store: Q({ bus: `room`, ref: 9, max: 60, pri: 8, send: 0 }),
+    ambient_hall: Q({ bus: `room`, ref: 25, max: 140, pri: 8, send: 0 }),
+  },
+  pr = 0,
+  mr = class {
+    name;
+    meta;
+    eng;
+    internal;
+    x = 0;
+    y = 0;
+    z = 0;
+    positional = !1;
+    stopped = !1;
+    voice = null;
+    pending = !1;
+    state = { vol: 1, rate: 1, params: {}, doppler: 1 };
+    dist = 0;
+    px = NaN;
+    pz = NaN;
+    svx = 0;
+    svz = 0;
+    panner = null;
+    air = null;
+    occ = null;
+    send = null;
+    lastAir = 0;
+    lastOcc = -1;
+    outOfRangeT = 0;
+    wx = NaN;
+    wy = NaN;
+    wz = NaN;
+    accDt = 0;
+    retryAt = 0;
+    occGain = 1;
+    spare = null;
+    phase = pr++ % 3;
+    created = performance.now();
+    constructor(e, t, n, r, i) {
+      ((this.name = e),
+        (this.meta = t),
+        (this.eng = n),
+        (this.internal = i),
+        (this.flat = !!r?.ui),
+        r &&
+          (r.x !== void 0 &&
+            r.z !== void 0 &&
+            this.setPosition(r.x, r.y ?? 0, r.z),
+          r.volume !== void 0 && this.setVolume(r.volume),
+          r.rate !== void 0 && this.setRate(r.rate)));
+    }
+    flat;
+    setPosition(e, t, n) {
+      Number.isFinite(e) &&
+        Number.isFinite(t) &&
+        Number.isFinite(n) &&
+        ((this.x = e),
+        (this.y = t),
+        (this.z = n),
+        this.flat || (this.positional = !0));
+    }
+    setVolume(e) {
+      this.state.vol = Number.isFinite(e) ? Math.max(0, e) : 0;
+    }
+    setRate(e) {
+      this.state.rate = Number.isFinite(e) ? Math.max(0.05, e) : 1;
+    }
+    setParam(e, t) {
+      Number.isFinite(t) && (this.state.params[e] = t);
+    }
+    stop() {
+      this.stopped || ((this.stopped = !0), this.eng.onLoopStopped(this));
+    }
+  },
+  hr = {
+    room: [6, 0.35],
+    store: [8, 0.3],
+    hall: [20, 0.55],
+    temple: [16, 0.6],
+    station: [30, 0.5],
+  },
+  gr = [12e4, 45e3],
+  _r = 1e3 / 30,
+  vr = 60,
+  yr = 20,
+  br = 0.45,
+  xr = 0.025,
+  Sr = 4,
+  Cr = 0.03,
+  wr = 30,
+  Tr = 4,
+  Er = 0.85,
+  Dr = 1,
+  Or = 1.25,
+  kr = 1,
+  Ar = 4,
+  jr = 0.6,
+  Mr = 4,
+  Nr = 6,
+  Pr = 24,
+  Fr = 8,
+  Ir = (e, t) => Array(t).fill(e),
+  Lr = {
+    low: [
+      ...Ir(`engine_car`, 2),
+      ...Ir(`engine_scooter`, 2),
+      `engine_bus`,
+      `engine_scooter#swarm`,
+    ],
+    medium: [
+      ...Ir(`engine_car`, 3),
+      ...Ir(`engine_scooter`, 3),
+      `engine_bus`,
+      `engine_sports`,
+      `engine_scooter#swarm`,
+      `siren_police`,
+      `tire_screech`,
+    ],
+    high: [
+      ...Ir(`engine_car`, 5),
+      ...Ir(`engine_scooter`, 4),
+      `engine_bus`,
+      `engine_sports`,
+      `engine_ev`,
+      `engine_motorcycle`,
+      `engine_scooter#swarm`,
+      ...Ir(`siren_police`, 2),
+      `tire_screech`,
+    ],
+    ultra: [
+      ...Ir(`engine_car`, 5),
+      ...Ir(`engine_scooter`, 5),
+      ...Ir(`engine_bus`, 2),
+      `engine_sports`,
+      `engine_ev`,
+      `engine_motorcycle`,
+      `engine_scooter#swarm`,
+      ...Ir(`siren_police`, 2),
+      `tire_screech`,
+    ],
+  },
+  Rr = /^(engine_|siren_|tire_screech)/,
+  zr = (e, t) => (t.swarm ? e + `#swarm` : e),
+  Br = class {
+    ac;
+    created = !1;
+    bank;
+    cabin = 0;
+    night = 0;
+    wet = 0;
+    revRet = null;
+    revAmt = 1;
+    revSet = -1;
+    setReverbAmount(e) {
+      Number.isFinite(e) && ((this.revAmt = e), this.applyReverb());
+    }
+    applyReverb(e = 0.6) {
+      if (!this.created || !this.revRet) return;
+      let t = 0.55 * this.revAmt * (1 - this.indoorT);
+      Math.abs(t - this.revSet) < 0.015 ||
+        ((this.revSet = t),
+        this.revRet.gain.setTargetAtTime(t, this.ac.currentTime, e));
+    }
+    indoorT = 0;
+    indoorS = 0;
+    room = `room`;
+    indoorExplicitAt = 0;
+    outLp;
+    outGain;
+    roomConv = null;
+    roomRet = null;
+    roomIRs = new Map();
+    roomLoaded = null;
+    setIndoor(e, t = `room`, n = !0) {
+      let r = Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : 0;
+      if (
+        (n && (this.indoorExplicitAt = performance.now()),
+        hr[t] && (this.room = t),
+        (r === this.indoorT && (r === 0 || this.roomLoaded === this.room)) ||
+          ((this.indoorT = r), !this.created))
+      )
+        return;
+      let i = this.ac.currentTime;
+      (this.outLp.frequency.setTargetAtTime(
+        this.hz(2e4 * (650 / 2e4) ** r),
+        i,
+        0.14,
+      ),
+        this.outGain.gain.setTargetAtTime(1 - 0.6 * r, i, 0.14),
+        r > 0 && this.ensureRoom(this.room),
+        this.roomRet &&
+          this.roomRet.gain.setTargetAtTime(hr[this.room][1] * r, i, 0.14),
+        this.applyReverb(0.14));
+    }
+    ensureRoom(e) {
+      let t = this.ac;
+      if (
+        (this.roomConv ||
+          ((this.roomConv = t.createConvolver()),
+          (this.roomConv.normalize = !0),
+          (this.roomRet = t.createGain()),
+          (this.roomRet.gain.value = 0),
+          this.revSend
+            .connect(this.roomConv)
+            .connect(this.roomRet)
+            .connect(this.worldIn)),
+        this.roomLoaded === e || this.roomWanted === e)
+      )
+        return;
+      this.roomWanted = e;
+      let n = this.roomIRs.get(e),
+        r = (t) => {
+          if (
+            (this.mobile || this.roomIRs.set(e, t),
+            this.roomWanted === e && this.roomConv)
+          )
+            try {
+              ((this.roomConv.buffer = t), (this.roomLoaded = e));
+            } catch {}
+        };
+      n ? r(n) : this.loadIR(e, r);
+    }
+    roomWanted = null;
+    get roomReverb() {
+      if (!this.roomConv) return `none`;
+      let e = this.roomConv.buffer;
+      return e
+        ? +e.duration.toFixed(2)
+        : this.roomWanted
+          ? `waiting`
+          : `released`;
+    }
+    loadIR(e, t) {
+      let n = this.ac.sampleRate,
+        r = e === `world` && _e.includes(n) && !this.bank.irsReleased;
+      this.bank.whenReady(`ir/${e}/${n}`, t, !r);
+    }
+    occlusion(e) {
+      let t = this.indoorS;
+      if (t < 0.01) return 0;
+      let n = hr[this.room][0];
+      return e <= n ? 0 : t * Math.min(1, (e - n) / 4);
+    }
+    quality;
+    hrtf = !1;
+    nyq = 2e4;
+    hz(e) {
+      return e < this.nyq ? e : this.nyq;
+    }
+    master;
+    bus;
+    worldIn;
+    musicDuck;
+    ambDuck;
+    worldGain;
+    cabinLp;
+    revSend;
+    conv;
+    comp;
+    limiter;
+    clip;
+    glide = !1;
+    analyser = null;
+    meterBuf = null;
+    async meter(e = 1e3) {
+      if (!this.created) return { rms: 0, peak: 0, db: -120, frames: 0 };
+      this.analyser ||
+        ((this.analyser = this.ac.createAnalyser()),
+        (this.analyser.fftSize = 2048),
+        this.clip.connect(this.analyser),
+        (this.meterBuf = new Float32Array(this.analyser.fftSize)));
+      let t = this.analyser,
+        n = this.meterBuf,
+        r = 0,
+        i = 0,
+        a = 0,
+        o = 0,
+        s = performance.now();
+      for (; performance.now() - s < e;) {
+        t.getFloatTimeDomainData(n);
+        for (let e = 0; e < n.length; e++) {
+          let t = n[e];
+          ((r += t * t), Math.abs(t) > a && (a = Math.abs(t)));
+        }
+        ((i += n.length), o++, await new Promise((e) => setTimeout(e, 40)));
+      }
+      let c = Math.sqrt(r / Math.max(1, i));
+      return {
+        rms: +c.toFixed(4),
+        peak: +a.toFixed(3),
+        db: +(20 * Math.log10(c + 1e-9)).toFixed(1),
+        frames: o,
+      };
+    }
+    lx = 0;
+    ly = 0;
+    lz = 0;
+    lvx = 0;
+    lvz = 0;
+    lpx = NaN;
+    lpz = NaN;
+    pools = {};
+    loops = [];
+    dying = [];
+    lastPlay = new Map();
+    lastVariant = new Map();
+    frame = 0;
+    loopBudget = 20;
+    volumes = { master: 0.8, music: 0.6, sfx: 0.9 };
+    counters = {
+      oneShots: 0,
+      culled: 0,
+      stolen: 0,
+      deduped: 0,
+      notReady: 0,
+      realized: 0,
+      derealized: 0,
+      evicted: 0,
+      limited: 0,
+    };
+    externalLoops = new Map();
+    externalPlays = new Map();
+    mobile;
+    constructor(e, t = !1) {
+      ((this.quality = e),
+        (this.mobile = t),
+        (this.bank = new Bn(e, t)),
+        (this.loopBudget =
+          e === `low` ? 10 : e === `medium` ? 14 : e === `high` ? 20 : 28),
+        (this.hrtf = e === `ultra`));
+    }
+    isRunning = !1;
+    get running() {
+      return this.isRunning;
+    }
+    create() {
+      if (this.created) return !0;
+      let e = window.AudioContext || window.webkitAudioContext;
+      if (!e) return !1;
+      let t;
+      try {
+        t = new e({ latencyHint: `interactive` });
+      } catch {
+        try {
+          t = new e();
+        } catch {
+          return !1;
+        }
+      }
+      if (
+        ((this.ac = t),
+        (this.nyq = Math.min(2e4, t.sampleRate * 0.45)),
+        this.buildGraph(),
+        this.bank.adopt(t),
+        (this.created = !0),
+        this.applyVolumes(),
+        this.indoorT > 0)
+      ) {
+        let e = this.indoorT;
+        ((this.indoorT = -1),
+          (this.indoorS = e),
+          this.setIndoor(e, this.room, !1));
+      }
+      let n = () => {
+        if (
+          ((this.isRunning = t.state === `running`),
+          this.isRunning && !this.announcedRunning)
+        ) {
+          ((this.announcedRunning = !0), (this.runningAt = performance.now()));
+          try {
+            this.onRunning?.();
+          } catch {}
+        }
+      };
+      try {
+        t.addEventListener(`statechange`, n);
+      } catch {}
+      return (n(), !0);
+    }
+    announcedRunning = !1;
+    runningAt = 0;
+    onRunning = null;
+    buildGraph() {
+      let e = this.ac,
+        t = (t) => {
+          let n = e.createGain();
+          return ((n.gain.value = t), n);
+        },
+        n = t(1 / Tr),
+        r = e.createWaveShaper();
+      ((r.curve = Wr()),
+        (r.oversample = `2x`),
+        n.connect(r).connect(e.destination),
+        (this.clip = r));
+      let i = e.createDynamicsCompressor();
+      ((i.threshold.value = -1.5),
+        (i.knee.value = 0),
+        (i.ratio.value = 20),
+        (i.attack.value = 0.001),
+        (i.release.value = 0.08),
+        i.connect(n),
+        (this.limiter = i));
+      let a = e.listener,
+        o = e.createPanner();
+      this.glide =
+        !!a.positionX &&
+        Kr([
+          a.positionX,
+          a.positionY,
+          a.positionZ,
+          a.forwardX,
+          a.forwardY,
+          a.forwardZ,
+          a.upX,
+          a.upY,
+          a.upZ,
+        ]) &&
+        Kr([
+          o.positionX,
+          o.positionY,
+          o.positionZ,
+          o.orientationX,
+          o.orientationY,
+          o.orientationZ,
+        ]);
+      let s = e.createDynamicsCompressor();
+      ((s.threshold.value = -16),
+        (s.knee.value = 10),
+        (s.ratio.value = 3.5),
+        (s.attack.value = 0.004),
+        (s.release.value = 0.22),
+        s.connect(i),
+        (this.comp = s),
+        (this.master = t(1)),
+        this.master.connect(s),
+        (this.worldGain = t(1)),
+        this.worldGain.connect(this.master),
+        (this.cabinLp = e.createBiquadFilter()),
+        (this.cabinLp.type = `lowpass`),
+        (this.cabinLp.frequency.value = this.nyq),
+        (this.cabinLp.Q.value = 0.5),
+        this.cabinLp.connect(this.worldGain));
+      let c = t(1);
+      (c.connect(this.cabinLp), (this.worldIn = c));
+      let l = t(1),
+        u = t(1),
+        d = t(1),
+        f = t(1),
+        p = t(1),
+        m = t(1);
+      (l.connect(c),
+        (this.ambDuck = t(1)),
+        (this.outLp = e.createBiquadFilter()),
+        (this.outLp.type = `lowpass`),
+        (this.outLp.frequency.value = this.nyq),
+        (this.outLp.Q.value = 0.6),
+        (this.outGain = t(1)),
+        u
+          .connect(this.outLp)
+          .connect(this.outGain)
+          .connect(this.ambDuck)
+          .connect(c),
+        m.connect(this.ambDuck),
+        p.connect(c),
+        d.connect(this.master),
+        (this.musicDuck = t(1)),
+        f.connect(this.musicDuck).connect(this.master),
+        (this.bus = { sfx: l, amb: u, ui: d, music: f, room: p, ambPos: m }),
+        (this.revSend = t(1)),
+        (this.conv = e.createConvolver()),
+        (this.conv.normalize = !0),
+        this.loadIR(`world`, (e) => {
+          try {
+            this.conv.buffer = e;
+          } catch {}
+        }));
+      let h = t(0.55);
+      (this.revSend.connect(this.conv).connect(h).connect(c),
+        (this.revRet = h));
+      let g = {
+        pos_sfx: [
+          this.quality === `low` ? 14 : this.quality === `ultra` ? 32 : 24,
+          !0,
+          `sfx`,
+        ],
+        pos_amb: [this.quality === `low` ? 6 : 12, !0, `amb`],
+        flat_sfx: [6, !1, `sfx`],
+        flat_amb: [6, !1, `amb`],
+        flat_ui: [10, !1, `ui`],
+      };
+      for (let [e, [t, n, r]] of Object.entries(g)) {
+        let i = [];
+        for (let e = 0; e < t; e++) i.push(this.makeOneShot(n, r));
+        ((this.pools[e] = i), (this.poolSpec[e] = [t, n, r]));
+      }
+      this.applyVolumes();
+    }
+    poolSpec = {};
+    makeOneShot(e, t) {
+      let n = this.ac,
+        r = n.createGain(),
+        i = null,
+        a = null,
+        o = null;
+      return (
+        e
+          ? ((a = n.createBiquadFilter()),
+            (a.type = `lowpass`),
+            (a.frequency.value = this.nyq),
+            (i = this.makePanner()),
+            r
+              .connect(a)
+              .connect(i)
+              .connect(this.bus[t === `amb` ? `ambPos` : t]))
+          : r.connect(this.bus[t]),
+        t !== `ui` &&
+          ((o = n.createGain()),
+          (o.gain.value = 0),
+          r.connect(o).connect(this.revSend)),
+        {
+          input: r,
+          panner: i,
+          air: a,
+          send: o,
+          src: null,
+          until: 0,
+          pri: 0,
+          startedAt: 0,
+          name: ``,
+        }
+      );
+    }
+    makePanner() {
+      let e = this.ac.createPanner();
+      return (
+        (e.panningModel = this.hrtf ? `HRTF` : `equalpower`),
+        (e.distanceModel = `inverse`),
+        (e.rolloffFactor = 1),
+        (e.maxDistance = 1e4),
+        this.glide &&
+          Kr([
+            e.positionX,
+            e.positionY,
+            e.positionZ,
+            e.orientationX,
+            e.orientationY,
+            e.orientationZ,
+          ]),
+        e
+      );
+    }
+    setPan(e, t, n, r, i, a = Cr) {
+      if (!e.positionX) {
+        e.setPosition(t, n, r);
+        return;
+      }
+      if (!this.glide) {
+        ((e.positionX.value = t),
+          (e.positionY.value = n),
+          (e.positionZ.value = r));
+        return;
+      }
+      let o = this.ac.currentTime;
+      i
+        ? (Gr(e.positionX, t, o), Gr(e.positionY, n, o), Gr(e.positionZ, r, o))
+        : (e.positionX.setTargetAtTime(t, o, a),
+          e.positionY.setTargetAtTime(n, o, a),
+          e.positionZ.setTargetAtTime(r, o, a));
+    }
+    kickBuf = null;
+    resume(e = !1) {
+      if (
+        !this.created ||
+        ((this.wantRun = !0), this.ac.state === `running` && !this.stalled)
+      )
+        return;
+      let t = navigator.userActivation;
+      if (e && (!t || t.isActive))
+        try {
+          let e = this.ac.createBufferSource();
+          ((e.buffer = this.kickBuf ??=
+            this.ac.createBuffer(1, 1, this.ac.sampleRate)),
+            e.connect(this.ac.destination),
+            e.start(0),
+            (e.onended = () => e.disconnect()));
+        } catch {}
+      this.ac.resume().catch(() => {});
+    }
+    suspend() {
+      ((this.wantRun = !1),
+        (this.stalled = !1),
+        this.created &&
+          this.ac.state === `running` &&
+          this.ac.suspend().catch(() => {}));
+    }
+    wantRun = !1;
+    stalled = !1;
+    watchAt = 0;
+    lastCt = -1;
+    stuckMs = 0;
+    reviveAt = 0;
+    revives = { tries: 0, stalls: 0 };
+    get needsResume() {
+      return !this.created || this.ac.state !== `running` || this.stalled;
+    }
+    watch(e) {
+      if (!this.created || e - this.watchAt < 500) return;
+      let t = e - this.watchAt;
+      this.watchAt = e;
+      let n = this.ac,
+        r = n.state;
+      this.isRunning = r === `running`;
+      let i = typeof document < `u` && document.hidden;
+      if (!this.wantRun || i) {
+        ((this.lastCt = -1), (this.stalled = !1));
+        return;
+      }
+      if (r === `running`) {
+        let e = n.currentTime;
+        if (this.lastCt < 0 || t >= 3e3 || e - this.lastCt > 0.001) {
+          ((this.lastCt = e), (this.stuckMs = 0), (this.stalled = !1));
+          return;
+        }
+        ((this.stuckMs += t),
+          this.stuckMs >= dr &&
+            !this.stalled &&
+            ((this.stalled = !0),
+            this.revives.stalls++,
+            n.suspend().catch(() => {})));
+        return;
+      }
+      ((this.lastCt = -1), (this.stuckMs = 0), this.revive(e));
+    }
+    revive(e = performance.now(), t = !1) {
+      !this.created ||
+        !this.wantRun ||
+        this.ac.state === `running` ||
+        (typeof document < `u` && document.hidden) ||
+        (!t && e - this.reviveAt < 900) ||
+        ((this.reviveAt = e),
+        this.revives.tries++,
+        (this.stalled = !1),
+        this.ac.resume().catch(() => {}));
+    }
+    setVolumes(e, t, n) {
+      let r = (e, t) => (Number.isFinite(e) ? Math.min(1, Math.max(0, e)) : t);
+      ((this.volumes.master = r(e, 0.8)),
+        (this.volumes.music = r(t, 0.6)),
+        (this.volumes.sfx = r(n, 0.9)),
+        this.applyVolumes());
+    }
+    applyVolumes() {
+      if (!this.created) return;
+      let e = this.ac.currentTime,
+        t = this.volumes,
+        n = (e) => e * e;
+      (this.master.gain.setTargetAtTime(n(t.master) * Dr, e, 0.05),
+        this.bus.music.gain.setTargetAtTime(n(t.music) * Or, e, 0.05),
+        this.bus.sfx.gain.setTargetAtTime(n(t.sfx), e, 0.05),
+        this.bus.amb.gain.setTargetAtTime(n(t.sfx) * 0.85, e, 0.05),
+        this.bus.ui.gain.setTargetAtTime(
+          n(t.sfx) * 0.9 + 0.1 * n(t.master),
+          e,
+          0.05,
+        ));
+    }
+    duckUntil = 0;
+    duck(e, t) {
+      if (!this.created || !Number.isFinite(e)) return;
+      (!Number.isFinite(t) || t < 0) && (t = 2);
+      let n = this.ac.currentTime,
+        r = Math.min(1, Math.max(0, e));
+      for (let [e, i] of [
+        [this.musicDuck, 0.9],
+        [this.ambDuck, 0.55],
+      ])
+        (Y(e.gain, n),
+          e.gain.setTargetAtTime(1 - r * i, n, 0.06),
+          e.gain.setTargetAtTime(1, n + Math.max(0.05, t), 0.35));
+      this.duckUntil = n + t;
+    }
+    pausedWorld = !1;
+    setWorldPaused(e) {
+      if (!this.created || e === this.pausedWorld) return;
+      this.pausedWorld = e;
+      let t = this.ac.currentTime;
+      (this.worldGain.gain.setTargetAtTime(+!e, t, e ? 0.08 : 0.15),
+        Y(this.bus.music.gain, t));
+      let n = this.volumes.music * this.volumes.music * Or;
+      this.bus.music.gain.setTargetAtTime(e ? n * 0.25 : n, t, 0.12);
+    }
+    lastCabin = -1;
+    muffle = 0;
+    muffleRate = 0.3;
+    setCabin(e) {
+      ((this.cabin = e), this.applyWorldFilter());
+    }
+    shock(e, t) {
+      (e > this.muffle && (this.muffle = e),
+        (this.muffleRate = this.muffle / Math.max(0.5, t)),
+        this.applyWorldFilter());
+    }
+    applyWorldFilter() {
+      let e = Math.max(this.cabin, this.muffle);
+      if (!this.created || Math.abs(e - this.lastCabin) < 0.02) return;
+      this.lastCabin = e;
+      let t = this.ac.currentTime;
+      (this.cabinLp.frequency.setTargetAtTime(
+        this.hz(2e4 * (2800 / 2e4) ** e),
+        t,
+        0.08,
+      ),
+        this.cabinLp.Q.setTargetAtTime(0.5 + 0.4 * Math.min(1, e), t, 0.08));
+    }
+    setListener(e, t, n, r, i, a, o) {
+      if (!Number.isFinite(e + t + n)) return;
+      if (o > 0 && Number.isFinite(this.lpx)) {
+        let t = Math.min(1, o * 8);
+        ((this.lvx += ((e - this.lpx) / o - this.lvx) * t),
+          (this.lvz += ((n - this.lpz) / o - this.lvz) * t));
+      }
+      if (
+        ((this.lpx = e),
+        (this.lpz = n),
+        (this.lx = e),
+        (this.ly = t),
+        (this.lz = n),
+        !this.created)
+      )
+        return;
+      let s = this.lw,
+        c = !(Math.abs(e - s.x) + Math.abs(t - s.y) + Math.abs(n - s.z) < 0.01),
+        l = !(
+          Math.abs(r - s.fx) + Math.abs(i - s.fy) + Math.abs(a - s.fz) <
+          0.002
+        );
+      if (!c && !l && s.up) return;
+      let u = this.ac.listener;
+      if (u.positionX && this.glide) {
+        let o = this.ac.currentTime;
+        (c &&
+          (Math.abs(e - s.x) + Math.abs(t - s.y) + Math.abs(n - s.z) < wr
+            ? (u.positionX.setTargetAtTime(e, o, Cr),
+              u.positionY.setTargetAtTime(t, o, Cr),
+              u.positionZ.setTargetAtTime(n, o, Cr))
+            : (Gr(u.positionX, e, o),
+              Gr(u.positionY, t, o),
+              Gr(u.positionZ, n, o))),
+          l &&
+            (r * s.fx + i * s.fy + a * s.fz > 0.5
+              ? (u.forwardX.setTargetAtTime(r, o, Cr),
+                u.forwardY.setTargetAtTime(i, o, Cr),
+                u.forwardZ.setTargetAtTime(a, o, Cr))
+              : (Gr(u.forwardX, r, o),
+                Gr(u.forwardY, i, o),
+                Gr(u.forwardZ, a, o))),
+          s.up || ((u.upX.value = 0), (u.upY.value = 1), (u.upZ.value = 0)));
+      } else
+        u.positionX
+          ? (c &&
+              ((u.positionX.value = e),
+              (u.positionY.value = t),
+              (u.positionZ.value = n)),
+            l &&
+              ((u.forwardX.value = r),
+              (u.forwardY.value = i),
+              (u.forwardZ.value = a)),
+            s.up || ((u.upX.value = 0), (u.upY.value = 1), (u.upZ.value = 0)))
+          : (c && u.setPosition?.(e, t, n),
+            (l || !s.up) && u.setOrientation?.(r, i, a, 0, 1, 0));
+      ((s.up = !0),
+        c && ((s.x = e), (s.y = t), (s.z = n)),
+        l && ((s.fx = r), (s.fy = i), (s.fz = a)),
+        this.prof.listenerWrites++);
+    }
+    lw = { x: NaN, y: NaN, z: NaN, fx: NaN, fy: NaN, fz: NaN, up: !1 };
+    slowRealize = ``;
+    builtBy = {};
+    prof = {
+      reused: 0,
+      built: 0,
+      prebuilt: 0,
+      listenerWrites: 0,
+      pannerWrites: 0,
+      applies: 0,
+      farSkips: 0,
+      realizeMaxMs: 0,
+      realizeDeferred: 0,
+      reapDeferred: 0,
+      evictScans: 0,
+      deferredPlays: 0,
+      deferredLate: 0,
+      loopsMaxMs: 0,
+    };
+    play(e, t, n, r = !0, i = 0, a = -1) {
+      if ((r && this.externalPlays.set(e, this.frame), !this.isRunning))
+        return !1;
+      let o = ht[e];
+      if (!o) return !1;
+      let s = 0,
+        c = t?.x ?? this.lx,
+        l = t?.y ?? this.ly,
+        u = t?.z ?? this.lz,
+        d =
+          !o.flat &&
+          !t?.ui &&
+          t !== void 0 &&
+          t.x !== void 0 &&
+          t.z !== void 0 &&
+          Number.isFinite(c + l + u);
+      if (d) {
+        let e = c - this.lx,
+          t = l - this.ly,
+          n = u - this.lz;
+        if (((s = Math.sqrt(e * e + t * t + n * n)), s > o.max))
+          return (this.counters.culled++, !1);
+      }
+      let f = n ?? o.recipe ?? e,
+        p = vt.has(f);
+      p && this.bank.wantSfx(f);
+      let m = this.bank.variants(f);
+      if (!m || !m.length)
+        return (
+          this.counters.notReady++,
+          p &&
+            this.deferred.length < 8 &&
+            this.deferred.push({
+              name: e,
+              recipe: n,
+              opts: t ? { ...t } : void 0,
+              delay: Number.isFinite(i) && i > 0 ? i : 0,
+              variant: a,
+              t: this.ac.currentTime,
+            }),
+          !1
+        );
+      e === `explosion` && this.bank.wantSfx(`tinnitus`);
+      let h = this.ac.currentTime,
+        g = o.sustain;
+      if (g && r && d && i <= 0) {
+        let n = this.sustainHit(e, c, u, g.radius);
+        if (n) {
+          if (((n.last = h), n.loop))
+            return (
+              n.loop.setPosition(c, l, u),
+              this.sustainLoopLevel(n.loop, t?.volume),
+              !0
+            );
+          if (n.voice && n.voice.src === n.src && n.voice.until - h > 0.35)
+            return !0;
+        }
+        if (!n && g.loop && g.loop in fr) {
+          let n = this.loop(g.loop, { x: c, y: l, z: u }, !0);
+          return (
+            this.sustainLoopLevel(n, t?.volume),
+            this.sustains.push({
+              name: e,
+              x: c,
+              z: u,
+              last: h,
+              started: h,
+              voice: null,
+              src: null,
+              loop: n,
+              body: this.findBody?.(c, u) ?? null,
+            }),
+            !0
+          );
+        }
+      }
+      let _ = this.lastPlay.get(e);
+      if (_ && h - _.t < o.dedupe && Math.abs(_.x - c) + Math.abs(_.z - u) < 3)
+        return (this.counters.deduped++, !1);
+      let v = d ? (o.bus === `amb` ? `pos_amb` : `pos_sfx`) : `flat_${o.bus}`;
+      o.maxVoices && this.limitVoices(v, e, o.maxVoices, h);
+      let y = this.acquire(v, o.pri, h);
+      if (!y) return !1;
+      _
+        ? ((_.t = h), (_.x = c), (_.z = u), (_.frame = this.frame))
+        : this.lastPlay.set(e, { t: h, x: c, z: u, frame: this.frame });
+      let b = 0;
+      if (a >= 0) b = Math.min(a, m.length - 1);
+      else if (m.length > 1) {
+        let t = this.lastVariant.get(e) ?? -1;
+        ((b = Math.floor(Math.random() * (m.length - 1))),
+          b >= t && b++,
+          b >= m.length && (b = 0),
+          this.lastVariant.set(e, b));
+      }
+      let x = m[b],
+        S = this.ac.createBufferSource();
+      S.buffer = x;
+      let C = t?.rate,
+        w = t?.volume,
+        T = Math.min(
+          8,
+          Math.max(
+            0.1,
+            (C !== void 0 && Number.isFinite(C) ? C : 1) *
+              (1 + (Math.random() * 2 - 1) * o.jitter),
+          ),
+        );
+      S.playbackRate.value = T;
+      let E = d ? this.occlusion(s) : 0,
+        D =
+          Math.min(4, Math.max(0, w !== void 0 && Number.isFinite(w) ? w : 1)) *
+          o.gain *
+          (1 - 0.72 * E);
+      if (
+        (y.input.gain.cancelScheduledValues(h),
+        y.input.gain.setValueAtTime(D, h),
+        d && y.panner && y.air)
+      ) {
+        let e = y.panner;
+        ((e.refDistance = o.ref),
+          this.setPan(e, c, l, u, !0),
+          (y.air.frequency.value = this.hz(
+            E > 0 ? Math.min(Ur(s), Hr(E)) : Ur(s),
+          )));
+      }
+      (y.send &&
+        (y.send.gain.value =
+          o.send *
+          (d ? 0.35 + 0.65 * Math.min(1, s / 60) : 0.5) *
+          (1 - 0.8 * E)),
+        S.connect(y.input));
+      let ee = h + (Number.isFinite(i) && i > 0 ? i : 0);
+      if (
+        (S.start(ee),
+        (y.src = S),
+        (y.pri = o.pri),
+        (y.startedAt = ee),
+        (y.until = ee + x.duration / T + 0.05),
+        (y.name = e),
+        this.counters.oneShots++,
+        g && r && d && i <= 0)
+      ) {
+        let t = this.sustainHit(e, c, u, g.radius);
+        t
+          ? ((t.voice = y), (t.src = S), (t.last = h))
+          : this.sustains.push({
+              name: e,
+              x: c,
+              z: u,
+              last: h,
+              started: h,
+              voice: y,
+              src: S,
+              loop: null,
+              body: null,
+            });
+      }
+      if (
+        (o.duck && this.duck(o.duck[0], o.duck[1]),
+        e === `explosion` && d && s < 18)
+      ) {
+        let e = 1 - s / 18;
+        (this.shock(0.55 + 0.75 * e, 2 + 2.5 * e),
+          this.play(`tinnitus`, { volume: 0.3 + 0.7 * e }, void 0, !1, 0.06));
+      }
+      return !0;
+    }
+    acquire(e, t, n) {
+      let r = this.pools[e];
+      if (!r) return null;
+      let i = null,
+        a = null,
+        o = null,
+        s = 0;
+      for (let e = 0; e < r.length; e++) {
+        let c = r[e];
+        if (c.until <= n) {
+          a ??= c;
+          continue;
+        }
+        if (!c.name) {
+          o ??= c;
+          continue;
+        }
+        (s++,
+          c.pri <= t &&
+            (!i ||
+              c.pri < i.pri ||
+              (c.pri === i.pri && c.startedAt < i.startedAt)) &&
+            (i = c));
+      }
+      let [c, l, u] = this.poolSpec[e];
+      if (s >= c) {
+        if (!i) return null;
+        (this.counters.stolen++, this.fadeOut(i, n));
+      }
+      if ((!a && r.length < c + Sr && r.push((a = this.makeOneShot(l, u))), a))
+        return this.take(a);
+      let d = o ?? i;
+      if (d.src) {
+        try {
+          d.src.stop();
+        } catch {}
+        try {
+          d.src.disconnect();
+        } catch {}
+        d.src = null;
+      }
+      return d;
+    }
+    fadeOut(e, t) {
+      if (((e.until = t + xr + 0.01), (e.name = ``), e.src)) {
+        (Y(e.input.gain, t), e.input.gain.setTargetAtTime(0, t, xr / 6));
+        try {
+          e.src.stop(t + xr);
+        } catch {
+          try {
+            e.src.disconnect();
+          } catch {}
+          e.src = null;
+        }
+      }
+    }
+    take(e) {
+      if (e.src) {
+        try {
+          e.src.disconnect();
+        } catch {}
+        e.src = null;
+      }
+      return e;
+    }
+    sustains = [];
+    findBody = null;
+    get sustainCount() {
+      return this.sustains.length;
+    }
+    sustainHit(e, t, n, r) {
+      let i = null,
+        a = r * r;
+      for (let r of this.sustains) {
+        if (r.name !== e) continue;
+        let o = (r.x - t) ** 2 + (r.z - n) ** 2;
+        o <= a && ((a = o), (i = r));
+      }
+      return (i && ((i.x = t), (i.z = n)), i);
+    }
+    sustainLoopLevel(e, t) {
+      let n =
+        t !== void 0 && Number.isFinite(t)
+          ? Math.min(1.5, Math.max(0, t))
+          : 0.8;
+      (e.setVolume(n),
+        e.setParam(`slip`, Math.min(1, Math.max(0.35, (n - 0.35) / 0.65))));
+    }
+    updateSustains(e) {
+      let t = this.sustains;
+      for (let n = t.length - 1; n >= 0; n--) {
+        let r = t[n],
+          i = ht[r.name]?.sustain,
+          a = !i || e - r.last > i.gap,
+          o = !1;
+        if (r.loop) {
+          if (a && e - r.started > (i?.min ?? 0)) (r.loop.stop(), (o = !0));
+          else if (r.body) {
+            let e = r.body;
+            (r.loop.setPosition(e.x, e.y + 0.3, e.z),
+              r.loop.setParam(`speed`, Math.sqrt(e.vx * e.vx + e.vz * e.vz)),
+              (r.x = e.x),
+              (r.z = e.z));
+          }
+        } else {
+          let t = r.voice;
+          if (!t || t.src !== r.src || t.until <= e) o = !0;
+          else if (a && e - r.started > (i?.min ?? 0)) {
+            (Y(t.input.gain, e),
+              t.input.gain.setTargetAtTime(0, e, 0.09),
+              (t.until = Math.min(t.until, e + 0.45)));
+            try {
+              t.src.stop(e + 0.45);
+            } catch {}
+            o = !0;
+          }
+        }
+        o && ((t[n] = t[t.length - 1]), t.pop());
+      }
+    }
+    limitVoices(e, t, n, r) {
+      let i = this.pools[e];
+      if (!i) return;
+      let a = 0,
+        o = null;
+      for (let e of i)
+        e.until <= r ||
+          e.name !== t ||
+          (a++, (!o || e.startedAt < o.startedAt) && (o = e));
+      if (!(a < n || !o || !o.src)) {
+        (Y(o.input.gain, r), o.input.gain.setTargetAtTime(0, r, 0.03));
+        try {
+          o.src.stop(r + 0.12);
+        } catch {}
+        ((o.until = r + 0.12), (o.name = ``), this.counters.limited++);
+      }
+    }
+    activeOneShots() {
+      if (!this.created) return 0;
+      let e = this.ac.currentTime,
+        t = 0;
+      for (let n in this.pools) for (let r of this.pools[n]) r.until > e && t++;
+      return t;
+    }
+    loop(e, t, n) {
+      let r = new mr(e, fr[e] ?? fr.ambient_city, this, t, n);
+      return (
+        n || this.externalLoops.set(e, performance.now()),
+        this.loops.push(r),
+        r
+      );
+    }
+    onLoopStopped(e) {
+      (e.voice && this.derealize(e, 0.15),
+        (e.spare &&= (e.spare.dispose(), null)));
+    }
+    makeVoice(e) {
+      let t = Yr(e, this);
+      return ((t.loopName = e), t);
+    }
+    tick = !0;
+    tickDt = 0;
+    tickN = 0;
+    tickAcc = _r;
+    dtAcc = 0;
+    tickB = !1;
+    tickDtB = 0;
+    tickAccB = _r / 2;
+    dtAccB = 0;
+    beginFrame(e, t) {
+      let n = e > 0 ? Math.min(250, e) : 0,
+        r = t > 0 ? t : 0;
+      if (
+        ((this.dtAcc += r),
+        (this.dtAccB += r),
+        (this.tickAcc += n),
+        (this.tickAccB += n),
+        this.tickAccB >= 29.333333333333336
+          ? ((this.tickB = !0),
+            (this.tickDtB = this.dtAccB),
+            (this.dtAccB = 0),
+            (this.tickAccB = Math.min(this.tickAccB - _r, _r)))
+          : (this.tickB = !1),
+        this.tickAcc < 29.333333333333336)
+      ) {
+        this.tick = !1;
+        return;
+      }
+      ((this.tick = !0),
+        this.tickN++,
+        (this.tickDt = this.dtAcc),
+        (this.dtAcc = 0),
+        (this.tickAcc = Math.min(this.tickAcc - _r, _r)));
+    }
+    pool = [];
+    get pooled() {
+      return this.pool.length;
+    }
+    poolCount(e) {
+      let t = 0;
+      for (let n = 0; n < this.pool.length; n++)
+        this.pool[n].poolKey === e && t++;
+      return t;
+    }
+    park(e, t, n) {
+      if (!e.poolable || !t.panner || !t.air || !t.occ) return !1;
+      let r = zr(t.name, t.state.params);
+      if (this.poolCount(r) >= Nr) return !1;
+      if (this.pool.length >= Pr) {
+        let e = 0;
+        for (; e < this.pool.length - 1 && this.pool[e].keepPooled;) e++;
+        this.retire(e);
+      }
+      return (
+        (e.poolKey = r),
+        (e.keepPooled = Rr.test(r)),
+        (e.routing = [t.panner, t.air, t.send, t.occ]),
+        e.park(n),
+        this.pool.push(e),
+        !0
+      );
+    }
+    retire(e) {
+      let t = this.pool[e];
+      (this.pool.splice(e, 1), t.stop(0.02), this.dying.push(t));
+    }
+    unpool(e) {
+      let t = zr(e.name, e.state.params),
+        n = -1;
+      for (let e = this.pool.length - 1; e >= 0; e--)
+        if (this.pool[e].poolKey === t) {
+          n = e;
+          break;
+        }
+      if (n < 0) return !1;
+      let r = this.pool[n];
+      this.pool.splice(n, 1);
+      let i = r.routing;
+      r.routing = null;
+      let a = i[0],
+        o = i[1],
+        s = i[2],
+        c = i[3],
+        l = e.meta;
+      ((a.refDistance = l.ref),
+        this.setPan(a, e.x, e.y, e.z, !0),
+        (e.wx = e.x),
+        (e.wy = e.y),
+        (e.wz = e.z));
+      let u = l.bus === `room` ? 0 : this.occlusion(e.dist),
+        d = this.ac.currentTime;
+      return (
+        Y(c.gain, d),
+        c.gain.setValueAtTime(1 - 0.72 * u, d),
+        Y(o.frequency, d),
+        o.frequency.setValueAtTime(
+          this.hz(u > 0 ? Math.min(Ur(e.dist), Hr(u)) : Ur(e.dist)),
+          d,
+        ),
+        s && (Y(s.gain, d), s.gain.setValueAtTime(l.send, d)),
+        (r.detached &&=
+          (a.connect(this.bus[l.bus === `amb` ? `ambPos` : l.bus]),
+          s?.connect(this.revSend),
+          !1)),
+        r.unpark(e.state),
+        (e.voice = r),
+        (e.panner = a),
+        (e.air = o),
+        (e.occ = c),
+        (e.send = s),
+        (e.lastAir = e.dist),
+        (e.lastOcc = u),
+        (e.occGain = 1 - 0.72 * u),
+        this.counters.realized++,
+        this.prof.reused++,
+        !0
+      );
+    }
+    tendPool(e) {
+      for (let t = this.pool.length - 1; t >= 0; t--) {
+        let n = this.pool[t];
+        if (!n.keepPooled && e - n.parkedAt > Fr) {
+          this.retire(t);
+          continue;
+        }
+        if (!n.detached && e >= n.detachAt && n.routing) {
+          try {
+            (n.routing[0]?.disconnect(), n.routing[2]?.disconnect());
+          } catch {}
+          n.detached = !0;
+        }
+      }
+    }
+    prebuildList = null;
+    get prebuildPending() {
+      return this.prebuildList ? this.prebuildList.length : -1;
+    }
+    prebuildPool(e = 1 / 0) {
+      if (!this.created) return !1;
+      let t = (this.prebuildList ??= Lr[this.quality].slice()),
+        n = performance.now();
+      for (; t.length;) {
+        let r = t[0],
+          i = r.indexOf(`#`);
+        if (!this.prebuild(i < 0 ? r : r.slice(0, i), i >= 0)) return !1;
+        if ((t.shift(), performance.now() - n > e)) return !t.length;
+      }
+      return !0;
+    }
+    prebuild(e, t) {
+      let n = fr[e],
+        r = {
+          vol: 0,
+          rate: 1,
+          params: t
+            ? { swarm: 1, rpm: 0, throttle: 0.1 }
+            : { rpm: 0, throttle: 0.1 },
+          doppler: 1,
+        },
+        i = this.makeVoice(e);
+      if (!i.start(r)) return !1;
+      let a = this.ac,
+        o = a.createBiquadFilter();
+      ((o.type = `lowpass`), (o.frequency.value = this.nyq));
+      let s = a.createGain(),
+        c = this.makePanner();
+      ((c.refDistance = n.ref), i.out.connect(o).connect(s).connect(c));
+      let l = null;
+      (n.send > 0 &&
+        ((l = a.createGain()), (l.gain.value = n.send), i.out.connect(l)),
+        (i.routing = [c, o, l, s]),
+        (i.poolKey = zr(e, r.params)),
+        (i.keepPooled = Rr.test(i.poolKey)));
+      let u = a.currentTime;
+      return (
+        (i.parkedAt = u),
+        (i.detachAt = u),
+        (i.detached = !0),
+        this.pool.push(i),
+        this.prof.prebuilt++,
+        !0
+      );
+    }
+    realize(e, t = !0, n = !0) {
+      if (e.positional && this.pool.length) {
+        if (n) {
+          if (this.unpool(e)) return 1;
+        } else if (this.poolCount(zr(e.name, e.state.params))) return 0;
+      }
+      if (!t) return 0;
+      let r = e.spare ?? this.makeVoice(e.name);
+      if (!r.start(e.state)) return ((e.spare = r), -1);
+      e.spare = null;
+      let i = e.meta;
+      if (e.positional) {
+        let t = this.ac.createBiquadFilter();
+        ((t.type = `lowpass`), (t.frequency.value = this.hz(Ur(e.dist))));
+        let n = this.makePanner();
+        ((n.refDistance = i.ref),
+          this.setPan(n, e.x, e.y, e.z, !0),
+          (e.wx = e.x),
+          (e.wy = e.y),
+          (e.wz = e.z));
+        let a = this.ac.createGain(),
+          o = i.bus === `room` ? 0 : this.occlusion(e.dist);
+        ((a.gain.value = 1 - 0.72 * o),
+          o > 0 && (t.frequency.value = this.hz(Math.min(Ur(e.dist), Hr(o)))),
+          r.out
+            .connect(t)
+            .connect(a)
+            .connect(n)
+            .connect(this.bus[i.bus === `amb` ? `ambPos` : i.bus]),
+          (e.air = t),
+          (e.occ = a),
+          (e.panner = n),
+          (e.lastAir = e.dist),
+          (e.lastOcc = o),
+          (e.occGain = 1 - 0.72 * o));
+      } else r.out.connect(this.bus[i.bus]);
+      if (i.send > 0) {
+        let t = this.ac.createGain();
+        ((t.gain.value = i.send),
+          r.out.connect(t).connect(this.revSend),
+          (e.send = t));
+      }
+      return (
+        (e.voice = r),
+        this.counters.realized++,
+        this.prof.built++,
+        (this.builtBy[e.name] = (this.builtBy[e.name] ?? 0) + 1),
+        2
+      );
+    }
+    derealize(e, t = 0.2) {
+      let n = e.voice;
+      n &&
+        (this.park(n, e, t) ||
+          (n.stop(t),
+          this.dying.push(n),
+          (n.routing = [e.panner, e.air, e.send, e.occ])),
+        (e.voice = null),
+        (e.panner = null),
+        (e.air = null),
+        (e.occ = null),
+        (e.send = null),
+        this.counters.derealized++);
+    }
+    reap(e) {
+      let t = 0;
+      for (let n = this.dying.length - 1; n >= 0; n--) {
+        let r = this.dying[n];
+        if (e < r.deadAt) continue;
+        if (t >= Mr) {
+          this.prof.reapDeferred++;
+          break;
+        }
+        (t++, r.dispose());
+        let i = r.routing;
+        if (i)
+          for (let e = 0; e < i.length; e++)
+            try {
+              i[e]?.disconnect();
+            } catch {}
+        ((r.routing = null),
+          (this.dying[n] = this.dying[this.dying.length - 1]),
+          this.dying.pop());
+      }
+    }
+    updateLoops() {
+      if (
+        !this.isRunning ||
+        (!this.tick && !this.deferred.length && !this.dying.length)
+      )
+        return;
+      let e = this.ac.currentTime;
+      (this.deferred.length && this.flushDeferred(e),
+        this.dying.length && this.reap(e),
+        this.tick && this.tickLoops(e));
+    }
+    rz = { realized: 0, built: 0, reused: 0, ms: 0, swapped: !1, t0: 0 };
+    tickLoops(e) {
+      let t = performance.now(),
+        n = this.tickDt;
+      this.tickHouse(e, n, t);
+      let r = this.loops,
+        i = this.rz,
+        a = 0;
+      for (let e = 0; e < r.length; e++) r[e].voice && a++;
+      ((i.realized = a),
+        (i.built = i.reused = 0),
+        (i.ms = 0),
+        (i.swapped = !1),
+        (i.t0 = t));
+      let o = this.tickN;
+      for (let a = r.length - 1; a >= 0; a--) {
+        let s = r[a];
+        if (s.stopped) {
+          this.dropLoop(a);
+          continue;
+        }
+        if (!s.voice && s.state.vol <= 5e-4) {
+          ((s.accDt = 0), (s.px = NaN));
+          continue;
+        }
+        let c = s.positional
+          ? s.dist > vr
+            ? 3
+            : s.dist > yr
+              ? 2
+              : 1
+          : s.voice
+            ? 3
+            : 1;
+        if (c > 1 && (o + s.phase) % c !== 0) {
+          ((s.accDt += n), this.prof.farSkips++);
+          continue;
+        }
+        let l = n + s.accDt;
+        ((s.accDt = 0), s.positional ? this.spatial(s, l) : (s.dist = 0));
+        let u = s.state.vol > 5e-4 && (!s.positional || s.dist < s.meta.max);
+        if (!s.voice) {
+          u && t >= s.retryAt && this.admit(s);
+          continue;
+        }
+        if (u) s.outOfRangeT = 0;
+        else if (
+          ((s.outOfRangeT += l), s.outOfRangeT > 0.6 || s.state.vol <= 5e-4)
+        ) {
+          (this.derealize(s, 0.2), i.realized--);
+          continue;
+        }
+        (s.panner && this.place(s, e),
+          s.voice.apply(s.state, l),
+          this.prof.applies++);
+      }
+      !i.built &&
+        this.prebuildList !== null &&
+        this.prebuildList.length &&
+        i.ms < jr &&
+        this.prebuildPool(0);
+      let s = performance.now() - t;
+      s > this.prof.loopsMaxMs && (this.prof.loopsMaxMs = s);
+    }
+    tickHouse(e, t, n) {
+      let r = this.indoorT > 0 ? this.indoorT : 0;
+      (this.indoorS !== r &&
+        ((this.indoorS += (r - this.indoorS) * Math.min(1, t / 0.13)),
+        Math.abs(this.indoorS - r) < 0.01 && (this.indoorS = r)),
+        this.sustains.length && this.updateSustains(e),
+        this.muffle > 0 &&
+          ((this.muffle = Math.max(0, this.muffle - this.muffleRate * t)),
+          this.applyWorldFilter()),
+        this.pool.length && this.tickN % 3 == 0 && this.tendPool(e),
+        (this.houseT -= t),
+        this.houseT <= 0 && this.house(n));
+    }
+    house(e) {
+      ((this.houseT = 1), (this.isRunning = this.ac.state === `running`));
+      for (let t = 0; t < this.loops.length; t++) this.loops[t].voice?.touch(e);
+      let t = this.ac.currentTime;
+      for (let e in this.pools) {
+        let n = this.pools[e];
+        for (let e = 0; e < n.length; e++) {
+          let r = n[e];
+          if (!(!r.src || r.until > t)) {
+            try {
+              r.src.disconnect();
+            } catch {}
+            r.src = null;
+          }
+        }
+      }
+      if (
+        this.roomConv &&
+        this.roomLoaded &&
+        this.indoorT <= 0 &&
+        this.indoorS <= 0
+      ) {
+        if (!this.outdoorSince) this.outdoorSince = e;
+        else if (e - this.outdoorSince > gr[+!!this.mobile]) {
+          try {
+            this.roomConv.buffer = null;
+          } catch {}
+          ((this.roomLoaded = this.roomWanted = null),
+            (this.outdoorSince = 0),
+            this.roomReleases++);
+        }
+      } else this.outdoorSince = 0;
+      ++this.gcTick >= 5 && ((this.gcTick = 0), this.bank.gc(e));
+    }
+    dropLoop(e) {
+      let t = this.loops,
+        n = t[e];
+      (n.voice && this.derealize(n, 0.15), (t[e] = t[t.length - 1]), t.pop());
+    }
+    spatial(e, t) {
+      let n = e.x - this.lx,
+        r = e.y - this.ly,
+        i = e.z - this.lz,
+        a = Math.sqrt(n * n + r * r + i * i);
+      if (t > 0 && e.px === e.px) {
+        let n = t * 6 < 1 ? t * 6 : 1,
+          r = (e.x - e.px) / t,
+          i = (e.z - e.pz) / t;
+        (r * r + i * i > 8100 && (r = i = 0),
+          (e.svx += (r - e.svx) * n),
+          (e.svz += (i - e.svz) * n));
+      }
+      ((e.px = e.x), (e.pz = e.z));
+      let o = e.state;
+      o.vel = Math.sqrt(e.svx * e.svx + e.svz * e.svz);
+      let s = e.meta.doppler;
+      if (s > 0 && a > 0.5) {
+        let t = n / a,
+          r = i / a,
+          c = e.svx * t + e.svz * r,
+          l = (343 + (this.lvx * t + this.lvz * r) * 0.8) / (343 + c * 0.8);
+        o.doppler = 1 + ((l < 0.8 ? 0.8 : l > 1.25 ? 1.25 : l) - 1) * s;
+      } else o.doppler = 1;
+      e.dist = a;
+    }
+    place(e, t) {
+      let n = e.panner,
+        r = Math.abs(e.x - e.wx) + Math.abs(e.y - e.wy) + Math.abs(e.z - e.wz);
+      r < 0.02 ||
+        (this.setPan(
+          n,
+          e.x,
+          e.y,
+          e.z,
+          !(r < wr),
+          e.dist > vr ? 3 * Cr : e.dist > yr ? 2 * Cr : Cr,
+        ),
+        (e.wx = e.x),
+        (e.wy = e.y),
+        (e.wz = e.z),
+        this.prof.pannerWrites++);
+      let i = e.dist,
+        a = e.meta.bus === `room` ? 0 : this.occlusion(i);
+      e.air &&
+        (Math.abs(i - e.lastAir) > 3 || Math.abs(a - e.lastOcc) > 0.03) &&
+        this.filterLoop(e, i, a, t);
+    }
+    filterLoop(e, t, n, r) {
+      ((e.lastAir = t), (e.lastOcc = n));
+      let i = Ur(t);
+      (e.air.frequency.setTargetAtTime(
+        this.hz(n > 0 ? Math.min(i, Hr(n)) : i),
+        r,
+        0.1,
+      ),
+        (n > 0 || e.occGain !== 1) &&
+          ((e.occGain = 1 - 0.72 * n),
+          e.occ?.gain.setTargetAtTime(e.occGain, r, 0.1)),
+        e.send &&
+          e.send.gain.setTargetAtTime(
+            e.meta.send * (0.35 + 0.65 * Math.min(1, t / 60)) * (1 - 0.8 * n),
+            r,
+            0.1,
+          ));
+    }
+    admit(e) {
+      let t = this.rz;
+      if (t.ms > jr) {
+        this.prof.realizeDeferred++;
+        return;
+      }
+      if (t.realized < this.loopBudget) {
+        let n = performance.now(),
+          r = this.realize(e, t.built < kr, t.reused < Ar),
+          i = performance.now() - n;
+        ((t.ms += i),
+          i > this.prof.realizeMaxMs &&
+            ((this.prof.realizeMaxMs = i),
+            (this.slowRealize = `${e.name}:${r}`)),
+          r === 0
+            ? this.prof.realizeDeferred++
+            : r < 0
+              ? (e.retryAt = t.t0 + 120)
+              : (t.realized++, r === 1 ? t.reused++ : t.built++));
+        return;
+      }
+      if (t.swapped || this.tickN < this.evictTick) return;
+      ((t.swapped = !0),
+        (this.evictTick = this.tickN + 3),
+        this.prof.evictScans++);
+      let n = this.loops,
+        r = null,
+        i = 1 / 0;
+      for (let e = 0; e < n.length; e++) {
+        let t = n[e];
+        if (!t.voice) continue;
+        let a = Vr(t);
+        a < i && ((i = a), (r = t));
+      }
+      r &&
+        Vr(e) > i * 1.4 &&
+        (this.derealize(r, 0.25),
+        this.realize(e) > 0 && this.counters.evicted++);
+    }
+    houseT = 1;
+    gcTick = 0;
+    outdoorSince = 0;
+    roomReleases = 0;
+    evictTick = 0;
+    deferred = [];
+    flushDeferred(e) {
+      let t = this.deferred;
+      for (let n = t.length - 1; n >= 0; n--) {
+        let r = t[n],
+          i = e - r.t,
+          a = this.bank.variants(
+            r.recipe ?? ht[r.name]?.recipe ?? r.name,
+          )?.length;
+        (!a && i <= br + r.delay) ||
+          (t.splice(n, 1),
+          a && i <= br + r.delay
+            ? (this.play(
+                r.name,
+                r.opts,
+                r.recipe,
+                !1,
+                Math.max(0, r.delay - i),
+                r.variant,
+              ),
+              this.prof.deferredPlays++)
+            : this.prof.deferredLate++);
+      }
+    }
+    get deferredCount() {
+      return this.deferred.length;
+    }
+    realizedLoops() {
+      let e = 0;
+      for (let t of this.loops) t.voice && e++;
+      return e;
+    }
+  };
+function Vr(e) {
+  let t = e.positional
+    ? e.meta.ref / (e.meta.ref + Math.max(0, e.dist - e.meta.ref))
+    : 1;
+  return (e.meta.pri - (e.internal ? 1.5 : 0)) * Math.min(1, e.state.vol) * t;
+}
+function Hr(e) {
+  return 2e4 * (600 / 2e4) ** Math.min(1, e);
+}
+function Ur(e) {
+  return Math.max(900, Math.min(2e4, 22e3 / (1 + e / 45)));
+}
+function Wr(e = 4096) {
+  let t = new Float32Array(e),
+    n = 0.14;
+  for (let r = 0; r < e; r++) {
+    let i = ((2 * r) / (e - 1) - 1) * Tr,
+      a = Math.abs(i);
+    t[r] = Math.sign(i) * (a <= Er ? a : Er + n * Math.tanh((a - Er) / n));
+  }
+  return t;
+}
+function Gr(e, t, n) {
+  (e.cancelScheduledValues(n), e.setValueAtTime(t, n));
+}
+function Kr(e) {
+  let t = !0;
+  for (let n of e)
+    try {
+      !n || !(`automationRate` in n)
+        ? (t = !1)
+        : ((n.automationRate = `k-rate`),
+          n.automationRate !== `k-rate` && (t = !1));
+    } catch {
+      t = !1;
+    }
+  return t;
+}
+function qr(e, t, n, r) {
+  let i = n?.get(`ir/${e}/${t.sampleRate}`);
+  if (i && i.sampleRate === t.sampleRate) return i;
+  let [a, o, s] = ge(e, r),
+    c = se(t.sampleRate, a, o, s),
+    l = t.createBuffer(2, c.ch[0].length, t.sampleRate);
+  return (
+    l.getChannelData(0).set(c.ch[0]),
+    l.getChannelData(1).set(c.ch[1]),
+    l
+  );
+}
+var Jr = {};
+function Yr(e, t) {
+  let n = Jr[e];
+  if (n) return n(t);
+  switch (e) {
+    case `engine_car`:
+      return new $n(t, `car`);
+    case `engine_scooter`:
+      return new $n(t, `scooter`);
+    case `engine_bus`:
+      return new $n(t, `bus`);
+    case `engine_sports`:
+      return new $n(t, `sports`);
+    case `siren_police`:
+      return new er(t, !1);
+    case `siren_ambulance`:
+      return new er(t, !0);
+    case `garbage_truck`:
+      return new tr(t, [`tune/elise`, `tune/maiden`], 0.95, !1, `tune`);
+    case `rain`:
+      return new nr(t);
+    case `wind`:
+      return new tr(t, [`amb/amb_wind`], 0.7, !0);
+    case `ambient_city`:
+      return new tr(t, [`amb/amb_city`], 0.6, !0);
+    case `ambient_market`:
+      return new tr(t, [`amb/amb_market`], 0.85, !0);
+    case `ambient_temple`:
+      return new tr(t, [`amb/amb_temple`], 0.75, !0);
+    case `ambient_park`:
+      return new rr(t);
+    case `ambient_river`:
+      return new tr(t, [`amb/amb_river`], 0.7, !0);
+    case `mrt_train`:
+      return new ir(t);
+    case `crosswalk_signal`:
+      return new or(t);
+    case `engine_motorcycle`:
+      return new $n(t, `moto`);
+    case `engine_ev`:
+      return new sr(t);
+    case `helicopter`:
+      return new cr(t);
+    case `jet`:
+      return new lr(t);
+    case `tire_screech`:
+      return new ur(t);
+    case `ambient_store`:
+      return new tr(t, [`amb/amb_store`], 0.8, !0);
+    case `ambient_hall`:
+      return new tr(t, [`amb/amb_hall`], 0.85, !0);
+  }
+  return new tr(t, [`amb/amb_city`], 0.5, !0);
+}
+var Xr = /^(zh[-_](HK|MO)|yue)|[-_]yue\b|Hant[-_]HK/i,
+  Zr =
+    /粵|粤|廣東|广东|Cantonese|Sin-?ji|Tracy|Danny|HiuGaai|HiuMaan|WanLung|Hong ?Kong|香港/i,
+  Qr =
+    /臺灣|台灣|Taiwan|Meijia|Mei-Jia|Hanhan|Yating|Zhiwei|HsiaoChen|HsiaoYu|YunJhe/i,
+  $r =
+    /Natural|Neural|Enhanced|Premium|Meijia|Mei-Jia|HsiaoChen|HsiaoYu|YunJhe|Xiaoxiao|Yunxi/i,
+  ei = /\b(Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley)\b/i,
+  ti =
+    /\b(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley)\b/i;
+function ni(e) {
+  let t = e.lang || ``,
+    n = e.name || ``;
+  if (Xr.test(t) || Zr.test(n)) return -1;
+  let r =
+    ($r.test(n) ? 3 : 0) - (ei.test(n) ? 2 : 0) + (e.localService ? 0.5 : 0);
+  return /^zh[-_]TW/i.test(t) || /^cmn[-_](Hant[-_])?TW/i.test(t) || Qr.test(n)
+    ? 30 + r
+    : /^zh[-_](CN|SG)/i.test(t) || /^cmn/i.test(t) || /Hans/i.test(t)
+      ? 20 + r
+      : /^zh$/i.test(t)
+        ? 10 + r
+        : -1;
+}
+var ri = class {
+    ok = !1;
+    voices = [];
+    zh = null;
+    en = null;
+    ja = null;
+    curPri = -1;
+    curUntil = 0;
+    seq = 0;
+    lastBy = new Map();
+    stats = { spoken: 0, skipped: 0, interrupted: 0 };
+    onStart = null;
+    onEnd = null;
+    constructor() {
+      try {
+        if (
+          typeof speechSynthesis > `u` ||
+          (navigator.webdriver &&
+            new URLSearchParams(location.search).get(`speech`) !== `1`)
+        )
+          return;
+        this.ok = !0;
+        let e = () => {
+          try {
+            ((this.voices = speechSynthesis.getVoices()), this.pickVoices());
+          } catch {}
+        };
+        (e(), speechSynthesis.addEventListener?.(`voiceschanged`, e));
+      } catch {
+        this.ok = !1;
+      }
+    }
+    pickVoices() {
+      let e = null,
+        t = -1;
+      for (let n of this.voices) {
+        let r = ni(n);
+        r > t && ((t = r), (e = n));
+      }
+      this.zh = t >= 0 ? e : null;
+      let n = null,
+        r = -1;
+      for (let e of this.voices) {
+        if (!/^en/i.test(e.lang)) continue;
+        let t =
+          (/^en[-_](US|GB)/i.test(e.lang) ? 2 : 1) +
+          ($r.test(e.name) ? 3 : 0) -
+          (ti.test(e.name) ? 5 : 0) +
+          (e.localService ? 0.5 : 0);
+        t > r && ((r = t), (n = e));
+      }
+      this.en = n;
+    }
+    get available() {
+      return this.ok && (!!this.zh || !!this.en);
+    }
+    has(e) {
+      return (
+        this.ok && !!(e === `zh` ? this.zh : e === `en` ? this.en : this.ja)
+      );
+    }
+    get chosen() {
+      return {
+        zh: this.zh ? `${this.zh.name} (${this.zh.lang})` : null,
+        en: this.en ? `${this.en.name} (${this.en.lang})` : null,
+      };
+    }
+    get speaking() {
+      return this.ok && performance.now() < this.curUntil;
+    }
+    speak(e, t, n = 0) {
+      if (!this.ok || !e) return !1;
+      let r = performance.now(),
+        i = t.channel;
+      if (t.minGap > 0 && r - (this.lastBy.get(i) ?? -1e9) < t.minGap * 1e3)
+        return this.skip();
+      let a = t.lang === `zh` ? this.zh : t.lang === `en` ? this.en : this.ja;
+      if (!a) return this.skip();
+      try {
+        let o = speechSynthesis,
+          s = o.speaking || o.pending,
+          c = s ? (r < this.curUntil + 500 ? this.curPri : 5) : -1;
+        if (s && t.priority <= c) return this.skip();
+        s && (o.cancel(), this.stats.interrupted++);
+        let l = new SpeechSynthesisUtterance(e);
+        ((l.voice = a),
+          (l.lang = a.lang),
+          (l.rate = t.rate),
+          (l.pitch = t.pitch),
+          (l.volume = Math.max(0, Math.min(1, t.volume))));
+        let u = (e.match(/[぀-ヿ㐀-鿿]/g) ?? []).length,
+          d = (u / 4.2 + (e.length - u) / 13) / Math.max(0.5, t.rate) + 0.4;
+        ((this.curPri = t.priority), (this.curUntil = r + d * 1e3));
+        let f = ++this.seq;
+        return (
+          (l.onend = l.onerror =
+            () => {
+              try {
+                this.onEnd?.();
+              } catch {}
+              this.seq === f &&
+                ((this.curUntil = Math.min(this.curUntil, performance.now())),
+                (this.curPri = -1));
+            }),
+          o.speak(l),
+          this.lastBy.set(i, r),
+          this.stats.spoken++,
+          n > 0 && this.onStart?.(n, d),
+          !0
+        );
+      } catch {
+        return this.skip();
+      }
+    }
+    skip() {
+      return (this.stats.skipped++, !1);
+    }
+    cancel(e = 10) {
+      if (!(!this.ok || this.curPri > e))
+        try {
+          (speechSynthesis.cancel(), (this.curUntil = 0), (this.curPri = -1));
+        } catch {}
+    }
+  },
+  ii = 3,
+  ai = class {
+    speech;
+    constructor(e) {
+      this.speech = e;
+    }
+    get available() {
+      return this.speech.available;
+    }
+    say(e, t, n, r = 12) {
+      let i = e.ja;
+      return this.speech.speak(
+        i ?? (t === `zh` ? e.zh : e.en),
+        {
+          lang: i ? `ja` : t,
+          priority: ii,
+          volume: n,
+          rate: 1.08,
+          pitch: 1.05,
+          channel: `dj`,
+          minGap: r,
+        },
+        0,
+      );
+    }
+    cancel() {
+      this.speech.cancel(ii);
+    }
+  },
+  oi = [18e4, 9e4],
+  si = [6e4, 3e4],
+  ci = 2500,
+  li = [12e4, 45e3],
+  ui = {
+    drums: { gain: 0.8, pan: 0, send: 0.05, sc: !1 },
+    perc: { gain: 0.62, pan: 0.2, send: 0.14, sc: !1 },
+    bass: { gain: 0.72, pan: 0, send: 0, sc: !0 },
+    keys: { gain: 0.5, pan: -0.18, send: 0.16, sc: !0 },
+    pad: { gain: 0.36, pan: 0.05, send: 0.28, sc: !0 },
+    lead: { gain: 0.56, pan: 0.12, send: 0.2, sc: !0 },
+    fx: { gain: 0.5, pan: 0, send: 0.22, sc: !1 },
+  },
+  di = new Set([`drum:kick`, `drum:kick808`, `drum:kick_lofi`]),
+  fi = 24,
+  pi = 256,
+  mi = new Map(),
+  hi = new Map();
+function gi(e, t) {
+  let n = mi.get(e);
+  n || mi.set(e, (n = new Map()));
+  let r = n.get(t);
+  return (r === void 0 && n.set(t, (r = `inst/${e}/${t}`)), r);
+}
+function _i(e) {
+  let t = hi.get(e);
+  return (t === void 0 && hi.set(e, (t = `drum/` + e.slice(5))), t);
+}
+var vi = class {
+    ac;
+    dest;
+    reverbIn;
+    fx;
+    ch = {};
+    sc;
+    lp;
+    out;
+    nodes = [];
+    srcs = [];
+    ring = Array(pi).fill(null);
+    ringI = 0;
+    notePool = {};
+    lastLp = 2e4;
+    nyq = 2e4;
+    deadAt = 0;
+    attached = !0;
+    makeup;
+    rsend = null;
+    vinylIn = null;
+    constructor(e, t, n, r, i, a = 0.6, o = {}) {
+      ((this.ac = e), (this.dest = t), (this.reverbIn = n), (this.fx = r));
+      let s = (t) => {
+          let n = e.createGain();
+          return ((n.gain.value = t), this.nodes.push(n), n);
+        },
+        c = (this.makeup = s(0.95));
+      c.connect(t);
+      let l = e.createDynamicsCompressor();
+      ((l.threshold.value = -18),
+        (l.knee.value = 8),
+        (l.ratio.value = 3.5),
+        (l.attack.value = 0.006),
+        (l.release.value = 0.2),
+        l.connect(c));
+      let u = e.createBiquadFilter();
+      ((u.type = `highpass`),
+        (u.frequency.value = 28),
+        u.connect(l),
+        this.nodes.push(l, u),
+        (this.out = s(0)),
+        this.out.connect(u));
+      let d = this.out;
+      if (r === `lofi`) {
+        let t = e.createDelay(0.1);
+        t.delayTime.value = 0.012;
+        let n = e.createOscillator();
+        n.frequency.value = 0.55;
+        let r = s(0.0016);
+        n.connect(r).connect(t.delayTime);
+        let a = e.createOscillator();
+        a.frequency.value = 5.8;
+        let o = s(22e-5);
+        (a.connect(o).connect(t.delayTime),
+          n.start(),
+          a.start(),
+          this.srcs.push(n, a));
+        let c = e.createBiquadFilter();
+        ((c.type = `lowpass`),
+          (c.frequency.value = Math.min(5200, e.sampleRate * 0.45)),
+          (c.Q.value = 0.4),
+          t.connect(c).connect(this.out),
+          this.nodes.push(t, c, n, a),
+          (d = t),
+          (this.vinylIn = s(0.5)),
+          this.vinylIn.connect(this.out),
+          this.ensureVinyl(i));
+      }
+      ((this.lp = e.createBiquadFilter()),
+        (this.lp.type = `lowpass`),
+        (this.nyq = e.sampleRate * 0.45),
+        (this.lp.frequency.value = Math.min(2e4, this.nyq)),
+        (this.lp.Q.value = 0.8),
+        this.lp.connect(d),
+        this.nodes.push(this.lp));
+      let f = s(a);
+      (f.connect(this.lp), (this.sc = s(1)), this.sc.connect(f));
+      let p = (this.rsend = n ? s(r === `hall` ? 1.8 : 1) : null);
+      p && n && p.connect(n);
+      for (let t of Object.keys(ui)) {
+        let n = ui[t],
+          r = s(n.gain * (o[t] ?? 1)),
+          i = r;
+        if (typeof e.createStereoPanner == `function` && n.pan) {
+          let t = e.createStereoPanner();
+          ((t.pan.value = n.pan),
+            r.connect(t),
+            this.nodes.push(t),
+            t.connect(n.sc ? this.sc : f));
+        } else r.connect(n.sc ? this.sc : f);
+        (p && n.send && r.connect(s(n.send)).connect(p),
+          (this.ch[t] = i),
+          (this.notePool[t] = { g: [], free: [] }));
+      }
+    }
+    vinyl = !1;
+    ensureVinyl(e) {
+      if (this.vinyl || !this.vinylIn) return;
+      let t = e.get(`amb/vinyl`);
+      if (!t) return;
+      this.vinyl = !0;
+      let n = this.ac.createBufferSource();
+      ((n.buffer = t),
+        (n.loop = !0),
+        n.connect(this.vinylIn),
+        n.start(0, Math.random() * t.duration),
+        this.srcs.push(n),
+        this.nodes.push(n));
+    }
+    release(e = 0.12) {
+      let t = this.ac.currentTime;
+      (Y(this.out.gain, t), this.out.gain.setTargetAtTime(0, t, e / 3));
+      let n = t + e + 0.05;
+      for (let e = 0; e < this.ring.length; e++) {
+        let t = this.ring[e];
+        if (t) {
+          try {
+            t.stop(n);
+          } catch {}
+          this.ring[e] = null;
+        }
+      }
+      for (let e in this.notePool) {
+        let t = this.notePool[e].free;
+        for (let e = 0; e < t.length; e++) t[e] > n && (t[e] = n);
+      }
+      this.deadAt = t + e + 0.15;
+    }
+    detach() {
+      if (this.attached) {
+        this.attached = !1;
+        try {
+          (this.makeup.disconnect(), this.rsend?.disconnect());
+        } catch {}
+      }
+    }
+    attach(e) {
+      this.attached ||
+        ((this.attached = !0),
+        this.makeup.connect(this.dest),
+        this.rsend && this.reverbIn && this.rsend.connect(this.reverbIn));
+      let t = this.ac.currentTime;
+      (Y(this.lp.frequency, t),
+        Y(this.sc.gain, t),
+        this.sc.gain.setValueAtTime(1, t),
+        (this.lastLp = -1),
+        this.fx === `lofi` && this.ensureVinyl(e));
+    }
+    track(e) {
+      ((this.ring[this.ringI] = e), (this.ringI = (this.ringI + 1) % pi));
+    }
+    noteGain(e, t, n) {
+      let r = this.notePool[e] ?? this.notePool.fx,
+        i = r.g,
+        a = r.free;
+      for (let e = 0; e < i.length; e++)
+        if (a[e] <= t)
+          return ((a[e] = n), i[e].gain.cancelScheduledValues(t), i[e]);
+      let o = this.ac.createGain();
+      return (
+        o.connect(this.ch[e] ?? this.ch.fx),
+        i.length < fi && (i.push(o), a.push(n), this.nodes.push(o)),
+        o
+      );
+    }
+    setFilter(e, t, n, r) {
+      let i = this.lp.frequency;
+      ((e = Math.min(e, this.nyq)),
+        (t = Math.min(t, this.nyq)),
+        (e !== this.lastLp || t !== e) &&
+          (i.setValueAtTime(e, n),
+          t !== e && i.exponentialRampToValueAtTime(Math.max(60, t), r),
+          (this.lastLp = t)));
+    }
+    duckAt(e, t, n) {
+      (this.sc.gain.setTargetAtTime(1 - t, e, 0.004),
+        this.sc.gain.setTargetAtTime(1, e + 0.018, n));
+    }
+    fadeIn(e, t) {
+      (this.out.gain.cancelScheduledValues(e),
+        this.out.gain.setValueAtTime(0, e),
+        this.out.gain.linearRampToValueAtTime(t, e + 0.35));
+    }
+    stop(e = 0.12) {
+      let t = this.ac.currentTime;
+      (Y(this.out.gain, t), this.out.gain.setTargetAtTime(0, t, e / 3));
+      let n = t + e + 0.05;
+      for (let e of this.srcs)
+        try {
+          e.stop(n);
+        } catch {}
+      for (let e of this.ring)
+        if (e)
+          try {
+            e.stop(n);
+          } catch {}
+      this.deadAt = t + e + 0.15;
+    }
+    dispose() {
+      for (let e of this.nodes)
+        try {
+          e.disconnect();
+        } catch {}
+      ((this.nodes.length = 0), (this.srcs.length = 0), this.ring.fill(null));
+    }
+  },
+  yi = class {
+    ac;
+    bank;
+    mixer;
+    st;
+    pos;
+    queue = [];
+    qi = 0;
+    sc = 0;
+    notes = 0;
+    dropped = 0;
+    onSong = null;
+    onDJ = null;
+    constructor(e, t, n, r, i, a, o) {
+      ((this.ac = e),
+        (this.bank = t),
+        (this.mixer = n),
+        (this.st = r),
+        (this.pos = { k: i, song: r.item(i), bar: a, barT: o }));
+    }
+    get song() {
+      return this.pos.song;
+    }
+    pump(e, t = -1) {
+      let n = 0;
+      for (; this.pos.barT < e && n++ < 8;) this.genBar(t);
+      let r = this.queue,
+        i = this.ac.currentTime - 0.06;
+      for (; this.qi < r.length && r[this.qi].t < e;) {
+        let e = r[this.qi++];
+        if (e.ev) {
+          if (e.t < i && i > 0) {
+            this.dropped++;
+            continue;
+          }
+          this.playEv(e.ev, e.t, e.spb, void 0, e.off ?? 0);
+        } else e.dj && this.onDJ?.(e.dj);
+      }
+      this.qi > 256 && (r.splice(0, this.qi), (this.qi = 0));
+    }
+    genBar(e) {
+      let t = this.pos,
+        n = t.song,
+        r = 60 / n.bpm,
+        i = n.beatsPerBar * r;
+      t.bar === 0 &&
+        n.dj &&
+        t.barT >= e &&
+        this.queue.push({ t: t.barT, ev: null, spb: r, dj: n.dj });
+      let a = n.filter?.(t.bar) ?? [2e4, 2e4];
+      (this.mixer.setFilter(
+        a[0],
+        a[1],
+        Math.max(t.barT, this.ac.currentTime),
+        t.barT + i,
+      ),
+        (this.sc = n.sidechain?.(t.bar) ?? 0));
+      let o = n.bar(t.bar),
+        s = this.queue.length;
+      for (let i of o) {
+        let a = i.t,
+          o = a * 4,
+          s = Math.round(o);
+        n.swing !== 0.5 &&
+          Math.abs(o - s) < 0.01 &&
+          s % 2 == 1 &&
+          (a += (n.swing - 0.5) * 0.5);
+        let c = i.inst.startsWith(`drum:`) ? 0.003 : 0.007,
+          l = t.barT + a * r + (Math.random() * 2 - 1) * c;
+        if (l < e) {
+          let t = l + Math.max(0.05, i.d * r);
+          Me[i.inst]?.sustain &&
+            t > e + 0.3 &&
+            this.queue.push({ t: e + 0.02, ev: i, spb: r, off: e + 0.02 - l });
+          continue;
+        }
+        this.queue.push({ t: l, ev: i, spb: r });
+      }
+      let c = this.queue.splice(s).sort((e, t) => e.t - t.t);
+      for (let e of c) this.queue.push(e);
+      ((t.barT += i),
+        t.bar++,
+        t.bar >= n.bars &&
+          (t.k++,
+          (t.song = this.st.item(t.k)),
+          (t.bar = 0),
+          this.onSong?.(t.song)));
+    }
+    playEv(e, t, n, r, i = 0) {
+      let a = this.ac,
+        o,
+        s = 1,
+        c = null;
+      if (e.inst.startsWith(`drum:`)) o = this.bank.get(_i(e.inst));
+      else if (e.inst.startsWith(`sfx:`))
+        o = this.bank.variants(e.inst.slice(4))?.[0];
+      else {
+        if (((c = Me[e.inst]), !c)) return;
+        let t = c.roots[0];
+        for (let n of c.roots) Math.abs(n - e.m) < Math.abs(t - e.m) && (t = n);
+        ((o = this.bank.get(gi(e.inst, t))), (s = 2 ** ((e.m - t) / 12)));
+      }
+      if (!o) return;
+      let l = Math.max(t, a.currentTime),
+        u = o.duration / s - i;
+      if (i > 0 && (!c || u < 0.15)) return;
+      let d = a.createBufferSource();
+      ((d.buffer = o), s !== 1 && (d.playbackRate.value = s));
+      let f = Math.max(0.05, e.d * n - i),
+        p = 0,
+        m = l + u;
+      c &&
+        ((p = c.sustain ? l + Math.min(f, u) : l + Math.min(u, f + 0.7)),
+        (m = Math.min(l + u, p + c.release * 2 + 0.02)));
+      let h = r ? a.createGain() : this.mixer.noteGain(e.ch, l, m + 0.02),
+        g = Math.max(0, e.v) * (0.93 + Math.random() * 0.14);
+      if (
+        (i > 0
+          ? (h.gain.setValueAtTime(0, l),
+            h.gain.linearRampToValueAtTime(g, l + 0.08))
+          : h.gain.setValueAtTime(g, l),
+        c
+          ? (h.gain.setTargetAtTime(0, p, c.release / 3),
+            d.start(l, i * s),
+            d.stop(m))
+          : d.start(l),
+        r)
+      ) {
+        d.connect(h).connect(r);
+        return;
+      }
+      (d.connect(h),
+        this.mixer.track(d),
+        this.notes++,
+        this.sc > 0 &&
+          di.has(e.inst) &&
+          this.mixer.duckAt(l, this.sc, 60 / this.pos.song.bpm / 3.5));
+    }
+  },
+  bi = class {
+    bank;
+    getAc;
+    dest;
+    opts;
+    defs;
+    stations;
+    station = -1;
+    active = !1;
+    sched = null;
+    dying = [];
+    mixers = [];
+    epochs;
+    durs = [];
+    reverb = null;
+    reverbRet = null;
+    reverbLoading = !1;
+    quietSince = 0;
+    startAt = 0;
+    lastStation = -1;
+    ident = !1;
+    identBus = null;
+    pendingSay = null;
+    needs = new Map();
+    asked = new Set();
+    lastUse = [];
+    lastSweep = 0;
+    waitFrom = 0;
+    pinStems = !1;
+    stemStats = {
+      waits: 0,
+      lastWaitMs: 0,
+      released: 0,
+      reverbLoads: 0,
+      reverbReleases: 0,
+    };
+    dj;
+    nowPlaying = null;
+    onChange = null;
+    constructor(e, t, n, r) {
+      ((this.bank = e), (this.getAc = t), (this.dest = n), (this.opts = r));
+      let i = (this.defs = r.defs ?? Mn);
+      ((this.stations = i.map((e) => ({
+        id: e.id,
+        name: { zh: `${e.name.zh} ${e.freq}`, en: `${e.name.en} ${e.freq}` },
+        genre: e.genre,
+      }))),
+        (this.dj = new ai(r.speech)),
+        (this.epochs = i.map(
+          (e, t) => 60 + ((t * 7919 + Math.floor(Math.random() * 1e6)) % 900),
+        )),
+        (e.onNeeds = (e, t, n) => {
+          for (let r of t) this.needs.set(`${e}:${r}`, { si: e, k: r, ids: n });
+        }));
+    }
+    ask(e, t) {
+      let n = `${e}:${t}`;
+      this.asked.has(n) || (this.asked.add(n), this.bank.requestRadio(e, [t]));
+    }
+    stemsReady(e, t) {
+      let n = this.needs.get(`${e}:${t}`);
+      if (!n) return !1;
+      for (let e of n.ids) if (!this.bank.has(e)) return !1;
+      return !0;
+    }
+    sweep(e) {
+      if (e - this.lastSweep < 5e3 || this.pinStems) return;
+      this.lastSweep = e;
+      let t = this.active && this.station >= 0 ? this.station : -1;
+      t >= 0 && (this.lastUse[t] = e);
+      let n = this.sched?.pos.k ?? -1,
+        r = new Set();
+      for (let [i, a] of this.needs) {
+        let o = e - (this.lastUse[a.si] ?? e),
+          s = +!!this.opts.mobile,
+          c = a.si === this.lastStation ? oi[s] : si[s];
+        if (a.si === t ? a.k >= n - 1 : o < c) for (let e of a.ids) r.add(e);
+        else (this.needs.delete(i), this.asked.delete(i));
+      }
+      let i = [];
+      for (let e of this.bank.ids()) bt(e) && !r.has(e) && i.push(e);
+      if (
+        (i.length &&
+          (this.bank.release(i), (this.stemStats.released += i.length)),
+        t >= 0)
+      )
+        this.quietSince = 0;
+      else if (!this.quietSince) this.quietSince = e;
+      else if (
+        this.reverb?.buffer &&
+        !this.dying.length &&
+        e - this.quietSince > li[+!!this.opts.mobile]
+      )
+        try {
+          ((this.reverb.buffer = null), this.stemStats.reverbReleases++);
+        } catch {}
+    }
+    setStation(e) {
+      let t = this.defs.length,
+        n = e < 0 || e >= t ? -1 : Math.floor(e);
+      n !== this.station &&
+        ((this.station = n),
+        n >= 0 && (this.lastStation = n),
+        this.restart(!0));
+    }
+    next() {
+      let e = this.defs.length;
+      this.setStation(
+        this.station < 0 ? 0 : this.station + 1 >= e ? -1 : this.station + 1,
+      );
+    }
+    setActive(e) {
+      e !== this.active &&
+        ((this.active = e),
+        e &&
+          this.station < 0 &&
+          (this.station =
+            this.lastStation >= 0
+              ? this.lastStation
+              : Math.floor(Math.random() * this.defs.length)),
+        this.restart(!1));
+    }
+    restart(e) {
+      ((this.sched &&=
+        (this.sched.mixer.release(0.12),
+        this.dying.push(this.sched.mixer),
+        null)),
+        this.dj.cancel(),
+        (this.nowPlaying = null),
+        (this.waitFrom = performance.now()),
+        this.asked.clear());
+      let t = this.active && this.station >= 0 && e;
+      if (this.active && this.station >= 0) {
+        let e = this.getAc(),
+          t = this.dest();
+        e && t && this.ensureReverb(e, t);
+      }
+      (t &&
+        (this.opts.staticSfx(),
+        (this.pendingSay = {
+          station: this.station,
+          at: performance.now() / 1e3 + 1.6,
+        })),
+        (this.ident = t),
+        (this.startAt = t ? 1.05 : 0.05),
+        this.emit());
+    }
+    ensureReverb(e, t) {
+      if (!this.reverb)
+        try {
+          ((this.reverb = e.createConvolver()),
+            (this.reverbRet = e.createGain()),
+            (this.reverbRet.gain.value = 0.32),
+            this.reverb.connect(this.reverbRet).connect(t));
+        } catch {
+          this.reverb = null;
+          return;
+        }
+      if (this.reverb.buffer || this.reverbLoading) return;
+      let n = this.reverb;
+      ((this.reverbLoading = !0),
+        this.stemStats.reverbLoads++,
+        this.opts.loadIR((e) => {
+          this.reverbLoading = !1;
+          try {
+            n.buffer = e;
+          } catch {}
+        }));
+    }
+    warmIdx = 0;
+    prewarm() {
+      if (this.warmIdx >= this.defs.length) return !0;
+      let e = this.warmIdx++;
+      try {
+        let { k: t } = this.locate(e),
+          n = this.defs[e].item(t);
+        for (let e = 0; e < Math.min(4, n.bars); e++) n.bar(e);
+      } catch {}
+      return this.warmIdx >= this.defs.length;
+    }
+    locate(e) {
+      let t = this.defs[e],
+        n = performance.now() / 1e3 + this.epochs[e],
+        r = (this.durs[e] ??= []);
+      for (let e = 0; e < 2e3; e++) {
+        let i = r[e];
+        if (i === void 0) {
+          let n = t.item(e);
+          i = r[e] = (n.bars * n.beatsPerBar * 60) / n.bpm;
+        }
+        if (n < i) return { k: e, offset: n };
+        n -= i;
+      }
+      return { k: 0, offset: 0 };
+    }
+    update() {
+      let e = this.getAc();
+      if (
+        !e ||
+        (this.opts.running ? !this.opts.running() : e.state !== `running`)
+      )
+        return;
+      let t = e.currentTime;
+      for (let e = this.dying.length - 1; e >= 0; e--)
+        t > this.dying[e].deadAt &&
+          (this.dying[e].detach(), this.dying.splice(e, 1));
+      let n = performance.now();
+      if ((this.sweep(n), !this.active || this.station < 0)) return;
+      let r = this.dest();
+      if (!r) return;
+      let i = this.pendingSay;
+      if (
+        (i &&
+          performance.now() / 1e3 >= i.at &&
+          ((this.pendingSay = null),
+          i.station === this.station &&
+            this.dj.say(
+              this.defs[this.station].ids[0],
+              this.opts.lang(),
+              this.opts.volume() * 0.9,
+              15,
+            )),
+        !this.sched)
+      ) {
+        let { k: i, offset: a } = this.locate(this.station);
+        if (
+          (this.ask(this.station, i),
+          this.ask(this.station, i + 1),
+          (this.lastUse[this.station] = n),
+          !this.stemsReady(this.station, i) && n - this.waitFrom < ci)
+        )
+          return;
+        (this.stemStats.waits++,
+          (this.stemStats.lastWaitMs = Math.round(n - this.waitFrom)),
+          this.ensureReverb(e, r));
+        let o = this.defs[this.station],
+          s = o.item(i),
+          c = 60 / s.bpm,
+          l = s.beatsPerBar * c,
+          u = Math.min(s.bars - 1, Math.floor(a / l)),
+          d = a - u * l,
+          f = t + this.startAt,
+          p = this.mixers[this.station];
+        if (p) {
+          let e = this.dying.indexOf(p);
+          (e >= 0 && this.dying.splice(e, 1), p.attach(this.bank));
+        } else
+          p = this.mixers[this.station] = new vi(
+            e,
+            r,
+            this.reverb,
+            o.fx,
+            this.bank,
+            o.trim,
+            o.mix,
+          );
+        p.fadeIn(f, 1);
+        let m = new yi(e, this.bank, p, o, i, u, f - d);
+        if (this.ident) {
+          ((this.ident = !1),
+            this.identBus ||
+              ((this.identBus = e.createGain()),
+              (this.identBus.gain.value = 0.3),
+              this.identBus.connect(r)));
+          let n = t + 0.2;
+          for (let e of o.ident ?? An(o.id))
+            m.playEv(e, n + e.t * 0.5, 0.5, this.identBus);
+        }
+        ((m.onSong = () => {
+          (this.setNow(), this.ask(this.station, m.pos.k + 1));
+        }),
+          (m.onDJ = (e) =>
+            this.dj.say(e, this.opts.lang(), this.opts.volume() * 0.9)),
+          (this.sched = m),
+          this.setNow(),
+          m.pump(t + 0.3, f));
+        return;
+      }
+      this.sched.pump(t + 0.3);
+    }
+    setNow() {
+      let e = this.sched;
+      if (!e) return;
+      let t = e.st;
+      ((this.nowPlaying = {
+        station: this.stations[this.station]?.name ?? t.name,
+        title: e.song.title,
+        artist: e.song.artist,
+        jingle: !!e.song.jingle,
+      }),
+        this.emit());
+    }
+    emit() {
+      try {
+        this.onChange?.(this.nowPlaying);
+      } catch {}
+    }
+    stats() {
+      return {
+        station: this.station,
+        active: this.active,
+        notes: this.sched?.notes ?? 0,
+        bar: this.sched?.pos.bar ?? -1,
+        song: this.sched?.song.title.en ?? null,
+        dying: this.dying.length,
+        stems: { ...this.stemStats, songsKnown: this.needs.size },
+        reverb: this.reverb
+          ? this.reverb.buffer
+            ? +this.reverb.buffer.duration.toFixed(2)
+            : this.reverbLoading
+              ? `waiting`
+              : `released`
+          : `none`,
+      };
+    }
+    static async renderOffline(e, t, n, r, i, a = 32e3, o = 0, s) {
+      let c = new OfflineAudioContext(2, Math.round(n * a), a),
+        l = Mn[t],
+        u = c.createConvolver();
+      u.buffer = i(c);
+      let d = c.createGain();
+      ((d.gain.value = 0.32), u.connect(d).connect(c.destination));
+      let f = new vi(c, c.destination, u, l.fx, e, l.trim, l.mix);
+      if (((f.out.gain.value = 1), s))
+        for (let e of Object.keys(f.ch)) e !== s && (f.ch[e].gain.value = 0);
+      let p = new yi(c, e, f, l, r, Math.min(o, l.item(r).bars - 1), 0.02);
+      for (let e = 0; e < 400 && p.pos.barT < n + 0.5; e++) p.pump(n + 0.5);
+      return {
+        buf: await c.startRendering(),
+        notes: p.notes,
+        song: p.song.title.en,
+      };
+    }
+  },
+  $ = (e, t, n) => (e < t ? t : e > n ? n : e),
+  xi = (e, t, n) => {
+    let r = $((n - e) / (t - e), 0, 1);
+    return r * r * (3 - 2 * r);
+  },
+  Si = Math.hypot,
+  Ci = 18,
+  wi = 60,
+  Ti = [8, 15],
+  Ei = 9,
+  Di = new Map();
+function Oi(e, t = !1) {
+  let n = typeof e == `string` ? e : String(e ?? ``),
+    r = t ? n + `|2` : n,
+    i = Di.get(r);
+  return (i === void 0 && Di.set(r, (i = ki(n, t))), i);
+}
+function ki(e, t) {
+  return e === `mamachari`
+    ? `engine_pedal`
+    : /gogoro|electric|^ev\b|_ev\b|ev_|escooter/i.test(e)
+      ? `engine_ev`
+      : /superbike|heavy|cruiser|sport_?bike|big_?bike/i.test(e)
+        ? `engine_motorcycle`
+        : e === `scooter` || /moto|bike/i.test(e) || t
+          ? `engine_scooter`
+          : e === `bus` || e === `garbage` || e === `truck`
+            ? `engine_bus`
+            : e === `sports` || e === `police`
+              ? `engine_sports`
+              : `engine_car`;
+}
+var Ai =
+  /interior|indoor|store|shop|mart|hall|temple|shrine|observ|lobby|room|concourse|mall|elevator|museum|station/i;
+function ji(e) {
+  return /store|shop|mart/i.test(e)
+    ? `store`
+    : /temple|shrine/i.test(e)
+      ? `temple`
+      : /station|concourse/i.test(e)
+        ? `station`
+        : /hall|observ|lobby|mall|museum/i.test(e)
+          ? `hall`
+          : `room`;
+}
+var Mi = {
+  xinyi: 1,
+  ximending: 1,
+  zhongshan: 0.9,
+  daan: 0.85,
+  songshan: 0.85,
+  zhongzheng: 0.8,
+  wanhua: 0.75,
+  shilin: 0.85,
+  riverside: 0.35,
+};
+function Ni(e, t, n) {
+  return Si(
+    Math.max(Math.abs(e - n.x) - n.w / 2, 0),
+    Math.max(Math.abs(t - n.z) - n.d / 2, 0),
+  );
+}
+function Pi(e) {
+  return e < 5
+    ? 0.25 + (0.1 * (5 - e)) / 5
+    : e < 7
+      ? 0.3 + (0.35 * (e - 5)) / 2
+      : e < 9.5
+        ? 1
+        : e < 16.5
+          ? 0.8
+          : e < 20
+            ? 1
+            : e < 23
+              ? 0.75
+              : 0.45;
+}
+var Fi = class {
+    ctx;
+    eng;
+    radio;
+    quality;
+    city = null;
+    park = null;
+    river = null;
+    wind = null;
+    temple = null;
+    rain = null;
+    walkX = null;
+    walkZ = null;
+    playerEngine = null;
+    playerEngineKind = null;
+    phantomTruck = null;
+    sirens = new Map();
+    trucks = [];
+    slots = [];
+    q = [];
+    stepOwed = Ei;
+    stepIdx = 0;
+    stepLast = new Float64Array(Ei);
+    stepMax = new Float32Array(Ei);
+    timers = {
+      passby: 3,
+      horn: 6,
+      dog: 20,
+      bird: 2,
+      siren: 90,
+      cracker: 120,
+      vendor: 4,
+      store: 10,
+      templeEv: 20,
+      truckCool: 8,
+      mrt: 6,
+      thunder: 8,
+      mahjong: 20,
+      vendorTruck: 30,
+    };
+    storeCool = new Map();
+    scheduled = [];
+    stepAcc = 0;
+    airborne = 0;
+    prevY = NaN;
+    cabinS = 0;
+    hourPrev = -1;
+    hour = 14;
+    night = 0;
+    parkAmt = 0;
+    riverAmt = 0;
+    district = `ximending`;
+    nearTemple = null;
+    nearMarket = null;
+    rainNow = 0;
+    radioNextFrame = -1;
+    enabled = !0;
+    hadVehicle = !1;
+    setRadioActive = null;
+    stats = { traffic: 0, swarm: 0, sirens: 0, trucks: 0, events: 0, ms: 0 };
+    remap = null;
+    riverAt = null;
+    busyD = Mi;
+    parks;
+    temples;
+    markets;
+    constructor(e, t, n, r) {
+      ((this.ctx = e), (this.eng = t), (this.radio = n), (this.quality = r));
+      let i = r === `low` ? 2 : r === `medium` ? 3 : r === `ultra` ? 7 : 5;
+      for (let e = 0; e < i; e++)
+        this.slots.push({
+          loop: null,
+          kind: null,
+          body: null,
+          lastSpeed: 0,
+          thr: 0,
+        });
+      let a = e.plan.landmarks;
+      ((this.parks = a.filter((e) => e.kind === `park`)),
+        (this.temples = a.filter((e) => e.kind === `temple`)),
+        (this.markets = a.filter((e) => e.kind === `market`)));
+    }
+    loop(e, t) {
+      let n = this.eng.loop(e, t, !0);
+      return (n.setVolume(0), n);
+    }
+    externalNear(e, t, n, r) {
+      let i = this.eng.loops,
+        a = r * r;
+      for (let r = 0; r < i.length; r++) {
+        let o = i[r];
+        if (o.internal || o.stopped || !o.name.startsWith(e)) continue;
+        if (!o.positional) return !0;
+        let s = o.x - t,
+          c = o.z - n;
+        if (s * s + c * c < a) return !0;
+      }
+      return !1;
+    }
+    externalEver(e) {
+      return this.eng.externalLoops.has(e);
+    }
+    update(e) {
+      if (!this.enabled) return;
+      let t = performance.now(),
+        n = this.ctx,
+        r = this.eng.tickB,
+        i = this.eng.tickDtB;
+      if (r)
+        try {
+          this.readEnv();
+        } catch {}
+      this.stepOwed = Math.min(Ei, this.stepOwed + (Math.max(0, e) / 0.2) * Ei);
+      let a = n.time.real;
+      for (let e = 0; this.stepOwed >= 1 && e < 3; e++) {
+        --this.stepOwed;
+        let e = this.stepIdx;
+        this.stepIdx = (e + 1) % Ei;
+        let t =
+          this.stepLast[e] > 0
+            ? Math.min(1, Math.max(0, a - this.stepLast[e]))
+            : 0.2;
+        this.stepLast[e] = a;
+        let n = performance.now();
+        try {
+          e === 8
+            ? this.prefetch()
+            : e === 7
+              ? this.autoIndoor()
+              : e === 0
+                ? this.beds()
+                : e === 1
+                  ? this.crosswalks()
+                  : e === 2
+                    ? this.trafficVoices()
+                    : e === 3
+                      ? this.fallbackSirens()
+                      : e === 4
+                        ? this.fallbackTrucks()
+                        : e === 5
+                          ? this.fallbackRain()
+                          : this.phantomGarbageTruck(t);
+        } catch (e) {
+          this.warn(e);
+        }
+        let r = performance.now() - n;
+        r > this.stepMax[e] && (this.stepMax[e] = r);
+      }
+      try {
+        this.player(e);
+      } catch (e) {
+        this.warn(e);
+      }
+      if (r)
+        for (let e = 0; e < 4; e++)
+          try {
+            e === 0
+              ? this.playerVehicle(i)
+              : e === 1
+                ? this.updateTrafficParams(i)
+                : e === 2
+                  ? this.updateSwarm(i)
+                  : this.events(i);
+          } catch (e) {
+            this.warn(e);
+          }
+      let o = n.time.real;
+      for (let e = this.scheduled.length - 1; e >= 0; e--)
+        if (this.scheduled[e].t <= o) {
+          let t = this.scheduled[e];
+          ((this.scheduled[e] = this.scheduled[this.scheduled.length - 1]),
+            this.scheduled.pop());
+          try {
+            t.fn();
+          } catch (e) {
+            this.warn(e);
+          }
+        }
+      this.stats.ms = performance.now() - t;
+    }
+    warned = !1;
+    warn(e) {
+      this.warned || ((this.warned = !0), console.warn(`[audio] director`, e));
+    }
+    schedule(e, t) {
+      this.scheduled.push({ t: this.ctx.time.real + e, fn: t });
+    }
+    readEnv() {
+      let e = this.ctx.env,
+        t = Number(e?.hour);
+      this.hour = Number.isFinite(t) ? ((t % 24) + 24) % 24 : 14;
+      let n = Number(e?.night),
+        r =
+          this.hour < 5.5 || this.hour > 19
+            ? 1
+            : this.hour < 6.5
+              ? 1 - (this.hour - 5.5)
+              : this.hour > 18
+                ? this.hour - 18
+                : 0;
+      ((this.night =
+        Number.isFinite(n) && typeof e?.update == `function` ? $(n, 0, 1) : r),
+        (this.eng.night = this.night),
+        this.hourPrev >= 0 &&
+          Math.floor(this.hour) !== Math.floor(this.hourPrev) &&
+          this.onHour(Math.floor(this.hour)),
+        (this.hourPrev = this.hour));
+    }
+    onHour(e) {
+      let t = this.eng,
+        n = null,
+        r = 1e9;
+      for (let e of this.temples) {
+        let i = Si(e.x - t.lx, e.z - t.lz);
+        i < r && ((r = i), (n = e));
+      }
+      if (!n || r > 420) return;
+      let i = n;
+      if (e === 6)
+        for (let e = 0; e < 3; e++)
+          this.schedule(e * 4.5, () =>
+            this.eng.play(`temple_bell`, { x: i.x, y: 8, z: i.z }, void 0, !1),
+          );
+      if (e === 18)
+        for (let e = 0; e < 4; e++)
+          this.schedule(e * 1.6, () =>
+            this.eng.play(`temple_drum`, { x: i.x, y: 2, z: i.z }, void 0, !1),
+          );
+    }
+    beds() {
+      let e = this.eng,
+        t = this.ctx,
+        n = e.lx,
+        r = e.lz,
+        a = `ximending`;
+      try {
+        a = t.plan.districtAt(n, r).id;
+      } catch {}
+      this.district = a;
+      let o = 1e9;
+      for (let e of this.parks) o = Math.min(o, Ni(n, r, e));
+      let s = t.plan.bounds,
+        c = Si(
+          Math.max(s.minX - n, 0, n - s.maxX),
+          Math.max(s.minZ - r, 0, r - s.maxZ),
+        );
+      this.parkAmt = Math.max(
+        1 - xi(0, 75, o),
+        xi(20, 160, c) * 0.9,
+        a === `riverside` ? 0.5 : 0,
+      );
+      let l = t.plan.dataset.water;
+      this.riverAmt = this.riverAt
+        ? this.riverAt(n, r)
+        : 1 - xi(10, 170, Math.max(0, Math.min(n - l.westX, r - l.northZ)));
+      let u = Pi(this.hour) * (this.busyD[a] ?? 0.8),
+        d = xi(25, 320, e.ly),
+        f =
+          $(
+            u *
+              (1 - 0.55 * this.parkAmt) *
+              (1 - 0.6 * this.riverAmt) *
+              (1 - 0.75 * d),
+            0.05,
+            1,
+          ) * 0.54;
+      ((this.city ??= this.loop(`ambient_city`)),
+        this.city.setVolume(f),
+        (this.park ??= this.loop(`ambient_park`)));
+      let p = $(Math.max(Number(t.env?.rain) || 0, this.eng.wet * 0.6), 0, 1);
+      ((this.rainNow = p),
+        this.park.setVolume(
+          this.parkAmt * (this.night > 0.5 ? 0.75 : 0.9) * (1 - 0.75 * p),
+        ),
+        this.park.setParam(`night`, this.night),
+        (this.river ??= this.loop(`ambient_river`)),
+        this.river.setVolume(this.riverAmt * 0.8));
+      let m = null,
+        h = 1e9;
+      for (let e of this.temples) {
+        let t = Ni(n, r, e);
+        t < h && ((h = t), (m = e));
+      }
+      if (((this.nearTemple = h < 160 ? m : null), this.nearTemple)) {
+        let e = this.nearTemple;
+        ((this.temple ||= this.loop(`ambient_temple`, {
+          x: e.x,
+          y: 3,
+          z: e.z,
+        })),
+          this.temple.setPosition(e.x, 3, e.z));
+        let t = this.hour > 5.5 && this.hour < 21.5 ? 1 : 0.25;
+        this.temple.setVolume(t * 0.9);
+      } else this.temple &&= (this.temple.stop(), null);
+      let g = null,
+        _ = 1e9;
+      for (let e of this.markets) {
+        let t = Ni(n, r, e);
+        t < _ && ((_ = t), (g = e));
+      }
+      let v = this.marketsOpen();
+      this.nearMarket = v && _ < wi ? g : null;
+      let y = a === `xinyi` || a === `ximending` || a === `zhongshan` ? 1 : 0.8;
+      e.setReverbAmount(
+        $(y * (1 - 0.7 * this.parkAmt) * (1 - 0.75 * this.riverAmt), 0.15, 1),
+      );
+      let b = Number(i.uWet?.value);
+      ((e.wet = $(
+        Number.isFinite(b) && b > 0 ? b : Number(t.env?.rain) || 0,
+        0,
+        1,
+      )),
+        (this.wind ??= this.loop(`wind`)));
+      let x = String(t.env?.weather ?? `clear`),
+        S = x === `storm` ? 0.55 : x === `rain` ? 0.12 : 0,
+        C = $((e.ly - 25) / 120, 0, 0.5),
+        w = t.vehicles?.playerVehicle ?? null,
+        T = Math.abs(w?.speed ?? 0),
+        E = +!!w?.spec?.twoWheeler
+          ? $(T / 22, 0, 1) * 0.54
+          : $(T / 45, 0, 1) * 0.25,
+        D = S === 0 ? 0.015 : 0.04;
+      (this.wind.setVolume($(D + S + C + E + this.riverAmt * 0.12, 0, 1)),
+        this.wind.setRate(0.85 + $(T / 30, 0, 0.5)));
+    }
+    prefetch() {
+      let e = this.ctx,
+        t = this.eng.bank,
+        n = e.player;
+      (n && n.mode === `foot` && this.storeChimes(n.position.x, n.position.z),
+        String(e.env?.weather) === `storm` && t.wantSfx(`thunder`));
+      let r = this.eng.indoorS > 0.5;
+      ((this.nearTemple || (r && this.eng.room === `temple`)) &&
+        (t.wantSfx(`temple_bell`),
+        t.wantSfx(`temple_drum`),
+        t.wantSfx(`moon_blocks`)),
+        r &&
+          this.eng.room === `store` &&
+          (t.wantSfx(`microwave_beep`),
+          t.wantSfx(`fridge_door`),
+          t.wantSfx(`alarm`)),
+        (Number(e.police?.level) || 0) > 0 &&
+          (t.wantSfx(`busted`),
+          t.wantSfx(`wanted_lost`),
+          t.wantSfx(`police_megaphone`),
+          t.wantSfx(`police_squelch`)),
+        e.landmarks?.fireworksActive && this.wantFireworks());
+    }
+    wantFireworks() {
+      let e = this.eng.bank;
+      (e.wantSfx(`firework_boom`),
+        e.wantSfx(`firework_crackle`),
+        e.wantSfx(`firework_launch`),
+        e.wantSfx(`firework_whistle`));
+    }
+    floors = [];
+    autoIn = !1;
+    autoIndoor() {
+      let e = this.eng,
+        t = this.ctx;
+      if (e.indoorExplicitAt > 0) {
+        this.autoIn = !1;
+        return;
+      }
+      let n = ``,
+        r = t.player;
+      if (r && r.mode === `foot` && typeof t.statics?.floorsAt == `function`) {
+        let e = r.position,
+          i = t.statics.floorsAt(e.x, e.z, this.floors);
+        for (let t = 0; t < i; t++) {
+          let r = this.floors[t];
+          if (!Ai.test(r.tag)) continue;
+          let i = Math.max(r.y0, r.y1);
+          if (Math.abs(e.y - i) < 1.2) {
+            n = r.tag;
+            break;
+          }
+        }
+      }
+      n
+        ? ((this.autoIn = !0), e.setIndoor(1, ji(n), !1))
+        : this.autoIn && ((this.autoIn = !1), e.setIndoor(0, e.room, !1));
+    }
+    marketsOpen() {
+      let e = this.ctx.culture;
+      return !e ||
+        (typeof e.update != `function` && typeof e.init != `function`)
+        ? this.hour >= 17 || this.hour < 1
+        : !!e.marketsOpen;
+    }
+    crosswalks() {
+      let e = this.ctx,
+        t = this.eng,
+        n = e.player?.mode === `foot` && !this.externalEver(`crosswalk_signal`),
+        r = null;
+      if (n) {
+        r = e.plan.nearestNode(t.lx, t.lz, (e) => e.signal);
+        let n = e.player.position.x,
+          i = e.player.position.z;
+        r && Si(r.x - n, r.z - i) > 26 && (r = null);
+      }
+      if (!r) {
+        (this.walkX?.stop(),
+          this.walkZ?.stop(),
+          (this.walkX = this.walkZ = null));
+        return;
+      }
+      let i = e.player.position,
+        a = Math.sign(i.x - r.x) || 1,
+        o = Math.sign(i.z - r.z) || 1,
+        s = this.night > 0.7 && this.hour > 23 ? 0.5 : 0.85;
+      for (let t of [`x`, `z`]) {
+        let n = t === `x` ? r.x + a * (r.halfX + 1.2) : r.x + a * r.halfX,
+          c = t === `x` ? r.z + o * r.halfZ : r.z + o * (r.halfZ + 1.2),
+          l = t === `x` ? this.walkX : this.walkZ;
+        (l ||
+          ((l = this.loop(`crosswalk_signal`, { x: n, y: 1.2, z: c })),
+          t === `x` ? (this.walkX = l) : (this.walkZ = l)),
+          l.setPosition(n, 1.2, c));
+        let u = e.signals.pedState(r.id, t);
+        (l.setParam(`state`, u === `walk` ? 1 : u === `flash` ? 2 : 0),
+          l.setParam(`remaining`, e.signals.pedRemaining(r.id, t)),
+          l.setParam(`variant`, t === `x` ? 0 : 1));
+        let d = $((Ci - Si(n - i.x, c - i.z)) / 12, 0, 1);
+        l.setVolume(s * (t === `x` ? 1 : 0.8) * d * d);
+      }
+    }
+    kindOf(e) {
+      let t = e.userData?.kind;
+      return t
+        ? t === `police`
+          ? `engine_car`
+          : Oi(t)
+        : e.halfW < 0.6
+          ? `engine_scooter`
+          : e.halfL > 3.3
+            ? `engine_bus`
+            : `engine_car`;
+    }
+    slotted(e) {
+      let t = this.slots;
+      for (let n = 0; n < t.length; n++) if (t[n].body === e) return !0;
+      return !1;
+    }
+    qExclude = null;
+    qFilter = (e) => e.kind === `vehicle` && e !== this.qExclude;
+    candD = [];
+    trafficVoices() {
+      let e = this.ctx,
+        t = this.eng;
+      this.qExclude = e.vehicles?.playerVehicle?.body ?? null;
+      let n = this.q,
+        r = e.dynamics.query(t.lx, t.lz, 48, n, this.qFilter),
+        i = 0;
+      for (let e = 0; e < r; e++) {
+        let t = n[e];
+        (t.owner !== `traffic` && t.vx * t.vx + t.vz * t.vz < 0.09) ||
+          (t.userData?.kind !== `mamachari` && (n[i++] = t));
+      }
+      r = n.length = i;
+      let a = this.candD;
+      for (let e = 0; e < r; e++) {
+        let r = n[e].x - t.lx,
+          i = n[e].z - t.lz;
+        a[e] = r * r + i * i;
+      }
+      let o = this.slots,
+        s = Math.min(r, o.length + 2);
+      for (let e = 0; e < s; e++) {
+        let t = e;
+        for (let n = e + 1; n < r; n++) a[n] < a[t] && (t = n);
+        if (t !== e) {
+          let r = n[e];
+          ((n[e] = n[t]), (n[t] = r));
+          let i = a[e];
+          ((a[e] = a[t]), (a[t] = i));
+        }
+      }
+      for (let t = 0; t < o.length; t++) {
+        let r = o[t];
+        if (!r.body) continue;
+        let i = !1;
+        for (let e = 0; e < s && !i; e++) i = n[e] === r.body;
+        (!i || !e.dynamics.bodies.has(r.body)) &&
+          ((r.body = null), r.loop?.setVolume(0));
+      }
+      for (let e = 0; e < Math.min(r, o.length); e++) {
+        let t = n[e];
+        if (this.slotted(t) || this.externalNear(`engine_`, t.x, t.z, 3))
+          continue;
+        let r = null;
+        for (let e = 0; e < o.length && !r; e++) o[e].body || (r = o[e]);
+        if (!r) break;
+        let i = this.kindOf(t);
+        ((r.kind !== i || !r.loop) &&
+          (r.loop?.stop(),
+          (r.loop = this.loop(i, { x: t.x, y: 0.6, z: t.z })),
+          (r.kind = i)),
+          (r.body = t),
+          (r.lastSpeed = Si(t.vx, t.vz)));
+      }
+      let c = 0;
+      for (let e = 0; e < o.length; e++) o[e].body && c++;
+      this.stats.traffic = c;
+      let l = 0,
+        u = 0,
+        d = 0,
+        f = 0;
+      for (let e = 0; e < r; e++) {
+        let t = n[e];
+        this.kindOf(t) !== `engine_scooter` ||
+          this.slotted(t) ||
+          (l++, (u += t.x), (d += t.z), (f += Si(t.vx, t.vz)));
+      }
+      let p = this.swarm;
+      if (l >= 2) {
+        ((p.n = l), (p.x = u / l), (p.z = d / l));
+        let e = f / l;
+        ((p.acc = (e - p.speed) / 0.2),
+          (p.speed = e),
+          p.loop ||
+            ((p.loop = this.eng.loop(
+              `engine_scooter`,
+              { x: p.x, y: 0.6, z: p.z },
+              !0,
+            )),
+            p.loop.setParam(`swarm`, 1),
+            p.loop.setVolume(0)));
+      } else p.n = 0;
+      this.stats.swarm = l;
+    }
+    swarm = {
+      loop: null,
+      n: 0,
+      x: 0,
+      z: 0,
+      speed: 0,
+      acc: 0,
+      thr: 0,
+      px: NaN,
+      pz: NaN,
+    };
+    updateSwarm(e) {
+      let t = this.swarm,
+        n = t.loop;
+      if (!n) return;
+      if (t.n < 2) {
+        n.setVolume(Math.max(0, n.state.vol - e * 1.5));
+        return;
+      }
+      Number.isFinite(t.px) || ((t.px = t.x), (t.pz = t.z));
+      let r = Math.min(1, e * 2);
+      ((t.px += (t.x - t.px) * r),
+        (t.pz += (t.z - t.pz) * r),
+        n.setPosition(t.px, 0.6, t.pz),
+        (t.thr +=
+          ((t.acc > 0.3
+            ? 0.9
+            : t.acc < -0.6
+              ? 0.05
+              : t.speed < 0.4
+                ? 0.03
+                : 0.4) -
+            t.thr) *
+          Math.min(1, e * 3)),
+        n.setParam(`rpm`, Bi(`engine_scooter`, t.speed)),
+        n.setParam(`throttle`, t.thr),
+        n.setVolume($(0.35 + t.n / 10, 0, 1.3) * (t.speed < 0.4 ? 0.6 : 1)));
+    }
+    updateTrafficParams(e) {
+      for (let t of this.slots) {
+        let n = t.body,
+          r = t.loop;
+        if (!n || !r) continue;
+        r.setPosition(n.x, 0.6, n.z);
+        let i = Si(n.vx, n.vz),
+          a = e > 0 ? (i - t.lastSpeed) / e : 0;
+        ((t.lastSpeed = i),
+          (t.thr +=
+            ((a > 0.4 ? 0.85 : a < -0.8 ? 0.05 : i < 0.3 ? 0.02 : 0.35) -
+              t.thr) *
+            Math.min(1, e * 4)),
+          r.setParam(`rpm`, Bi(t.kind, i)),
+          r.setParam(`throttle`, t.thr),
+          r.setVolume(i < 0.3 ? 0.5 : 0.85));
+      }
+    }
+    seenSirens = new Set();
+    fallbackSirens() {
+      let e = this.ctx.vehicles?.list;
+      if (!e) return;
+      let t = this.seenSirens;
+      t.clear();
+      for (let n of e) {
+        if (
+          !n.sirenOn ||
+          n.destroyed ||
+          t.size >= 4 ||
+          this.ctx.police?.isPoliceVehicle?.(n.id)
+        )
+          continue;
+        t.add(n.id);
+        let e = n.kind === `ambulance` ? `siren_ambulance` : `siren_police`,
+          r = this.sirens.get(n.id);
+        if (this.externalNear(`siren_`, n.body.x, n.body.z, 6)) {
+          r && (r.stop(), this.sirens.delete(n.id));
+          continue;
+        }
+        (r ||
+          this.sirens.set(
+            n.id,
+            (r = this.loop(e, { x: n.body.x, y: 1.5, z: n.body.z })),
+          ),
+          r.setPosition(n.body.x, 1.5, n.body.z),
+          r.setVolume(1));
+      }
+      for (let [e, n] of this.sirens)
+        t.has(e) || (n.stop(), this.sirens.delete(e));
+      this.stats.sirens = this.sirens.size;
+    }
+    fallbackTrucks() {
+      let e = this.ctx.culture?.garbageTrucks ?? [],
+        t = 0;
+      for (let n = 0; n < e.length; n++) {
+        let r = e[n];
+        if (!r.playing || this.externalNear(`garbage_truck`, r.x, r.z, 8)) {
+          this.trucks[n] && (this.trucks[n].stop(), delete this.trucks[n]);
+          continue;
+        }
+        let i = this.trucks[n];
+        (i ||
+          ((i = this.trucks[n] =
+            this.loop(`garbage_truck`, { x: r.x, y: 2.5, z: r.z })),
+          i.setParam(`tune`, n % 2)),
+          i.setPosition(r.x, 2.5, r.z),
+          i.setVolume(1),
+          t++);
+      }
+      for (let t = e.length; t < this.trucks.length; t++)
+        this.trucks[t] && (this.trucks[t].stop(), delete this.trucks[t]);
+      this.stats.trucks = t;
+    }
+    fallbackRain() {
+      let e = $(Number(this.ctx.env?.rain) || 0, 0, 1),
+        t = this.externalEver(`rain`);
+      if (t || e < 0.02) {
+        this.rain &&
+          (this.rain.setVolume(0), t && (this.rain.stop(), (this.rain = null)));
+        return;
+      }
+      ((this.rain ??= this.loop(`rain`)), this.rain.setVolume(e));
+    }
+    phantomGarbageTruck(e) {
+      let t = this.hour >= 19 && this.hour < 21.2,
+        n =
+          (this.ctx.culture?.garbageTrucks?.length ?? 0) > 0 ||
+          this.externalEver(`garbage_truck`),
+        r = this.phantomTruck;
+      if (!t || n || this.district === `riverside` || this.riverAmt > 0.6) {
+        r && (r.loop.stop(), (this.phantomTruck = null));
+        return;
+      }
+      let i = this.eng;
+      if (!r) {
+        if (((this.timers.truckCool -= e), this.timers.truckCool > 0)) return;
+        this.timers.truckCool = 70;
+        let t = Math.random() * Math.PI * 2,
+          n = i.lx + Math.cos(t) * 165,
+          r = i.lz + Math.sin(t) * 165;
+        try {
+          let e = this.ctx.plan.nearestLink(n, r);
+          if (e) {
+            ((n = e.link.sx + e.link.dx * e.s),
+              (r = e.link.sz + e.link.dz * e.s));
+            let t = this.loop(`garbage_truck`, { x: n, y: 2.5, z: r });
+            (t.setParam(`tune`, Math.random() < 0.7 ? 0 : 1),
+              (this.phantomTruck = {
+                loop: t,
+                x: n,
+                z: r,
+                dx: e.link.dx,
+                dz: e.link.dz,
+                t: 0,
+                stopT: 6,
+              }));
+          }
+        } catch {}
+        return;
+      }
+      ((r.t += e),
+        r.t % 26 > 12 && ((r.x += r.dx * 3 * e), (r.z += r.dz * 3 * e)),
+        r.loop.setPosition(r.x, 2.5, r.z));
+      let a =
+        Math.min(1, r.t / 4) * (r.t > 95 ? Math.max(0, 1 - (r.t - 95) / 8) : 1);
+      (r.loop.setVolume(0.95 * a),
+        (r.t > 104 || Si(r.x - i.lx, r.z - i.lz) > 260) &&
+          (r.loop.stop(), (this.phantomTruck = null)));
+    }
+    playerVehicle(e) {
+      let t = this.ctx;
+      if (!t.player) return;
+      let n = t.vehicles?.playerVehicle ?? null,
+        r = n && !n.spec?.twoWheeler ? 1 : 0;
+      if (
+        (this.cabinS !== r &&
+          ((this.cabinS += (r - this.cabinS) * Math.min(1, e * 5)),
+          Math.abs(this.cabinS - r) < 0.005 && (this.cabinS = r),
+          this.eng.setCabin(this.cabinS * 0.85)),
+        n && !n.destroyed)
+      ) {
+        let e = Oi(n.kind, !!n.spec?.twoWheeler);
+        if (this.externalNear(`engine_`, n.body.x, n.body.z, 5))
+          (this.playerEngine?.stop(), (this.playerEngine = null));
+        else {
+          (!this.playerEngine || this.playerEngineKind !== e) &&
+            (this.playerEngine?.stop(),
+            (this.playerEngine = this.loop(e, {
+              x: n.body.x,
+              y: 0.8,
+              z: n.body.z,
+            })),
+            (this.playerEngineKind = e));
+          let r = Math.abs(n.speed),
+            i = t.input,
+            a = $(i.axis(`throttle`) + Math.max(0, -i.axis(`brake`) * 0), 0, 1),
+            o = $(i.axis(`brake`), 0, 1),
+            s = this.playerEngine;
+          s.setPosition(n.body.x, 0.8, n.body.z);
+          let c = n.rpm,
+            l =
+              c !== void 0 && Number.isFinite(c)
+                ? c
+                : Bi(e, r) + a * (r < 2 ? 0.35 : 0.08);
+          (s.setParam(`rpm`, $(l, 0, 1)),
+            s.setParam(`throttle`, o > 0.5 && r > 1 ? 0.05 : a),
+            s.setParam(`speed`, r),
+            s.setVolume(1));
+        }
+      } else this.playerEngine &&= (this.playerEngine.stop(), null);
+    }
+    player(e) {
+      let t = this.ctx,
+        n = t.player;
+      if (!n) return;
+      let r = t.vehicles?.playerVehicle ?? null;
+      !!r !== this.hadVehicle &&
+        ((this.hadVehicle = !!r), this.setRadioActive?.(!!r));
+      let i = t.input,
+        a = t.time.frame,
+        o = this.eng.externalPlays;
+      if (
+        r &&
+        i.pressed(`horn`) &&
+        o.get(`horn_car`) !== a &&
+        o.get(`horn_scooter`) !== a &&
+        o.get(`horn_bus`) !== a &&
+        o.get(`bike_bell`) !== a
+      ) {
+        let e =
+          r.kind === `mamachari`
+            ? `bike_bell`
+            : r.spec?.twoWheeler
+              ? /superbike|heavy|cruiser/i.test(r.kind)
+                ? `horn_car`
+                : `horn_scooter`
+              : r.kind === `bus`
+                ? `horn_bus`
+                : `horn_car`;
+        this.eng.play(e, { x: r.body.x, y: 1, z: r.body.z }, void 0, !1);
+      }
+      if (
+        (r &&
+          i.pressed(`radio`) &&
+          this.radioNextFrame !== a &&
+          this.radio.next(),
+        n.mode === `foot`)
+      ) {
+        let r = n.position,
+          i = r.y;
+        try {
+          i = t.plan.groundHeight(r.x, r.z);
+        } catch {}
+        let s = r.y - i > 0.22,
+          c = (o.get(`footstep`) ?? -1e9) > a - 90;
+        if (s)
+          (this.airborne === 0 &&
+            (o.get(`jump`) ?? -1e9) < a - 30 &&
+            r.y > this.prevY &&
+            this.eng.play(`jump`, { x: r.x, y: r.y, z: r.z }, void 0, !1),
+            (this.airborne += e));
+        else {
+          (this.airborne > 0.3 &&
+            (o.get(`land`) ?? -1e9) < a - 30 &&
+            this.eng.play(`land`, { x: r.x, y: r.y, z: r.z }, void 0, !1),
+            (this.airborne = 0));
+          let t = Si(n.velocity.x, n.velocity.z);
+          if (t > 0.8 && !c) {
+            this.stepAcc += e;
+            let n = $(0.62 - t * 0.05, 0.27, 0.58);
+            this.stepAcc >= n &&
+              ((this.stepAcc = 0),
+              this.footstep(r.x, r.y, r.z, $(0.45 + t / 8, 0.4, 1)));
+          } else this.stepAcc = 0.25;
+        }
+        this.prevY = r.y;
+      }
+    }
+    footstep(e, t, n, r = 1, i = !1) {
+      let a = `sidewalk`;
+      try {
+        a = this.ctx.plan.surfaceAt(e, n);
+      } catch {}
+      let o = this.eng.wet > 0.25 || (Number(this.ctx.env?.rain) || 0) > 0.2,
+        s =
+          this.eng.indoorS > 0.5
+            ? `footstep_tile`
+            : a === `park` || a === `terrain`
+              ? `footstep_grass`
+              : o
+                ? `footstep_wet`
+                : `footstep_concrete`;
+      this.eng.play(`footstep`, { x: e, y: t, z: n, volume: r }, s, i);
+    }
+    storeChimes(e, t) {
+      let n = this.ctx.time.real;
+      for (let r of this.ctx.plan.pois) {
+        if (r.kind !== `convenience`) continue;
+        let i = r.x - e,
+          a = r.z - t;
+        i * i + a * a > 16 ||
+          n < (this.storeCool.get(r.id) ?? 0) ||
+          (this.storeCool.set(r.id, n + 45),
+          this.eng.play(
+            `store_chime`,
+            { x: r.x, y: 2.2, z: r.z },
+            void 0,
+            !1,
+            0,
+            +(r.brand === `FamilyMark`),
+          ));
+      }
+    }
+    fire(e, t) {
+      let n = this.remap ? this.remap(e, t) : e;
+      n && this.eng.play(n, t, void 0, !1) && this.stats.events++;
+    }
+    around(e, t) {
+      let n = Math.random() * Math.PI * 2,
+        r = e + Math.random() * (t - e);
+      return {
+        x: this.eng.lx + Math.cos(n) * r,
+        y: 1.2,
+        z: this.eng.lz + Math.sin(n) * r,
+      };
+    }
+    events(e) {
+      let t = this.eng,
+        n = this.timers,
+        r = this.ctx;
+      if (!t.running || r.paused) return;
+      let i = Pi(this.hour) * (this.busyD[this.district] ?? 0.8),
+        a = 1 - Math.max(this.parkAmt, this.riverAmt),
+        o = !!r.vehicles?.playerVehicle,
+        s = Math.random;
+      if ((n.mrt -= e) <= 0) {
+        n.mrt = 16 + s() * 22;
+        let e = typeof r.transit?.update != `function`;
+        for (let n of r.plan.mrtStations ?? []) {
+          if (!n.elevated && Si(n.ex - t.lx, n.ez - t.lz) < 16) {
+            this.fire(`mrt_door_chime`, {
+              x: n.ex,
+              y: -5,
+              z: n.ez,
+              volume: 0.35,
+            });
+            break;
+          }
+          if (n.elevated && e && Si(n.x - t.lx, n.z - t.lz) < 60) {
+            this.fire(`mrt_arrival`, { x: n.x, y: 9, z: n.z, volume: 0.7 });
+            break;
+          }
+        }
+      }
+      if ((n.thunder -= e) <= 0) {
+        n.thunder = 10 + s() * 22;
+        let e = (t.externalPlays.get(`thunder`) ?? -1e9) > r.time.frame - 2400;
+        String(r.env?.weather) === `storm` &&
+          !e &&
+          this.fire(`thunder`, {
+            volume: 0.55 + 0.45 * s(),
+            rate: 0.9 + s() * 0.2,
+          });
+      }
+      if (
+        ((n.passby -= e) <= 0 &&
+          ((n.passby = (4 + s() * 9) / Math.max(0.2, i * a)),
+          a > 0.4 &&
+            !o &&
+            this.fire(s() < 0.72 ? `passby_scooter` : `passby_car`, {
+              volume: 0.35 + 0.4 * s() * i,
+              rate: 0.92 + s() * 0.16,
+            })),
+        (n.horn -= e) <= 0 &&
+          ((n.horn = (8 + s() * 16) / Math.max(0.2, i * a)),
+          a > 0.3 &&
+            this.fire(s() < 0.6 ? `horn_scooter` : `horn_car`, {
+              ...this.around(35, 110),
+              volume: 0.45 + 0.3 * s(),
+              rate: 0.94 + s() * 0.12,
+            })),
+        (n.dog -= e) <= 0)
+      ) {
+        n.dog = 25 + s() * 50;
+        let e =
+          this.district === `wanhua` ||
+          this.district === `shilin` ||
+          this.district === `zhongzheng` ||
+          this.district === `songshan`;
+        this.night > 0.5 &&
+          (e || s() < 0.35) &&
+          !o &&
+          this.fire(`dog_bark`, { ...this.around(30, 90), volume: 0.6 });
+      }
+      if ((n.bird -= e) <= 0) {
+        let e =
+          this.hour > 5.5 && this.hour < 10 ? 1 : this.hour < 17.5 ? 0.45 : 0;
+        ((n.bird =
+          (2.5 + s() * 5) / Math.max(0.15, (this.parkAmt + 0.25) * (e + 0.01))),
+          e > 0 &&
+            this.night < 0.5 &&
+            !o &&
+            this.rainNow < 0.2 &&
+            this.fire(`bird_chirp`, {
+              ...this.around(8, 35),
+              y: 6 + s() * 6,
+              volume: 0.35 + 0.4 * this.parkAmt,
+            }));
+      }
+      let c =
+        this.district === `wanhua` ||
+        this.district === `zhongzheng` ||
+        this.district === `shilin` ||
+        this.district === `songshan` ||
+        this.district === `daan`;
+      if (
+        (n.mahjong -= e) <= 0 &&
+        ((n.mahjong = 45 + s() * 70),
+        (this.hour > 19 || this.hour < 1.5) && c && a > 0.5 && !o)
+      ) {
+        let e = this.around(10, 24);
+        ((e.y = 5 + s() * 6),
+          this.fire(`mahjong`, { ...e, volume: 0.6 + 0.3 * s() }));
+      }
+      if (
+        ((n.vendorTruck -= e) <= 0 &&
+          ((n.vendorTruck = 80 + s() * 140),
+          this.hour > 9 &&
+            this.hour < 18 &&
+            c &&
+            a > 0.5 &&
+            this.fire(`loudspeaker_vendor`, {
+              ...this.around(70, 140),
+              volume: 0.8,
+            })),
+        (n.siren -= e) <= 0 &&
+          ((n.siren = 100 + s() * 160),
+          a > 0.5 &&
+            this.fire(`distant_siren`, {
+              volume: 0.6 + 0.4 * s(),
+              rate: 0.95 + s() * 0.1,
+            })),
+        (n.cracker -= e) <= 0 &&
+          ((n.cracker = 120 + s() * 200),
+          this.hour > 17 &&
+            this.hour < 23 &&
+            !o &&
+            this.fire(`firecracker`, {
+              ...this.around(170, 260),
+              volume: 0.7,
+            })),
+        this.nearTemple && (n.templeEv -= e) <= 0)
+      ) {
+        n.templeEv = 18 + s() * 40;
+        let e = this.nearTemple,
+          t = s();
+        this.hour > 5.5 &&
+          this.hour < 21.5 &&
+          (t < 0.35
+            ? this.fire(`temple_bell`, { x: e.x, y: 8, z: e.z, volume: 0.7 })
+            : t < 0.6
+              ? this.fire(`temple_drum`, { x: e.x, y: 2, z: e.z, volume: 0.6 })
+              : t < 0.8 &&
+                this.fire(`wood_fish`, {
+                  x: e.x + (s() - 0.5) * 10,
+                  y: 1,
+                  z: e.z + (s() - 0.5) * 10,
+                }));
+      }
+      if (this.nearMarket && (n.vendor -= e) <= 0) {
+        n.vendor = Ti[0] + s() * (Ti[1] - Ti[0]);
+        let e = this.nearMarket;
+        this.fire(`vendor_call`, {
+          x: e.x + (s() - 0.5) * e.w,
+          y: 1.6,
+          z: e.z + (s() - 0.5) * e.d,
+          volume: 0.55 + 0.4 * s(),
+          rate: 0.9 + s() * 0.2,
+        });
+      }
+      if ((n.store -= e) <= 0 && ((n.store = 12 + s() * 25), !o)) {
+        let e = null,
+          n = 900;
+        for (let i of r.plan.pois) {
+          if (i.kind !== `convenience`) continue;
+          let r = (i.x - t.lx) ** 2 + (i.z - t.lz) ** 2;
+          r < n && ((n = r), (e = i));
+        }
+        e &&
+          this.eng.play(
+            `store_chime`,
+            { x: e.x, y: 2.2, z: e.z, volume: 0.6 },
+            void 0,
+            !1,
+            0,
+            +(e.brand === `FamilyMark`),
+          ) &&
+          this.stats.events++;
+      }
+    }
+  },
+  Ii = [0, 3, 7, 12, 17, 24],
+  Li = [0, 8, 16, 26, 38, 52, 70],
+  Ri = [0, 9, 17, 26, 36, 48, 64],
+  zi = [0, 6, 12, 19, 27, 36, 50];
+function Bi(e, t) {
+  if (e === `engine_scooter`) return t < 0.4 ? 0 : $(0.28 + t / 16, 0, 0.92);
+  if (e === `engine_ev`) return $(t / 22, 0, 1);
+  let n =
+    e === `engine_bus`
+      ? Ii
+      : e === `engine_sports`
+        ? Li
+        : e === `engine_motorcycle`
+          ? Ri
+          : zi;
+  if (t < 0.4) return 0;
+  for (let e = 1; e < n.length; e++)
+    if (t < n[e])
+      return $(0.18 + 0.72 * ((t - n[e - 1]) / (n[e] - n[e - 1])), 0, 1);
+  return 0.95;
+}
+var Vi = {
+    setPosition() {},
+    setVolume() {},
+    setRate() {},
+    setParam() {},
+    stop() {},
+  },
+  Hi = (e) => /superbike|heavy|cruiser|sport_?bike|big_?bike/i.test(e),
+  Ui = (e) => /gogoro|electric|^ev\b|_ev\b|ev_|escooter|mamachari/i.test(e),
+  Wi = 0;
+function Gi(e) {
+  try {
+    e();
+  } catch (e) {
+    Wi++ < 3 && console.warn(`[audio]`, e);
+  }
+}
+function Ki(e, t) {
+  let i = e.params.get(`audio`) === `0`,
+    o = [`low`, `medium`, `high`, `ultra`].includes(e.quality?.level)
+      ? e.quality.level
+      : `high`,
+    s = !!e.quality?.mobile,
+    c = new Br(o, s),
+    l = () => e.state?.settings,
+    u = new ri(),
+    d = () => (e.state?.lang === `en` ? `en` : `zh`);
+  ((u.onStart = (e, t) => c.duck(e, t)),
+    (u.onEnd = () =>
+      setTimeout(() => Gi(() => c.revive(performance.now(), !0)), 120)));
+  let f = new bi(
+      c.bank,
+      () => (c.created ? c.ac : null),
+      () => (c.created ? c.bus.music : null),
+      {
+        lang: () => (e.state?.lang === `en` ? `en` : `zh`),
+        volume: () => {
+          let e = l();
+          return e ? e.masterVolume * e.musicVolume : 0.5;
+        },
+        staticSfx: () => c.play(`radio_static`, void 0, void 0, !1),
+        loadIR: (e) => c.loadIR(`radio`, e),
+        speech: u,
+        running: () => c.running,
+        mobile: s,
+        defs: t?.stations,
+      },
+    ),
+    p = [];
+  ((c.findBody = (t, n) => {
+    let r = e.vehicles?.playerVehicle;
+    if (r && Math.hypot(r.body.x - t, r.body.z - n) < 8) return r.body;
+    let i = null,
+      a = 64,
+      o = e.dynamics?.query?.(t, n, 8, p, (e) => e.kind === `vehicle`) ?? 0;
+    for (let e = 0; e < o; e++) {
+      let r = p[e],
+        o = (r.x - t) ** 2 + (r.z - n) ** 2;
+      o < a && ((a = o), (i = r));
+    }
+    return i;
+  }),
+    (c.onRunning = () => {
+      (c.bank.releaseIRs(), Gi(() => e.events.emit(`audio:unlocked`)));
+    }));
+  let m = () =>
+      c.created
+        ? !0
+        : (ne(),
+          _(),
+          c.create()
+            ? (Qn(c.ac),
+              c.bank.whenReady(`noise/pink`, () => Gi(() => c.prebuildPool())),
+              !0)
+            : !1),
+    h = typeof navigator < `u` ? navigator.audioSession : void 0,
+    g = ``,
+    _ = () => {
+      if (!h) return;
+      let e = l(),
+        t =
+          c.volumes.master > 0 &&
+          e?.playInSilentMode !== !1 &&
+          !(typeof document < `u` && document.hidden)
+            ? `playback`
+            : `auto`;
+      if (t !== g || h.type !== t)
+        try {
+          ((h.type = t), (g = t));
+        } catch {}
+    },
+    v = (t, r = {}) => {
+      if (i || !t || e.paused || (typeof document < `u` && document.hidden))
+        return !1;
+      let a = l(),
+        o = (r.volume ?? 1) * (a ? a.masterVolume * a.sfxVolume : 0.7);
+      if (r.x !== void 0 && r.z !== void 0 && Number.isFinite(r.x + r.z)) {
+        let e = Math.hypot(r.x - c.lx, (r.y ?? c.ly) - c.ly, r.z - c.lz),
+          t = r.maxDist ?? 60;
+        if (e > t) return !1;
+        o *= Math.min(1, 1.15 * (1 - e / t));
+      }
+      if (o < 0.04) return !1;
+      let s = r.priority ?? 5,
+        f = r.duck ?? (s >= 7 ? 0.35 : 0);
+      if (
+        (r.lang === void 0 || r.lang === `ui`) &&
+        e.state?.lang === `ja` &&
+        u.has(`ja`)
+      ) {
+        let e = (typeof t == `string` ? n(t) : (t.ja ?? n(t.zh)))
+          ?.replace(/（.*?）|\(.*?\)/g, ``)
+          .trim();
+        if (e)
+          return u.speak(
+            e,
+            {
+              lang: `ja`,
+              priority: s,
+              volume: Math.min(1, o),
+              rate: r.rate ?? 1.05,
+              pitch: r.pitch ?? 1,
+              channel: r.channel ?? `game`,
+              minGap: r.minGap ?? 0,
+            },
+            f,
+          );
+      }
+      let p = r.lang === `en` ? `en` : r.lang === `zh` ? `zh` : d(),
+        m = typeof t == `string` ? t : p === `en` && t.en ? t.en : t.zh;
+      return (
+        typeof t != `string` && p === `en` && !t.en && (p = `zh`),
+        p === `en` &&
+          typeof t != `string` &&
+          !u.has(`en`) &&
+          ((p = `zh`), (m = t.zh)),
+        (m = m.replace(/（.*?）|\(.*?\)/g, ``).trim()),
+        u.speak(
+          m,
+          {
+            lang: p,
+            priority: s,
+            volume: Math.min(1, o),
+            rate: r.rate ?? 1.05,
+            pitch: r.pitch ?? 1,
+            channel: r.channel ?? `game`,
+            minGap: r.minGap ?? 0,
+          },
+          f,
+        )
+      );
+    },
+    y = new Fi(e, c, f, o);
+  t?.attach?.({ eng: c, radio: f, director: y, speech: u });
+  let b = new r(),
+    x = 0,
+    S = e.params.get(`radio`),
+    C = 0,
+    w = 0,
+    T = 0,
+    E = 0,
+    D = 0,
+    ee = 0,
+    te = !1,
+    O = {
+      avgMs: 0,
+      maxMs: 0,
+      maxDirector: 0,
+      maxRadio: 0,
+      maxLate: 0,
+      avgDirector: 0,
+      avgRadio: 0,
+      avgLate: 0,
+      maxListener: 0,
+      over1: 0,
+      over2: 0,
+      frames: 0,
+    },
+    ne = () => {
+      let e = l();
+      e && c.setVolumes(e.masterVolume, e.musicVolume, e.sfxVolume);
+    },
+    k = {
+      name: `audio`,
+      alwaysUpdate: !0,
+      get stations() {
+        return f.stations;
+      },
+      get station() {
+        return f.station;
+      },
+      get nowPlaying() {
+        return f.active ? f.nowPlaying : null;
+      },
+      get unlocked() {
+        return c.running;
+      },
+      unlock() {
+        if (!i)
+          try {
+            if (!m()) return;
+            (_(), c.resume(!0));
+          } catch (e) {
+            console.warn(`[audio] unlock failed`, e);
+          }
+      },
+      play(e, t) {
+        if (!i)
+          try {
+            e === `footstep` && t && t.x !== void 0 && t.z !== void 0
+              ? y.footstep(t.x, t.y ?? 0, t.z, t.volume ?? 1, !0)
+              : e === `gunshot` && t?.rate !== void 0 && t.rate >= 1.7
+                ? c.play(`backfire`, {
+                    ...t,
+                    rate: 1,
+                    volume: Math.min(1, (t.volume ?? 1) * 4),
+                  })
+                : e === `explosion` &&
+                    t &&
+                    (t.y ?? 0) > 45 &&
+                    (t.rate ?? 1) < 0.85
+                  ? c.play(`firework_boom`, {
+                      ...t,
+                      rate: 0.9 + (t.rate ?? 0.65) * 0.2,
+                      volume: Math.min(1.2, (t.volume ?? 1) * 1.6),
+                    })
+                  : e === `firecracker` && t && (t.y ?? 0) > 45
+                    ? c.play(`firework_crackle`, t)
+                    : c.play(e, t);
+          } catch {}
+      },
+      loop(e, t) {
+        if (i || e === `ambient_market`) return Vi;
+        try {
+          let n = e;
+          return (
+            n === `engine_bus` &&
+              t?.rate !== void 0 &&
+              t.rate < 0.7 &&
+              (t.y ?? 0) > 12 &&
+              (n = `helicopter`),
+            c.loop(n, t, !1)
+          );
+        } catch {
+          return Vi;
+        }
+      },
+      say(e, t) {
+        try {
+          return v(e, t);
+        } catch {
+          return !1;
+        }
+      },
+      setIndoor(e, t) {
+        i || Gi(() => c.setIndoor(e, t ?? `room`, !0));
+      },
+      setStation(e) {
+        Gi(() => f.setStation(Number.isFinite(e) ? e : -1));
+      },
+      nextStation() {
+        ((y.radioNextFrame = e.time.frame), Gi(() => f.next()));
+      },
+      setRadioActive(e) {
+        Gi(() => f.setActive(!!e || S !== null));
+      },
+      setVolumes(e, t, n) {
+        Gi(() => {
+          (c.setVolumes(e, t, n), _());
+        });
+      },
+      duck(e, t = 2) {
+        Gi(() => c.duck(e, t));
+      },
+      debug: null,
+      async init() {
+        if (!i) {
+          c.bank.start();
+          try {
+            m();
+          } catch (e) {
+            console.warn(`[audio] context failed`, e);
+          }
+          for (let t = 0; t < 8 && !te; t++)
+            ((te = f.prewarm()), await e.yieldFrame());
+        }
+      },
+      start() {
+        if (i) return;
+        A();
+        let t = (e) => {
+          if (document.hidden || !c.needsResume) return;
+          let t = e.pointerType;
+          (e.type === `pointerdown`
+            ? t !== `mouse`
+            : e.type === `pointerup` && t === `mouse`) || k.unlock();
+        };
+        if (
+          (window.addEventListener(`pointerdown`, t, !0),
+          window.addEventListener(`pointerup`, t, !0),
+          window.addEventListener(`keydown`, t, !0),
+          window.addEventListener(`touchend`, t, !0),
+          document.addEventListener(`visibilitychange`, () => {
+            c.created &&
+              (document.hidden ? (c.suspend(), _()) : (_(), c.resume()));
+          }),
+          e.params.has(`autoplay`) && k.unlock(),
+          S !== null)
+        ) {
+          let e = Number(S);
+          (f.setStation(Number.isFinite(e) ? e : 0), f.setActive(!0));
+        }
+      },
+      update(t) {
+        if (i) return;
+        let n = performance.now();
+        ((c.frame = e.time.frame),
+          c.watch(n),
+          c.beginFrame(x > 0 ? n - x : 33.333333333333336, t),
+          (x = n),
+          c.bank.stats.mode === `main` && c.bank.pump(e.paused ? 8 : 3),
+          y.update(t));
+        let r = performance.now();
+        (!te &&
+          c.bank.ready &&
+          !f.active &&
+          e.time.frame % 4 == 0 &&
+          (te = f.prewarm()),
+          f.update());
+        let a = performance.now();
+        (r - n > O.maxDirector && (O.maxDirector = r - n),
+          a - r > O.maxRadio && (O.maxRadio = a - r),
+          (T += r - n),
+          (E += a - r),
+          (ee = a - n));
+      },
+      lateUpdate() {
+        if (i) return;
+        let t = performance.now();
+        if (c.tick) {
+          let n = e.camera;
+          n.getWorldDirection(b);
+          let r = n.position.x,
+            i = n.position.y,
+            a = n.position.z,
+            o = e.player?.position;
+          if (o) {
+            let e = o.x - r,
+              t = o.y + 1.6 - i,
+              n = o.z - a;
+            e * e + t * t + n * n < 900 &&
+              ((r += e * 0.55), (i += t * 0.55), (a += n * 0.55));
+          }
+          c.setListener(r, i, a, b.x, b.y, b.z, c.tickDt);
+          let s = performance.now() - t;
+          s > O.maxListener && (O.maxListener = s);
+        }
+        c.updateLoops();
+        let n = performance.now() - t;
+        (n > O.maxLate && (O.maxLate = n),
+          (D += n),
+          (ee += n),
+          ee > O.maxMs && (O.maxMs = ee),
+          O.frames++,
+          ee > 1 && O.over1++,
+          ee > 2 && O.over2++,
+          (C += ee),
+          (ee = 0),
+          ++w >= 60 &&
+            ((O.avgMs = C / w),
+            (O.avgDirector = T / w),
+            (O.avgRadio = E / w),
+            (O.avgLate = D / w),
+            (C = T = E = D = 0),
+            (w = 0)));
+      },
+    };
+  function A() {
+    let n = e.events,
+      r = {
+        on(e, t) {
+          n.on(e, (e) => Gi(() => t(e)));
+        },
+      },
+      i = (e, t, n = 0) => c.play(e, t, void 0, !1, n),
+      a = (e) => (e ? { x: e.x, y: e.y, z: e.z } : void 0);
+    (r.on(`wanted:changed`, ({ level: e, prev: t }) => {
+      (e > 0 &&
+        (c.bank.wantSfx(`busted`),
+        c.bank.wantSfx(`wanted_lost`),
+        c.bank.wantSfx(`police_megaphone`),
+        c.bank.wantSfx(`police_squelch`)),
+        e > t ? i(`wanted_up`) : e === 0 && t > 0 && i(`wanted_lost`));
+    }),
+      r.on(`money:changed`, ({ delta: e }) => {
+        e > 0 && i(e >= 50 ? `money` : `coin`);
+      }),
+      r.on(`mission:started`, () => i(`mission_start`)),
+      r.on(`mission:completed`, () => i(`mission_pass`)),
+      r.on(`mission:failed`, () => i(`mission_fail`)),
+      r.on(`player:died`, () => {
+        (i(`wasted`), c.shock(1.15, 4.5));
+      }),
+      r.on(`player:busted`, () => {
+        (i(`busted`), c.shock(0.7, 3));
+      }),
+      r.on(`ui:bigMessage`, (e) =>
+        c.duck(0.55, Math.min(6, e?.duration ?? 3)),
+      ));
+    let o = (t, n) => {
+      let r;
+      try {
+        r =
+          e.vehicles?.get?.(t) ??
+          (e.vehicles?.playerVehicle?.id === t
+            ? e.vehicles.playerVehicle
+            : void 0);
+      } catch {}
+      return typeof r?.spec?.twoWheeler == `boolean`
+        ? r.spec.twoWheeler
+        : n === `scooter` || Hi(n) || Ui(n);
+    };
+    (r.on(`player:enterVehicle`, ({ vehicleId: t, kind: n }) => {
+      let r = e.vehicles?.playerVehicle,
+        s = r ? { x: r.body.x, y: 1, z: r.body.z } : a(e.player?.position),
+        c = String(n ?? ``),
+        l = o(t, c);
+      l || i(`car_door`, s);
+      let u =
+        r?.electric === !0 || Ui(c)
+          ? `ev_start`
+          : l
+            ? Hi(c)
+              ? `motorcycle_start`
+              : `scooter_start`
+            : `car_start`;
+      (i(u, s, l ? 0.1 : 0.45), f.setActive(!0));
+    }),
+      r.on(`player:exitVehicle`, ({ vehicleId: t, kind: n }) => {
+        (o(t, String(n ?? ``)) || i(`car_door`, a(e.player?.position)),
+          S === null && f.setActive(!1));
+      }),
+      r.on(`vehicle:collision`, ({ pos: e, impulse: t }) => {
+        let n = c.externalPlays,
+          r = c.frame;
+        if (n.get(`crash_light`) === r || n.get(`crash_heavy`) === r) return;
+        let o = Number.isFinite(t) ? t : 0,
+          s = { ...a(e), volume: Math.min(1.2, 0.5 + o / 14) };
+        o > 9
+          ? (i(`crash_heavy`, s), o > 14 && i(`glass`, s))
+          : o > 2.5 && i(`crash_light`, s);
+      }),
+      r.on(`vehicle:destroyed`, ({ pos: e }) => i(`explosion`, a(e))),
+      r.on(`player:attack`, ({ weapon: t, pos: n }) => {
+        let r = a(n) ?? a(e.player?.position);
+        t === `pistol`
+          ? i(`gunshot`, { ...r, rate: 1.04 })
+          : t === `smg`
+            ? i(`gunshot`, { ...r, rate: 1.22, volume: 0.85 })
+            : i(`punch_whoosh`, r);
+      }),
+      r.on(`fireworks`, ({ x: t, y: n, z: r, duration: a }) => {
+        if ((y.wantFireworks(), typeof e.landmarks?.fireworks == `function`))
+          return;
+        let o = Math.max(3, Math.round(a * 1.3));
+        for (let s = 0; s < o; s++) {
+          let l = (s / o) * a + Math.random() * 0.6,
+            u = t + (Math.random() - 0.5) * 40,
+            d = r + (Math.random() - 0.5) * 40,
+            f = n + Math.random() * 60,
+            p = Math.random() < 0.3;
+          y.schedule(l, () =>
+            i(p ? `firework_whistle` : `firework_launch`, {
+              x: u,
+              y: p ? 40 : 5,
+              z: d,
+            }),
+          );
+          let m = p ? 1.9 : 1.3 + Math.random() * 0.4;
+          y.schedule(l + m, () => {
+            let t = Math.hypot(u - c.lx, f - c.ly, d - c.lz);
+            (c.externalPlays.get(`firework_boom`) ?? -1e9) >
+              e.time.frame - 120 ||
+              (i(`firework_boom`, { x: u, y: f, z: d }, t / 343),
+              Math.random() < 0.45 &&
+                i(
+                  `firework_crackle`,
+                  { x: u, y: f - 10, z: d },
+                  t / 343 + 0.25,
+                ));
+          });
+        }
+      }),
+      t ||
+        r.on(`mrt:travel`, ({ to: t }) => {
+          let n = e.plan?.mrtStations?.find((e) => e.id === t);
+          if (!n) return;
+          let r = `${n.name.zh.replace(/\s*[/／]\s*/g, `，`)}到了。`,
+            i = `Arriving at ${n.name.en.replace(/\s*[/／]\s*/g, `, `)}.`;
+          y.schedule(0.35, () =>
+            v(r, {
+              lang: `zh`,
+              priority: 7,
+              volume: 0.85,
+              channel: `mrt`,
+              duck: 0.3,
+            }),
+          );
+          let a = [...n.name.zh].length / 4.4 + 1.1;
+          y.schedule(0.35 + a, () =>
+            v(i, {
+              lang: `en`,
+              priority: 6,
+              volume: 0.8,
+              channel: `mrt`,
+              duck: 0.3,
+            }),
+          );
+        }),
+      r.on(`game:pause`, ({ paused: e }) => {
+        (c.setWorldPaused(e), e && u.cancel());
+      }),
+      r.on(`settings:changed`, ({ key: e }) => {
+        ((e === `masterVolume` || e === `musicVolume` || e === `sfxVolume`) &&
+          ne(),
+          (e === `masterVolume` || e === `playInSilentMode`) && _());
+      }),
+      r.on(`quality:changed`, ({ level: e }) => {
+        c.hrtf = e === `ultra`;
+      }));
+  }
+  return (
+    (y.setRadioActive = (e) => k.setRadioActive(e)),
+    (k.debug = a(e, c, f, y, O, u, () => h?.type ?? null)),
+    e.params.get(`audiodebug`) &&
+      k.debug.overlay(e.params.get(`audiodebug`) === `spectro`),
+    k
+  );
+}
+export {
+  vt as C,
+  o as E,
+  _t as S,
+  Me as T,
+  Wt as _,
+  fr as a,
+  Kt as b,
+  qr as c,
+  An as d,
+  Vt as f,
+  W as g,
+  Yt as h,
+  yi as i,
+  tr as l,
+  Xt as m,
+  vi as n,
+  Jr as o,
+  Gt as p,
+  bi as r,
+  Yr as s,
+  Ki as t,
+  Gn as u,
+  Jt as v,
+  ht as w,
+  Ct as x,
+  G as y,
+};

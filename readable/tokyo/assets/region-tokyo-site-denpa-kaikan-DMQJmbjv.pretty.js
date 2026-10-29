@@ -1,0 +1,250 @@
+import { t as e } from "./rolldown-runtime-DK3Fl9T5.js";
+import { Q as t } from "./world-CVm1JHks.js";
+import { h as n, in as r, r as i } from "./region-tokyo-A7LxHjud.js";
+import { n as a, t as o } from "./sites-kit-BhplXgcu.js";
+import {
+  B as s,
+  D as c,
+  E as l,
+  I as u,
+  M as d,
+  N as f,
+  P as p,
+  R as m,
+  j as h,
+  v as g,
+  w as _,
+  x as v,
+  y,
+  z as b,
+} from "./region-tokyo-sites-kit-DAwzVR8Q.js";
+var x = e({ default: () => S }),
+  S = t({
+    state: (e) => +!!i(n.hours, e),
+    art: [
+      {
+        key: `top`,
+        w: 512,
+        h: 128,
+        legibility: 9,
+        paint: (e, t, n, i) => {
+          m(
+            e,
+            t,
+            n,
+            {
+              bg: `#f6d21a`,
+              fg: `#d8101c`,
+              text: r(`sites.denpa.name`),
+              sub: r(`sites.denpa.akiba`),
+              subColor: `#1a1a1a`,
+              style: `lightbox`,
+              weight: 900,
+            },
+            i,
+          );
+        },
+      },
+      {
+        key: `floors`,
+        w: 64,
+        h: 512,
+        legibility: 3,
+        paint: (e, t, n, i) =>
+          b(
+            e,
+            t,
+            n,
+            {
+              cols: 1,
+              rows: 8,
+              cells: [1, 2, 3, 4, 5, 6, 7, 8].map((e) => ({
+                bg: e % 2 ? `#ffffff` : `#ffe94a`,
+                fg: `#1a1a1a`,
+                text: r(`sites.denpa.floor-${e}`),
+              })),
+            },
+            i,
+          ),
+      },
+      {
+        key: `gacha`,
+        w: 256,
+        h: 128,
+        paint: (e, t, n, r) => {
+          ((e.fillStyle = `#e8eaee`), e.fillRect(0, 0, t, n));
+          for (let r = 0; r < 3; r++)
+            for (let i = 0; i < 10; i++) {
+              let a = (i / 10) * t,
+                o = (r / 3) * n;
+              ((e.fillStyle = [
+                `#ff5a7a`,
+                `#3aa8ff`,
+                `#ffd23a`,
+                `#7adf5a`,
+                `#c87aff`,
+              ][(i + r * 3) % 5]),
+                e.fillRect(a + 2, o + 2, t / 10 - 4, n / 3 - 4),
+                (e.fillStyle = `rgba(255,255,255,0.75)`),
+                e.beginPath(),
+                e.arc(a + t / 20, o + n / 9, t / 32, 0, Math.PI * 2),
+                e.fill(),
+                (e.fillStyle = `#ffffff`),
+                e.fillRect(a + t / 40, o + n / 5, t / 20, n / 14));
+            }
+        },
+      },
+      {
+        key: `gacha-sign`,
+        w: 256,
+        h: 32,
+        paint: (e, t, n, i) =>
+          m(
+            e,
+            t,
+            n,
+            {
+              bg: `#ff3a7a`,
+              fg: `#ffffff`,
+              text: r(`sites.denpa.gacha`),
+              style: `lightbox`,
+            },
+            i,
+          ),
+      },
+      {
+        key: `kaitori`,
+        w: 64,
+        h: 128,
+        paint: (e, t, n, i) =>
+          s(
+            e,
+            t,
+            n,
+            {
+              lines: [
+                r(`sites.denpa.kaitori`),
+                r(`sites.denpa.floor-3`),
+                r(`sites.denpa.floor-2`),
+              ],
+            },
+            i,
+          ),
+      },
+    ],
+    mid: u,
+    *near(e) {
+      let { w: t, d: n } = e.frame,
+        r = -n / 2,
+        i = e.state > 0;
+      p(e, { x0: -t / 2, z0: r, x1: t / 2, z1: r + 2.8 });
+      let s = yield* _(e, {
+        floors: 10,
+        groundH: 4.6,
+        floorH: 3.45,
+        wall: 15658728,
+        trim: 12106944,
+        windows: `band`,
+        recess: 0,
+        roof: !0,
+      });
+      (f(e, {
+        x0: s.x0 - 0.1,
+        x1: s.x1 + 0.1,
+        y0: s.top - 4.2,
+        y1: s.top + 0.6,
+        z: s.front - 0.25,
+        key: `top`,
+        lit: !0,
+        always: !0,
+        depth: 0.5,
+      }),
+        h(e, {
+          x: s.x1 - 0.4,
+          y0: 5.2,
+          y1: 20,
+          z: s.front,
+          out: 0.9,
+          key: `floors`,
+          lit: !0,
+          thick: 0.28,
+        }),
+        yield);
+      let u = s.x0 + 0.1,
+        m = s.x1 - 0.1;
+      if (
+        (e.lm.setPaint(y(10133672, 0.3, 0.6)),
+        e.lm.box(s.x0, 3.9, r + 0.05, s.x1, 4.6, r + 0.4),
+        !i)
+      ) {
+        (d(e, { x0: u, x1: m, h: 3.9, z: r + 0.45 }),
+          e.box(u, r, m, r + 0.5, 0, 3.9));
+        return;
+      }
+      (c(e, {
+        x0: u,
+        x1: m,
+        z: r + 0.45,
+        h: 3.9,
+        depth: 3.2,
+        backKey: `gacha`,
+        light: 16185599,
+        floor: 13159632,
+      }),
+        e.lm.setPaint(y(14211807, 0.4, 0.3)),
+        e.lm.box(u + 0.3, 0, r + 1.1, u + (m - u) * 0.45, 1.75, r + 1.6),
+        e.art.tex(e.atlas.r(`gacha`), 16777215, 0.6),
+        e.art.rectZ(
+          u + 0.32,
+          0.05,
+          u + (m - u) * 0.45 - 0.02,
+          1.72,
+          r + 1.09,
+          -1,
+        ),
+        e.box(u + 0.3, r + 1.1, u + (m - u) * 0.45, r + 1.6, 0, 1.75),
+        l(e, {
+          x0: -1.6,
+          x1: 1.6,
+          z: r + 0.4,
+          h: 2.7,
+          kind: `sash`,
+          open: !0,
+          leaves: 2,
+        }),
+        f(e, {
+          x0: u + 0.2,
+          x1: u + (m - u) * 0.45,
+          y0: 3,
+          y1: 3.4,
+          z: r + 0.38,
+          key: `gacha-sign`,
+          lit: !0,
+          always: !0,
+          depth: 0.08,
+        }),
+        e.lm.setPaint(g(16777215, 2, !0)),
+        e.lm.box(u, 3.88, r + 0.4, m, 3.92, r + 0.46, 8),
+        v(e, { x: m - 0.8, z: r - 0.5, key: `kaitori`, rot: -0.25 }),
+        yield,
+        o(
+          e,
+          6,
+          { x0: -t / 2, z0: r - 3, x1: t / 2, z1: r - 1 },
+          {
+            poses: [`phone`, `walk`, `stand`, `phone`],
+            palette: `casual`,
+            spacing: 1.2,
+            face: Math.PI,
+          },
+        ),
+        a(e, {
+          x: -2.6,
+          z: r - 0.6,
+          rot: 0,
+          pose: `phone`,
+          palette: `casual`,
+        }));
+    },
+  });
+export { x as t };

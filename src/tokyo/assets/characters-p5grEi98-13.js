@@ -1,0 +1,295 @@
+// tokyo/assets/characters-p5grEi98 13 — loose
+// Lines 3707-3999 of readable/tokyo/assets/characters-p5grEi98.pretty.js (statement-aligned).
+function pr(e) {
+  return lr(e, `hair3`, 128, 128, !0, Le);
+}
+function mr(e, t, n, r) {
+  return lr(e, `rib:${t}:${n}:${r}`, 128, 64, !0, Ue(t, n, r));
+}
+function hr(e, t, n, r) {
+  return t === `none`
+    ? null
+    : lr(e, `print:${t}:${n}:${r}`, 256, 256, !1, We(t, n, r));
+}
+function gr(e, t, n) {
+  return lr(e, `placket:${t}:${n}`, 32, 256, !1, Be(t, n, 6));
+}
+function _r(e, t, n) {
+  return lr(e, `zip:${t}:${n}`, 16, 256, !1, Ve(t, n));
+}
+function vr(e, t, n, r) {
+  return lr(e, `pocket:${r}:${t}:${n}`, 96, 96, !1, He(t, n, r));
+}
+function yr(e, t) {
+  return Math.max(1, Math.round((Math.PI * 2 * e) / t));
+}
+var br = new u();
+function K(e, t) {
+  return br.setHex(e).multiplyScalar(t).getHex();
+}
+var q = Math.PI * 2,
+  xr = (e, t, n) => e + (t - e) * n,
+  Sr = (e, t) => Math.exp(-(e * e) / (t * t)),
+  Cr = (e, t) => {
+    let n = (e - t) % q;
+    return (n > Math.PI && (n -= q), n < -Math.PI && (n += q), n);
+  },
+  wr = { none: -1, short: 0.4, elbow: 0.95, long: 1.93 },
+  Tr = {
+    tee: {
+      hem: 0.502,
+      sleeve: `short`,
+      off: 0.004,
+      loose: 0.45,
+      collar: `crew`,
+      neckF: 0.834,
+      neckB: 0.846,
+    },
+    polo: {
+      hem: 0.506,
+      sleeve: `short`,
+      off: 0.005,
+      loose: 0.4,
+      collar: `polo`,
+      neckF: 0.838,
+      neckB: 0.85,
+    },
+    shirt: {
+      hem: 0.49,
+      sleeve: `long`,
+      off: 0.0045,
+      loose: 0.32,
+      collar: `shirt`,
+      neckF: 0.838,
+      neckB: 0.852,
+    },
+    uniform: {
+      hem: 0.5,
+      sleeve: `short`,
+      off: 0.0045,
+      loose: 0.38,
+      collar: `shirt`,
+      neckF: 0.838,
+      neckB: 0.852,
+    },
+    blouse: {
+      hem: 0.53,
+      sleeve: `short`,
+      off: 0.004,
+      loose: 0.62,
+      collar: `crew`,
+      neckF: 0.818,
+      neckB: 0.842,
+    },
+    tank: {
+      hem: 0.505,
+      sleeve: `none`,
+      off: 0.003,
+      loose: 0.25,
+      collar: `crew`,
+      neckF: 0.795,
+      neckB: 0.828,
+      armhole: !0,
+    },
+    hoodie: {
+      hem: 0.49,
+      sleeve: `long`,
+      off: 0.011,
+      loose: 0.8,
+      collar: `hood`,
+      neckF: 0.836,
+      neckB: 0.85,
+      rib: !0,
+    },
+    sweater: {
+      hem: 0.5,
+      sleeve: `long`,
+      off: 0.009,
+      loose: 0.6,
+      collar: `crew`,
+      neckF: 0.836,
+      neckB: 0.848,
+      rib: !0,
+    },
+    police: {
+      hem: 0.5,
+      sleeve: `long`,
+      off: 0.005,
+      loose: 0.38,
+      collar: `shirt`,
+      neckF: 0.838,
+      neckB: 0.852,
+    },
+    rider: {
+      hem: 0.49,
+      sleeve: `long`,
+      off: 0.012,
+      loose: 0.72,
+      collar: `high`,
+      neckF: 0.842,
+      neckB: 0.855,
+      rib: !0,
+    },
+    sailor: {
+      hem: 0.515,
+      sleeve: `long`,
+      off: 0.0045,
+      loose: 0.5,
+      collar: `none`,
+      neckF: 0.812,
+      neckB: 0.85,
+    },
+    yukata: {
+      hem: 0.5,
+      sleeve: `elbow`,
+      off: 0.006,
+      loose: 0.45,
+      collar: `none`,
+      neckF: 0.79,
+      neckB: 0.852,
+    },
+  },
+  Er = {
+    bomber: {
+      hem: 0.52,
+      sleeve: `long`,
+      off: 0.02,
+      loose: 0.85,
+      gap: 0.2,
+      collar: `rib`,
+      ribHem: !0,
+      neck: 0.848,
+    },
+    cropped: {
+      hem: 0.632,
+      sleeve: `long`,
+      off: 0.013,
+      loose: 0.6,
+      gap: 0.26,
+      collar: `rib`,
+      ribHem: !0,
+      neck: 0.846,
+    },
+    blazer: {
+      hem: 0.455,
+      sleeve: `long`,
+      off: 0.012,
+      loose: 0.3,
+      gap: 0.24,
+      collar: `lapel`,
+      ribHem: !1,
+      neck: 0.85,
+    },
+    cardigan: {
+      hem: 0.47,
+      sleeve: `long`,
+      off: 0.009,
+      loose: 0.5,
+      gap: 0.26,
+      collar: `v`,
+      ribHem: !0,
+      neck: 0.845,
+    },
+    vest: {
+      hem: 0.5,
+      sleeve: `none`,
+      off: 0.012,
+      loose: 0.25,
+      gap: 0,
+      collar: `v`,
+      ribHem: !1,
+      neck: 0.84,
+    },
+    windbreaker: {
+      hem: 0.49,
+      sleeve: `long`,
+      off: 0.016,
+      loose: 0.8,
+      gap: 0,
+      collar: `high`,
+      ribHem: !1,
+      neck: 0.855,
+    },
+    poncho: {
+      hem: 0.44,
+      sleeve: `none`,
+      off: 0.03,
+      loose: 1,
+      gap: 0,
+      collar: `none`,
+      ribHem: !1,
+      neck: 0.85,
+    },
+    jacket: {
+      hem: 0.505,
+      sleeve: `long`,
+      off: 0.011,
+      loose: 0.3,
+      gap: 0.2,
+      collar: `lapel`,
+      ribHem: !1,
+      neck: 0.85,
+    },
+    gakuran: {
+      hem: 0.475,
+      sleeve: `long`,
+      off: 0.012,
+      loose: 0.32,
+      gap: 0,
+      collar: `high`,
+      ribHem: !1,
+      neck: 0.852,
+    },
+    happi: {
+      hem: 0.45,
+      sleeve: `elbow`,
+      off: 0.012,
+      loose: 0.55,
+      gap: 0.16,
+      collar: `none`,
+      ribHem: !1,
+      neck: 0.846,
+    },
+  },
+  Dr = {
+    jeans: {
+      waist: 0.572,
+      legT: 1.93,
+      off: 0.006,
+      loose: 0.22,
+      pattern: `denim`,
+    },
+    slacks: { waist: 0.585, legT: 1.96, off: 0.005, loose: 0.45 },
+    shorts: { waist: 0.575, legT: 0.55, off: 0.006, loose: 0.55 },
+    skirt: {
+      waist: 0.605,
+      legT: -1,
+      off: 0.004,
+      loose: 0,
+      skirt: { hem: 0.33, flare: 0.13, pleats: 12 },
+    },
+    pencil: {
+      waist: 0.6,
+      legT: -1,
+      off: 0.004,
+      loose: 0,
+      skirt: { hem: 0.3, flare: -0.01, pleats: 0 },
+    },
+    longskirt: {
+      waist: 0.6,
+      legT: -1,
+      off: 0.004,
+      loose: 0,
+      skirt: { hem: 0.075, flare: 0.22, pleats: 0 },
+    },
+    wide: { waist: 0.62, legT: 1.985, off: 0.005, loose: 1, flare: 0.012 },
+    track: { waist: 0.58, legT: 1.9, off: 0.007, loose: 0.5 },
+    leggings: { waist: 0.6, legT: 1.92, off: 0.0018, loose: 0 },
+    robe: {
+      waist: 0.6,
+      legT: -1,
+      off: 0.005,
+      loose: 0,
+      skirt: { hem: 0.07, flare: 0.035, pleats: 0 },
+    },
+  };

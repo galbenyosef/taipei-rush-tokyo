@@ -23,7 +23,7 @@
 //   the capture *.css -> readable/<served path>.pretty.css, wholeFile section
 //                        (stylesheet rule: stylesheets are never sliced).
 //   vendor bundles     -> readable/ + wholeFile section (vendor rule): the
-//                        bundled three.js r186 chunk (assets/three-x0mFGRTI.js),
+//                        bundled three.js r186 chunk (assets/three-C4coU-vx.js),
 //                        the Google Basis KTX2 transcoder (avatars/basis/…) and
 //                        the Vercel Web Analytics platform script
 //                        (_vercel/insights/script.js) are indexed whole.
@@ -305,9 +305,9 @@ function scanBlocks(buf) {
 
 // ── curated content-anchored classification (guards fail loudly) ────────
 const WHOLE_FILE = {
-  "tokyo/assets/three-x0mFGRTI": {
+  "tokyo/assets/three-C4coU-vx": {
     title:
-      "tokyo/assets/three-x0mFGRTI.js — bundled three.js r186 engine (vendor, whole-file, never sliced)",
+      "tokyo/assets/three-C4coU-vx.js — bundled three.js r186 engine (vendor, whole-file, never sliced)",
     desc:
       "the bundled three.js r186 engine chunk — the vendored `__THREE__` revision registration (r186), WebGLRenderer, the math/geometry/material/texture/renderer machinery — third-party engine code, not app logic. Vendor rule — indexed whole-file in readable/, never sliced or rewritten.",
     guard: (t) => t.includes("WebGLRenderer") && t.includes("__THREE__") && /REVISION\s*:\s*\(\)\s*=>\s*[`"']186[`"']/.test(t),
@@ -765,7 +765,7 @@ async function main() {
       const parser = isImportmap ? "json" : b.kind === "style" ? "css" : "babel";
       const DATA_TYPES = new Set(["application/ld+json", "application/json", "importmap", "speculationrules"]);
       const type = (/\btype\s*=\s*["']?([^"'\s>]+)/i.exec(b.tag)?.[1] ?? "").toLowerCase();
-      if (parser === "script" && DATA_TYPES.has(type)) {
+      if (b.kind === "script" && DATA_TYPES.has(type)) {
         notRendered.push({
           capture: rel,
           kind: "inline-data",
@@ -935,7 +935,7 @@ async function main() {
       "exports are excluded (documented in README). Every slice parses standalone under `node " +
       "--input-type=module --check -` and round-trips byte-exact to its recorded readable line range " +
       "(through the recorded rename map where the chunk is renamed). Vendor rule — wholeFile sections, " +
-      "never sliced: tokyo/assets/three-x0mFGRTI.js (bundled three.js r186 engine: WebGLRenderer + " +
+      "never sliced: tokyo/assets/three-C4coU-vx.js (bundled three.js r186 engine: WebGLRenderer + " +
       "__THREE__ r186 revision registration), avatars/basis/basis_transcoder.js (Google Basis KTX2 " +
       "transcoder wrapper) and _vercel/insights/script.js (Vercel Web Analytics platform script) — all " +
       "content-anchored and guarded. Stylesheet rule — every captured .css is wholeFile. Non-standalone " +

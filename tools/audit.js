@@ -167,6 +167,7 @@ function scanBlocks(buf) {
         const content = buf.subarray(tagEnd + 1, j);
         blocks.push({
           kind: /\btype\s*=\s*["']importmap["']/i.test(tag) ? "importmap" : kind,
+          tag,
           block: n,
           contentStart: tagEnd + 1,
           contentEnd: j,
@@ -554,7 +555,20 @@ for (const capRel of Object.keys(manifest?.files ?? {})) {
   const blocks = scanBlocks(buf);
   inlineBlocks += blocks.length;
   const entryTag = capRel.replace(/\.html$/i, "");
+  // typed data blocks (the entry's <script type="application/ld+json"> SEO
+  // record, an importmap, …) are DATA, not JS/CSS: derive records them in
+  // split-spec.notRendered with their byte range + sha256 and writes no
+  // readable twin, so they are verified there instead of as an inline twin.
+  const DATA_TYPES = new Set(["application/ld+json", "application/json", "speculationrules"]);
   for (const b of blocks) {
+    const btype = (/\btype\s*=\s*["']?([^"'\s>]+)/i.exec(b.tag)?.[1] ?? "").toLowerCase();
+    if (b.kind === "script" && DATA_TYPES.has(btype)) {
+      const rec = (spec?.notRendered ?? []).find(
+        (x) => x.capture === capRel && x.kind === "inline-data" && x.sha256 === b.sha256,
+      );
+      if (!rec) problem(`${capRel}: typed data block <script type="${btype}"> #${b.block} is not recorded in split-spec.notRendered`);
+      continue;
+    }
     const twinExt = b.kind === "style" ? "css" : b.kind === "importmap" ? "json" : "js";
     const twin = `readable/${entryTag}-inline-${b.block}.pretty.${twinExt}`;
     inlineTwinRels.add(twin);
@@ -618,8 +632,8 @@ if (manifest) {
 // ── vendor rule: wholeFile sections carry the recorded shape ────────────
 // (the VENDOR_GUARDS entries are required for this mirror; absence is a problem)
 const VENDOR_GUARDS = [
-  ["tokyo/assets/three-x0mFGRTI-vendor.js", /WebGLRenderer/, /__THREE__/],
-  ["tokyo/assets/three-x0mFGRTI-vendor.js", /REVISION\s*:\s*\(\)\s*=>\s*[`"']186[`"']/, /getContext/],
+  ["tokyo/assets/three-C4coU-vx-vendor.js", /WebGLRenderer/, /__THREE__/],
+  ["tokyo/assets/three-C4coU-vx-vendor.js", /REVISION\s*:\s*\(\)\s*=>\s*[`"']186[`"']/, /getContext/],
   ["avatars/basis/basis_transcoder-vendor.js", /var BASIS/, /basis_transcoder|wasmBinary/],
   ["_vercel/insights/script-vendor.js", /\/_vercel\/insights/, /addEventListener|XMLHttpRequest|fetch/],
 ];

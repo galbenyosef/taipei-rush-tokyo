@@ -1,0 +1,159 @@
+const __vite__mapDeps = (
+  i,
+  m = __vite__mapDeps,
+  d = m.f ||
+    (m.f = [
+      "assets/client-BwrkpB9y.js",
+      "assets/engine-14d5lda2.js",
+      "assets/rolldown-runtime-DK3Fl9T5.js",
+      "assets/preload-helper-DZce6yc-.js",
+      "assets/ja-anaGONx4.js",
+      "assets/three-C4coU-vx.js",
+      "assets/cities-tfcRdmsJ.js",
+      "assets/shared-BaQwRjes.js",
+      "assets/session-DVEw0yxj.js",
+      "assets/controllers-DHBZ_k07.js",
+      "assets/game-DQ7TeBJx.js",
+    ]),
+) => i.map((i) => d[i]);
+import { t as e } from "./preload-helper-DZce6yc-.js";
+import { t } from "./ja-anaGONx4.js";
+import { Wn as n, sr as r } from "./engine-14d5lda2.js";
+import { f as i, i as a } from "./session-DVEw0yxj.js";
+var o = `taipei-rush-market-ticket-v3:`,
+  s = new Set();
+function c() {
+  let e = a();
+  if (!e) return null;
+  let t = e.anonymous === !1 ? e.user_id : `guest`;
+  if (n() !== t) return null;
+  try {
+    return r(o + e.user_id)?.ticket ?? null;
+  } catch {
+    return `unreadable`;
+  }
+}
+function l() {
+  return c() !== null;
+}
+function u() {
+  for (let e of s)
+    try {
+      e();
+    } catch {}
+}
+function d(e) {
+  let t = !1,
+    n = () => {
+      let n = l();
+      (n && !t && e(), (t = n));
+    },
+    r = (e) => {
+      (!e.key || e.key.startsWith(o)) && n();
+    };
+  (s.add(n), window.addEventListener(`storage`, r));
+  let a = i(n);
+  return (
+    n(),
+    () => {
+      (s.delete(n), window.removeEventListener(`storage`, r), a());
+    }
+  );
+}
+var f = [8, 20, 45, 90, 180, 300];
+function p(n, r) {
+  let i,
+    a = 0,
+    o = !1,
+    s = !1,
+    u = (e) => {
+      (clearTimeout(i), s || (i = setTimeout(() => void m(), e * 1e3)));
+    },
+    p = () => u(f[Math.min(a++, f.length - 1)]);
+  async function m() {
+    if (o || s) return;
+    let i = c();
+    if (!i) {
+      a = 0;
+      return;
+    }
+    if (i !== `unreadable`) {
+      o = !0;
+      try {
+        let { createMarketClient: o } = await e(
+            async () => {
+              let { createMarketClient: e } = await import(
+                `./client-BwrkpB9y.js`
+              );
+              return { createMarketClient: e };
+            },
+            __vite__mapDeps([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+          ),
+          s = await (await o(n)).account();
+        if (c() !== null) {
+          p();
+          return;
+        }
+        let l = s.orders.find((e) => e.requestId === i.requestId),
+          u = i.quantity.toLocaleString(`en-US`);
+        (l &&
+          r(
+            {
+              zh: t.on
+                ? t.t(
+                    `股票已成交：${i.side === `buy` ? `買入` : `賣出`} ${i.symbol} × ${u}`,
+                    `注文が約定しました：${i.side === `buy` ? `買い` : `売り`} ${i.symbol} × ${u}`,
+                  )
+                : `股票已成交：${i.side === `buy` ? `買入` : `賣出`} ${i.symbol} × ${u}`,
+              en: `Order filled: ${i.side === `buy` ? `bought` : `sold`} ${i.symbol} × ${u}`,
+            },
+            `good`,
+          ),
+          (a = 0));
+      } catch {
+        if (c() !== null) {
+          p();
+          return;
+        }
+        (r(
+          {
+            zh: t.on
+              ? t.t(
+                  `股票委託未成交（${i.symbol}），錢包沒有變動`,
+                  `注文は約定しませんでした（${i.symbol}）。財布はそのままです`,
+                )
+              : `股票委託未成交（${i.symbol}），錢包沒有變動`,
+            en: `Order not filled (${i.symbol}); your wallet is unchanged`,
+          },
+          `bad`,
+        ),
+          (a = 0));
+      } finally {
+        o = !1;
+      }
+    }
+  }
+  let h = d(() => u(2)),
+    g = () => {
+      l() && ((a = 0), u(1));
+    };
+  return (
+    window.addEventListener(`online`, g),
+    l() &&
+      r(
+        {
+          zh: `上一筆股票委託確認中…`,
+          en: `Confirming your last stock order…`,
+        },
+        `info`,
+      ),
+    () => {
+      ((s = !0), clearTimeout(i), h(), window.removeEventListener(`online`, g));
+    }
+  );
+}
+export {
+  l as hasPendingMarketTicket,
+  u as notifyMarketTicketChange,
+  p as resolveInBackground,
+};

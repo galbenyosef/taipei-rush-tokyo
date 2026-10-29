@@ -1,0 +1,1264 @@
+import { t as e } from "./ja-anaGONx4.js";
+import { Wn as t, ft as n } from "./engine-14d5lda2.js";
+import { C as r, S as i, n as a } from "./shared-BaQwRjes.js";
+import { f as o, i as s, o as c } from "./session-DVEw0yxj.js";
+import { hasPendingMarketTicket as l } from "./recovery-DKVj2RZ5.js";
+import { createMarketClient as u } from "./client-BwrkpB9y.js";
+import { l as d } from "./dom-BCt0vy2n.js";
+function ee(e, t, n, r) {
+  let i = BigInt(Math.round(e * 100)) * BigInt(t),
+    a = BigInt(Math.round(r.minCommission * 100)),
+    o = ((i * BigInt(Math.round(r.commissionRate * 1e6))) / 100000000n) * 100n,
+    s = o > a ? o : a,
+    c =
+      n === `sell`
+        ? ((i * BigInt(Math.round(r.sellTaxRate * 1e6))) / 100000000n) * 100n
+        : 0n,
+    l = n === `buy` ? i + s : i - s - c;
+  return {
+    gross: Number(i) / 100,
+    fee: Number(s) / 100,
+    tax: Number(c) / 100,
+    total: Number(l) / 100,
+  };
+}
+var f = a === `hong-kong`,
+  p = 1e3,
+  m = (e, t = 0) =>
+    Number.isFinite(e)
+      ? e.toLocaleString(`en-US`, {
+          minimumFractionDigits: t,
+          maximumFractionDigits: t,
+        })
+      : `—`,
+  h = (e) => m(e, e >= 1e3 ? 0 : 2),
+  g = (e) =>
+    `NT$ ${m(Math.round(e * 100) / 100, Number.isInteger(Math.round(e * 100) / 100) ? 0 : 2)}`,
+  _ = (e) => (e == null ? `—` : `${e > 0 ? `+` : ``}${m(e, 2)}%`),
+  v = (e) => (e != null && e > 0 ? `up` : e != null && e < 0 ? `down` : `flat`),
+  y = (e) =>
+    e
+      ? new Intl.DateTimeFormat(`en-GB`, {
+          timeZone: `Asia/Taipei`,
+          hour: `2-digit`,
+          minute: `2-digit`,
+          hourCycle: `h23`,
+        }).format(new Date(e))
+      : ``,
+  b = (e) => e.slice(5).replace(`-`, `/`),
+  x = (e) =>
+    new Intl.DateTimeFormat(`en-CA`, { timeZone: `Asia/Taipei` }).format(e),
+  S = [
+    [`日`, `Sun`],
+    [`一`, `Mon`],
+    [`二`, `Tue`],
+    [`三`, `Wed`],
+    [`四`, `Thu`],
+    [`五`, `Fri`],
+    [`六`, `Sat`],
+  ].map(([e, t]) => ({ zh: e, en: t })),
+  C = (t) => {
+    let n = y(t),
+      r = x(new Date(t)),
+      i = Math.round((Date.parse(r) - Date.parse(x(new Date()))) / 864e5);
+    if (i <= 0)
+      return {
+        zh: e.on ? e.t(`今天 ${n}`, `今日 ${n}`) : `今天 ${n}`,
+        en: `today ${n}`,
+      };
+    if (i === 1)
+      return {
+        zh: e.on ? e.t(`明天 ${n}`, `明日 ${n}`) : `明天 ${n}`,
+        en: `tomorrow ${n}`,
+      };
+    if (i > 6) return { zh: `${b(r)} ${n}`, en: `${b(r)} ${n}` };
+    let a = S[new Date(`${r}T00:00:00Z`).getUTCDay()];
+    return {
+      zh: e.on
+        ? e.t(`週${a.zh} ${n}`, `${e.jz(`週` + a.zh)} ${n}`)
+        : `週${a.zh} ${n}`,
+      en: `${a.en} ${n}`,
+    };
+  },
+  w = [
+    {
+      zh: `用最新一天的收盤價成交，不是即時股價。`,
+      en: `Every order fills at the latest closing price, not a live price.`,
+    },
+    {
+      zh: `真實台股開盤的日子，遊戲從 09:00 起暫停下單，等當天收盤價公布後（約 16:30）重新開放。`,
+      en: `On days the real exchange trades, the game stops taking orders at 09:00 and reopens once that day's close is out (about 16:30).`,
+    },
+    {
+      zh: `所以平日 16:30 後到隔天 09:00，還有真實台股休市的週末和國定假日，整天都能下單。`,
+      en: `So you can trade weekdays from 16:30 to 09:00 the next morning, and all day on weekends and holidays when the real exchange is closed.`,
+    },
+    {
+      zh: `為什麼？真實台股盤中股價一直在變，若還能用昨天的收盤價買賣，就能穩賺不賠。`,
+      en: `Why: while the real exchange trades, buying at yesterday's close would be a free win.`,
+    },
+  ],
+  T = {
+    market_closed: {
+      zh: `真實台股開盤中，遊戲暫停下單，收盤價公布後開放`,
+      en: `The real exchange is trading; orders reopen after its close`,
+    },
+    market_paused: {
+      zh: `行情更新中，稍後再試`,
+      en: `Prices are updating — try again shortly`,
+    },
+    market_outdated: {
+      zh: `行情過舊，暫停交易`,
+      en: `Prices are out of date; trading is paused`,
+    },
+    market_unavailable: {
+      zh: `行情暫時無法使用`,
+      en: `Prices are unavailable right now`,
+    },
+    stale_snapshot: {
+      zh: `行情剛更新，請再按一次`,
+      en: `Prices just updated — tap again`,
+    },
+    insufficient_cash: { zh: `錢包餘額不足`, en: `Not enough in your wallet` },
+    insufficient_shares: { zh: `持股不足`, en: `Not enough shares` },
+    sell_below_fees: {
+      zh: `金額不夠付手續費和稅`,
+      en: `Too small to cover fees and tax`,
+    },
+    position_limit: { zh: `已達持股上限`, en: `Holding limit reached` },
+    account_limit: { zh: `已達帳戶上限`, en: `Account limit reached` },
+    corporate_action_required: {
+      zh: `除權息處理中，暫停交易`,
+      en: `Paused for a corporate action`,
+    },
+    symbol_suspended: { zh: `這檔今天停止交易`, en: `Suspended today` },
+    sell_only_symbol: {
+      zh: `已移出台灣50，只能賣出`,
+      en: `Left the Taiwan 50 — sell only`,
+    },
+    trade_rate_limited: {
+      zh: `交易太頻繁，休息一下再試`,
+      en: `Too many trades — wait a moment`,
+    },
+    rate_limited: {
+      zh: `操作太頻繁，稍等一下`,
+      en: `Too many requests — wait a moment`,
+    },
+    wallet_rate_limited: {
+      zh: `存檔太頻繁，稍等一下再試`,
+      en: `Saving too often — wait a moment`,
+    },
+    wallet_conflict: {
+      zh: `錢包剛更新，請再按一次`,
+      en: `Your wallet just changed — tap again`,
+    },
+    wallet_unavailable: {
+      zh: `錢包同步中，稍等一下`,
+      en: `Your wallet is syncing — wait a moment`,
+    },
+    cloud_not_ready: {
+      zh: `錢包同步中，稍等一下`,
+      en: `Your wallet is syncing — wait a moment`,
+    },
+    order_pending: {
+      zh: `上一筆委託確認中`,
+      en: `Your last order is still confirming`,
+    },
+    market_in_use: { zh: `另一個分頁正在交易`, en: `Another tab is trading` },
+    wallet_recovery_required: {
+      zh: `請先在帳戶頁恢復原本的登入`,
+      en: `Restore your original sign-in in Account`,
+    },
+    storage_unavailable: {
+      zh: `瀏覽器無法存檔，請允許網站資料`,
+      en: `This browser cannot save — allow site data`,
+    },
+    unsupported_browser: {
+      zh: `這個瀏覽器無法交易，請更新`,
+      en: `This browser cannot trade — please update it`,
+    },
+    not_configured: {
+      zh: `交易服務尚未開放`,
+      en: `Trading is not available yet`,
+    },
+    unavailable: { zh: `交易服務尚未開放`, en: `Trading is not available yet` },
+    network_error: {
+      zh: `連線不穩，稍後再試`,
+      en: `Connection problem — try again`,
+    },
+    service_unavailable: {
+      zh: `交易服務忙碌，稍後再試`,
+      en: `The service is busy — try again`,
+    },
+    invalid_response: {
+      zh: `連線不穩，稍後再試`,
+      en: `Connection problem — try again`,
+    },
+  };
+function E(y, x) {
+  let S = (e, t) => x.t({ zh: e, en: t }),
+    E = (e) => x.t(e),
+    D = () => {
+      let e = s();
+      return e ? `${e.user_id}:${t()}` : void 0;
+    },
+    te = D(),
+    ne = () => te === D() && !x.ctx?.state?.resetting,
+    O = !0,
+    k = 0,
+    A,
+    j,
+    M,
+    N = `quotes`,
+    P = ``,
+    re = ``,
+    F = `symbol`,
+    I = `buy`,
+    L = p,
+    R = !1,
+    z = !1,
+    B = !1,
+    V,
+    H = ``,
+    U = !1,
+    ie = !1,
+    ae,
+    W = new Map(),
+    oe,
+    se,
+    G = d(`section`, `mk`, null);
+  (G.setAttribute(
+    `aria-label`,
+    S(`台股模擬交易`, `Taiwan stocks (paper trading)`),
+  ),
+    y.replaceChildren(G),
+    y.classList.add(`mk-body`));
+  let ce = () => {
+      let e = y.clientWidth,
+        t = y.clientHeight || window.innerHeight;
+      return { wide: e >= 440 && e > t, tight: e < 600 };
+    },
+    K = !1,
+    le = new ResizeObserver(() => {
+      let e = ce();
+      (e.wide !== U || e.tight !== K) && ((U = e.wide), (K = e.tight), Q());
+    });
+  (le.observe(y), ({ wide: U, tight: K } = ce()));
+  let q = (e, t, n, r = ``) => {
+      let i = d(`button`, `mk-btn ${r}`, e, t);
+      return (
+        (i.type = `button`),
+        (i.dataset.nav = `1`),
+        i.addEventListener(`click`, (e) => {
+          (e.stopPropagation(), x.sfx(`ui_click`, 0.6), n());
+        }),
+        i
+      );
+    },
+    ue = (e) => {
+      let t = e?.code ?? ``;
+      return T[t]
+        ? E(T[t])
+        : S(`連線不穩，稍後再試`, `Connection problem — try again`);
+    },
+    de = (e, t = `info`, n = 3800) => {
+      ((V = { text: e, kind: t }),
+        clearTimeout(se),
+        (se = setTimeout(() => {
+          ((V = void 0), Q());
+        }, n)),
+        Q());
+    },
+    J = (e) =>
+      j?.quotes.find((t) => t.symbol === e) ??
+      M?.positions.find((t) => t.symbol === e)?.quote,
+    Y = (e) => M?.positions.find((t) => t.symbol === e),
+    fe = (e) => !!j?.quotes.some((t) => t.symbol === e),
+    pe = (e) =>
+      !!j &&
+      j.trading.open &&
+      J(e)?.tradable !== !1 &&
+      (fe(e) || Y(e)?.tradable === !0),
+    me = () => {
+      try {
+        return l();
+      } catch {
+        return !1;
+      }
+    };
+  function he(t) {
+    let n = d(`div`, `mk-status`, t),
+      o = d(`span`, `mk-pill`, n),
+      s = j?.trading,
+      c,
+      l;
+    if (
+      (j
+        ? s?.open
+          ? ((c = s.closesAt
+              ? S(
+                  e.on
+                    ? e.t(
+                        `開放交易 · 到${C(s.closesAt).zh}`,
+                        `取引できます · ${e.jz(C(s.closesAt).zh)}まで`,
+                      )
+                    : `開放交易 · 到${C(s.closesAt).zh}`,
+                  `Open · until ${C(s.closesAt).en}`,
+                )
+              : S(`開放交易`, `Open`)),
+            (l = `open`))
+          : s?.reason === `session_open`
+            ? ((c = S(
+                e.on
+                  ? e.t(`暫停下單 · ${X().zh}`, `注文停止中 · ${e.jz(X().zh)}`)
+                  : `暫停下單 · ${X().zh}`,
+                `Orders paused · ${X().en}`,
+              )),
+              (l = `wait`))
+            : s?.reason === `refresh`
+              ? ((c = S(`更新行情中`, `Updating prices`)), (l = `wait`))
+              : ((c = S(`暫停交易`, `Paused`)), (l = `off`))
+        : ((c = S(`連線中`, `Connecting`)), (l = `idle`)),
+      (o.dataset.state = l),
+      d(`i`, ``, o).setAttribute(`aria-hidden`, `true`),
+      d(`span`, ``, o, c),
+      j &&
+        d(
+          `span`,
+          `mk-asof`,
+          n,
+          S(
+            e.on
+              ? e.t(`收盤 ${b(j.date)}`, `終値 ${b(j.date)}`)
+              : `收盤 ${b(j.date)}`,
+            `Close ${b(j.date)}`,
+          ),
+        ),
+      j)
+    ) {
+      let e = q(
+        n,
+        K && U ? `ⓘ` : S(`規則`, `Rules`),
+        () => {
+          ((ae = !Z()), Q());
+        },
+        `mk-link mk-rules-btn${Z() ? ` on` : ``}`,
+      );
+      (e.setAttribute(`aria-expanded`, String(Z())),
+        e.setAttribute(
+          `aria-label`,
+          S(`盤後交易規則`, `After-hours trading rules`),
+        ));
+    }
+    let u = d(`span`, `mk-wallet`, n);
+    M &&
+      (d(`small`, ``, u, S(`錢包`, `Wallet`)),
+      d(`strong`, ``, u, g(M.cash)),
+      f
+        ? d(`small`, `mk-hk`, u, `HK$ ${m(Math.floor(M.cash / 4))}`)
+        : a === `tokyo`
+          ? d(
+              `small`,
+              `mk-hk`,
+              u,
+              `¥${m(i(M.cash, `tokyo`) + r(x.ctx?.state?.data))}`,
+            )
+          : a === `london` &&
+            d(`small`, `mk-hk`, u, `£${m(i(M.cash, `london`))}`));
+  }
+  function X() {
+    let t = j?.trading.reopensAt;
+    if (!t || Date.parse(t) <= Date.now())
+      return { zh: `等收盤價公布`, en: `Waiting for the close` };
+    let n = C(t);
+    return {
+      zh: e.on
+        ? e.t(`${n.zh} 後開放`, `${e.jz(n.zh)}に再開`)
+        : `${n.zh} 後開放`,
+      en: `Opens ${n.en}`,
+    };
+  }
+  let Z = () => ae ?? j?.trading.reason === `session_open`;
+  function ge(e) {
+    let t = d(`div`, `mk-rules`, e);
+    t.setAttribute(`role`, `note`);
+    let n = d(`div`, `mk-rules-head`, t);
+    (d(`strong`, ``, n, S(`盤後交易規則`, `After-hours trading`)),
+      q(
+        n,
+        S(`知道了`, `Got it`),
+        () => {
+          ((ae = !1), Q());
+        },
+        `mk-link`,
+      ));
+    let r = d(`ul`, ``, t);
+    for (let e of w) d(`li`, ``, r, E(e));
+  }
+  function _e(t) {
+    let n = d(`nav`, `mk-tabs`, t);
+    n.setAttribute(`aria-label`, S(`台股`, `Stocks`));
+    let r = M?.positions.length ?? 0;
+    for (let [t, i] of [
+      [`quotes`, S(`行情`, `Market`)],
+      [
+        `portfolio`,
+        r
+          ? S(
+              e.on ? e.t(`持股 ${r}`, `保有株 ${r}`) : `持股 ${r}`,
+              `Holdings ${r}`,
+            )
+          : S(`持股`, `Holdings`),
+      ],
+      [`activity`, S(`紀錄`, `History`)],
+    ])
+      q(
+        n,
+        i,
+        () => {
+          ((N = t), U || (P = ``), (R = !1), Q());
+        },
+        N === t ? `on` : ``,
+      ).setAttribute(`aria-current`, N === t ? `page` : `false`);
+  }
+  function Q() {
+    if (!O) return;
+    let e = [...G.querySelectorAll(`[data-scroll]`)].map((e) => [
+        e.dataset.scroll,
+        e.scrollTop,
+      ]),
+      t = y.scrollTop,
+      n =
+        document.activeElement instanceof HTMLElement &&
+        G.contains(document.activeElement)
+          ? document.activeElement.dataset.mk
+          : void 0;
+    (G.replaceChildren(),
+      G.classList.toggle(`wide`, U),
+      G.classList.toggle(`tight`, K));
+    let r = d(`div`, `mk-top`, G);
+    if (
+      (B || he(r),
+      V &&
+        d(`div`, `mk-notice ${V.kind}`, G, V.text).setAttribute(
+          `role`,
+          `status`,
+        ),
+      me() && !z)
+    ) {
+      let e = d(
+        `div`,
+        `mk-notice info`,
+        G,
+        S(
+          `上一筆委託確認中，完成前不能再下單`,
+          `Confirming your last order — new orders wait for it`,
+        ),
+      );
+      (e.setAttribute(`role`, `status`),
+        q(e, S(`重試`, `Retry`), () => void $(), `mk-link`));
+    }
+    if (B) return ye();
+    if (!j || !M) return ve();
+    if (H) {
+      let e = d(`div`, `mk-notice bad`, G, H);
+      (e.setAttribute(`role`, `alert`),
+        q(e, S(`重試`, `Retry`), () => void $(), `mk-link`));
+    }
+    (_e(U ? r : G), U && r.appendChild(r.querySelector(`.mk-wallet`)));
+    let i = d(`div`, `mk-main`, G);
+    if (U) {
+      let e = d(`div`, `mk-pane mk-left`, i);
+      e.dataset.scroll = `left`;
+      let t = d(`div`, `mk-pane mk-right`, i);
+      ((t.dataset.scroll = `right`),
+        Z() && ge(e),
+        N === `quotes` ? we(e) : N === `portfolio` ? Te(e) : Ee(e),
+        (P ||=
+          N === `portfolio` && M.positions[0]
+            ? M.positions[0].symbol
+            : (xe()[0]?.symbol ?? ``)),
+        P ? De(t) : d(`p`, `mk-empty`, t, S(`選一檔股票`, `Pick a stock`)));
+    } else
+      P
+        ? De(i)
+        : (Z() && ge(i),
+          N === `quotes` ? we(i) : N === `portfolio` ? Te(i) : Ee(i));
+    N === `quotes` && (!P || U) && be();
+    for (let [t, n] of e) {
+      let e = G.querySelector(`[data-scroll="${t}"]`);
+      e && (e.scrollTop = n);
+    }
+    ((y.scrollTop = t),
+      n && G.querySelector(`[data-mk="${n}"]`)?.focus({ preventScroll: !0 }));
+  }
+  function ve() {
+    let e = d(`div`, `mk-skeleton`, G);
+    (e.setAttribute(`role`, `status`),
+      e.setAttribute(`aria-label`, H || S(`載入行情中`, `Loading prices`)));
+    for (let t = 0; t < 6; t++) d(`div`, `mk-skel-row`, e);
+    if (H) {
+      let e = d(`div`, `mk-notice bad`, G, H);
+      q(e, S(`重試`, `Retry`), () => void $(), `mk-link`);
+    }
+  }
+  function ye() {
+    let e = d(`div`, `mk-start`, G);
+    (d(`div`, `mk-start-ic`, e, `📈`).setAttribute(`aria-hidden`, `true`),
+      d(`h2`, ``, e, S(`用遊戲的錢買台股`, `Buy Taiwan stocks with game cash`)),
+      d(
+        `p`,
+        ``,
+        e,
+        S(
+          `台灣50 · 盤後交易 · 模擬交易`,
+          `Taiwan 50 · after-hours · paper trading`,
+        ),
+      ),
+      d(
+        `p`,
+        ``,
+        e,
+        S(
+          `平日 16:30 到隔天 09:00、週末假日整天可交易`,
+          `Fills at the close: weekdays 16:30 to 09:00, all day on weekends and holidays`,
+        ),
+      ));
+    let t = q(
+      e,
+      S(`開始交易`, `Start trading`),
+      async () => {
+        t.disabled = !0;
+        try {
+          await c(!0);
+        } catch {}
+        O &&
+          (s()
+            ? ((B = !1), $())
+            : ((t.disabled = !1),
+              (H = S(`現在無法連線，稍後再試`, `Cannot connect right now`)),
+              Q()));
+      },
+      `mk-primary`,
+    );
+    (q(
+      e,
+      S(`用 Google 登入`, `Sign in with Google`),
+      () => n(x.ctx),
+      `mk-link`,
+    ),
+      H && d(`p`, `mk-note bad`, e, H));
+  }
+  function be() {
+    if (!j) return;
+    let e = d(`footer`, `mk-footer`, G),
+      t = d(
+        `a`,
+        ``,
+        e,
+        S(`收盤價：臺灣證券交易所 ↗`, `Closing prices: TWSE ↗`),
+      );
+    ((t.href = `https://www.twse.com.tw/`),
+      (t.target = `_blank`),
+      (t.rel = `noopener noreferrer`),
+      d(
+        `span`,
+        ``,
+        e,
+        S(`模擬交易，不是真的下單`, `Paper trading — no real orders`),
+      ));
+  }
+  function xe() {
+    let e = re.trim().toLocaleLowerCase(),
+      t = (e, t, n) =>
+        e.changePercent == null
+          ? 1
+          : t.changePercent == null
+            ? -1
+            : n * (e.changePercent - t.changePercent);
+    return j.quotes
+      .filter(
+        (t) =>
+          !e ||
+          `${t.symbol} ${t.name.zh} ${t.name.en} ${x.t(t.name)}`
+            .toLocaleLowerCase()
+            .includes(e),
+      )
+      .sort((e, n) =>
+        F === `gainers`
+          ? t(e, n, -1)
+          : F === `losers`
+            ? t(e, n, 1)
+            : F === `volume`
+              ? (n.volume ?? 0) - (e.volume ?? 0)
+              : e.symbol.localeCompare(n.symbol),
+      );
+  }
+  function Se(e) {
+    if (!M || !j) return p;
+    let t = Math.min(
+      p,
+      Math.floor(M.cash / (e.close * (1 + j.fees.commissionRate))),
+    );
+    for (; t > 1 && ee(e.close, t, `buy`, j.fees).total > M.cash;) t--;
+    return Math.max(1, t);
+  }
+  function Ce(t, n, r) {
+    let i = q(
+      t,
+      ``,
+      () => {
+        ((P = n.symbol),
+          (I = Y(n.symbol) && N === `portfolio` ? `sell` : `buy`),
+          (L = I === `sell` ? Math.min(Y(n.symbol).quantity, p) : Se(n)),
+          (R = !1),
+          Q(),
+          U || (y.scrollTop = 0),
+          Ne(n.symbol));
+      },
+      `mk-row${P === n.symbol && U ? ` sel` : ``}`,
+    );
+    i.dataset.symbol = n.symbol;
+    let a = d(`span`, `mk-name`, i);
+    (d(`strong`, ``, a, x.t(n.name)),
+      d(
+        `small`,
+        ``,
+        a,
+        r
+          ? S(
+              e.on
+                ? e.t(
+                    `${n.symbol} · ${m(r.qty)} 股`,
+                    `${n.symbol} · ${m(r.qty)} 株`,
+                  )
+                : `${n.symbol} · ${m(r.qty)} 股`,
+              `${n.symbol} · ${m(r.qty)} sh`,
+            )
+          : n.symbol + (Y(n.symbol) ? ` ●` : ``),
+      ));
+    let o = d(`span`, `mk-px`, i);
+    d(`strong`, ``, o, h(n.close));
+    let s = r ? r.pnl : n.changePercent;
+    d(
+      `span`,
+      `mk-chg ${v(s)}`,
+      o,
+      n.tradable === !1 && n.haltReason === `suspended`
+        ? S(`停牌`, `Halted`)
+        : _(s),
+    );
+  }
+  function we(e) {
+    let t = d(`div`, `mk-tools`, e),
+      n = d(`input`, `mk-search`, t);
+    ((n.type = `search`),
+      (n.placeholder = S(`搜尋代號或名稱`, `Search symbol or name`)),
+      (n.value = re),
+      n.setAttribute(`aria-label`, S(`搜尋股票`, `Search stocks`)),
+      (n.dataset.nav = `1`),
+      (n.dataset.mk = `search`));
+    let r = d(`div`, `mk-chips`, t);
+    for (let [e, t] of [
+      [`symbol`, S(`代號`, `Code`)],
+      [`gainers`, S(`漲幅`, `Up`)],
+      [`losers`, S(`跌幅`, `Down`)],
+      [`volume`, S(`熱門`, `Active`)],
+    ]) {
+      let n = q(
+        r,
+        t,
+        () => {
+          ((F = e),
+            a(),
+            r.querySelectorAll(`.on`).forEach((e) => e.classList.remove(`on`)),
+            n.classList.add(`on`));
+        },
+        F === e ? `on` : ``,
+      );
+      n.setAttribute(`aria-pressed`, String(F === e));
+    }
+    let i = d(`div`, `mk-list`, e);
+    i.dataset.scroll = U ? `list` : ``;
+    function a() {
+      i.replaceChildren();
+      let e = xe();
+      for (let t of e) Ce(i, t);
+      e.length || d(`p`, `mk-empty`, i, S(`找不到這檔股票`, `No match`));
+    }
+    (n.addEventListener(`input`, () => {
+      ((re = n.value), a());
+    }),
+      a());
+  }
+  function Te(e) {
+    let t = M.positions,
+      n = t.map((e) => ({
+        p: e,
+        mark: e.lastPrice ?? J(e.symbol)?.close ?? null,
+      })),
+      r = n.reduce((e, t) => e + (t.mark ?? 0) * t.p.quantity, 0),
+      i = t.reduce((e, t) => e + t.costBasis, 0),
+      a = d(`div`, `mk-summary`, e),
+      o = (e, t, n = ``) => {
+        let r = d(`div`, ``, a);
+        (d(`small`, ``, r, e), d(`strong`, n, r, t));
+      };
+    if (
+      (o(S(`股票市值`, `Holdings`), g(r)),
+      o(
+        S(`未實現`, `Unrealised`),
+        `${r - i >= 0 ? `+` : ``}${g(r - i)}`,
+        v(r - i),
+      ),
+      o(
+        S(`已實現`, `Realised`),
+        `${M.realizedPnl >= 0 ? `+` : ``}${g(M.realizedPnl)}`,
+        v(M.realizedPnl),
+      ),
+      !t.length)
+    ) {
+      let t = d(`div`, `mk-empty`, e);
+      (d(`p`, ``, t, S(`還沒有股票`, `No stocks yet`)),
+        q(
+          t,
+          S(`去看行情`, `Browse the market`),
+          () => {
+            ((N = `quotes`), Q());
+          },
+          `mk-link`,
+        ));
+      return;
+    }
+    let s = d(`div`, `mk-list`, e);
+    for (let { p: e, mark: t } of n)
+      Ce(
+        s,
+        J(e.symbol) ?? {
+          symbol: e.symbol,
+          name: { zh: e.symbol, en: e.symbol },
+          close: t ?? 0,
+          previousClose: null,
+          change: null,
+          changePercent: null,
+          open: null,
+          high: null,
+          low: null,
+          volume: null,
+        },
+        {
+          qty: e.quantity,
+          pnl:
+            t == null || !e.costBasis
+              ? null
+              : ((t * e.quantity - e.costBasis) / e.costBasis) * 100,
+        },
+      );
+  }
+  function Ee(t) {
+    let n = [];
+    for (let e of M.orders)
+      n.push({
+        at: e.createdAt,
+        el: (t) => {
+          let n = d(`div`, `mk-act`, t),
+            r = d(`span`, ``, n);
+          (d(
+            `strong`,
+            e.side === `buy` ? `up` : `down`,
+            r,
+            `${e.side === `buy` ? S(`買`, `Buy`) : S(`賣`, `Sell`)} ${x.t(J(e.symbol)?.name ?? { zh: e.symbol, en: e.symbol })}`,
+          ),
+            d(
+              `small`,
+              ``,
+              r,
+              `${m(e.quantity)} ${S(`股`, `sh`)} @ ${h(e.price)} · ${b(e.createdAt.slice(0, 10))}`,
+            ),
+            d(
+              `span`,
+              `mk-amt`,
+              n,
+              `${e.side === `buy` ? `−` : `+`}${g(e.total)}`,
+            ));
+        },
+      });
+    for (let t of M.dividends)
+      n.push({
+        at: t.createdAt,
+        el: (n) => {
+          let r = d(`div`, `mk-act`, n),
+            i = d(`span`, ``, r);
+          (d(
+            `strong`,
+            `up`,
+            i,
+            `${S(`股息`, `Dividend`)} ${x.t(J(t.symbol)?.name ?? { zh: t.symbol, en: t.symbol })}`,
+          ),
+            d(
+              `small`,
+              ``,
+              i,
+              `${m(t.quantity)} ${S(`股`, `sh`)}${t.bonusShares ? S(e.on ? e.t(` · 配股 +${m(t.bonusShares)}`, ` · 株式配当 +${m(t.bonusShares)}`) : ` · 配股 +${m(t.bonusShares)}`, ` · +${m(t.bonusShares)} bonus`) : ``} · ${b(t.date)}`,
+            ),
+            d(`span`, `mk-amt up`, r, t.cash ? `+${g(t.cash)}` : ``));
+        },
+      });
+    if (!n.length) {
+      d(`p`, `mk-empty`, t, S(`還沒有交易`, `No trades yet`));
+      return;
+    }
+    let r = d(`div`, `mk-list`, t);
+    n.sort((e, t) => t.at.localeCompare(e.at)).forEach((e) => e.el(r));
+  }
+  function De(t) {
+    let n = J(P);
+    if (!n) return ((P = ``), Q());
+    let r = Y(n.symbol);
+    U ||
+      q(
+        t,
+        S(`‹ 返回`, `‹ Back`),
+        () => {
+          ((P = ``), (R = !1), Q());
+        },
+        `mk-back`,
+      );
+    let i = d(`div`, `mk-head`, t),
+      a = d(`div`, `mk-title`, i),
+      o = d(`div`, `mk-tname`, a);
+    if ((d(`h2`, ``, o, x.t(n.name)), d(`small`, ``, o, n.symbol), r)) {
+      let t = (r.lastPrice ?? n.close) * r.quantity - r.costBasis,
+        i = d(`div`, `mk-holding`, a);
+      (d(
+        `span`,
+        ``,
+        i,
+        S(
+          e.on
+            ? e.t(
+                `持有 ${m(r.quantity)} 股 · 均價 ${h(r.costBasis / r.quantity)}`,
+                `保有 ${m(r.quantity)} 株 · 平均 ${h(r.costBasis / r.quantity)}`,
+              )
+            : `持有 ${m(r.quantity)} 股 · 均價 ${h(r.costBasis / r.quantity)}`,
+          `${m(r.quantity)} sh · avg ${h(r.costBasis / r.quantity)}`,
+        ),
+      ),
+        d(`strong`, v(t), i, `${t >= 0 ? `+` : ``}${g(t)}`));
+    } else {
+      let e = d(`div`, `mk-facts`, a);
+      for (let [t, r] of [
+        [x.t({ zh: `開`, en: `O`, ja: `始` }), n.open],
+        [S(`高`, `H`), n.high],
+        [x.t({ zh: `低`, en: `L`, ja: `安` }), n.low],
+      ])
+        r != null && d(`span`, ``, e, `${t} ${h(r)}`);
+      n.volume != null &&
+        d(
+          `span`,
+          ``,
+          e,
+          `${S(`量`, `Vol`)} ${m(Math.round(n.volume / p))}${S(`張`, `k`)}`,
+        );
+    }
+    let s = d(`div`, `mk-big`, i);
+    (d(`strong`, ``, s, h(n.close)),
+      d(
+        `span`,
+        `mk-chg ${v(n.change)}`,
+        s,
+        n.change == null
+          ? S(`除權息`, `Ex-div`)
+          : `${n.change > 0 ? `▲` : n.change < 0 ? `▼` : ``}${h(Math.abs(n.change))} (${_(n.changePercent)})`,
+      ),
+      U || Oe(t, n.symbol),
+      ke(t, n, r?.quantity ?? 0));
+  }
+  function Oe(t, n) {
+    let r = W.get(n);
+    if (!r || r === `error` || r.length < 2) return;
+    let i = document.createElementNS(`http://www.w3.org/2000/svg`, `svg`);
+    (i.setAttribute(`viewBox`, `0 0 120 36`),
+      i.setAttribute(`preserveAspectRatio`, `none`),
+      i.setAttribute(`class`, `mk-spark ${v(r.at(-1).close - r[0].close)}`),
+      i.setAttribute(`role`, `img`),
+      i.setAttribute(
+        `aria-label`,
+        S(
+          e.on
+            ? e.t(`${r.length} 日收盤走勢`, `${r.length}日間の終値`)
+            : `${r.length} 日收盤走勢`,
+          `${r.length}-day closes`,
+        ),
+      ));
+    let a = Math.min(...r.map((e) => e.close)),
+      o = Math.max(...r.map((e) => e.close)) - a || 1,
+      s = document.createElementNS(i.namespaceURI, `polyline`);
+    (s.setAttribute(
+      `points`,
+      r
+        .map(
+          (e, t) =>
+            `${((t * 120) / (r.length - 1)).toFixed(1)},${(33 - ((e.close - a) / o) * 30).toFixed(1)}`,
+        )
+        .join(` `),
+    ),
+      i.appendChild(s),
+      t.appendChild(i));
+  }
+  function ke(t, n, r) {
+    let i = d(`div`, `mk-ticket`, t),
+      a = fe(n.symbol);
+    (a || (I = `sell`), I === `sell` && !r && (I = `buy`));
+    let o = d(`div`, `mk-seg`, i);
+    for (let [e, t] of [
+      [`buy`, S(`買入`, `Buy`)],
+      [`sell`, S(`賣出`, `Sell`)],
+    ]) {
+      let n = q(
+        o,
+        t,
+        () => {
+          ((I = e),
+            (L = e === `sell` ? Math.min(r, L || p) || 1 : L || p),
+            (R = !1),
+            Q());
+        },
+        `${e}${I === e ? ` on` : ``}`,
+      );
+      (n.setAttribute(`aria-pressed`, String(I === e)),
+        (n.disabled = (e === `buy` && !a) || (e === `sell` && !r)));
+    }
+    let s = j.fees,
+      c = () => {
+        let e = M.cash,
+          t = Math.floor(e / (n.close * (1 + s.commissionRate)));
+        for (; t > 0 && ee(n.close, t, `buy`, s).total > e;) t--;
+        return Math.max(0, Math.min(t, 1e6));
+      },
+      l = d(`div`, `mk-qty`, i),
+      u = q(l, `−`, () => b(L - (L > p ? p : L > 100 ? 100 : 1)), `mk-step`);
+    u.setAttribute(`aria-label`, S(`減少股數`, `Fewer shares`));
+    let f = d(`input`, `mk-qty-in`, l);
+    ((f.type = `text`),
+      (f.inputMode = `numeric`),
+      (f.value = m(L)),
+      (f.dataset.nav = `1`),
+      (f.dataset.mk = `qty`),
+      f.setAttribute(`aria-label`, S(`股數`, `Shares`)),
+      d(`span`, `mk-unit`, l, S(`股`, `sh`)));
+    let h = q(
+      l,
+      `+`,
+      () => b(L + (L >= p ? p : L >= 100 ? 100 : 1)),
+      `mk-step`,
+    );
+    h.setAttribute(`aria-label`, S(`增加股數`, `More shares`));
+    let _ = d(`div`, `mk-chips mk-quick`, i);
+    for (let [e, t] of [
+      [1, S(`1股`, `1`)],
+      [100, `100`],
+      [p, S(`1張`, `1 lot`)],
+    ])
+      q(_, t, () => b(e), L === e ? `on` : ``);
+    q(
+      _,
+      I === `buy`
+        ? S(`最多`, `Max`)
+        : x.t({ zh: `全部`, en: `All`, ja: `全株` }),
+      () => b(I === `buy` ? c() : r),
+    );
+    let v = d(`div`, `mk-sum`, i),
+      y = q(i, ``, () => D(), `mk-go ${I}`);
+    (f.addEventListener(`input`, () => {
+      let e = Number(f.value.replace(/[^\d]/g, ``));
+      ((L = Math.min(e, 1e6)), (R = !1), w());
+    }),
+      f.addEventListener(`blur`, () => {
+        f.value = L ? m(L) : ``;
+      }));
+    function b(e) {
+      ((L = Math.max(0, Math.min(Math.floor(e), I === `sell` ? r : 1e6))),
+        (R = !1),
+        (f.value = L ? m(L) : ``),
+        w());
+    }
+    function C() {
+      if (z) return S(`成交中…`, `Placing…`);
+      if (me()) return E(T.order_pending);
+      if (!j.trading.open)
+        return j.trading.reason === `session_open`
+          ? E(X())
+          : S(`暫停交易`, `Paused`);
+      if (n.tradable === !1)
+        return n.haltReason === `suspended`
+          ? E(T.symbol_suspended)
+          : E(T.corporate_action_required);
+      if (!pe(n.symbol)) return S(`暫停交易`, `Paused`);
+      if (!L) return S(`輸入股數`, `Enter shares`);
+      if (I === `sell` && L > r) return E(T.insufficient_shares);
+      let e = ee(n.close, L, I, s);
+      return I === `buy` && e.total > M.cash
+        ? E(T.insufficient_cash)
+        : I === `sell` && e.total <= 0
+          ? E(T.sell_below_fees)
+          : ``;
+    }
+    function w() {
+      if (
+        ((u.disabled = L <= 1),
+        (h.disabled = I === `sell` ? L >= r : L >= 1e6),
+        _.querySelectorAll(`.mk-btn`).forEach((e, t) =>
+          e.classList.toggle(`on`, [1, 100, p][t] === L),
+        ),
+        v.replaceChildren(),
+        L)
+      ) {
+        let t = ee(n.close, L, I, s);
+        (d(
+          `strong`,
+          ``,
+          v,
+          `${S(I === `buy` ? `約付` : `約收`, `About`)} ${g(t.total)}`,
+        ),
+          d(
+            `small`,
+            ``,
+            v,
+            I === `buy`
+              ? S(
+                  e.on
+                    ? e.t(`含手續費 ${m(t.fee)}`, `手数料 ${m(t.fee)} 込み`)
+                    : `含手續費 ${m(t.fee)}`,
+                  `incl. fee ${m(t.fee)}`,
+                )
+              : S(
+                  e.on
+                    ? e.t(
+                        `已扣手續費 ${m(t.fee)}、稅 ${m(t.tax)}`,
+                        `手数料 ${m(t.fee)}・税 ${m(t.tax)} 差引後`,
+                      )
+                    : `已扣手續費 ${m(t.fee)}、稅 ${m(t.tax)}`,
+                  `after fee ${m(t.fee)}, tax ${m(t.tax)}`,
+                ),
+          ));
+      }
+      let t = C();
+      if (
+        ((y.disabled = !!t),
+        y.classList.toggle(`confirm`, R && !t),
+        (y.textContent =
+          t ||
+          (R
+            ? I === `buy`
+              ? S(
+                  e.on
+                    ? e.t(`確認買入 ${m(L)} 股`, `${m(L)} 株の買いを確定`)
+                    : `確認買入 ${m(L)} 股`,
+                  `Confirm: buy ${m(L)}`,
+                )
+              : S(
+                  e.on
+                    ? e.t(`確認賣出 ${m(L)} 股`, `${m(L)} 株の売りを確定`)
+                    : `確認賣出 ${m(L)} 股`,
+                  `Confirm: sell ${m(L)}`,
+                )
+            : I === `buy`
+              ? S(
+                  e.on
+                    ? e.t(`買入 ${m(L)} 股`, `${m(L)} 株を買う`)
+                    : `買入 ${m(L)} 股`,
+                  `Buy ${m(L)}`,
+                )
+              : S(
+                  e.on
+                    ? e.t(`賣出 ${m(L)} 股`, `${m(L)} 株を売る`)
+                    : `賣出 ${m(L)} 股`,
+                  `Sell ${m(L)}`,
+                ))),
+        R && !t)
+      ) {
+        let e = d(`button`, `mk-btn mk-link mk-cancel`, v, S(`取消`, `Cancel`));
+        ((e.type = `button`),
+          (e.dataset.nav = `1`),
+          e.addEventListener(`click`, (e) => {
+            (e.stopPropagation(), x.sfx(`ui_back`, 0.6), (R = !1), w());
+          }));
+      }
+    }
+    function D() {
+      if (!C()) {
+        if (!R) {
+          ((R = !0),
+            w(),
+            clearTimeout(oe),
+            (oe = setTimeout(() => {
+              R && ((R = !1), Q());
+            }, 5e3)));
+          return;
+        }
+        ((R = !1),
+          clearTimeout(oe),
+          Ae({
+            requestId: crypto.randomUUID(),
+            snapshotId: j.id,
+            symbol: n.symbol,
+            side: I,
+            quantity: L,
+          }));
+      }
+    }
+    w();
+  }
+  async function Ae(t) {
+    if (!A || z || !ne()) return;
+    ((z = !0), Q());
+    let n = k,
+      r = A;
+    try {
+      let i = await r.order(t);
+      if (!O || n !== k) return;
+      let a = x.t(J(i.symbol)?.name ?? { zh: i.symbol, en: i.symbol });
+      (x.sfx(i.side === `sell` ? `money` : `ui_confirm`),
+        de(
+          i.side === `buy`
+            ? S(
+                e.on
+                  ? e.t(
+                      `✓ 已買入 ${a} ${m(i.quantity)} 股`,
+                      `✓ ${a}を ${m(i.quantity)} 株買いました`,
+                    )
+                  : `✓ 已買入 ${a} ${m(i.quantity)} 股`,
+                `✓ Bought ${m(i.quantity)} ${a}`,
+              )
+            : S(
+                e.on
+                  ? e.t(
+                      `✓ 已賣出 ${a} ${m(i.quantity)} 股，+${g(i.total)}`,
+                      `✓ ${a}を ${m(i.quantity)} 株売りました（+${g(i.total)}）`,
+                    )
+                  : `✓ 已賣出 ${a} ${m(i.quantity)} 股，+${g(i.total)}`,
+                `✓ Sold ${m(i.quantity)} ${a}, +${g(i.total)}`,
+              ),
+          `good`,
+        ),
+        i.side === `sell` && !Y(i.symbol) && (I = `buy`));
+    } catch (e) {
+      if (!O || n !== k) return;
+      (x.sfx(`ui_back`), de(ue(e), `bad`, 5200));
+    } finally {
+      ((z = !1), O && n === k && (await je()));
+    }
+  }
+  async function je() {
+    if (!A || !ne()) return;
+    let e = k;
+    try {
+      let { snapshot: t, account: n } = await A.refresh();
+      O && e === k && ((j = t), (M = n), (H = ``), Q(), Me());
+    } catch (t) {
+      O && e === k && ((H = ue(t)), Q());
+    }
+  }
+  async function Me() {
+    if (!(!A || ie || !M || M.collectible < 1 || me())) {
+      ie = !0;
+      try {
+        let t = await A.collect();
+        t > 0 &&
+          O &&
+          (x.sfx(`coin`),
+          de(
+            S(
+              e.on
+                ? e.t(
+                    `股息 +${g(t)} 已存入錢包`,
+                    `配当 +${g(t)} を財布に入れました`,
+                  )
+                : `股息 +${g(t)} 已存入錢包`,
+              `Dividend +${g(t)} added to your wallet`,
+            ),
+            `good`,
+          ),
+          await je());
+      } catch {
+      } finally {
+        ie = !1;
+      }
+    }
+  }
+  async function Ne(e) {
+    if (W.has(e) || !A) return;
+    let t = k;
+    try {
+      let n = await A.history(e);
+      O &&
+        t === k &&
+        (W.set(
+          e,
+          n
+            .filter((e) => e.close > 0)
+            .sort((e, t) => e.date.localeCompare(t.date)),
+        ),
+        P === e && Q());
+    } catch {
+      O && t === k && W.set(e, `error`);
+    }
+  }
+  async function $() {
+    let e = ++k;
+    ((te = D()), (H = ``), (B = !1), Q());
+    try {
+      let t = await u(x.ctx);
+      if (!O || e !== k) return;
+      A = t;
+      let { snapshot: n, account: r } = await t.refresh();
+      if (!O || e !== k) return;
+      ((j = n),
+        (M = r),
+        U &&
+          !P &&
+          ((P = n.quotes[0]?.symbol ?? ``),
+          n.quotes[0] && (L = Se(n.quotes[0]))),
+        P && Ne(P),
+        Me());
+    } catch (t) {
+      if (!O || e !== k) return;
+      t?.code === `session_expired` && !s() ? (B = !0) : (H = ue(t));
+    } finally {
+      O && e === k && Q();
+    }
+  }
+  let Pe = o(() => {
+      D() !== te &&
+        (k++,
+        (A = void 0),
+        (j = void 0),
+        (M = void 0),
+        (P = ``),
+        W.clear(),
+        $());
+    }),
+    Fe = () => {
+      ((H = S(`目前離線`, `You are offline`)), Q());
+    },
+    Ie = () => void $();
+  return (
+    window.addEventListener(`offline`, Fe),
+    window.addEventListener(`online`, Ie),
+    $(),
+    () => {
+      ((O = !1),
+        k++,
+        clearTimeout(oe),
+        clearTimeout(se),
+        le.disconnect(),
+        Pe(),
+        window.removeEventListener(`offline`, Fe),
+        window.removeEventListener(`online`, Ie),
+        G.remove(),
+        y.classList.remove(`mk-body`));
+    }
+  );
+}
+export { E as mountMarket };

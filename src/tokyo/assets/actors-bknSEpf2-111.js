@@ -1,0 +1,46 @@
+// tokyo/assets/actors-bknSEpf2 111 — math
+// Lines 48075-48118 of readable/tokyo/assets/actors-bknSEpf2.pretty.js (statement-aligned).
+var tD = Math.PI * 2,
+  nD = 128,
+  rD = 2,
+  iD = 1.7,
+  aD = 0.5,
+  oD = 3,
+  sD = 0.5,
+  cD = Q(14) | Q(15) | Q(16) | Q(19) | Q(17) | Q(18) | Q(21),
+  lD = Q(3) | Q(4) | Q(5) | Q(9),
+  uD = cD | Q(10),
+  dD = Q(14) | Q(15) | Q(19) | Q(21),
+  fD = {
+    daan: 1.6,
+    xinyi: 1.4,
+    songshan: 1.2,
+    zhongzheng: 1.1,
+    zhongshan: 1,
+    shilin: 1,
+    wanhua: 0.7,
+    ximending: 0.45,
+    riverside: 3,
+  },
+  pD = {
+    idle: 0,
+    wave: 6,
+    sit: 1,
+    cower: 2,
+    phone: 5,
+    hands_up: 8,
+    chat: 7,
+    pray: 4,
+    squat: 15,
+    film: 12,
+    look_up: 17,
+    sitFloor: 19,
+    punch: 20,
+    swing: 21,
+    fist: 23,
+    placard: 24,
+  },
+  mD = (e, t, n) => (e < t ? t : e > n ? n : e);
+function hD(e) {
+  return ((e = (e + Math.PI) % tD), e < 0 && (e += tD), e - Math.PI);
+}
