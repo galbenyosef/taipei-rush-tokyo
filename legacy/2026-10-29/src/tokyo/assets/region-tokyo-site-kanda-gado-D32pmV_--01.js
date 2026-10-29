@@ -1,0 +1,179 @@
+// tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_- 01 — key
+// Lines 1-177 of readable/tokyo/assets/region-tokyo-site-kanda-gado-D32pmV_-.pretty.js (statement-aligned).
+import { t as e } from "./rolldown-runtime-DK3Fl9T5.js";
+import { nt as t } from "./world-CAmHK742.js";
+import { in as n, n as r } from "./region-tokyo-55J_WESF.js";
+import {
+  B as i,
+  G as a,
+  U as o,
+  c as s,
+  q as c,
+  z as l,
+} from "./region-tokyo-sites-kit-CgUCzK9Y.js";
+var u = e({ default: () => d }),
+  d = t({
+    state: (e) => {
+      let t = r(e);
+      return t >= 16 || t < 0.5 ? 2 : +(t >= 11 && t < 15);
+    },
+    art: [
+      {
+        key: `signs`,
+        w: 256,
+        h: 96,
+        legibility: 9,
+        paint: (e, t, r, i) =>
+          l(
+            e,
+            t,
+            r,
+            {
+              cols: 1,
+              rows: 3,
+              cells: [
+                {
+                  bg: `#f4ead2`,
+                  fg: `#7a1a0a`,
+                  text: n(`sites.kanda.yakiton`),
+                  style: `wood`,
+                  serif: !0,
+                },
+                {
+                  bg: `#1a3a6a`,
+                  fg: `#ffffff`,
+                  text: n(`sites.kanda.tachinomi`),
+                  style: `lightbox`,
+                },
+                {
+                  bg: `#ffd21e`,
+                  fg: `#c8161c`,
+                  text: n(`sites.kanda.curry`),
+                  style: `lightbox`,
+                },
+              ],
+            },
+            i,
+          ),
+      },
+      {
+        key: `lanterns`,
+        w: 128,
+        h: 64,
+        paint: (e, t, r, i) =>
+          o(
+            e,
+            t,
+            r,
+            {
+              items: [
+                { text: n(`sites.kanda.lantern-1`) },
+                { text: n(`sites.kanda.lantern-2`) },
+              ],
+            },
+            i,
+          ),
+      },
+      {
+        key: `noren`,
+        w: 128,
+        h: 64,
+        paint: (e, t, r, i) =>
+          c(
+            e,
+            t,
+            r,
+            { bg: `#5a1a12`, text: n(`sites.common.sakaba`), panels: 3 },
+            i,
+          ),
+      },
+      {
+        key: `yakiton-menu`,
+        w: 64,
+        h: 128,
+        paint: (e, t, r, a) =>
+          i(
+            e,
+            t,
+            r,
+            {
+              lines: [
+                n(`sites.kanda.menu-4`),
+                n(`sites.kanda.menu-1`),
+                n(`sites.kanda.menu-3`),
+              ],
+            },
+            a,
+          ),
+      },
+      {
+        key: `curry-menu`,
+        w: 128,
+        h: 128,
+        legibility: 1,
+        paint: (e, t, r, i) =>
+          a(
+            e,
+            t,
+            r,
+            {
+              title: n(`sites.kanda.curry`),
+              items: [
+                [n(`sites.kanda.curry-board`), ``],
+                [n(`sites.kanda.curry-gp`), ``],
+              ],
+              style: `yellow`,
+            },
+            i,
+          ),
+      },
+    ],
+    *near(e) {
+      let { d: t } = e.frame;
+      -t / 2;
+      let n = e.site.x - -20.5,
+        r = n + 1.3,
+        i = e.state;
+      (yield* s(e, {
+        o0: 4,
+        o1: 10.4,
+        face: n,
+        recess: r,
+        open: i === 2,
+        kind: `grill`,
+        signKey: `signs`,
+        signCell: [0, 1, 3],
+        lanternKey: `lanterns`,
+        lanternCell: [0, 2],
+        menuKey: `yakiton-menu`,
+        wood: 3810326,
+      }),
+        yield* s(e, {
+          o0: -4,
+          o1: 2.4,
+          face: n,
+          recess: r,
+          open: i === 2,
+          kind: `stand`,
+          signKey: `signs`,
+          signCell: [1, 1, 3],
+          lanternKey: `lanterns`,
+          lanternCell: [1, 2],
+          norenKey: `noren`,
+          wood: 3025446,
+        }),
+        yield* s(e, {
+          o0: -12,
+          o1: -5.6,
+          face: n,
+          recess: r,
+          open: i > 0,
+          kind: `counter`,
+          signKey: `signs`,
+          signCell: [2, 1, 3],
+          menuKey: `curry-menu`,
+          wood: 5917226,
+        }),
+        i === 2 && e.live(1, n - 1.6, 0.6, `chat`));
+    },
+  });
